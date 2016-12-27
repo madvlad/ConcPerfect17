@@ -12,8 +12,6 @@ Written by David Bohan
 
 ### Design History
 
-###
-
  This is a brief explanation of the history of this document, including documented change sets.
 
  This is a log of changes made to the design document over time. The aim of this section is to provide return readers a quick reference to changed sections from when they last read the document
@@ -26,15 +24,15 @@ Written by David Bohan
 
  Version 1.10 – Add details for new focus on gameplay &amp; course development. Major changes include:
 
-- .Preference of random course generation over full course design
-- .Switch design focus from overall courses to individual jump components
-- .Break gameplay in two: Endless runs and time-based challenges
-- .Remove Hearing Impaired accessibility
-- .Change the main focus of this game from a story-driven plot to an open-ended personal stat objective
-- .Removed Rendering System section
-- .Removed &quot;Travel&quot; subsection in the Game World section
-- .Remove ability to switch from First Person to Third Person
-- .Remove the &quot;World Layout&quot; section
+- Preference of random course generation over full course design
+- Switch design focus from overall courses to individual jump components
+- Break gameplay in two: Endless runs and time-based challenges
+- Remove Hearing Impaired accessibility
+- Change the main focus of this game from a story-driven plot to an open-ended personal stat objective
+- Removed Rendering System section
+- Removed &quot;Travel&quot; subsection in the Game World section
+- Remove ability to switch from First Person to Third Person
+- Remove the &quot;World Layout&quot; section
 
 ### Game Overview
 
@@ -86,51 +84,43 @@ There are not too many games out there that are like this exactly. What is diffe
 
 ## Feature Set
 
-##
-
 ## General Features
 
-- .45 jump components
-- .Randomized courses (Unlimited, 9-jump, or 18-jump)
-- .Well defined and smooth conc jumping mechanics
-- .3D graphics
-- .Customizable character models
-- .Multiplayer functionality
-- .Ability to customize experience:
-  - .FOV customization
-  - .Mouse sensitivity customization
+- 45 jump components
+- Randomized courses (Unlimited, 9-jump, or 18-jump)
+- Well defined and smooth conc jumping mechanics
+- 3D graphics
+- Customizable character models
+- Multiplayer functionality
+- Ability to customize experience:
+  - FOV customization
+  - Mouse sensitivity customization
 
 ## Multiplayer Features
 
-- .Up to 16 players per game
-- .Games are found in a server browser
-- .Players host their own game servers
-- .Chat with voice and text
-- .Different multiplayer game modes
+- Up to 16 players per game
+- Games are found in a server browser
+- Players host their own game servers
+- Chat with voice and text
+- Different multiplayer game modes
 
 ## Editor
 
-- .Players will be able to build their own course by selecting and ordering Jump Components manually
-- .Given the order of jumps the player should be able to get a seed to share their course with others
+- Players will be able to build their own course by selecting and ordering Jump Components manually
+- Given the order of jumps the player should be able to get a seed to share their course with others
 
 ## Gameplay
 
-- .Timing functionality to try and beat the courses as fast as possible
-- .Challenging courses that are hard enough that merely completing them is fun in itself
-- .Online racing functionality to go head to head with your friends
-- .Online &quot;skins&quot; game mode that relies more on your skill than your speed
-
-
+- Timing functionality to try and beat the courses as fast as possible
+- Challenging courses that are hard enough that merely completing them is fun in itself
+- Online racing functionality to go head to head with your friends
+- Online &quot;skins&quot; game mode that relies more on your skill than your speed
 
 ### The Game World
-
-###
 
 ## Overview
 
  The main game world will be divided up into five different courses from different locations in the Western United Stated. Each location has a restricted conc jumping course that the player will be put on. The course will be restricted with physical boundaries like ones seen around the boundaries of a soccer field (advertisements included).
-
-
 
 ## Difficult and Interesting Terrain Obstacles
 
@@ -150,11 +140,11 @@ There are not too many games out there that are like this exactly. What is diffe
 
  There are five different jump themes in ConcPerfect &#39;17. They are based on the following locations
 
-- .Taos, New Mexico
-- .Pyramid Lake, Nevada
-- .Panther Gap, California
-- .Carlsbad, New Mexico
-- .Monument Valley, Arizona
+- Taos, New Mexico
+- Pyramid Lake, Nevada
+- Panther Gap, California
+- Carlsbad, New Mexico
+- Monument Valley, Arizona
 
 ### Scale
 
@@ -204,10 +194,6 @@ The camera will be in the first person perspective.
 
  Most of ConcPerfect&#39;s fun and addictiveness comes from its fast paced game play. In order to achieve an exciting and engaging pacing in the game, the movement of the player needs to be very smooth and fast in an almost arcade-y kind of way. There will be no &quot;heavy feeling&quot; controls.
 
-
-
-
-
 ## Lighting Models
 
 ### Overview
@@ -224,8 +210,6 @@ The camera will be in the first person perspective.
 
 ### Game Characters
 
-###
-
 ## Overview
 
  ConcPerfect &#39;17 will be limited in the kinds of characters it offers. There will only be the player&#39;s player character and two others for flavor. These two character are the trainer, and Gerald, the announcer / tournament official.
@@ -235,8 +219,6 @@ The camera will be in the first person perspective.
  Players will create their player by selecting a base model and supplying a name. They will have the option to customize their model with various items in their inventory, though these changes will only be cosmetic.
 
 ### User Interface
-
-###
 
 ## Overview
 
@@ -300,8 +282,6 @@ The camera will be in the first person perspective.
 
 ### Single-Player Game
 
-###
-
 ## Overview
 
  The single-player game is presented in a simple level progression format. The player is initially given one open course to complete, and upon completing that course opens up a new course and so on until they reach the last course.
@@ -319,8 +299,6 @@ The camera will be in the first person perspective.
  The player will win singe-player campaign when they progress to the last stage and win the Jerome Cup.
 
 ### Multiplayer Game
-
-###
 
 ## Overview
 
@@ -344,8 +322,6 @@ The camera will be in the first person perspective.
 
 ### Custom Course Creation
 
-###
-
 ## Overview
 
  In the future, a course editor will be released for ConcPerfect &#39;17. Course editing and creation is crucial to the life span of ConcPerfect &#39;17 as it relies heavily on new courses and challenges being available to the player.
@@ -361,8 +337,6 @@ The camera will be in the first person perspective.
 
 
 ### The Mechanics of Concing
-
-###
 
 ## Overview
 
