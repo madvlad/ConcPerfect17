@@ -10,17 +10,19 @@ All work Copyright ©2016 by ConcPerfect Dev Team Studio 96
 
 Written by David Bohan
 
-### Design History
+## Design History
 
  This is a brief explanation of the history of this document, including documented change sets.
 
  This is a log of changes made to the design document over time. The aim of this section is to provide return readers a quick reference to changed sections from when they last read the document
 
-## Version 1.00
+## Version History
+
+### Version 1.00
 
  Version 1.00 is the start of the document. Before that there was only the template.
 
-## Version 1.10
+### Version 1.10
 
  Version 1.10 – Add details for new focus on gameplay &amp; course development. Major changes include:
 
@@ -34,7 +36,7 @@ Written by David Bohan
 - Remove ability to switch from First Person to Third Person
 - Remove the &quot;World Layout&quot; section
 
-### Game Overview
+# Game Overview
 
 ## Philosophy
 
@@ -68,8 +70,6 @@ ConcPerfect is a skill based 3D platformer, with some puzzle elements. Players w
 
  You will control you, the player. The player is a concer (or: a person who plays the sport of conc jumping) who is trying to &quot;become professional&quot;
 
-
-
 ### How many characters do I control?
 
  You will only control one character: you, the player.
@@ -82,7 +82,7 @@ ConcPerfect is a skill based 3D platformer, with some puzzle elements. Players w
 
 There are not too many games out there that are like this exactly. What is different is the usage of a deployable device to enhance the potential movements a player can make. Additionally, the aesthetic the game is taking is a breath of fresh air over what it was back in TFC. Another thing that makes this game different from ones like it (the original conc jumping game mode) is the fact that it will be platform independent, free to play, and offer carefully tailored multiplayer game modes and functionalities.
 
-## Feature Set
+# Feature Set
 
 ## General Features
 
@@ -116,7 +116,7 @@ There are not too many games out there that are like this exactly. What is diffe
 - Online racing functionality to go head to head with your friends
 - Online &quot;skins&quot; game mode that relies more on your skill than your speed
 
-### The Game World
+# The Game World
 
 ## Overview
 
@@ -208,7 +208,7 @@ The camera will be in the first person perspective.
 
  During the night faint directional lighting will be used, the source of which will be the moon. The more prominent source of lighting at night will be point lighting originating from spot lights around the courses.
 
-### Game Characters
+# Game Characters
 
 ## Overview
 
@@ -258,7 +258,7 @@ The camera will be in the first person perspective.
 
 
 
-### Musical Scores and Sound Effects
+# Musical Scores and Sound Effects
 
 ## Overview
 
@@ -280,7 +280,7 @@ The camera will be in the first person perspective.
 
  There are a few abstract mechanics that require sound design as well. The concs themselves will have a concussive blast, and a timer beep. Players will produce sound when jumping and walking around.
 
-### Single-Player Game
+# Single-Player Game
 
 ## Overview
 
@@ -298,7 +298,7 @@ The camera will be in the first person perspective.
 
  The player will win singe-player campaign when they progress to the last stage and win the Jerome Cup.
 
-### Multiplayer Game
+# Multiplayer Game
 
 ## Overview
 
@@ -320,7 +320,7 @@ The camera will be in the first person perspective.
 
  The game world will be persistent independent on individual player sessions.
 
-### Custom Course Creation
+# Custom Course Creation
 
 ## Overview
 
@@ -334,9 +334,7 @@ The camera will be in the first person perspective.
 
  There exists a large repository of conc maps map for TFC that are compiled under the bsp format. Writing an importer to bring those maps into this game and have them playable will be a great feature and will be a huge plus for advancing the life span of ConcPerfect &#39;17.
 
-
-
-### The Mechanics of Concing
+# The Mechanics of Concing
 
 ## Overview
 
