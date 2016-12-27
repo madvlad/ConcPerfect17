@@ -254,14 +254,12 @@ The camera will be in the first person perspective.
 
  Pressing tab will bring up a list of all players in the server.
 
-
-
 # Musical Scores and Sound Effects
 
 ## Overview
 
- Custom music will be created by Jacob Alfaro. There will be a few tunes for the game, namely the title screen music and the end-course music. Additionally, there will be a large emphasis on nature ambience in the courses themselves. No music will be played while in the course.
-
+ Custom music will be created by Jacob Alfaro. Music will be available to the player on demand in a small jukebox like feature. Additionally, there will be a large emphasis on nature ambience in the courses themselves.
+ 
 ## Title Screen Score
 
  The title screen sequence will be a downbeat and modern jazzy tune that brings to mind &quot;early 2000s professionalism and progress&quot;. See the Windows XP installation music for what I mean with that. A song that will be used as a creative starting point is the song &quot;Dimensional&quot; by Robb Warren. Listen to that here: [https://soundcloud.com/lemoncellomusic/dimensional](https://soundcloud.com/lemoncellomusic/dimensional)
@@ -282,19 +280,9 @@ The camera will be in the first person perspective.
 
 ## Overview
 
- The single-player game is presented in a simple level progression format. The player is initially given one open course to complete, and upon completing that course opens up a new course and so on until they reach the last course.
-
-## Story
-
- ConcPerfect &#39;17&#39;s story is about an amateur concer who wants to go professional. The only way for him to do that is to ascend the ranks and win tournaments at each of the courses available to him. At the last course he is presented with the Professional Qualifiers tournament: The Jerome Cup. Completing the Jerome Cup will earn him status as a professional.
-
-## Hours of Gameplay
-
- Given the mean time of completing a course for the first time is around four hours, the expected amount of gameplay one will receive from their play through of the single-player campaign alone is 20 hours.
-
-## Victory Conditions
-
- The player will win singe-player campaign when they progress to the last stage and win the Jerome Cup.
+ The single-player portion of the game is strictly a stats building game. Over time you get better and better scores based on how fast you complete a course, how many courses you have completed, and how many jumps you complete each time you do an event. There is no classic story line.
+ 
+ Gameplay is randomized so for single player the game lasts more as a hobby and less as a game to go through from start to end.
 
 # Multiplayer Game
 
@@ -317,20 +305,6 @@ The camera will be in the first person perspective.
 ## Persistence
 
  The game world will be persistent independent on individual player sessions.
-
-# Custom Course Creation
-
-## Overview
-
- In the future, a course editor will be released for ConcPerfect &#39;17. Course editing and creation is crucial to the life span of ConcPerfect &#39;17 as it relies heavily on new courses and challenges being available to the player.
-
-## Creating from Scratch
-
- Taking some tips from Valve&#39;s hammer editor and also Portal 2&#39;s snap maps, there will be a simple and easy to use editor for creating brand new courses from scratch. The tool will be easy enough to use so that getting into it doesn&#39;t require a steep learning curve, but it will be feature rich enough to provide creators with tools to create unique and interesting courses.
-
-## Importing Existing bsp Files
-
- There exists a large repository of conc maps map for TFC that are compiled under the bsp format. Writing an importer to bring those maps into this game and have them playable will be a great feature and will be a huge plus for advancing the life span of ConcPerfect &#39;17.
 
 # The Mechanics of Concing
 
@@ -355,8 +329,6 @@ Once exploded, a conc generates a sphere of influence around itself. The conc ac
 In that illustration, the dot is the conc. Any player outside of the sphere&#39;s boundaries is not effected by the blast at all. Any player inside the sphere _is_ affected by the blast. Direction and velocity can be thought of as vectors and scalars. Upon detonation the conc emits force vectors in all directions. Each vector that hits the player effects the player&#39;s momentum. Thus, the closer the player is to the center of the sphere, the higher the amount of vectors apply to him. Vectors can cancel each other out, so a player close to the center may receive momentum in both the positive and negative direction creating a net momentum gain close to zero or mostly upwards.
 
 A player will want to ideally place themselves as close to the perimeter of the sphere as possible, and position their selves in the angle that they desire to travel to get the most amount of force in the correct direction.
-
-
 
 ## Behavior of a Conc When Hand Held
 
