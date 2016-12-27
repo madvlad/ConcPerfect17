@@ -8,8 +8,6 @@ The Comprehensive Conc Jumping Game
 
 All work Copyright ©2016 by ConcPerfect Dev Team Studio 96
 
-Written by David Bohan
-
 ## Design History
 
  This is a brief explanation of the history of this document, including documented change sets.
