@@ -1,4 +1,4 @@
-# Conc Perfect 2017
+![ConcPerfect 2017](http://i.imgur.com/rnXb6CT.jpg)
 
 This is the source code for Conc Perfect 2017.
 
