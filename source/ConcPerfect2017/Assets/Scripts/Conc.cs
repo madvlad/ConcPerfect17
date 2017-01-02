@@ -7,6 +7,7 @@ public class Conc : MonoBehaviour
     public AudioClip explodeSFX;
     public float timer = 4.0f;
     public bool exploded = false;
+
     void Start()
     {
         Invoke("Explode", timer);
