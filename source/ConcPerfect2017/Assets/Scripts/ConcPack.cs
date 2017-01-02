@@ -6,12 +6,13 @@ public class ConcPack : MonoBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
-        var currentConcCount = other.GetComponent<Concer>().ConcCount;
-        if (currentConcCount < 3)
+        var currentConcer = other.GetComponent<Concer>();
+        if (currentConcer.ConcCount < currentConcer.MaxConcCount)
         {
-            var concsToAdd = 3 - other.GetComponent<Concer>().ConcCount;
-            other.GetComponent<Concer>().ConcCount += concsToAdd;
+            var concsToAdd = currentConcer.MaxConcCount - currentConcer.ConcCount;
+            currentConcer.ConcCount += concsToAdd;
             Destroy(this.gameObject);
+            // TODO :: Add pickup sound
         }
     }
 }

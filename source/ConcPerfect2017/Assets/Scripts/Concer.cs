@@ -5,7 +5,9 @@ public class Concer : MonoBehaviour
 {
 
     public GameObject concPrefab;
+    public int ConcPushForce = 8;
     public int ConcCount = 3;
+    public int MaxConcCount = 3;
     private bool primed = false;
     private float timer = 0.0f;
     private GameObject concInstance;
@@ -45,7 +47,7 @@ public class Concer : MonoBehaviour
                 concInstance.GetComponent<BoxCollider>().enabled = true;
                 concInstance.GetComponent<MeshRenderer>().enabled = true;
                 concInstance.GetComponent<Rigidbody>().useGravity = true;
-                concInstance.GetComponent<Rigidbody>().AddForce(playerCamera.transform.forward * 8, ForceMode.Impulse);
+                concInstance.GetComponent<Rigidbody>().AddForce(playerCamera.transform.forward * ConcPushForce, ForceMode.Impulse);
                 primed = false;
             }
         }
