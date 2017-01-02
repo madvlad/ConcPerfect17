@@ -5,6 +5,7 @@ public class Conc : MonoBehaviour
 {
     public AudioClip timerSFX;
     public AudioClip explodeSFX;
+    public AudioClip primeSFX;
     public float timer = 4.0f;
     public bool exploded = false;
 
@@ -15,11 +16,8 @@ public class Conc : MonoBehaviour
         {
             if (gameObject.GetComponent<AudioSource>())
             {
-                gameObject.GetComponent<AudioSource>().PlayOneShot(timerSFX);
-            }
-            else
-            {
-                AudioSource.PlayClipAtPoint(timerSFX, gameObject.transform.position);
+                gameObject.GetComponent<AudioSource>().PlayOneShot(primeSFX);
+                Invoke("Beep", 1.0f);
             }
         }
     }
@@ -72,6 +70,15 @@ public class Conc : MonoBehaviour
             {
                 AudioSource.PlayClipAtPoint(explodeSFX, gameObject.transform.position);
             }
+        }
+    }
+
+    void Beep()
+    {
+        if (!exploded)
+        {
+            gameObject.GetComponent<AudioSource>().PlayOneShot(timerSFX);
+            Invoke("Beep", 1.0f);
         }
     }
 
