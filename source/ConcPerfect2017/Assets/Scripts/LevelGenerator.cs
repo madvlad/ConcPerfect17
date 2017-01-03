@@ -4,12 +4,22 @@ using UnityEngine;
 
 public class LevelGenerator : MonoBehaviour {
     public List<GameObject> jumpList;
+    public int jumpNumber;
+    public int RandomSeed;
 
 	void Start () {
-        GameObject previousSnapPoint = null;
-		foreach(var jump in jumpList)
+        if (RandomSeed != 0)
         {
-            var newJump = Instantiate(jump);
+            Random.InitState(RandomSeed);
+        }
+
+        GameObject previousSnapPoint = null;
+
+        for (int i = 0; i < jumpNumber; i++)
+        {
+            var nextJump = Random.Range(0, jumpList.Count);
+            var newJump = Instantiate(jumpList[nextJump]);
+
             if (previousSnapPoint != null)
             {
                 newJump.GetComponent<SnapPointManager>().snapPointIn.transform.position = previousSnapPoint.transform.position;
