@@ -41,7 +41,7 @@ public class Concer : MonoBehaviour
         }
         if (primed && !Input.GetButton("Conc"))
         {
-            if (concPrefab && !concInstance.GetComponent<Conc>().exploded)
+            if (concPrefab && concInstance != null && concInstance.GetComponent<Conc>() != null && !concInstance.GetComponent<Conc>().exploded)
             {
                 concInstance.transform.position = playerCamera.transform.position + playerCamera.transform.forward;
                 concInstance.GetComponent<BoxCollider>().enabled = true;
