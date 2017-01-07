@@ -6,7 +6,9 @@ public class Conc : MonoBehaviour
     public AudioClip timerSFX;
     public AudioClip explodeSFX;
     public AudioClip primeSFX;
-    public float timer = 4.0f;
+    public AudioClip warningSFX;
+    public float timer = 5f;
+    private int BeepCount = 1;
     public bool exploded = false;
 
     void Start()
@@ -78,8 +80,21 @@ public class Conc : MonoBehaviour
         if (!exploded)
         {
             gameObject.GetComponent<AudioSource>().PlayOneShot(timerSFX);
-            Invoke("Beep", 1.0f);
+            if (BeepCount == (int)timer - 1)
+            {
+                Invoke("WarningBeep", 1.0f);
+            }
+            else
+            {
+                BeepCount++;
+                Invoke("Beep", 1.0f);
+            }
         }
+    }
+
+    void WarningBeep()
+    {
+        gameObject.GetComponent<AudioSource>().PlayOneShot(warningSFX);
     }
 
     void Destroy()
