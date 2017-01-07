@@ -5,7 +5,7 @@ using UnityEngine;
 public class GameStateManager : MonoBehaviour {
     private int CurrentJump;
     private float CurrentTimerTime;
-    private bool TimerIsRunning;
+    public bool TimerIsRunning;
     private List<GameObject> CourseJumpList;
     private int CourseJumpLimit;
     private bool IsCasual;
@@ -14,37 +14,29 @@ public class GameStateManager : MonoBehaviour {
 		if (TimerIsRunning)
         {
             CurrentTimerTime += Time.deltaTime;
+            Debug.Log(CurrentTimerTime);
         }
 	}
 
-    void StartTimer()
+    public void SetTimerIsRunning(bool set)
     {
         if (!IsCasual)
         {
-            TimerIsRunning = true;
+            TimerIsRunning = set;
         }
     }
-
-    void StopTimer()
-    {
-        if (!IsCasual)
-        {
-            TimerIsRunning = false;
-        }
-    }
-
-    void SetJumpNumer(int num)
+    public void SetJumpNumer(int num)
     {
         CurrentTimerTime = num;
     }
 
-    void SetCourseJumps(List<GameObject> CourseJumpList)
+    public void SetCourseJumps(List<GameObject> CourseJumpList)
     {
         this.CourseJumpList = CourseJumpList;
         CourseJumpLimit = CourseJumpList.Count;
     }
 
-    void SetCasual()
+    public void SetCasual()
     {
         this.IsCasual = true;
     }
