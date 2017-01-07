@@ -7,7 +7,7 @@ public class ConcPack : MonoBehaviour {
     public float RespawnTime = 10f;
     public AudioClip PickupSound;
 
-    void OnTriggerEnter(Collider other)
+    void OnTriggerStay(Collider other)
     {
         var currentConcer = other.GetComponent<Concer>();
         if (currentConcer.ConcCount < currentConcer.MaxConcCount)
