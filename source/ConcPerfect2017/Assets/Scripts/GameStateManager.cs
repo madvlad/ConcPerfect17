@@ -1,11 +1,15 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameStateManager : MonoBehaviour {
+    public bool TimerIsRunning;
+    public GameObject TimerHUDElement;
+
     private int CurrentJump;
     private float CurrentTimerTime;
-    public bool TimerIsRunning;
     private List<GameObject> CourseJumpList;
     private int CourseJumpLimit;
     private bool IsCasual;
@@ -14,7 +18,8 @@ public class GameStateManager : MonoBehaviour {
 		if (TimerIsRunning)
         {
             CurrentTimerTime += Time.deltaTime;
-            Debug.Log(CurrentTimerTime);
+            TimeSpan timeSpan = TimeSpan.FromSeconds(CurrentTimerTime);
+            TimerHUDElement.GetComponent<Text>().text = timeSpan.Minutes.ToString("00") + ":" + timeSpan.Seconds.ToString("00") + ":" + timeSpan.Milliseconds.ToString("000");
         }
 	}
 
