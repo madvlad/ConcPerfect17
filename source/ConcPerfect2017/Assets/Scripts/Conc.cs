@@ -33,7 +33,7 @@ public class Conc : MonoBehaviour
 
     void EnactPush()
     {
-        var colliders = Physics.OverlapSphere(transform.position, 10.0f);
+        var colliders = Physics.OverlapSphere(transform.position, 7.0f);
         foreach (var hit in colliders)
         {
             if (hit.CompareTag("Player"))
@@ -46,7 +46,7 @@ public class Conc : MonoBehaviour
                     if (dir.magnitude == 0)
                     {
                         force = Mathf.Clamp(100.0f, 0, 100.0f);
-                        dir = hit.GetComponent<CharacterController>().velocity * 10;
+                        dir = hit.GetComponent<CharacterController>().velocity * hit.GetComponent<CharacterController>().velocity.sqrMagnitude;
                     }
                     else
                     {
