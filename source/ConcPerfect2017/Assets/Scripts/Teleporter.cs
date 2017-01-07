@@ -10,7 +10,6 @@ public class Teleporter : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             other.transform.position = destination.transform.position;
-
         }
     }
 }

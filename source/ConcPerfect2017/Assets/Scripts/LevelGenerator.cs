@@ -21,11 +21,18 @@ public class LevelGenerator : MonoBehaviour {
         Debug.Log("Seed being used: " + Random.seed);
 
         GameObject previousSnapPoint = InstantiateStartPoint();
-
+        int lastNum = -1;
         for (int i = 0; i < jumpNumber; i++)
         {
             var nextJump = Random.Range(0, jumpList.Count);
-            previousSnapPoint = InstantiateJumpAtSnapPoint(previousSnapPoint, jumpList[nextJump]);
+            if (nextJump == lastNum)
+            {
+                i--;
+            } else
+            {
+                previousSnapPoint = InstantiateJumpAtSnapPoint(previousSnapPoint, jumpList[nextJump]);
+            }
+            lastNum = nextJump;
         }
 
         InstantiateEndPoint(previousSnapPoint);
