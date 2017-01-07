@@ -13,6 +13,7 @@ public class Conc : MonoBehaviour
 
     void Start()
     {
+        Physics.IgnoreCollision(GameObject.FindGameObjectWithTag("Player").GetComponent<Collider>(), GetComponent<Collider>());
         Invoke("Explode", timer);
         if (timerSFX)
         {
