@@ -46,7 +46,7 @@ public class Conc : MonoBehaviour
                     if (dir.magnitude == 0)
                     {
                         force = Mathf.Clamp(100.0f, 0, 100.0f);
-                        dir = (hit.GetComponent<CharacterController>().velocity + new Vector3(1, 1)) * hit.GetComponent<CharacterController>().velocity.sqrMagnitude;
+                        dir = hit.GetComponent<CharacterController>().velocity * hit.GetComponent<CharacterController>().velocity.sqrMagnitude;
                     }
                     else
                     {
