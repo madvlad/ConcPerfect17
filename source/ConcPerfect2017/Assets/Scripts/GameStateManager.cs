@@ -7,13 +7,14 @@ using UnityEngine.UI;
 public class GameStateManager : MonoBehaviour {
     public bool TimerIsRunning;
     public GameObject TimerHUDElement;
+    public GameObject JumpHUDElement;
 
     private int CurrentJump;
     private float CurrentTimerTime;
     private List<GameObject> CourseJumpList;
     private int CourseJumpLimit;
     private bool IsCasual;
-	
+
 	void Update () {
 		if (TimerIsRunning)
         {
@@ -30,9 +31,11 @@ public class GameStateManager : MonoBehaviour {
             TimerIsRunning = set;
         }
     }
-    public void SetJumpNumer(int num)
+
+    public void SetJumpNumber(int num)
     {
-        CurrentTimerTime = num;
+        CurrentJump = num;
+        JumpHUDElement.GetComponent<Text>().text = "Jump: " + num + " / " + (CourseJumpLimit);
     }
 
     public void SetCourseJumps(List<GameObject> CourseJumpList)
@@ -44,5 +47,10 @@ public class GameStateManager : MonoBehaviour {
     public void SetCasual()
     {
         this.IsCasual = true;
+    }
+
+    public void SetCourseJumpLimit(int limit)
+    {
+        this.CourseJumpLimit = limit;
     }
 }

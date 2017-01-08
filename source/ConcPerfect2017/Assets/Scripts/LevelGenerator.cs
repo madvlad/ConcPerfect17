@@ -3,15 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class LevelGenerator : MonoBehaviour {
+    public GameObject jumpSeparator;
     public GameObject startPrefab;
     public GameObject endPrefab;
     public List<GameObject> jumpList;
-    private List<GameObject> courseJumpList;
-    public int jumpNumber;
+    public int courseJumpListSize;
     public int RandomSeed;
 
-	void Start ()
+    private List<GameObject> CourseJumpList;
+    private GameStateManager GameStateManager;
+    private int CurrentJumpNumber = 1;
+
+    void Start ()
     {
+        GameStateManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameStateManager>();
+        GameStateManager.SetCourseJumpLimit(courseJumpListSize);
         if (RandomSeed != 0)
         {
             Random.InitState(RandomSeed);
@@ -22,17 +28,19 @@ public class LevelGenerator : MonoBehaviour {
 
         GameObject previousSnapPoint = InstantiateStartPoint();
         int lastNum = -1;
-        for (int i = 0; i < jumpNumber; i++)
+        for (int i = 0; i < courseJumpListSize; i++)
         {
             var nextJump = Random.Range(0, jumpList.Count);
             if (nextJump == lastNum)
             {
                 i--;
-            } else
+            }
+            else
             {
                 previousSnapPoint = InstantiateJumpAtSnapPoint(previousSnapPoint, jumpList[nextJump]);
             }
             lastNum = nextJump;
+            CurrentJumpNumber++;
         }
 
         InstantiateEndPoint(previousSnapPoint);
@@ -42,7 +50,7 @@ public class LevelGenerator : MonoBehaviour {
     {
         GameObject previousSnapPoint = InstantiateStartPoint();
 
-        foreach (var jump in courseJumpList)
+        foreach (var jump in CourseJumpList)
         {
             previousSnapPoint = InstantiateJumpAtSnapPoint(previousSnapPoint, jump);
         }
@@ -50,10 +58,13 @@ public class LevelGenerator : MonoBehaviour {
         InstantiateEndPoint(previousSnapPoint);
     }
 
-    private static GameObject InstantiateJumpAtSnapPoint(GameObject previousSnapPoint, GameObject jump)
+    private GameObject InstantiateJumpAtSnapPoint(GameObject previousSnapPoint, GameObject jump)
     {
         var newJump = Instantiate(jump);
+        var newJumpSeparator = Instantiate(jumpSeparator);
         newJump.GetComponent<SnapPointManager>().snapPointIn.transform.position = previousSnapPoint.transform.position;
+        newJumpSeparator.transform.position = previousSnapPoint.transform.position;
+        newJumpSeparator.GetComponent<JumpTrigger>().JumpNumber = CurrentJumpNumber;
         previousSnapPoint = newJump.GetComponent<SnapPointManager>().snapPointOut;
         return previousSnapPoint;
     }
