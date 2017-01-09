@@ -9,14 +9,17 @@ public class ConcPack : MonoBehaviour {
 
     void OnTriggerStay(Collider other)
     {
-        var currentConcer = other.GetComponent<Concer>();
-        if (currentConcer.ConcCount < currentConcer.MaxConcCount)
+        if (other.CompareTag("Player"))
         {
-            gameObject.GetComponent<AudioSource>().PlayOneShot(PickupSound);
-            var concsToAdd = currentConcer.MaxConcCount - currentConcer.ConcCount;
-            currentConcer.SetConcCount(currentConcer.ConcCount + concsToAdd);
-            DisablePack();
-            Invoke("EnablePack", RespawnTime);
+            var currentConcer = other.GetComponent<Concer>();
+            if (currentConcer.ConcCount < currentConcer.MaxConcCount)
+            {
+                gameObject.GetComponent<AudioSource>().PlayOneShot(PickupSound);
+                var concsToAdd = currentConcer.MaxConcCount - currentConcer.ConcCount;
+                currentConcer.SetConcCount(currentConcer.ConcCount + concsToAdd);
+                DisablePack();
+                Invoke("EnablePack", RespawnTime);
+            }
         }
     }
 
