@@ -1,51 +1,56 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameStateManager : MonoBehaviour {
+    public bool TimerIsRunning;
+    public GameObject TimerHUDElement;
+    public GameObject JumpHUDElement;
+
     private int CurrentJump;
     private float CurrentTimerTime;
-    private bool TimerIsRunning;
     private List<GameObject> CourseJumpList;
     private int CourseJumpLimit;
     private bool IsCasual;
-	
+
 	void Update () {
 		if (TimerIsRunning)
         {
             CurrentTimerTime += Time.deltaTime;
+            TimeSpan timeSpan = TimeSpan.FromSeconds(CurrentTimerTime);
+            TimerHUDElement.GetComponent<Text>().text = timeSpan.Minutes.ToString("00") + ":" + timeSpan.Seconds.ToString("00") + ":" + timeSpan.Milliseconds.ToString("000");
         }
 	}
 
-    void StartTimer()
+    public void SetTimerIsRunning(bool set)
     {
         if (!IsCasual)
         {
-            TimerIsRunning = true;
+            TimerIsRunning = set;
         }
     }
 
-    void StopTimer()
+    public void SetJumpNumber(int num)
     {
-        if (!IsCasual)
-        {
-            TimerIsRunning = false;
-        }
+        CurrentJump = num;
+        JumpHUDElement.GetComponent<Text>().text = "Jump: " + num + " / " + (CourseJumpLimit);
     }
 
-    void SetJumpNumer(int num)
-    {
-        CurrentTimerTime = num;
-    }
-
-    void SetCourseJumps(List<GameObject> CourseJumpList)
+    public void SetCourseJumps(List<GameObject> CourseJumpList)
     {
         this.CourseJumpList = CourseJumpList;
         CourseJumpLimit = CourseJumpList.Count;
     }
 
-    void SetCasual()
+    public void SetCasual()
     {
         this.IsCasual = true;
+    }
+
+    public void SetCourseJumpLimit(int limit)
+    {
+        this.CourseJumpLimit = limit;
     }
 }
