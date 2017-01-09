@@ -38,9 +38,9 @@ public class LevelGenerator : MonoBehaviour {
             else
             {
                 previousSnapPoint = InstantiateJumpAtSnapPoint(previousSnapPoint, jumpList[nextJump]);
+                CurrentJumpNumber++;
             }
             lastNum = nextJump;
-            CurrentJumpNumber++;
         }
 
         InstantiateEndPoint(previousSnapPoint);
