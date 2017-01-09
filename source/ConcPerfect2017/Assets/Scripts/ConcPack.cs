@@ -14,7 +14,7 @@ public class ConcPack : MonoBehaviour {
         {
             gameObject.GetComponent<AudioSource>().PlayOneShot(PickupSound);
             var concsToAdd = currentConcer.MaxConcCount - currentConcer.ConcCount;
-            currentConcer.ConcCount += concsToAdd;
+            currentConcer.SetConcCount(currentConcer.ConcCount + concsToAdd);
             DisablePack();
             Invoke("EnablePack", RespawnTime);
         }

@@ -1,13 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class Concer : MonoBehaviour
 {
-
     public GameObject concPrefab;
     public int ConcPushForce = 8;
     public int ConcCount = 3;
     public int MaxConcCount = 3;
+
+    private GameObject concCountHUDElement;
     private bool primed = false;
     private float timer = 0.0f;
     private GameObject concInstance;
@@ -16,6 +18,13 @@ public class Concer : MonoBehaviour
     void Start()
     {
         playerCamera = Camera.main.gameObject;
+        concCountHUDElement = GameObject.FindGameObjectWithTag("ConcCounter");
+    }
+
+    public void SetConcCount(int newConcCount)
+    {
+        concCountHUDElement.GetComponent<Text>().text = "Concs: " + newConcCount;
+        ConcCount = newConcCount;
     }
 
     // Update is called once per frame
@@ -29,7 +38,7 @@ public class Concer : MonoBehaviour
         {
             if (timer <= 0)
             {
-                ConcCount--;
+                SetConcCount(ConcCount - 1);
                 timer = 0.45f;
                 primed = true;
                 concInstance = Instantiate(concPrefab, playerCamera.transform.position, playerCamera.transform.rotation) as GameObject;
