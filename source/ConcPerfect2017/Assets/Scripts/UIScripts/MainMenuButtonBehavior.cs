@@ -4,13 +4,22 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class MainMenuButtonBehavior : MonoBehaviour {
-    public string sceneToLoad;
+    public string mainGameScene;
+    public string mainMenuScene;
     public GameObject creditsUIElement;
-
+    public GameObject escapeMenuUIElement;
+    public GameObject gameStateManager;
+    
     void StartNewGame()
     {
-        SceneManager.LoadScene(sceneToLoad);
+        SceneManager.LoadScene(mainGameScene);
         SceneManager.UnloadSceneAsync("MainMenuScene");
+    }
+
+    void LoadMainMenu()
+    {
+        SceneManager.LoadScene(mainMenuScene);
+        SceneManager.UnloadSceneAsync(mainGameScene);
     }
 
     void QuitApplication()
@@ -26,5 +35,10 @@ public class MainMenuButtonBehavior : MonoBehaviour {
     void HideCredits()
     {
         creditsUIElement.SetActive(false);
+    }
+
+    void HideEscapeMenu()
+    {
+        gameStateManager.GetComponent<GameStateManager>().SetPlayerEnabled(true);
     }
 }

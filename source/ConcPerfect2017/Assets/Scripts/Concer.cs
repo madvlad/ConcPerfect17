@@ -26,8 +26,7 @@ public class Concer : MonoBehaviour
         concCountHUDElement.GetComponent<Text>().text = "Concs: " + newConcCount;
         ConcCount = newConcCount;
     }
-
-    // Update is called once per frame
+    
     void Update()
     {
         if (timer > 0)

@@ -28,6 +28,8 @@ public class SetTimerOnTrigger : MonoBehaviour {
             gameStateManager.SetTimerIsRunning(SwitchToOn);
             gameObject.GetComponent<AudioSource>().PlayOneShot(GameEndSound);
             GameObject.FindGameObjectWithTag("Music").GetComponent<AudioSource>().Stop();
+            gameStateManager.SetPlayerEnabled(false);
+            gameStateManager.SetIsCourseComplete(true);
         }
     }
 }

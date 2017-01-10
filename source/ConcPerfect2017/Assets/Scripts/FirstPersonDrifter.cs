@@ -42,6 +42,7 @@ public class FirstPersonDrifter : NetworkBehaviour
 
     public Vector3 moveDirection = Vector3.zero;
     public bool grounded = false;
+    private bool escaped = false;
     private CharacterController controller;
     private Transform myTransform;
     private float speed;
@@ -73,6 +74,11 @@ public class FirstPersonDrifter : NetworkBehaviour
 
     void FixedUpdate()
     {
+        if (escaped)
+        {
+            return;
+        }
+
 		if (!isLocalPlayer)
 			return;
         float inputX = Input.GetAxis("Horizontal");
