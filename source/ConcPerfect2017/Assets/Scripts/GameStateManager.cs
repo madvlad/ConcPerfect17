@@ -70,9 +70,9 @@ public class GameStateManager : MonoBehaviour {
         player.GetComponent<Concer>().enabled = enabled;
         player.GetComponent<Footsteps>().enabled = enabled;
         player.GetComponent<ImpactReceiver>().enabled = enabled;
-        camera.GetComponent<LockMouse>().enabled = enabled;
         camera.GetComponent<MouseLook>().enabled = enabled;
-        Cursor.visible = !enabled;
+        camera.GetComponent<LockMouse>().enabled = enabled;
+        
     }
 
     public void ShowEscapeMenu(bool show)
