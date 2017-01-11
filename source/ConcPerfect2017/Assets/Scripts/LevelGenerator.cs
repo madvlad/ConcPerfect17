@@ -17,7 +17,15 @@ public class LevelGenerator : MonoBehaviour {
     void Start ()
     {
         GameStateManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameStateManager>();
+
+        if (courseJumpListSize == 0)
+        {
+            courseJumpListSize = ApplicationManager.numberOfJumps;
+        }
+
         GameStateManager.SetCourseJumpLimit(courseJumpListSize);
+        RandomSeed = ApplicationManager.randomSeed;
+
         if (RandomSeed != 0)
         {
             Random.InitState(RandomSeed);
