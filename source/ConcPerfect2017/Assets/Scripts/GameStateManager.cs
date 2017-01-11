@@ -38,21 +38,26 @@ public class GameStateManager : MonoBehaviour {
         if (Input.GetButtonDown("Cancel") && !IsPaused)
         {
             SetPlayerEnabled(false);
+            ShowEscapeMenu(true);
             return true;
         }
         else if (Input.GetButtonDown("Cancel") && IsPaused && !IsCourseComplete)
         {
             SetPlayerEnabled(true);
+            ShowEscapeMenu(false);
             return false;
         }
         return IsPaused;
     }
 
+    public string GetCurrentTime()
+    {
+        return TimerHUDElement.GetComponent<Text>().text;
+    }
+
     public void SetPlayerEnabled(bool enabled)
     {
         IsPaused = !enabled;
-        Cursor.lockState = CursorLockMode.Locked;
-        EscapeMenuHUDElement.SetActive(!enabled);
 
         var player = GameObject.FindGameObjectWithTag("Player");
         var camera = Camera.main;
@@ -66,6 +71,11 @@ public class GameStateManager : MonoBehaviour {
         camera.GetComponent<LockMouse>().enabled = enabled;
         camera.GetComponent<MouseLook>().enabled = enabled;
         Cursor.visible = !enabled;
+    }
+
+    public void ShowEscapeMenu(bool show)
+    {
+        EscapeMenuHUDElement.SetActive(show);
     }
 
     public void SetTimerIsRunning(bool set)

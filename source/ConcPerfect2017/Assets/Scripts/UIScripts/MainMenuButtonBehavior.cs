@@ -39,6 +39,8 @@ public class MainMenuButtonBehavior : MonoBehaviour {
 
     void HideEscapeMenu()
     {
-        gameStateManager.GetComponent<GameStateManager>().SetPlayerEnabled(true);
+        var gameState = gameStateManager.GetComponent<GameStateManager>();
+        gameState.SetPlayerEnabled(true);
+        gameState.ShowEscapeMenu(false);
     }
 }
