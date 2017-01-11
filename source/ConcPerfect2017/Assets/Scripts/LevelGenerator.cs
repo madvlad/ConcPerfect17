@@ -22,9 +22,8 @@ public class LevelGenerator : MonoBehaviour {
         {
             Random.InitState(RandomSeed);
         }
-
-        // TODO :: Display this to the player
-        Debug.Log("Seed being used: " + Random.seed);
+        
+        GameStateManager.SetJumpSeed(Random.seed);
 
         GameObject previousSnapPoint = InstantiateStartPoint();
         int lastNum = -1;

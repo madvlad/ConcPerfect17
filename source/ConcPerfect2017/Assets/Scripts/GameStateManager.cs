@@ -9,6 +9,7 @@ public class GameStateManager : MonoBehaviour {
     public GameObject TimerHUDElement;
     public GameObject JumpHUDElement;
     public GameObject EscapeMenuHUDElement;
+    public GameObject EscapeMenuSeedElement;
 
     private int CurrentJump;
     private float CurrentTimerTime;
@@ -17,6 +18,7 @@ public class GameStateManager : MonoBehaviour {
     private bool IsCasual;
     private bool IsPaused = false;
     private bool IsCourseComplete = false;
+    private int CourseSeed;
 
 	void Update ()
     {
@@ -111,5 +113,11 @@ public class GameStateManager : MonoBehaviour {
     public void SetIsCourseComplete(bool isComplete)
     {
         IsCourseComplete = isComplete;
+    }
+
+    public void SetJumpSeed(int seed)
+    {
+        this.CourseSeed = seed;
+        EscapeMenuSeedElement.GetComponent<Text>().text = "Seed: " + seed;
     }
 }
