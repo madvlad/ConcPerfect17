@@ -3,6 +3,7 @@ using System.Collections;
 
 public class Conc : MonoBehaviour
 {
+    public ParticleSystem explosionParticleSystem;
     public GameObject devBubble;
     public bool ShowSphereCollider = false;
     public AudioClip timerSFX;
@@ -29,6 +30,7 @@ public class Conc : MonoBehaviour
 
     void Explode()
     {
+        explosionParticleSystem.Emit(1);
         exploded = true;
         Invoke("Destroy", timer);
         gameObject.GetComponent<MeshRenderer>().enabled = false;
