@@ -3,6 +3,8 @@ using System.Collections;
 
 public class Conc : MonoBehaviour
 {
+    public GameObject devBubble;
+    public bool ShowSphereCollider = false;
     public AudioClip timerSFX;
     public AudioClip explodeSFX;
     public AudioClip primeSFX;
@@ -36,6 +38,11 @@ public class Conc : MonoBehaviour
 
     void EnactPush()
     {
+        if (devBubble != null && ShowSphereCollider)
+        {
+            var bubble = Instantiate(devBubble);
+            bubble.transform.position = transform.position;
+        }
         var colliders = Physics.OverlapSphere(transform.position, 7.0f);
         foreach (var hit in colliders)
         {
