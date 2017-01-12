@@ -3,10 +3,11 @@
 // http://wiki.unity3d.com/index.php/FPSWalkerEnhanced
 
 using UnityEngine;
+using UnityEngine.Networking;
 using System.Collections;
 
 [RequireComponent(typeof(CharacterController))]
-public class FirstPersonDrifter : MonoBehaviour
+public class FirstPersonDrifter : NetworkBehaviour
 {
     public float walkSpeed = 6.0f;
     public float runSpeed = 10.0f;
@@ -39,8 +40,9 @@ public class FirstPersonDrifter : MonoBehaviour
     // Player must be grounded for at least this many physics frames before being able to jump again; set to 0 to allow bunny hopping
     public int antiBunnyHopFactor = 1;
 
-    private Vector3 moveDirection = Vector3.zero;
+    public Vector3 moveDirection = Vector3.zero;
     public bool grounded = false;
+    private bool escaped = false;
     private CharacterController controller;
     private Transform myTransform;
     private float speed;
@@ -52,9 +54,16 @@ public class FirstPersonDrifter : MonoBehaviour
     private Vector3 contactPoint;
     private bool playerControl = false;
     private int jumpTimer;
+	private Camera playerCam;
 
-    void Start()
+	void Awake() {
+		playerCam = GetComponentInChildren<Camera>();
+		playerCam.gameObject.SetActive(false);
+	}
+
+    public override void OnStartLocalPlayer()
     {
+		playerCam.gameObject.SetActive(true);
         controller = GetComponent<CharacterController>();
         myTransform = transform;
         speed = walkSpeed;
@@ -65,6 +74,13 @@ public class FirstPersonDrifter : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (escaped)
+        {
+            return;
+        }
+
+		if (!isLocalPlayer)
+			return;
         float inputX = Input.GetAxis("Horizontal");
         float inputY = Input.GetAxis("Vertical");
         // If both horizontal and vertical are used simultaneously, limit speed (if allowed), so the total doesn't exceed normal move speed
@@ -164,6 +180,8 @@ public class FirstPersonDrifter : MonoBehaviour
     // Store point that we're in contact with for use in FixedUpdate if needed
     void OnControllerColliderHit(ControllerColliderHit hit)
     {
+		if (!isLocalPlayer)
+			return;
         contactPoint = hit.point;
     }
 
@@ -171,6 +189,8 @@ public class FirstPersonDrifter : MonoBehaviour
     // have hitpoints and remove some of them based on the distance fallen, add sound effects, etc.
     void FallingDamageAlert(float fallDistance)
     {
+		if (!isLocalPlayer)
+			return;
         //print ("Ouch! Fell " + fallDistance + " units!");   
     }
 }

@@ -118,7 +118,7 @@ There are not too many games out there that are like this exactly. What is diffe
 
 ## Overview
 
- The main game world will be divided up into five different courses from different locations in the Western United Stated. Each location has a restricted conc jumping course that the player will be put on. The course will be restricted with physical boundaries like ones seen around the boundaries of a soccer field (advertisements included).
+ The main game world will be divided up into several different courses themed from different locations in the Western United Stated. Each location has a restricted conc jumping course that the player will be put on. The course will be restricted with physical boundaries like ones seen around the boundaries of a soccer field (advertisements included).
 
 ## Difficult and Interesting Terrain Obstacles
 
@@ -182,11 +182,11 @@ The camera will be in the first person perspective.
 
 ### Water
 
- Water will be present in some courses. Players will have the ability to swim up and down and conc under water. Water will slow down any players going through it to a halt.
+ Water will be present in some courses. Players will have the ability to swim up and down and conc under water. Water will slow down any players going through it to a halt. Water will be made from scratch following the guide on Unity's website.
 
 ### Conc Jumping
 
- The essential game engine feature. There will be logic in the game to handle player propulsion produced by concussive blasts of the conc grenade. Given the distance and angle of the player from the point of origin (the conc grenade), the player will be propelled at a certain velocity and with a certain trajectory. The specifics of this has still yet to be worked out.
+ The essential game engine feature. There will be logic in the game to handle player propulsion produced by concussive blasts of the conc grenade. Given the distance and angle of the player from the point of origin (the conc grenade), the player will be propelled at a certain velocity and with a certain trajectory.
 
 ### Fluid and Fast Movement
 
@@ -229,10 +229,6 @@ The camera will be in the first person perspective.
 ## Conc Primed Notification
 
  There will be a small icon that appears just above the ammo count that will show the player that they have a conc primed and in hand. A primed conc is one set to go off in the next four seconds.
-
-## Time Left
-
- There will be a small bar at the top center of the screen displaying how much time there is left to complete the course. If a time limit is not set in the game properties, this will display 0:00.
 
 ## Timer
 

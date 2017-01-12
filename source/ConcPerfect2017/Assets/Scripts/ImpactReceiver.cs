@@ -15,10 +15,6 @@ public class ImpactReceiver : MonoBehaviour
     public void AddImpact(Vector3 dir, float force)
     {
         dir.Normalize();
-        if (dir.y < 0)
-        {
-            dir.y = -dir.y;
-        }
         impact += dir.normalized * force / mass;
     }
 
@@ -27,7 +23,7 @@ public class ImpactReceiver : MonoBehaviour
         if (impact.magnitude > 0.2)
         {
             character.Move(impact * Time.deltaTime);
-            impact = Vector3.Lerp(impact, Vector3.zero, 5 * Time.deltaTime);
+            impact = Vector3.Lerp(impact, Vector3.zero, 4 * Time.deltaTime);
         }
     }
 }
