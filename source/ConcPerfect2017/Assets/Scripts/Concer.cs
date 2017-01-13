@@ -39,6 +39,7 @@ public class Concer : MonoBehaviour
 
         if (concInstance == null || concInstance.GetComponent<Conc>().exploded)
         {
+            primed = false;
             concPrimedHUDElement.SetActive(false);
         }
 
