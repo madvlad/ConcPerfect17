@@ -13,8 +13,9 @@ public class Conc : MonoBehaviour
     public AudioClip primeSFX;
     public AudioClip warningSFX;
     public float timer = 5f;
-    private int BeepCount = 1;
     public bool exploded = false;
+
+    private int BeepCount = 1;
 
     void Start()
     {

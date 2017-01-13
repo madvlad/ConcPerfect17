@@ -10,6 +10,7 @@ public class Concer : MonoBehaviour
     public int MaxConcCount = 3;
 
     private GameObject concCountHUDElement;
+    private GameObject concPrimedHUDElement;
     private bool primed = false;
     private float timer = 0.0f;
     private GameObject concInstance;
@@ -19,6 +20,8 @@ public class Concer : MonoBehaviour
     {
         playerCamera = Camera.main.gameObject;
         concCountHUDElement = GameObject.FindGameObjectWithTag("ConcCounter");
+        concPrimedHUDElement = GameObject.FindGameObjectWithTag("PrimedNotification");
+        concPrimedHUDElement.SetActive(false);
     }
 
     public void SetConcCount(int newConcCount)
@@ -33,13 +36,20 @@ public class Concer : MonoBehaviour
         {
             timer -= Time.deltaTime;
         }
-        if (Input.GetButtonDown("Conc") && ConcCount > 0)
+
+        if (concInstance == null || concInstance.GetComponent<Conc>().exploded)
+        {
+            concPrimedHUDElement.SetActive(false);
+        }
+
+        if (Input.GetButtonDown("Conc") && ConcCount > 0 && !primed)
         {
             if (timer <= 0)
             {
                 SetConcCount(ConcCount - 1);
                 timer = 0.45f;
                 primed = true;
+                concPrimedHUDElement.SetActive(true);
                 concInstance = Instantiate(concPrefab, playerCamera.transform.position, playerCamera.transform.rotation) as GameObject;
                 if (!concInstance.GetComponent<Rigidbody>()) { concInstance.AddComponent<Rigidbody>(); }
                 concInstance.GetComponent<Rigidbody>().useGravity = false;
@@ -57,6 +67,7 @@ public class Concer : MonoBehaviour
                 concInstance.GetComponent<Rigidbody>().useGravity = true;
                 concInstance.GetComponent<Rigidbody>().AddForce(playerCamera.transform.forward * ConcPushForce, ForceMode.Impulse);
                 primed = false;
+                concPrimedHUDElement.SetActive(false);
             }
         }
         else if (primed)
