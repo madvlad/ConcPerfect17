@@ -33,6 +33,7 @@ public class SetTimerOnTrigger : MonoBehaviour {
             GameObject.FindGameObjectWithTag("Music").GetComponent<AudioSource>().Stop();
             courseCompleteMessage.enabled = true;
             courseCompleteMessage.text = "Course Complete!!\n\nYour time: " + gameStateManager.GetCurrentTime();
+            gameStateManager.SetIsCourseComplete(true);
             gameStateManager.SetPlayerEnabled(false);
             Invoke("EndGame", 7.0f);
         }
@@ -42,6 +43,5 @@ public class SetTimerOnTrigger : MonoBehaviour {
     {
         courseCompleteMessage.enabled = false;
         gameStateManager.ShowEscapeMenu(true);
-        gameStateManager.SetIsCourseComplete(true);
     }
 }

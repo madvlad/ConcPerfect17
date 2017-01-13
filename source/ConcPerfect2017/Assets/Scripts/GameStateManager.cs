@@ -41,13 +41,13 @@ public class GameStateManager : MonoBehaviour {
         {
             SetPlayerEnabled(false);
             ShowEscapeMenu(true);
-            return true;
+            IsPaused = true;
         }
         else if (Input.GetButtonDown("Cancel") && IsPaused && !IsCourseComplete)
         {
             SetPlayerEnabled(true);
             ShowEscapeMenu(false);
-            return false;
+            IsPaused = false;
         }
         return IsPaused;
     }
@@ -70,14 +70,16 @@ public class GameStateManager : MonoBehaviour {
         player.GetComponent<Concer>().enabled = enabled;
         player.GetComponent<Footsteps>().enabled = enabled;
         player.GetComponent<ImpactReceiver>().enabled = enabled;
-        camera.GetComponent<MouseLook>().enabled = enabled;
         camera.GetComponent<LockMouse>().enabled = enabled;
-        
+        camera.GetComponent<MouseLook>().enabled = enabled;
+
+        Cursor.lockState = CursorLockMode.None;
     }
 
     public void ShowEscapeMenu(bool show)
     {
         EscapeMenuHUDElement.SetActive(show);
+        Cursor.visible = show;
     }
 
     public void SetTimerIsRunning(bool set)
