@@ -69,6 +69,7 @@ public class LevelGenerator : MonoBehaviour {
     {
         var newJump = Instantiate(jump);
         var newJumpSeparator = Instantiate(jumpSeparator);
+        newJump.transform.position = previousSnapPoint.transform.position;
         newJump.GetComponent<SnapPointManager>().snapPointIn.transform.position = previousSnapPoint.transform.position;
         newJumpSeparator.transform.position = previousSnapPoint.transform.position;
         newJumpSeparator.GetComponent<JumpTrigger>().JumpNumber = CurrentJumpNumber;
