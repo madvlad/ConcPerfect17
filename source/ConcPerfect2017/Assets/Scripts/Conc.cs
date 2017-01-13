@@ -25,7 +25,7 @@ public class Conc : MonoBehaviour
         {
             if (gameObject.GetComponent<AudioSource>())
             {
-                gameObject.GetComponent<AudioSource>().PlayOneShot(primeSFX);
+                AudioSource.PlayClipAtPoint(primeSFX, GameObject.FindGameObjectWithTag("Player").transform.position);
                 Invoke("Beep", 1.0f);
             }
         }
@@ -79,14 +79,7 @@ public class Conc : MonoBehaviour
     {
         if (explodeSFX)
         {
-            if (gameObject.GetComponent<AudioSource>())
-            {
-                gameObject.GetComponent<AudioSource>().PlayOneShot(explodeSFX);
-            }
-            else
-            {
-                AudioSource.PlayClipAtPoint(explodeSFX, gameObject.transform.position);
-            }
+            AudioSource.PlayClipAtPoint(explodeSFX, GameObject.FindGameObjectWithTag("Player").transform.position);
         }
     }
 
@@ -94,7 +87,7 @@ public class Conc : MonoBehaviour
     {
         if (!exploded)
         {
-            gameObject.GetComponent<AudioSource>().PlayOneShot(timerSFX);
+            AudioSource.PlayClipAtPoint(timerSFX, GameObject.FindGameObjectWithTag("Player").transform.position);
             if (BeepCount == (int)timer - 1)
             {
                 Invoke("WarningBeep", 1.0f);
@@ -109,7 +102,7 @@ public class Conc : MonoBehaviour
 
     void WarningBeep()
     {
-        gameObject.GetComponent<AudioSource>().PlayOneShot(warningSFX);
+        AudioSource.PlayClipAtPoint(warningSFX, GameObject.FindGameObjectWithTag("Player").transform.position);
     }
 
     void Destroy()
