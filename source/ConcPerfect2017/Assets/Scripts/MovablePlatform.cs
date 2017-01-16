@@ -37,7 +37,7 @@ public class MovablePlatform : MonoBehaviour {
 
     void OnTriggerEnter(Collider collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Conc"))
         {
             collision.gameObject.transform.parent = gameObject.transform;
         }
@@ -45,7 +45,7 @@ public class MovablePlatform : MonoBehaviour {
 
     void OnTriggerExit(Collider collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Conc"))
         {
             collision.gameObject.transform.parent = null;
         }
