@@ -14,11 +14,11 @@ public class LevelGenerator : NetworkBehaviour {
     private List<GameObject> CourseJumpList;
     private GameStateManager GameStateManager;
     private int CurrentJumpNumber = 1;
-		
+
     void Start ()
     {
-		if (!isServer)
-			return;
+        if (!isServer)
+          return;
         GameStateManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameStateManager>();
 
         if (courseJumpListSize == 0)
@@ -33,7 +33,7 @@ public class LevelGenerator : NetworkBehaviour {
         {
             Random.InitState(RandomSeed);
         }
-        
+
         GameStateManager.SetJumpSeed(Random.seed);
 
         GameObject previousSnapPoint = InstantiateStartPoint();
@@ -72,30 +72,30 @@ public class LevelGenerator : NetworkBehaviour {
     {
         var newJump = Instantiate(jump);
         var newJumpSeparator = Instantiate(jumpSeparator);
-		newJump.GetComponent<NetworkTransform> ().transform.position = previousSnapPoint.transform.position;
+        newJump.GetComponent<NetworkTransform> ().transform.position = previousSnapPoint.transform.position;
         newJump.GetComponent<SnapPointManager>().snapPointIn.transform.position = previousSnapPoint.transform.position;
-		newJumpSeparator.GetComponent<NetworkTransform>().transform.position = previousSnapPoint.transform.position;
+        newJumpSeparator.GetComponent<NetworkTransform>().transform.position = previousSnapPoint.transform.position;
         newJumpSeparator.transform.position = previousSnapPoint.transform.position;
         newJumpSeparator.GetComponent<JumpTrigger>().JumpNumber = CurrentJumpNumber;
         previousSnapPoint = newJump.GetComponent<SnapPointManager>().snapPointOut;
-		NetworkServer.Spawn(newJump);
+        NetworkServer.Spawn(newJump);
         return previousSnapPoint;
     }
 
     private GameObject InstantiateStartPoint()
     {
         var newStartPrefab = Instantiate(startPrefab);
-		newStartPrefab.GetComponent<NetworkTransform> ().transform.position = newStartPrefab.transform.position;
+        newStartPrefab.GetComponent<NetworkTransform> ().transform.position = newStartPrefab.transform.position;
         GameObject previousSnapPoint = newStartPrefab.GetComponent<SnapPointManager>().snapPointOut;
-		NetworkServer.Spawn(newStartPrefab);
+        NetworkServer.Spawn(newStartPrefab);
         return previousSnapPoint;
     }
 
     private void InstantiateEndPoint(GameObject previousSnapPoint)
     {
         var newEndPrefab = Instantiate(endPrefab);
-		newEndPrefab.GetComponent<NetworkTransform> ().transform.position = previousSnapPoint.transform.position;
+        newEndPrefab.GetComponent<NetworkTransform> ().transform.position = previousSnapPoint.transform.position;
         newEndPrefab.GetComponent<SnapPointManager>().snapPointIn.transform.position = previousSnapPoint.transform.position;
-		NetworkServer.Spawn(newEndPrefab);
+        NetworkServer.Spawn(newEndPrefab);
     }
 }
