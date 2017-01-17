@@ -634,6 +634,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4416118131626052}
   - component: {fileID: 114951745185202576}
+  - component: {fileID: 114308187368343822}
+  - component: {fileID: 114701730225528374}
   m_Layer: 0
   m_Name: Jump4
   m_TagString: Untagged
@@ -2844,6 +2846,38 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   RespawnTime: 3
   PickupSound: {fileID: 8300000, guid: ad9aacd5dc903b04897a15dd28850b91, type: 3}
+--- !u!114 &114308187368343822
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1885427148529334}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: 870353891bb340e2b2a9c8707e7419ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 115
+    i1: 247
+    i2: 206
+    i3: 104
+    i4: 156
+    i5: 192
+    i6: 154
+    i7: 84
+    i8: 9
+    i9: 82
+    i10: 134
+    i11: 97
+    i12: 195
+    i13: 84
+    i14: 48
+    i15: 1
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0
 --- !u!114 &114489356470128724
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2869,6 +2903,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destination: {fileID: 1560431966550666}
+--- !u!114 &114701730225528374
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1885427148529334}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1768714887, guid: 870353891bb340e2b2a9c8707e7419ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TransformSyncMode: 1
+  m_SendInterval: 0.1
+  m_SyncRotationAxis: 7
+  m_RotationSyncCompression: 0
+  m_SyncSpin: 0
+  m_MovementTheshold: 0.001
+  m_SnapThreshold: 5
+  m_InterpolateRotation: 1
+  m_InterpolateMovement: 1
 --- !u!114 &114951745185202576
 MonoBehaviour:
   m_ObjectHideFlags: 1

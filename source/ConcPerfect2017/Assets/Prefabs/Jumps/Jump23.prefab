@@ -821,6 +821,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4356489198056576}
   - component: {fileID: 114568996777383336}
+  - component: {fileID: 114596366088247112}
+  - component: {fileID: 114632882659796146}
   m_Layer: 0
   m_Name: Jump23
   m_TagString: Untagged
@@ -4059,6 +4061,38 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   snapPointIn: {fileID: 1441878708459766}
   snapPointOut: {fileID: 1521138217175218}
+--- !u!114 &114596366088247112
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1715766192864356}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: 870353891bb340e2b2a9c8707e7419ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 26
+    i1: 229
+    i2: 149
+    i3: 18
+    i4: 36
+    i5: 23
+    i6: 50
+    i7: 180
+    i8: 171
+    i9: 230
+    i10: 234
+    i11: 210
+    i12: 132
+    i13: 154
+    i14: 54
+    i15: 28
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0
 --- !u!114 &114603173932525724
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4076,6 +4110,26 @@ MonoBehaviour:
   - {fileID: 1045998845704938}
   - {fileID: 1721330919633180}
   speed: 0.4
+--- !u!114 &114632882659796146
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1715766192864356}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1768714887, guid: 870353891bb340e2b2a9c8707e7419ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TransformSyncMode: 1
+  m_SendInterval: 0.1
+  m_SyncRotationAxis: 7
+  m_RotationSyncCompression: 0
+  m_SyncSpin: 0
+  m_MovementTheshold: 0.001
+  m_SnapThreshold: 5
+  m_InterpolateRotation: 1
+  m_InterpolateMovement: 1
 --- !u!114 &114676774125994664
 MonoBehaviour:
   m_ObjectHideFlags: 1

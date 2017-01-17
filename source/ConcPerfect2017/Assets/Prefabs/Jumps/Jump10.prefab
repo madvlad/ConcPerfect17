@@ -791,6 +791,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4498069607034472}
   - component: {fileID: 114263427205916064}
+  - component: {fileID: 114392845552477142}
+  - component: {fileID: 114540370497316402}
   m_Layer: 0
   m_Name: Jump10
   m_TagString: Untagged
@@ -3465,6 +3467,58 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   RespawnTime: 3
   PickupSound: {fileID: 8300000, guid: ad9aacd5dc903b04897a15dd28850b91, type: 3}
+--- !u!114 &114392845552477142
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1927703523429990}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: 870353891bb340e2b2a9c8707e7419ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 39
+    i1: 60
+    i2: 112
+    i3: 178
+    i4: 177
+    i5: 97
+    i6: 118
+    i7: 164
+    i8: 170
+    i9: 38
+    i10: 179
+    i11: 254
+    i12: 63
+    i13: 89
+    i14: 57
+    i15: 180
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0
+--- !u!114 &114540370497316402
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1927703523429990}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1768714887, guid: 870353891bb340e2b2a9c8707e7419ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TransformSyncMode: 1
+  m_SendInterval: 0.1
+  m_SyncRotationAxis: 7
+  m_RotationSyncCompression: 0
+  m_SyncSpin: 0
+  m_MovementTheshold: 0.001
+  m_SnapThreshold: 5
+  m_InterpolateRotation: 1
+  m_InterpolateMovement: 1
 --- !u!114 &114565966272418770
 MonoBehaviour:
   m_ObjectHideFlags: 1

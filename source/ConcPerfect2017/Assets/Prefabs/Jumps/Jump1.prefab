@@ -38,6 +38,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4364224524621488}
   - component: {fileID: 114903419921143768}
+  - component: {fileID: 114054749609357564}
+  - component: {fileID: 114931549849275002}
   m_Layer: 0
   m_Name: Jump1
   m_TagString: Untagged
@@ -1931,6 +1933,38 @@ Light:
   m_BounceIntensity: 6.75
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!114 &114054749609357564
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1004310208602452}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: 870353891bb340e2b2a9c8707e7419ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 61
+    i1: 179
+    i2: 54
+    i3: 87
+    i4: 94
+    i5: 220
+    i6: 228
+    i7: 244
+    i8: 107
+    i9: 8
+    i10: 141
+    i11: 143
+    i12: 70
+    i13: 205
+    i14: 230
+    i15: 31
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0
 --- !u!114 &114163728056740952
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1970,3 +2004,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   snapPointIn: {fileID: 1615755841387148}
   snapPointOut: {fileID: 1400721782499114}
+--- !u!114 &114931549849275002
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1004310208602452}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1768714887, guid: 870353891bb340e2b2a9c8707e7419ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TransformSyncMode: 1
+  m_SendInterval: 0.1
+  m_SyncRotationAxis: 7
+  m_RotationSyncCompression: 0
+  m_SyncSpin: 0
+  m_MovementTheshold: 0.001
+  m_SnapThreshold: 5
+  m_InterpolateRotation: 1
+  m_InterpolateMovement: 1
