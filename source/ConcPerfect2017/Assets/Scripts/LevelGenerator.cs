@@ -86,6 +86,7 @@ public class LevelGenerator : NetworkBehaviour {
     private GameObject InstantiateStartPoint()
     {
         var newStartPrefab = Instantiate(startPrefab);
+        NetworkServer.Spawn(newStartPrefab);
         GameObject previousSnapPoint = newStartPrefab.GetComponent<SnapPointManager>().snapPointOut;
         return previousSnapPoint;
     }
@@ -94,5 +95,7 @@ public class LevelGenerator : NetworkBehaviour {
     {
         var newEndPrefab = Instantiate(endPrefab);
         newEndPrefab.GetComponent<SnapPointManager>().snapPointIn.transform.position = previousSnapPoint.transform.position;
+        newEndPrefab.GetComponent<NetworkTransform>().transform.position = previousSnapPoint.transform.position;
+        NetworkServer.Spawn(newEndPrefab);
     }
 }
