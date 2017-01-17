@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class LevelGenerator : MonoBehaviour {
+public class LevelGenerator : NetworkBehaviour {
     public GameObject jumpSeparator;
     public GameObject startPrefab;
     public GameObject endPrefab;
@@ -16,6 +17,9 @@ public class LevelGenerator : MonoBehaviour {
 
     void Start ()
     {
+        if (!isServer)
+            return;
+
         GameStateManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameStateManager>();
 
         if (courseJumpListSize == 0)
@@ -69,11 +73,13 @@ public class LevelGenerator : MonoBehaviour {
     {
         var newJump = Instantiate(jump);
         var newJumpSeparator = Instantiate(jumpSeparator);
-        newJump.transform.position = previousSnapPoint.transform.position;
+        newJump.GetComponent<NetworkTransform>().transform.position = previousSnapPoint.transform.position;
         newJump.GetComponent<SnapPointManager>().snapPointIn.transform.position = previousSnapPoint.transform.position;
+        newJumpSeparator.GetComponent<NetworkManager>().transform.position = previousSnapPoint.transform.position;
         newJumpSeparator.transform.position = previousSnapPoint.transform.position;
         newJumpSeparator.GetComponent<JumpTrigger>().JumpNumber = CurrentJumpNumber;
         previousSnapPoint = newJump.GetComponent<SnapPointManager>().snapPointOut;
+        NetworkServer.Spawn(newJump);
         return previousSnapPoint;
     }
 
