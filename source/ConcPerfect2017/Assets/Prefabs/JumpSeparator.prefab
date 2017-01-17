@@ -24,6 +24,8 @@ GameObject:
   - component: {fileID: 23375448963549626}
   - component: {fileID: 114429595202722318}
   - component: {fileID: 82721723224567622}
+  - component: {fileID: 114008597741317056}
+  - component: {fileID: 114709930351289684}
   m_Layer: 0
   m_Name: JumpSeparator
   m_TagString: Untagged
@@ -149,7 +151,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   spreadCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -161,7 +163,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   reverbZoneMixCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -173,7 +175,39 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
+--- !u!114 &114008597741317056
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1904945146051678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: 870353891bb340e2b2a9c8707e7419ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 129
+    i1: 144
+    i2: 117
+    i3: 214
+    i4: 105
+    i5: 44
+    i6: 130
+    i7: 84
+    i8: 217
+    i9: 246
+    i10: 10
+    i11: 222
+    i12: 140
+    i13: 78
+    i14: 54
+    i15: 241
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0
 --- !u!114 &114429595202722318
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -187,3 +221,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   JumpNumber: 0
   checkpointSound: {fileID: 8300000, guid: 1da91e8b9c073fb41b3b17a183345fb2, type: 3}
+--- !u!114 &114709930351289684
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1904945146051678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1768714887, guid: 870353891bb340e2b2a9c8707e7419ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TransformSyncMode: 1
+  m_SendInterval: 0.1
+  m_SyncRotationAxis: 7
+  m_RotationSyncCompression: 0
+  m_SyncSpin: 0
+  m_MovementTheshold: 0.001
+  m_SnapThreshold: 5
+  m_InterpolateRotation: 1
+  m_InterpolateMovement: 1
