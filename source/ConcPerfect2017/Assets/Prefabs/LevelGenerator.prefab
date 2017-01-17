@@ -20,6 +20,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4482548528983668}
   - component: {fileID: 114513035881818372}
+  - component: {fileID: 114027119156232248}
+  - component: {fileID: 114746286136046840}
   m_Layer: 0
   m_Name: LevelGenerator
   m_TagString: Untagged
@@ -40,6 +42,38 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114027119156232248
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1052735502284284}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: 870353891bb340e2b2a9c8707e7419ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 193
+    i1: 166
+    i2: 179
+    i3: 139
+    i4: 18
+    i5: 48
+    i6: 12
+    i7: 164
+    i8: 154
+    i9: 213
+    i10: 29
+    i11: 12
+    i12: 208
+    i13: 167
+    i14: 201
+    i15: 155
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0
 --- !u!114 &114513035881818372
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -77,5 +111,42 @@ MonoBehaviour:
   - {fileID: 1426396602732136, guid: 7756b5dffcfe3aa44b231acf588b0ab6, type: 2}
   - {fileID: 1803601532014446, guid: b56c7ac42557ae040873369826908ed6, type: 2}
   - {fileID: 1911791233750000, guid: 1f330a340fd7db044b8dc29c77ff24a2, type: 2}
-  courseJumpListSize: 9
+  - {fileID: 1017824681395122, guid: f0adafa917dafbc4ca88602eda4665e6, type: 2}
+  - {fileID: 1807693947087682, guid: 51d648dd797b7114d9fba770e7368317, type: 2}
+  - {fileID: 1715766192864356, guid: 1ae59512241732b4abe6ead2849a361c, type: 2}
+  - {fileID: 1044604661366782, guid: 4c17f74c10510714aaf5a614a715428b, type: 2}
+  - {fileID: 1883178535283972, guid: 8dd73296fc892494b88703b8f2d58384, type: 2}
+  courseJumpListSize: 0
   RandomSeed: 0
+--- !u!114 &114746286136046840
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1052735502284284}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: 870353891bb340e2b2a9c8707e7419ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 193
+    i1: 166
+    i2: 179
+    i3: 139
+    i4: 18
+    i5: 48
+    i6: 12
+    i7: 164
+    i8: 154
+    i9: 213
+    i10: 29
+    i11: 12
+    i12: 208
+    i13: 167
+    i14: 201
+    i15: 155
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0
