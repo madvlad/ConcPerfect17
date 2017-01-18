@@ -14,6 +14,7 @@ public class MainMenuButtonBehavior : MonoBehaviour {
     public GameObject mainMenuUIElement;
     public GameObject singlePlayerMenuUIElement;
     public GameObject randomSeedInputUIElement;
+    public GameObject predefinedCourseMenuUIElement;
     
     void StartNewGame9()
     {
@@ -33,6 +34,12 @@ public class MainMenuButtonBehavior : MonoBehaviour {
         LoadGameScene();
     }
 
+    void StartLevel1()
+    {
+        ApplicationManager.currentLevel = 1;
+        LoadGameScene();
+    }
+
     void LoadGameScene()
     {
         SceneManager.LoadScene(mainGameScene);
@@ -41,8 +48,15 @@ public class MainMenuButtonBehavior : MonoBehaviour {
 
     void ShowSingleplayerMenu()
     {
+        predefinedCourseMenuUIElement.SetActive(false);
         mainMenuUIElement.SetActive(false);
         singlePlayerMenuUIElement.SetActive(true);
+    }
+
+    void ShowPredefinedCoursesMenu()
+    {
+        singlePlayerMenuUIElement.SetActive(false);
+        predefinedCourseMenuUIElement.SetActive(true);
     }
 
     void ShowMainMenu()

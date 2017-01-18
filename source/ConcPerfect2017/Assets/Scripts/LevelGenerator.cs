@@ -7,6 +7,7 @@ public class LevelGenerator : NetworkBehaviour {
     public GameObject jumpSeparator;
     public GameObject startPrefab;
     public GameObject endPrefab;
+    public GameObject gameManager;
     public List<GameObject> jumpList;
     public int courseJumpListSize;
     public int RandomSeed;
@@ -28,13 +29,26 @@ public class LevelGenerator : NetworkBehaviour {
         }
 
         GameStateManager.SetCourseJumpLimit(courseJumpListSize);
+
+        if (ApplicationManager.currentLevel > 0)
+        {
+            BuildCourseIteratively();
+        }
+        else
+        {
+            BuildRandomCourse();
+        }
+    }
+
+    private void BuildRandomCourse()
+    {
         RandomSeed = ApplicationManager.randomSeed;
 
         if (RandomSeed != 0)
         {
             Random.InitState(RandomSeed);
         }
-        
+
         GameStateManager.SetJumpSeed(Random.seed);
 
         GameObject previousSnapPoint = InstantiateStartPoint();
@@ -59,11 +73,13 @@ public class LevelGenerator : NetworkBehaviour {
 
     void BuildCourseIteratively()
     {
+        CourseJumpList = gameManager.GetComponent<LevelManager>().getLevel(ApplicationManager.currentLevel);
         GameObject previousSnapPoint = InstantiateStartPoint();
 
         foreach (var jump in CourseJumpList)
         {
             previousSnapPoint = InstantiateJumpAtSnapPoint(previousSnapPoint, jump);
+            CurrentJumpNumber++;
         }
 
         InstantiateEndPoint(previousSnapPoint);
