@@ -94,7 +94,6 @@ public class LevelGenerator : NetworkBehaviour {
     private void InstantiateEndPoint(GameObject previousSnapPoint)
     {
         var newEndPrefab = Instantiate(endPrefab);
-        newEndPrefab.GetComponent<SnapPointManager>().snapPointIn.transform.position = previousSnapPoint.transform.position;
         newEndPrefab.GetComponent<NetworkTransform>().transform.position = previousSnapPoint.transform.position;
         NetworkServer.Spawn(newEndPrefab);
     }
