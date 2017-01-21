@@ -985,7 +985,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1961947144834550}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.526, z: 0.49}
+  m_LocalPosition: {x: 0, y: 0.526, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4036471470654180}
@@ -1069,7 +1069,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1581514564486594}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.106, z: 0}
+  m_LocalPosition: {x: 0, y: -1.106, z: -0.55}
   m_LocalScale: {x: 0.15, y: 0.15, z: 0.15}
   m_Children:
   - {fileID: 4348956263553800}
@@ -1564,7 +1564,11 @@ MonoBehaviour:
   enableRunning: 0
   jumpSpeed: 2
   gravity: 15
-  slideWhenOverSlopeLimit: 0
+  walkAnimation: {fileID: 7400004, guid: 65e78f85e0c164949847146b4a4c0b14, type: 3}
+  idleAnimation: {fileID: 7400002, guid: 65e78f85e0c164949847146b4a4c0b14, type: 3}
+  fallAnimation: {fileID: 7400000, guid: 65e78f85e0c164949847146b4a4c0b14, type: 3}
+  playerModel: {fileID: 1581514564486594}
+  slideWhenOverSlopeLimit: 1
   slideOnTaggedObjects: 0
   slideSpeed: 5
   airControl: 1

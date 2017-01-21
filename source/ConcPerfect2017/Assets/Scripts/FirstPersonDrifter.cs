@@ -20,6 +20,14 @@ public class FirstPersonDrifter : NetworkBehaviour
     public float jumpSpeed = 4.0f;
     public float gravity = 10.0f;
 
+    // Model animations
+    public AnimationClip walkAnimation;
+    public AnimationClip idleAnimation;
+    public AnimationClip fallAnimation;
+
+    // Player Model
+    public GameObject playerModel;
+
     // Units that player can fall before a falling damage function is run. To disable, type "infinity" in the inspector
     private float fallingDamageThreshold = 10.0f;
 
@@ -74,13 +82,14 @@ public class FirstPersonDrifter : NetworkBehaviour
 
     void FixedUpdate()
     {
+		if (!isLocalPlayer)
+			return;
+
         if (escaped)
         {
             return;
         }
 
-		if (!isLocalPlayer)
-			return;
         float inputX = Input.GetAxis("Horizontal");
         float inputY = Input.GetAxis("Vertical");
         // If both horizontal and vertical are used simultaneously, limit speed (if allowed), so the total doesn't exceed normal move speed
@@ -88,6 +97,15 @@ public class FirstPersonDrifter : NetworkBehaviour
 
         if (grounded)
         {
+            if (inputX != 0 || inputY != 0)
+            {
+                playerModel.GetComponent<Animation>().Play(walkAnimation.name, PlayMode.StopAll);
+            }
+            else
+            {
+                playerModel.GetComponent<Animation>().Play(idleAnimation.name);
+            }
+
             bool sliding = false;
             // See if surface immediately below should be slid down. We use this normally rather than a ControllerColliderHit point,
             // because that interferes with step climbing amongst other annoyances
@@ -148,6 +166,7 @@ public class FirstPersonDrifter : NetworkBehaviour
         }
         else
         {
+            playerModel.GetComponent<Animation>().Play(fallAnimation.name);
             // If we stepped over a cliff or something, set the height at which we started falling
             if (!falling)
             {
@@ -166,13 +185,6 @@ public class FirstPersonDrifter : NetworkBehaviour
 
         // Apply gravity
         moveDirection.y -= (gravity / 2) * Time.deltaTime;
-
-        // Elongate jump if player is still holding down the jump key
-        //if (!Input.GetButton("Jump"))
-        //{
-        //    moveDirection.y -= (gravity / 2) * Time.deltaTime;
-        //}
-
         // Move the controller, and set grounded true or false depending on whether we're standing on something
         grounded = (controller.Move(moveDirection * Time.deltaTime) & CollisionFlags.Below) != 0;
     }
@@ -190,7 +202,6 @@ public class FirstPersonDrifter : NetworkBehaviour
     void FallingDamageAlert(float fallDistance)
     {
 		if (!isLocalPlayer)
-			return;
-        //print ("Ouch! Fell " + fallDistance + " units!");   
+			return; 
     }
 }
