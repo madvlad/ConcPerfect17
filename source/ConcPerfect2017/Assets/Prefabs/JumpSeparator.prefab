@@ -26,6 +26,7 @@ GameObject:
   - component: {fileID: 82721723224567622}
   - component: {fileID: 114008597741317056}
   - component: {fileID: 114709930351289684}
+  - component: {fileID: 148866029527860962}
   m_Layer: 0
   m_Name: JumpSeparator
   m_TagString: Untagged
@@ -241,3 +242,15 @@ MonoBehaviour:
   m_SnapThreshold: 5
   m_InterpolateRotation: 1
   m_InterpolateMovement: 1
+--- !u!148 &148866029527860962
+NetworkView:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1904945146051678}
+  m_Enabled: 1
+  m_StateSynchronization: 1
+  m_Observed: {fileID: 4762579507998920}
+  m_ViewID:
+    m_ID: 0
+    m_Type: 0

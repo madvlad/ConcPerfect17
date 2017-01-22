@@ -1,8 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class JumpTrigger : MonoBehaviour {
+public class JumpTrigger : NetworkBehaviour {
+
+    [SyncVar]
     public int JumpNumber;
     public AudioClip checkpointSound;
 

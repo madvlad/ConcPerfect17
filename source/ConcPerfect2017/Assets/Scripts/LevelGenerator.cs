@@ -18,9 +18,6 @@ public class LevelGenerator : NetworkBehaviour {
 
     void Start ()
     {
-        if (!isServer)
-            return;
-
         GameStateManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameStateManager>();
 
         if (courseJumpListSize == 0)
@@ -29,6 +26,9 @@ public class LevelGenerator : NetworkBehaviour {
         }
 
         GameStateManager.SetCourseJumpLimit(courseJumpListSize);
+
+        if (!isServer)
+            return;
 
         if (ApplicationManager.currentLevel > 0)
         {
@@ -96,6 +96,7 @@ public class LevelGenerator : NetworkBehaviour {
         newJumpSeparator.GetComponent<JumpTrigger>().JumpNumber = CurrentJumpNumber;
         previousSnapPoint = newJump.GetComponent<SnapPointManager>().snapPointOut;
         NetworkServer.Spawn(newJump);
+        NetworkServer.Spawn(newJumpSeparator);
         return previousSnapPoint;
     }
 
