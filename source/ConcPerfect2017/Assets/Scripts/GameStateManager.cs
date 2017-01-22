@@ -10,6 +10,7 @@ public class GameStateManager : MonoBehaviour {
     public GameObject JumpHUDElement;
     public GameObject EscapeMenuHUDElement;
     public GameObject EscapeMenuSeedElement;
+    public GameObject SettingsMenuHUDElement;
 
     private int CurrentJump;
     private float CurrentTimerTime;
@@ -78,6 +79,11 @@ public class GameStateManager : MonoBehaviour {
 
     public void ShowEscapeMenu(bool show)
     {
+        if (!show)
+        {
+            SettingsMenuHUDElement.SetActive(show);
+        }
+
         EscapeMenuHUDElement.SetActive(show);
         Cursor.visible = show;
     }

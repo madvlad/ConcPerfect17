@@ -15,7 +15,16 @@ public class MainMenuButtonBehavior : MonoBehaviour {
     public GameObject singlePlayerMenuUIElement;
     public GameObject randomSeedInputUIElement;
     public GameObject predefinedCourseMenuUIElement;
+    public GameObject mouseSensitivityMenuUIElement;
     
+    void Start()
+    {
+        if (mouseSensitivityMenuUIElement != null && mouseSensitivityMenuUIElement.GetComponent<Slider>() != null)
+        {
+            mouseSensitivityMenuUIElement.GetComponent<Slider>().value = ApplicationManager.mouseSensitivity;
+        }
+    }
+
     void StartNewGame9()
     {
         ApplicationManager.numberOfJumps = 9;
@@ -100,8 +109,20 @@ public class MainMenuButtonBehavior : MonoBehaviour {
 
     void HideEscapeMenu()
     {
+        mouseSensitivityMenuUIElement.SetActive(false);
         var gameState = gameStateManager.GetComponent<GameStateManager>();
         gameState.SetPlayerEnabled(true);
         gameState.ShowEscapeMenu(false);
+    }
+
+    public void ShowSettings()
+    {
+        mouseSensitivityMenuUIElement.SetActive(true);
+        escapeMenuUIElement.SetActive(false);
+    }
+
+    public void SetMouseSensitivity(float sensitivity)
+    {
+        ApplicationManager.mouseSensitivity = sensitivity;
     }
 }

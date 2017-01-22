@@ -17,8 +17,8 @@ public class MouseLook : MonoBehaviour
     public RotationAxes axes = RotationAxes.MouseX;
     public bool invertY = false;
 
-    public float sensitivityX = 10F;
-    public float sensitivityY = 9F;
+    private float sensitivityX = 10F;
+    private float sensitivityY = 9F;
 
     public float minimumX = -360F;
     public float maximumX = 360F;
@@ -51,6 +51,9 @@ public class MouseLook : MonoBehaviour
 
     void Update()
     {
+        sensitivityX = ApplicationManager.mouseSensitivity;
+        sensitivityY = ApplicationManager.mouseSensitivity;
+
         if (axes == RotationAxes.MouseX)
         {
             rotAverageX = 0f;

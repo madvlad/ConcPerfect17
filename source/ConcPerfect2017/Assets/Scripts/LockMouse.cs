@@ -19,13 +19,6 @@ public class LockMouse : MonoBehaviour
         {
             LockCursor(true);
         }
-
-        //// unlock when escape is hit
-        //if (Input.GetKeyDown(KeyCode.Escape))
-        //{
-        //    currentlyLocked = !currentlyLocked;
-        //    LockCursor(currentlyLocked);
-        //}
     }
 
     public void LockCursor(bool lockCursor)
