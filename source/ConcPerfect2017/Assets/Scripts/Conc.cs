@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.Networking;
 
-public class Conc : MonoBehaviour
+public class Conc : NetworkBehaviour
 {
     public ParticleSystem explosionParticleSystem;
     public ParticleSystem explosionFlashParticleSystem;

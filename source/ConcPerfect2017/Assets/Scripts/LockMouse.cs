@@ -5,8 +5,6 @@ using System.Collections;
 
 public class LockMouse : MonoBehaviour
 {
-    private bool currentlyLocked = true;
-
     void Start()
     {
         LockCursor(true);

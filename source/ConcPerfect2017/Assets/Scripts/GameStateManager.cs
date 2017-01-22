@@ -12,7 +12,6 @@ public class GameStateManager : MonoBehaviour {
     public GameObject EscapeMenuSeedElement;
     public GameObject SettingsMenuHUDElement;
 
-    private int CurrentJump;
     private float CurrentTimerTime;
     private List<GameObject> CourseJumpList;
     private int CourseJumpLimit;
@@ -98,7 +97,6 @@ public class GameStateManager : MonoBehaviour {
 
     public void SetJumpNumber(int num)
     {
-        CurrentJump = num;
         JumpHUDElement.GetComponent<Text>().text = "Jump: " + num + " / " + (CourseJumpLimit);
     }
 

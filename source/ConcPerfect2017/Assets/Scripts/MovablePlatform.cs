@@ -19,7 +19,6 @@ public class MovablePlatform : MonoBehaviour {
         nextWayPoint = WayPoints[idx];
         if (Vector3.Distance(gameObject.transform.position, nextWayPoint.transform.position) < 0.5)
         {
-            var a = new WaitForSecondsRealtime(4.0f);
             if (idx == WayPoints.Count - 1)
             {
                 idx = 0;

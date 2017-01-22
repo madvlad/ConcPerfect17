@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.Networking;
 
-public class Concer : MonoBehaviour
+public class Concer : NetworkBehaviour
 {
     public GameObject concPrefab;
     public int ConcPushForce = 8;
@@ -51,7 +52,8 @@ public class Concer : MonoBehaviour
                 timer = 0.45f;
                 primed = true;
                 concPrimedHUDElement.SetActive(true);
-                concInstance = Instantiate(concPrefab, playerCamera.transform.position, playerCamera.transform.rotation) as GameObject;
+                concInstance = Instantiate(concPrefab, playerCamera.transform.position, playerCamera.transform.rotation);
+                NetworkServer.Spawn(concInstance);
                 if (!concInstance.GetComponent<Rigidbody>()) { concInstance.AddComponent<Rigidbody>(); }
                 concInstance.GetComponent<Rigidbody>().useGravity = false;
                 concInstance.GetComponent<BoxCollider>().enabled = false;
