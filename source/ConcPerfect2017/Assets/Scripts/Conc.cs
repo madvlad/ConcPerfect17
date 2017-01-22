@@ -16,17 +16,29 @@ public class Conc : NetworkBehaviour
     public float timer = 5f;
     public bool exploded = false;
 
+    private GameObject owner;
+    private GameObject playerObject;
     private int BeepCount = 1;
 
     void Start()
     {
-        Physics.IgnoreCollision(GameObject.FindGameObjectWithTag("Player").GetComponent<Collider>(), GetComponent<Collider>());
+        var playerObjects = GameObject.FindGameObjectsWithTag("Player");
+
+        foreach(GameObject obj in playerObjects)
+        {
+            if (obj.GetComponent<NetworkIdentity>().isLocalPlayer)
+            {
+                playerObject = obj;
+            }
+        }
+
+        Physics.IgnoreCollision(playerObject.GetComponent<Collider>(), GetComponent<Collider>());
         Invoke("Explode", timer);
         if (timerSFX)
         {
             if (gameObject.GetComponent<AudioSource>())
             {
-                AudioSource.PlayClipAtPoint(primeSFX, GameObject.FindGameObjectWithTag("Player").transform.position);
+                AudioSource.PlayClipAtPoint(primeSFX, playerObject.transform.position);
                 Invoke("Beep", 1.0f);
             }
         }
@@ -80,7 +92,7 @@ public class Conc : NetworkBehaviour
     {
         if (explodeSFX)
         {
-            AudioSource.PlayClipAtPoint(explodeSFX, GameObject.FindGameObjectWithTag("Player").transform.position);
+            AudioSource.PlayClipAtPoint(explodeSFX, playerObject.transform.position);
         }
     }
 
@@ -88,7 +100,7 @@ public class Conc : NetworkBehaviour
     {
         if (!exploded)
         {
-            AudioSource.PlayClipAtPoint(timerSFX, GameObject.FindGameObjectWithTag("Player").transform.position);
+            AudioSource.PlayClipAtPoint(timerSFX, playerObject.transform.position);
             if (BeepCount == (int)timer - 1)
             {
                 Invoke("WarningBeep", 1.0f);
@@ -103,11 +115,16 @@ public class Conc : NetworkBehaviour
 
     void WarningBeep()
     {
-        AudioSource.PlayClipAtPoint(warningSFX, GameObject.FindGameObjectWithTag("Player").transform.position);
+        AudioSource.PlayClipAtPoint(warningSFX, playerObject.transform.position);
     }
 
     void Destroy()
     {
         Destroy(gameObject);
+    }
+
+    public void SetOwner(GameObject owner)
+    {
+        this.owner = owner;
     }
 }

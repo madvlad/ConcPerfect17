@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.Networking;
+using System;
 
 public class Concer : NetworkBehaviour
 {
@@ -17,7 +18,7 @@ public class Concer : NetworkBehaviour
     private GameObject concInstance;
     private GameObject playerCamera;
 
-    void Start()
+    public override void OnStartLocalPlayer()
     {
         playerCamera = Camera.main.gameObject;
         concCountHUDElement = GameObject.FindGameObjectWithTag("ConcCounter");
@@ -33,6 +34,9 @@ public class Concer : NetworkBehaviour
     
     void Update()
     {
+        if (!isLocalPlayer)
+            return;
+
         if (timer > 0)
         {
             timer -= Time.deltaTime;
@@ -53,6 +57,7 @@ public class Concer : NetworkBehaviour
                 primed = true;
                 concPrimedHUDElement.SetActive(true);
                 concInstance = Instantiate(concPrefab, playerCamera.transform.position, playerCamera.transform.rotation);
+                concInstance.GetComponent<Conc>().SetOwner(GetLocalPlayerObject());
                 NetworkServer.Spawn(concInstance);
                 if (!concInstance.GetComponent<Rigidbody>()) { concInstance.AddComponent<Rigidbody>(); }
                 concInstance.GetComponent<Rigidbody>().useGravity = false;
@@ -77,5 +82,20 @@ public class Concer : NetworkBehaviour
         {
             concInstance.transform.position = playerCamera.transform.position;
         }
+    }
+
+    private GameObject GetLocalPlayerObject()
+    {
+        var playerObjects = GameObject.FindGameObjectsWithTag("Player");
+        GameObject playerObject = null;
+        foreach (GameObject obj in playerObjects)
+        {
+            if (obj.GetComponent<NetworkIdentity>().isLocalPlayer)
+            {
+                playerObject = obj;
+            }
+        }
+
+        return playerObject;
     }
 }

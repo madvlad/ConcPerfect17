@@ -82,6 +82,9 @@ public class FirstPersonDrifter : NetworkBehaviour
 
     void FixedUpdate()
     {
+		if (!isLocalPlayer)
+			return;
+
         if (escaped)
         {
             return;
