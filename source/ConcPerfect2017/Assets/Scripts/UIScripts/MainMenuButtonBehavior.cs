@@ -22,6 +22,7 @@ public class MainMenuButtonBehavior : MonoBehaviour {
         if (mouseSensitivityMenuUIElement != null && mouseSensitivityMenuUIElement.GetComponent<Slider>() != null)
         {
             mouseSensitivityMenuUIElement.GetComponent<Slider>().value = ApplicationManager.mouseSensitivity;
+            PlayerPrefs.SetFloat("MouseSensitivity", ApplicationManager.mouseSensitivity);
         }
     }
 

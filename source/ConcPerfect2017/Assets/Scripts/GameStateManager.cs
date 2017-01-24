@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.UI;
 
 public class GameStateManager : MonoBehaviour {
@@ -61,7 +62,7 @@ public class GameStateManager : MonoBehaviour {
     {
         IsPaused = !enabled;
 
-        var player = GameObject.FindGameObjectWithTag("Player");
+        var player = GetLocalPlayerObject();
         var camera = Camera.main;
 
         player.GetComponent<Rigidbody>().mass = enabled ? 1 : float.MaxValue;
@@ -125,5 +126,20 @@ public class GameStateManager : MonoBehaviour {
     {
         this.CourseSeed = seed;
         EscapeMenuSeedElement.GetComponent<Text>().text = "Seed: " + seed;
+    }
+
+    private GameObject GetLocalPlayerObject()
+    {
+        var playerObjects = GameObject.FindGameObjectsWithTag("Player");
+        GameObject playerObject = null;
+        foreach (GameObject obj in playerObjects)
+        {
+            if (obj.GetComponent<NetworkIdentity>().isLocalPlayer)
+            {
+                playerObject = obj;
+            }
+        }
+
+        return playerObject;
     }
 }

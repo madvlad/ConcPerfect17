@@ -7,4 +7,13 @@ public class ApplicationManager : MonoBehaviour {
     static public int randomSeed = 0;
     static public int currentLevel = 0;
     static public float mouseSensitivity = 4.0f;
+
+    void Start()
+    {
+        mouseSensitivity = PlayerPrefs.GetFloat("MouseSensitivity");
+        if (mouseSensitivity == 0)
+        {
+            mouseSensitivity = 4;
+        }
+    }
 }

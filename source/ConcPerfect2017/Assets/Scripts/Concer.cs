@@ -34,6 +34,9 @@ public class Concer : NetworkBehaviour
     
     void Update()
     {
+        if (!isLocalPlayer)
+            return;
+
         if (timer > 0)
         {
             timer -= Time.deltaTime;
