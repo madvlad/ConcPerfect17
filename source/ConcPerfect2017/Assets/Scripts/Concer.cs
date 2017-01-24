@@ -55,7 +55,6 @@ public class Concer : NetworkBehaviour
                 concPrimedHUDElement.SetActive(true);
                 concInstance = Instantiate(concPrefab, playerCamera.transform.position, playerCamera.transform.rotation);
                 concInstance.GetComponent<Conc>().SetOwner(GetLocalPlayerObject());
-                NetworkServer.Spawn(concInstance);
                 if (!concInstance.GetComponent<Rigidbody>()) { concInstance.AddComponent<Rigidbody>(); }
                 concInstance.GetComponent<Rigidbody>().useGravity = false;
                 concInstance.GetComponent<BoxCollider>().enabled = false;
