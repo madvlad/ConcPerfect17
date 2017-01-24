@@ -287,6 +287,7 @@ GameObject:
   - component: {fileID: 114076387300325432}
   - component: {fileID: 82004844420146152}
   - component: {fileID: 114187345358977680}
+  - component: {fileID: 148081963049842702}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1809,3 +1810,15 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!148 &148081963049842702
+NetworkView:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1392250199329400}
+  m_Enabled: 1
+  m_StateSynchronization: 1
+  m_Observed: {fileID: 4036471470654180}
+  m_ViewID:
+    m_ID: 0
+    m_Type: 0

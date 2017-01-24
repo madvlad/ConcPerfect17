@@ -64,10 +64,18 @@ public class FirstPersonDrifter : NetworkBehaviour
     private int jumpTimer;
 	private Camera playerCam;
 
+    private Vector3 lastPosition;
+    private float animTimer;
+
 	void Awake() {
 		playerCam = GetComponentInChildren<Camera>();
 		playerCam.gameObject.SetActive(false);
-	}
+
+        if (!(Network.isServer || Network.isClient))
+        {
+            Network.InitializeServer(1, 25000, false);
+        }
+    }
 
     public override void OnStartLocalPlayer()
     {
@@ -80,10 +88,28 @@ public class FirstPersonDrifter : NetworkBehaviour
         jumpTimer = antiBunnyHopFactor;
     }
 
+    void Update()
+    {
+        var currentPosition = gameObject.transform.position;
+
+        if (currentPosition != lastPosition && animTimer <= 0)
+        {
+            playerModel.GetComponent<Animation>().Play(walkAnimation.name, PlayMode.StopAll);
+            lastPosition = currentPosition;
+            animTimer = 0.1f;
+        }
+        else if (animTimer <= 0)
+        {
+            playerModel.GetComponent<Animation>().Play(idleAnimation.name, PlayMode.StopAll);
+        }
+
+        animTimer -= Time.deltaTime;
+    }
+
     void FixedUpdate()
     {
-		if (!isLocalPlayer)
-			return;
+        if (!isLocalPlayer)
+            return;
 
         if (escaped)
         {
