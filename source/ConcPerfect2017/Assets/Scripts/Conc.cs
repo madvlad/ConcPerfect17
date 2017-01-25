@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.Networking;
 
-public class Conc : MonoBehaviour
+public class Conc : NetworkBehaviour
 {
     public ParticleSystem explosionParticleSystem;
     public ParticleSystem explosionFlashParticleSystem;
@@ -13,18 +14,31 @@ public class Conc : MonoBehaviour
     public AudioClip primeSFX;
     public AudioClip warningSFX;
     public float timer = 5f;
-    private int BeepCount = 1;
     public bool exploded = false;
+
+    private GameObject owner;
+    private GameObject playerObject;
+    private int BeepCount = 1;
 
     void Start()
     {
-        Physics.IgnoreCollision(GameObject.FindGameObjectWithTag("Player").GetComponent<Collider>(), GetComponent<Collider>());
+        var playerObjects = GameObject.FindGameObjectsWithTag("Player");
+
+        foreach(GameObject obj in playerObjects)
+        {
+            if (obj.GetComponent<NetworkIdentity>().isLocalPlayer)
+            {
+                playerObject = obj;
+            }
+        }
+
+        Physics.IgnoreCollision(playerObject.GetComponent<Collider>(), GetComponent<Collider>());
         Invoke("Explode", timer);
         if (timerSFX)
         {
             if (gameObject.GetComponent<AudioSource>())
             {
-                gameObject.GetComponent<AudioSource>().PlayOneShot(primeSFX);
+                AudioSource.PlayClipAtPoint(primeSFX, playerObject.transform.position);
                 Invoke("Beep", 1.0f);
             }
         }
@@ -78,14 +92,7 @@ public class Conc : MonoBehaviour
     {
         if (explodeSFX)
         {
-            if (gameObject.GetComponent<AudioSource>())
-            {
-                gameObject.GetComponent<AudioSource>().PlayOneShot(explodeSFX);
-            }
-            else
-            {
-                AudioSource.PlayClipAtPoint(explodeSFX, gameObject.transform.position);
-            }
+            AudioSource.PlayClipAtPoint(explodeSFX, playerObject.transform.position);
         }
     }
 
@@ -93,7 +100,7 @@ public class Conc : MonoBehaviour
     {
         if (!exploded)
         {
-            gameObject.GetComponent<AudioSource>().PlayOneShot(timerSFX);
+            AudioSource.PlayClipAtPoint(timerSFX, playerObject.transform.position);
             if (BeepCount == (int)timer - 1)
             {
                 Invoke("WarningBeep", 1.0f);
@@ -108,11 +115,16 @@ public class Conc : MonoBehaviour
 
     void WarningBeep()
     {
-        gameObject.GetComponent<AudioSource>().PlayOneShot(warningSFX);
+        AudioSource.PlayClipAtPoint(warningSFX, playerObject.transform.position);
     }
 
     void Destroy()
     {
         Destroy(gameObject);
+    }
+
+    public void SetOwner(GameObject owner)
+    {
+        this.owner = owner;
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -14,22 +15,46 @@ public class MainMenuButtonBehavior : MonoBehaviour {
     public GameObject mainMenuUIElement;
     public GameObject singlePlayerMenuUIElement;
     public GameObject randomSeedInputUIElement;
-    
+    public GameObject predefinedCourseMenuUIElement;
+    public GameObject mouseSensitivityMenuUIElement;
+    public GameObject multiplayerMenuUIElement;
+
+    void Start()
+    {
+        if (mouseSensitivityMenuUIElement != null && mouseSensitivityMenuUIElement.GetComponent<Slider>() != null)
+        {
+            mouseSensitivityMenuUIElement.GetComponent<Slider>().value = ApplicationManager.mouseSensitivity;
+            PlayerPrefs.SetFloat("MouseSensitivity", ApplicationManager.mouseSensitivity);
+        }
+    }
+
     void StartNewGame9()
     {
+        ApplicationManager.currentLevel = 0;
         ApplicationManager.numberOfJumps = 9;
+        ApplicationManager.IsSingleplayer = true;
         LoadGameScene();
     }
 
     void StartNewGame18()
     {
+        ApplicationManager.currentLevel = 0;
         ApplicationManager.numberOfJumps = 18;
+        ApplicationManager.IsSingleplayer = true;
         LoadGameScene();
     }
 
     void StartNewGameInfinite()
     {
         ApplicationManager.numberOfJumps = 27;
+        LoadGameScene();
+    }
+
+    public void StartLevel1()
+    {
+        ApplicationManager.currentLevel = 1;
+        ApplicationManager.numberOfJumps = 9;
+        ApplicationManager.IsSingleplayer = true;
         LoadGameScene();
     }
 
@@ -41,8 +66,23 @@ public class MainMenuButtonBehavior : MonoBehaviour {
 
     void ShowSingleplayerMenu()
     {
+        predefinedCourseMenuUIElement.SetActive(false);
         mainMenuUIElement.SetActive(false);
         singlePlayerMenuUIElement.SetActive(true);
+    }
+
+    public void ShowMultiplayerMenu()
+    {
+        predefinedCourseMenuUIElement.SetActive(false);
+        mainMenuUIElement.SetActive(false);
+        multiplayerMenuUIElement.SetActive(true);
+    }
+
+    void ShowPredefinedCoursesMenu()
+    {
+        singlePlayerMenuUIElement.SetActive(false);
+        multiplayerMenuUIElement.SetActive(false);
+        predefinedCourseMenuUIElement.SetActive(true);
     }
 
     void ShowMainMenu()
@@ -65,6 +105,7 @@ public class MainMenuButtonBehavior : MonoBehaviour {
 
     void LoadMainMenu()
     {
+        GameObject.FindGameObjectWithTag("NetManager").GetComponent<NetworkManager>().StopHost();
         SceneManager.LoadScene(mainMenuScene);
         SceneManager.UnloadSceneAsync(mainGameScene);
     }
@@ -86,8 +127,31 @@ public class MainMenuButtonBehavior : MonoBehaviour {
 
     void HideEscapeMenu()
     {
+        mouseSensitivityMenuUIElement.SetActive(false);
         var gameState = gameStateManager.GetComponent<GameStateManager>();
         gameState.SetPlayerEnabled(true);
         gameState.ShowEscapeMenu(false);
+    }
+
+    public void ShowSettings()
+    {
+        mouseSensitivityMenuUIElement.SetActive(true);
+        escapeMenuUIElement.SetActive(false);
+    }
+
+    public void SetMouseSensitivity(float sensitivity)
+    {
+        ApplicationManager.mouseSensitivity = sensitivity;
+    }
+
+    public void SetIpAddress(string ip)
+    {
+        ApplicationManager.NetworkAddress = ip;
+    }
+
+    public void JoinMultiplayerGame()
+    {
+        ApplicationManager.IsSingleplayer = false;
+        LoadGameScene();
     }
 }

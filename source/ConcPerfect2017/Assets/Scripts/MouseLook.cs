@@ -1,14 +1,7 @@
-﻿// original by asteins
-// adapted by @torahhorse
-// http://wiki.unity3d.com/index.php/SmoothMouseLook
-
-// Instructions:
-// There should be one MouseLook script on the Player itself, and another on the camera
-// player's MouseLook should use MouseX, camera's MouseLook should use MouseY
-
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Networking;
 
 public class MouseLook : MonoBehaviour
 {
@@ -17,8 +10,8 @@ public class MouseLook : MonoBehaviour
     public RotationAxes axes = RotationAxes.MouseX;
     public bool invertY = false;
 
-    public float sensitivityX = 10F;
-    public float sensitivityY = 9F;
+    private float sensitivityX = 10F;
+    private float sensitivityY = 9F;
 
     public float minimumX = -360F;
     public float maximumX = 360F;
@@ -41,6 +34,9 @@ public class MouseLook : MonoBehaviour
 
     void Start()
     {
+        if (!(gameObject == GetLocalPlayerObject() || gameObject.transform.parent == GetLocalPlayerObject().transform))
+            return;
+
         if (GetComponent<Rigidbody>())
         {
             GetComponent<Rigidbody>().freezeRotation = true;
@@ -51,6 +47,12 @@ public class MouseLook : MonoBehaviour
 
     void Update()
     {
+        if (!(gameObject == GetLocalPlayerObject() || gameObject.transform.parent == GetLocalPlayerObject().transform))
+            return;
+
+        sensitivityX = ApplicationManager.mouseSensitivity;
+        sensitivityY = ApplicationManager.mouseSensitivity;
+
         if (axes == RotationAxes.MouseX)
         {
             rotAverageX = 0f;
@@ -124,5 +126,20 @@ public class MouseLook : MonoBehaviour
             }
         }
         return Mathf.Clamp(angle, min, max);
+    }
+
+    private GameObject GetLocalPlayerObject()
+    {
+        var playerObjects = GameObject.FindGameObjectsWithTag("Player");
+        GameObject playerObject = null;
+        foreach (GameObject obj in playerObjects)
+        {
+            if (obj.GetComponent<NetworkIdentity>().isLocalPlayer)
+            {
+                playerObject = obj;
+            }
+        }
+
+        return playerObject;
     }
 }

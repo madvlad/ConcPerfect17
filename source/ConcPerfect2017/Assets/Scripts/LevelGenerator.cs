@@ -1,11 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class LevelGenerator : MonoBehaviour {
+public class LevelGenerator : NetworkBehaviour {
     public GameObject jumpSeparator;
     public GameObject startPrefab;
     public GameObject endPrefab;
+    public GameObject gameManager;
     public List<GameObject> jumpList;
     public int courseJumpListSize;
     public int RandomSeed;
@@ -24,13 +26,29 @@ public class LevelGenerator : MonoBehaviour {
         }
 
         GameStateManager.SetCourseJumpLimit(courseJumpListSize);
+
+        if (!isServer)
+            return;
+
+        if (ApplicationManager.currentLevel > 0)
+        {
+            BuildCourseIteratively();
+        }
+        else
+        {
+            BuildRandomCourse();
+        }
+    }
+
+    private void BuildRandomCourse()
+    {
         RandomSeed = ApplicationManager.randomSeed;
 
         if (RandomSeed != 0)
         {
             Random.InitState(RandomSeed);
         }
-        
+
         GameStateManager.SetJumpSeed(Random.seed);
 
         GameObject previousSnapPoint = InstantiateStartPoint();
@@ -55,11 +73,13 @@ public class LevelGenerator : MonoBehaviour {
 
     void BuildCourseIteratively()
     {
+        CourseJumpList = gameManager.GetComponent<LevelManager>().getLevel(ApplicationManager.currentLevel);
         GameObject previousSnapPoint = InstantiateStartPoint();
 
         foreach (var jump in CourseJumpList)
         {
             previousSnapPoint = InstantiateJumpAtSnapPoint(previousSnapPoint, jump);
+            CurrentJumpNumber++;
         }
 
         InstantiateEndPoint(previousSnapPoint);
@@ -69,16 +89,21 @@ public class LevelGenerator : MonoBehaviour {
     {
         var newJump = Instantiate(jump);
         var newJumpSeparator = Instantiate(jumpSeparator);
+        newJump.GetComponent<NetworkTransform>().transform.position = previousSnapPoint.transform.position;
         newJump.GetComponent<SnapPointManager>().snapPointIn.transform.position = previousSnapPoint.transform.position;
+        newJumpSeparator.GetComponent<NetworkTransform>().transform.position = previousSnapPoint.transform.position;
         newJumpSeparator.transform.position = previousSnapPoint.transform.position;
         newJumpSeparator.GetComponent<JumpTrigger>().JumpNumber = CurrentJumpNumber;
         previousSnapPoint = newJump.GetComponent<SnapPointManager>().snapPointOut;
+        NetworkServer.Spawn(newJump);
+        NetworkServer.Spawn(newJumpSeparator);
         return previousSnapPoint;
     }
 
     private GameObject InstantiateStartPoint()
     {
         var newStartPrefab = Instantiate(startPrefab);
+        NetworkServer.Spawn(newStartPrefab);
         GameObject previousSnapPoint = newStartPrefab.GetComponent<SnapPointManager>().snapPointOut;
         return previousSnapPoint;
     }
@@ -86,6 +111,7 @@ public class LevelGenerator : MonoBehaviour {
     private void InstantiateEndPoint(GameObject previousSnapPoint)
     {
         var newEndPrefab = Instantiate(endPrefab);
-        newEndPrefab.GetComponent<SnapPointManager>().snapPointIn.transform.position = previousSnapPoint.transform.position;
+        newEndPrefab.GetComponent<NetworkTransform>().transform.position = previousSnapPoint.transform.position;
+        NetworkServer.Spawn(newEndPrefab);
     }
 }

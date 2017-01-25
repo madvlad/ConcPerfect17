@@ -5,8 +5,6 @@ using System.Collections;
 
 public class LockMouse : MonoBehaviour
 {
-    private bool currentlyLocked = true;
-
     void Start()
     {
         LockCursor(true);
@@ -17,15 +15,7 @@ public class LockMouse : MonoBehaviour
         // lock when mouse is clicked
         if (Input.GetMouseButtonDown(0) && Time.timeScale > 0.0f)
         {
-            currentlyLocked = true;
-            LockCursor(currentlyLocked);
-        }
-
-        // unlock when escape is hit
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            currentlyLocked = !currentlyLocked;
-            LockCursor(currentlyLocked);
+            LockCursor(true);
         }
     }
 

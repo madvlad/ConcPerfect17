@@ -14,7 +14,7 @@ public class ConcPack : MonoBehaviour {
             var currentConcer = other.GetComponent<Concer>();
             if (currentConcer.ConcCount < currentConcer.MaxConcCount)
             {
-                gameObject.GetComponent<AudioSource>().PlayOneShot(PickupSound);
+                AudioSource.PlayClipAtPoint(PickupSound, other.transform.position);
                 var concsToAdd = currentConcer.MaxConcCount - currentConcer.ConcCount;
                 currentConcer.SetConcCount(currentConcer.ConcCount + concsToAdd);
                 DisablePack();
@@ -25,13 +25,11 @@ public class ConcPack : MonoBehaviour {
 
     private void DisablePack()
     {
-        gameObject.GetComponent<BoxCollider>().enabled = false;
-        gameObject.GetComponent<MeshRenderer>().enabled = false;
+        gameObject.SetActive(false);
     }
 
     private void EnablePack()
     {
-        gameObject.GetComponent<BoxCollider>().enabled = true;
-        gameObject.GetComponent<MeshRenderer>().enabled = true;
+        gameObject.SetActive(true);
     }
 }

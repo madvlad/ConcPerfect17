@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.UI;
 
 public class GameStateManager : MonoBehaviour {
@@ -10,8 +11,8 @@ public class GameStateManager : MonoBehaviour {
     public GameObject JumpHUDElement;
     public GameObject EscapeMenuHUDElement;
     public GameObject EscapeMenuSeedElement;
+    public GameObject SettingsMenuHUDElement;
 
-    private int CurrentJump;
     private float CurrentTimerTime;
     private List<GameObject> CourseJumpList;
     private int CourseJumpLimit;
@@ -41,13 +42,13 @@ public class GameStateManager : MonoBehaviour {
         {
             SetPlayerEnabled(false);
             ShowEscapeMenu(true);
-            return true;
+            IsPaused = true;
         }
         else if (Input.GetButtonDown("Cancel") && IsPaused && !IsCourseComplete)
         {
             SetPlayerEnabled(true);
             ShowEscapeMenu(false);
-            return false;
+            IsPaused = false;
         }
         return IsPaused;
     }
@@ -61,7 +62,7 @@ public class GameStateManager : MonoBehaviour {
     {
         IsPaused = !enabled;
 
-        var player = GameObject.FindGameObjectWithTag("Player");
+        var player = GetLocalPlayerObject();
         var camera = Camera.main;
 
         player.GetComponent<Rigidbody>().mass = enabled ? 1 : float.MaxValue;
@@ -70,14 +71,21 @@ public class GameStateManager : MonoBehaviour {
         player.GetComponent<Concer>().enabled = enabled;
         player.GetComponent<Footsteps>().enabled = enabled;
         player.GetComponent<ImpactReceiver>().enabled = enabled;
-        camera.GetComponent<MouseLook>().enabled = enabled;
         camera.GetComponent<LockMouse>().enabled = enabled;
-        
+        camera.GetComponent<MouseLook>().enabled = enabled;
+
+        Cursor.lockState = CursorLockMode.None;
     }
 
     public void ShowEscapeMenu(bool show)
     {
+        if (!show)
+        {
+            SettingsMenuHUDElement.SetActive(show);
+        }
+
         EscapeMenuHUDElement.SetActive(show);
+        Cursor.visible = show;
     }
 
     public void SetTimerIsRunning(bool set)
@@ -90,7 +98,6 @@ public class GameStateManager : MonoBehaviour {
 
     public void SetJumpNumber(int num)
     {
-        CurrentJump = num;
         JumpHUDElement.GetComponent<Text>().text = "Jump: " + num + " / " + (CourseJumpLimit);
     }
 
@@ -119,5 +126,20 @@ public class GameStateManager : MonoBehaviour {
     {
         this.CourseSeed = seed;
         EscapeMenuSeedElement.GetComponent<Text>().text = "Seed: " + seed;
+    }
+
+    private GameObject GetLocalPlayerObject()
+    {
+        var playerObjects = GameObject.FindGameObjectsWithTag("Player");
+        GameObject playerObject = null;
+        foreach (GameObject obj in playerObjects)
+        {
+            if (obj.GetComponent<NetworkIdentity>().isLocalPlayer)
+            {
+                playerObject = obj;
+            }
+        }
+
+        return playerObject;
     }
 }
