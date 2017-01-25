@@ -1,16 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
 public class ConcPerfectNetworkManager : MonoBehaviour {
-
-	// Use this for initialization
 	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+        GameObject.FindGameObjectWithTag("NetManager").GetComponent<NetworkManager>().StartHost();
+    }
+
+    public void QuitServer()
+    {
+        GameObject.FindGameObjectWithTag("NetManager").GetComponent<NetworkManager>().StopServer();
+    }
 }
