@@ -90,6 +90,9 @@ public class FirstPersonDrifter : NetworkBehaviour
 
     void Update()
     {
+        if (gameObject.GetComponent<NetworkIdentity>().isLocalPlayer)
+            return;
+
         var currentPosition = gameObject.transform.position;
 
         if (currentPosition != lastPosition && animTimer <= 0)

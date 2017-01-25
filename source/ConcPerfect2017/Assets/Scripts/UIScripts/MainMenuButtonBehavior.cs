@@ -17,7 +17,8 @@ public class MainMenuButtonBehavior : MonoBehaviour {
     public GameObject randomSeedInputUIElement;
     public GameObject predefinedCourseMenuUIElement;
     public GameObject mouseSensitivityMenuUIElement;
-    
+    public GameObject multiplayerMenuUIElement;
+
     void Start()
     {
         if (mouseSensitivityMenuUIElement != null && mouseSensitivityMenuUIElement.GetComponent<Slider>() != null)
@@ -49,7 +50,7 @@ public class MainMenuButtonBehavior : MonoBehaviour {
         LoadGameScene();
     }
 
-    void StartLevel1()
+    public void StartLevel1()
     {
         ApplicationManager.currentLevel = 1;
         ApplicationManager.numberOfJumps = 9;
@@ -70,9 +71,17 @@ public class MainMenuButtonBehavior : MonoBehaviour {
         singlePlayerMenuUIElement.SetActive(true);
     }
 
+    public void ShowMultiplayerMenu()
+    {
+        predefinedCourseMenuUIElement.SetActive(false);
+        mainMenuUIElement.SetActive(false);
+        multiplayerMenuUIElement.SetActive(true);
+    }
+
     void ShowPredefinedCoursesMenu()
     {
         singlePlayerMenuUIElement.SetActive(false);
+        multiplayerMenuUIElement.SetActive(false);
         predefinedCourseMenuUIElement.SetActive(true);
     }
 
@@ -133,5 +142,16 @@ public class MainMenuButtonBehavior : MonoBehaviour {
     public void SetMouseSensitivity(float sensitivity)
     {
         ApplicationManager.mouseSensitivity = sensitivity;
+    }
+
+    public void SetIpAddress(string ip)
+    {
+        ApplicationManager.NetworkAddress = ip;
+    }
+
+    public void JoinMultiplayerGame()
+    {
+        ApplicationManager.IsSingleplayer = false;
+        LoadGameScene();
     }
 }
