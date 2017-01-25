@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -28,13 +29,17 @@ public class MainMenuButtonBehavior : MonoBehaviour {
 
     void StartNewGame9()
     {
+        ApplicationManager.currentLevel = 0;
         ApplicationManager.numberOfJumps = 9;
+        ApplicationManager.IsSingleplayer = true;
         LoadGameScene();
     }
 
     void StartNewGame18()
     {
+        ApplicationManager.currentLevel = 0;
         ApplicationManager.numberOfJumps = 18;
+        ApplicationManager.IsSingleplayer = true;
         LoadGameScene();
     }
 
@@ -47,6 +52,8 @@ public class MainMenuButtonBehavior : MonoBehaviour {
     void StartLevel1()
     {
         ApplicationManager.currentLevel = 1;
+        ApplicationManager.numberOfJumps = 9;
+        ApplicationManager.IsSingleplayer = true;
         LoadGameScene();
     }
 
@@ -89,6 +96,7 @@ public class MainMenuButtonBehavior : MonoBehaviour {
 
     void LoadMainMenu()
     {
+        GameObject.FindGameObjectWithTag("NetManager").GetComponent<NetworkManager>().StopHost();
         SceneManager.LoadScene(mainMenuScene);
         SceneManager.UnloadSceneAsync(mainGameScene);
     }

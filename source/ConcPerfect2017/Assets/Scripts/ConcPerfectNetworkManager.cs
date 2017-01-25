@@ -5,7 +5,16 @@ using UnityEngine.Networking;
 
 public class ConcPerfectNetworkManager : MonoBehaviour {
 	void Start () {
-        GameObject.FindGameObjectWithTag("NetManager").GetComponent<NetworkManager>().StartHost();
+        if (ApplicationManager.IsSingleplayer)
+        {
+            GameObject.FindGameObjectWithTag("NetManager").GetComponent<NetworkManager>().StartHost();
+        }
+        else
+        {
+            GameObject.FindGameObjectWithTag("NetManager").GetComponent<NetworkManager>().networkPort = 7777;
+            GameObject.FindGameObjectWithTag("NetManager").GetComponent<NetworkManager>().networkAddress = ApplicationManager.NetworkAddress;
+            GameObject.FindGameObjectWithTag("NetManager").GetComponent<NetworkManager>().StartClient();
+        }
     }
 
     public void QuitServer()
