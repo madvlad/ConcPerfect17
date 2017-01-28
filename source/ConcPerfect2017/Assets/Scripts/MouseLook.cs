@@ -50,6 +50,8 @@ public class MouseLook : MonoBehaviour
         if (!(gameObject == GetLocalPlayerObject() || gameObject.transform.parent == GetLocalPlayerObject().transform))
             return;
 
+        invertY = ApplicationManager.invertYAxis;
+
         sensitivityX = ApplicationManager.mouseSensitivity;
         sensitivityY = ApplicationManager.mouseSensitivity;
 

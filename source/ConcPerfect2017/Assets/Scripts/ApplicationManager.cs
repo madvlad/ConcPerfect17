@@ -7,6 +7,7 @@ public class ApplicationManager : MonoBehaviour {
     static public int randomSeed = 0;
     static public int currentLevel = 0;
     static public float mouseSensitivity = 4.0f;
+    static public bool invertYAxis = false;
     static public bool IsSingleplayer = true;
     static public string NetworkAddress = "localhost";
 

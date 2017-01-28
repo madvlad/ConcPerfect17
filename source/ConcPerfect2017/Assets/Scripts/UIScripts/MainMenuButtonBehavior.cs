@@ -17,6 +17,7 @@ public class MainMenuButtonBehavior : MonoBehaviour {
     public GameObject randomSeedInputUIElement;
     public GameObject predefinedCourseMenuUIElement;
     public GameObject mouseSensitivityMenuUIElement;
+    public GameObject mouseInvertYAxisMenuUIElement;
     public GameObject multiplayerMenuUIElement;
 
     void Start()
@@ -26,6 +27,11 @@ public class MainMenuButtonBehavior : MonoBehaviour {
             mouseSensitivityMenuUIElement.GetComponent<Slider>().value = ApplicationManager.mouseSensitivity;
             PlayerPrefs.SetFloat("MouseSensitivity", ApplicationManager.mouseSensitivity);
         }
+
+		if (mouseInvertYAxisMenuUIElement != null && mouseInvertYAxisMenuUIElement.GetComponent<Toggle> () != null) {
+			mouseInvertYAxisMenuUIElement.GetComponent<Toggle>().isOn = ApplicationManager.invertYAxis;
+			PlayerPrefs.SetInt("MouseInvertXAxis", ApplicationManager.invertYAxis ? 1 : 0);
+		}
     }
 
     void StartNewGame9()
@@ -142,6 +148,11 @@ public class MainMenuButtonBehavior : MonoBehaviour {
     public void SetMouseSensitivity(float sensitivity)
     {
         ApplicationManager.mouseSensitivity = sensitivity;
+    }
+
+    public void SetMouseInvertYAxis()
+    {
+        ApplicationManager.invertYAxis = mouseInvertYAxisMenuUIElement.GetComponent<Toggle>().isOn;
     }
 
     public void SetIpAddress(string ip)
