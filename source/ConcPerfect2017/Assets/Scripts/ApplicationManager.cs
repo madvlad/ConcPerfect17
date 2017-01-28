@@ -6,7 +6,7 @@ public class ApplicationManager : MonoBehaviour {
     static public int numberOfJumps = 9;
     static public int randomSeed = 0;
     static public int currentLevel = 0;
-    static public float mouseSensitivity = 4.0f;
+    static public float mouseSensitivity = 0.0f;
     static public bool invertYAxis = false;
     static public bool IsSingleplayer = true;
     static public string NetworkAddress = "localhost";
@@ -14,6 +14,7 @@ public class ApplicationManager : MonoBehaviour {
     void Start()
     {
         mouseSensitivity = PlayerPrefs.GetFloat("MouseSensitivity");
+        invertYAxis = PlayerPrefs.GetInt("InvertY") == 1 ? true : false;
         if (mouseSensitivity == 0)
         {
             mouseSensitivity = 4;

@@ -148,11 +148,13 @@ public class MainMenuButtonBehavior : MonoBehaviour {
     public void SetMouseSensitivity(float sensitivity)
     {
         ApplicationManager.mouseSensitivity = sensitivity;
+        PlayerPrefs.SetFloat("MouseSensitivity", ApplicationManager.mouseSensitivity);
     }
 
     public void SetMouseInvertYAxis()
     {
         ApplicationManager.invertYAxis = mouseInvertYAxisMenuUIElement.GetComponent<Toggle>().isOn;
+        PlayerPrefs.SetInt("InvertY", ApplicationManager.invertYAxis ? 1 : 0);
     }
 
     public void SetIpAddress(string ip)
