@@ -15,7 +15,7 @@ public class MovablePlatform : MonoBehaviour {
 
     }
 
-	void Update () {
+	void FixedUpdate () {
         nextWayPoint = WayPoints[idx];
         if (Vector3.Distance(gameObject.transform.position, nextWayPoint.transform.position) < 0.5)
         {
