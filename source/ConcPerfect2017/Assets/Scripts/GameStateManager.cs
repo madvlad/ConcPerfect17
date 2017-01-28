@@ -12,14 +12,23 @@ public class GameStateManager : MonoBehaviour {
     public GameObject EscapeMenuHUDElement;
     public GameObject EscapeMenuSeedElement;
     public GameObject SettingsMenuHUDElement;
+	public GameObject PlayerStatsHUDElement;
+	public NetworkPlayerStats networkPlayerStats;
 
     private float CurrentTimerTime;
     private List<GameObject> CourseJumpList;
     private int CourseJumpLimit;
+	private int CurrentJumpNumber;
     private bool IsCasual;
     private bool IsPaused = false;
+	private bool IsDisplayStats = false;
     private bool IsCourseComplete = false;
     private int CourseSeed;
+
+	void Start()
+	{
+		networkPlayerStats = GameObject.FindGameObjectWithTag ("GameManager").GetComponent<NetworkPlayerStats> ();
+	}
 
 	void Update ()
     {
@@ -27,6 +36,8 @@ public class GameStateManager : MonoBehaviour {
         {
             return;
         }
+
+		CheckIfDisplayStats();
 
         if (TimerIsRunning)
         {
@@ -36,15 +47,29 @@ public class GameStateManager : MonoBehaviour {
         }
     }
 
+
+	// TODO - Update Stats while tab is held, currently stats only updated after open and close.
+	private bool CheckIfDisplayStats()
+	{
+		if (Input.GetButtonDown ("Tab") && !IsPaused && !IsDisplayStats) {
+			IsDisplayStats = true;
+			ShowPlayerStats (true);
+		} else if (Input.GetButtonUp("Tab") && IsDisplayStats) {
+			ShowPlayerStats (false);
+		}
+
+		return IsDisplayStats;
+	}
+
     private bool CheckIfPaused()
     {
-        if (Input.GetButtonDown("Cancel") && !IsPaused)
+		if (Input.GetButtonDown("Cancel") && !IsPaused && !IsDisplayStats)
         {
             SetPlayerEnabled(false);
             ShowEscapeMenu(true);
             IsPaused = true;
         }
-        else if (Input.GetButtonDown("Cancel") && IsPaused && !IsCourseComplete)
+		else if (Input.GetButtonDown("Cancel") && IsPaused && !IsCourseComplete && !IsDisplayStats)
         {
             SetPlayerEnabled(true);
             ShowEscapeMenu(false);
@@ -88,6 +113,41 @@ public class GameStateManager : MonoBehaviour {
         Cursor.visible = show;
     }
 
+	public bool IsDisplayingStats()
+	{
+		return IsDisplayStats;
+	}
+
+	// TODO - Style each Row and add Table Header
+	public void ShowPlayerStats(bool show)
+	{
+		if (show) 
+		{
+			foreach (Text row in PlayerStatsHUDElement.GetComponentsInChildren<Text>()) {
+				Destroy (row.gameObject);
+			}
+
+			Font ArialFont = (Font)Resources.GetBuiltinResource(typeof(Font), "Arial.ttf");
+
+			var i = 0;
+			foreach (string stat in networkPlayerStats.GetPlayerStats()) {
+				GameObject newRowGO = new GameObject ("Player " + i++);
+				newRowGO.AddComponent<Text>();
+				newRowGO.GetComponent<Text> ().text = stat;
+				newRowGO.GetComponent<Text>().font = ArialFont;
+				newRowGO.GetComponent<Text>().material = ArialFont.material;
+				newRowGO.transform.SetParent(PlayerStatsHUDElement.transform);
+			}
+
+			PlayerStatsHUDElement.SetActive (show);
+		}
+
+		if (!show) {
+			IsDisplayStats = false;
+			PlayerStatsHUDElement.SetActive (show);
+		}
+	}
+
     public void SetTimerIsRunning(bool set)
     {
         if (!IsCasual)
@@ -98,9 +158,20 @@ public class GameStateManager : MonoBehaviour {
 
     public void SetJumpNumber(int num)
     {
+		this.CurrentJumpNumber = num;
         JumpHUDElement.GetComponent<Text>().text = "Jump: " + num + " / " + (CourseJumpLimit);
     }
 
+	public int GetCourseJumpLimit()
+	{
+		return CourseJumpLimit;
+	}
+
+	public int GetCurrentJumpNumber()
+	{
+		return CurrentJumpNumber;
+	}
+		
     public void SetCourseJumps(List<GameObject> CourseJumpList)
     {
         this.CourseJumpList = CourseJumpList;
