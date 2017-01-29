@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 33537645917639668}
   - component: {fileID: 65798484975609124}
   - component: {fileID: 23442111951112778}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: BoundaryZ+
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,7 +40,7 @@ GameObject:
   - component: {fileID: 33291050741097596}
   - component: {fileID: 65895645958366462}
   - component: {fileID: 23389129056546264}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: BoundaryY+
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -73,7 +73,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4886903617809060}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: Triggers
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -106,7 +106,7 @@ GameObject:
   - component: {fileID: 33280090131876512}
   - component: {fileID: 65043747730596322}
   - component: {fileID: 23873713371690870}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: BoundaryX-
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -125,7 +125,7 @@ GameObject:
   - component: {fileID: 65874464908260096}
   - component: {fileID: 23420558815049518}
   - component: {fileID: 114755885201599646}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: StartTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -159,7 +159,7 @@ GameObject:
   - component: {fileID: 33723093328366270}
   - component: {fileID: 65554399393894214}
   - component: {fileID: 23126798851101288}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: BoundaryZ-
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -176,7 +176,7 @@ GameObject:
   - component: {fileID: 4879108179214470}
   - component: {fileID: 23510450400843092}
   - component: {fileID: 102144703385896430}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: StartLabel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -206,7 +206,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4420710872655508}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: Boundaries
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -952,6 +952,9 @@ MonoBehaviour:
   startLabel: {fileID: 1601422791178512}
   SwitchToOn: 1
   GameEndSound: {fileID: 0}
+  confetti1: {fileID: 0}
+  confetti2: {fileID: 0}
+  confetti3: {fileID: 0}
 --- !u!114 &114830024380756188
 MonoBehaviour:
   m_ObjectHideFlags: 1
