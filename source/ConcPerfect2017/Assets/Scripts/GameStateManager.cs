@@ -13,6 +13,7 @@ public class GameStateManager : MonoBehaviour {
     public GameObject EscapeMenuSeedElement;
     public GameObject SettingsMenuHUDElement;
 
+    private int GameType;
     private float CurrentTimerTime;
     private List<GameObject> CourseJumpList;
     private int CourseJumpLimit;
@@ -20,6 +21,12 @@ public class GameStateManager : MonoBehaviour {
     private bool IsPaused = false;
     private bool IsCourseComplete = false;
     private int CourseSeed;
+
+    void Start ()
+    {
+        GameType = ApplicationManager.GameType;
+        Debug.Log(GameType);
+    } 
 
 	void Update ()
     {
