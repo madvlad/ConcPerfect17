@@ -30,11 +30,7 @@ public class GameStateManager : MonoBehaviour {
 
 	void Update ()
     {
-        if (CheckIfPaused())
-        {
-            return;
-        }
-
+        CheckIfPaused();
         if (TimerIsRunning)
         {
             CurrentTimerTime += Time.deltaTime;
@@ -72,12 +68,12 @@ public class GameStateManager : MonoBehaviour {
         var player = GetLocalPlayerObject();
         var camera = Camera.main;
 
-        player.GetComponent<Rigidbody>().mass = enabled ? 1 : float.MaxValue;
-        player.GetComponent<FirstPersonDrifter>().enabled = enabled;
+        //player.GetComponent<Rigidbody>().mass = enabled ? 1 : float.MaxValue;
+        //player.GetComponent<FirstPersonDrifter>().enabled = enabled;
         player.GetComponent<MouseLook>().enabled = enabled;
-        player.GetComponent<Concer>().enabled = enabled;
-        player.GetComponent<Footsteps>().enabled = enabled;
-        player.GetComponent<ImpactReceiver>().enabled = enabled;
+        //player.GetComponent<Concer>().enabled = enabled;
+        //player.GetComponent<Footsteps>().enabled = enabled;
+        //player.GetComponent<ImpactReceiver>().enabled = enabled;
         camera.GetComponent<LockMouse>().enabled = enabled;
         camera.GetComponent<MouseLook>().enabled = enabled;
 
