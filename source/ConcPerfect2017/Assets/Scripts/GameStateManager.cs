@@ -30,7 +30,8 @@ public class GameStateManager : MonoBehaviour {
     {
         GameType = ApplicationManager.GameType;
         Debug.Log(GameType);
-    } 
+		networkPlayerStats = GameObject.FindGameObjectWithTag("GameManager").GetComponent<NetworkPlayerStats>();    
+	} 
 
 	void Update ()
     {
@@ -55,7 +56,10 @@ public class GameStateManager : MonoBehaviour {
 	{
 		if (Input.GetButtonDown ("Tab") && !IsPaused && !IsDisplayStats) {
 			IsDisplayStats = true;
+			UpdatePlayerStats ();
 			ShowPlayerStats (true);
+		} else if (Input.GetButton("Tab") && IsDisplayStats) {
+			UpdatePlayerStats ();
 		} else if (Input.GetButtonUp("Tab") && IsDisplayStats) {
 			ShowPlayerStats (false);
 		}
@@ -120,27 +124,35 @@ public class GameStateManager : MonoBehaviour {
 		return IsDisplayStats;
 	}
 
+	private void AddTextToPanel(GameObject panel, string label, string text)
+	{
+		Font ArialFont = (Font)Resources.GetBuiltinResource(typeof(Font), "Arial.ttf");
+
+		GameObject textObject = new GameObject (label);
+		textObject.AddComponent<Text>();
+		textObject.GetComponent<Text> ().text = text;
+		textObject.GetComponent<Text>().font = ArialFont;
+		textObject.GetComponent<Text>().material = ArialFont.material;
+		textObject.transform.SetParent(panel.transform);
+	}
+
+	public void UpdatePlayerStats()
+	{
+		foreach (Text row in PlayerStatsHUDElement.GetComponentsInChildren<Text>()) {
+			Destroy (row.gameObject);
+		}
+
+		var i = 0;
+		foreach (string stat in networkPlayerStats.GetPlayerStats()) {
+			AddTextToPanel (PlayerStatsHUDElement, "Row" + i++, stat);
+		}
+	}
+
 	// TODO - Style each Row and add Table Header
 	public void ShowPlayerStats(bool show)
 	{
 		if (show) 
 		{
-			foreach (Text row in PlayerStatsHUDElement.GetComponentsInChildren<Text>()) {
-				Destroy (row.gameObject);
-			}
-
-			Font ArialFont = (Font)Resources.GetBuiltinResource(typeof(Font), "Arial.ttf");
-
-			var i = 0;
-			foreach (string stat in networkPlayerStats.GetPlayerStats()) {
-				GameObject newRowGO = new GameObject ("Player " + i++);
-				newRowGO.AddComponent<Text>();
-				newRowGO.GetComponent<Text> ().text = stat;
-				newRowGO.GetComponent<Text>().font = ArialFont;
-				newRowGO.GetComponent<Text>().material = ArialFont.material;
-				newRowGO.transform.SetParent(PlayerStatsHUDElement.transform);
-			}
-
 			PlayerStatsHUDElement.SetActive (show);
 		}
 
