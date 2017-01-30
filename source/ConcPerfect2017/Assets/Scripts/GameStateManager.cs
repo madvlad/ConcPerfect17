@@ -15,6 +15,7 @@ public class GameStateManager : MonoBehaviour {
 	public GameObject PlayerStatsHUDElement;
 	public NetworkPlayerStats networkPlayerStats;
 
+    private int GameType;
     private float CurrentTimerTime;
     private List<GameObject> CourseJumpList;
     private int CourseJumpLimit;
@@ -25,10 +26,11 @@ public class GameStateManager : MonoBehaviour {
     private bool IsCourseComplete = false;
     private int CourseSeed;
 
-	void Start()
-	{
-		networkPlayerStats = GameObject.FindGameObjectWithTag ("GameManager").GetComponent<NetworkPlayerStats> ();
-	}
+    void Start ()
+    {
+        GameType = ApplicationManager.GameType;
+        Debug.Log(GameType);
+    } 
 
 	void Update ()
     {

@@ -167,4 +167,9 @@ public class MainMenuButtonBehavior : MonoBehaviour {
         ApplicationManager.IsSingleplayer = false;
         LoadGameScene();
     }
+
+    public void SetGameMode(int gameMode)
+    {
+        ApplicationManager.GameType = gameMode;
+    }
 }
