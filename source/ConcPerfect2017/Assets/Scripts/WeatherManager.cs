@@ -11,7 +11,7 @@ public class WeatherManager : MonoBehaviour {
 
 	void Start () {
         var petesRainDance = Random.value;
-        Debug.Log(petesRainDance);
+        
         if (petesRainDance < 0.15f)
         {
             rainInstance = Instantiate(rain);
