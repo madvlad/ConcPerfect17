@@ -40,10 +40,21 @@ public class SetTimerOnTrigger : MonoBehaviour {
                 courseCompleteMessage.enabled = true;
                 courseCompleteMessage.text = "Course Complete!!\n\nYour time: " + gameStateManager.GetCurrentTime();
                 ShootConfetti(other.gameObject);
+                SaveLevelCompletion();
                 gameStateManager.SetIsCourseComplete(true);
                 gameStateManager.SetPlayerEnabled(false);
                 Invoke("EndGame", 7.0f);
             }
+        }
+    }
+
+    private void SaveLevelCompletion()
+    {
+        var levelsCompleted = ApplicationManager.LevelsCompleted;
+        if (levelsCompleted < ApplicationManager.currentLevel)
+        {
+            levelsCompleted = ApplicationManager.currentLevel;
+            PlayerPrefs.SetInt("LevelsCompleted", levelsCompleted);
         }
     }
 
