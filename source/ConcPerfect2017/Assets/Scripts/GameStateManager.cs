@@ -158,6 +158,20 @@ public class GameStateManager : NetworkBehaviour {
 		textObject.transform.SetParent(panel.transform);
 	}
 
+	private void AddHeaderTextToPanel(GameObject panel, string label, string text)
+	{
+		Font ArialFont = (Font)Resources.GetBuiltinResource(typeof(Font), "Arial.ttf");
+
+		GameObject textObject = new GameObject (label);
+		textObject.AddComponent<Text>();
+		textObject.GetComponent<Text> ().text = text;
+		textObject.GetComponent<Text>().font = ArialFont;
+		textObject.GetComponent<Text> ().fontStyle = FontStyle.Bold;
+		textObject.GetComponent<Text> ().fontSize = 18;
+		textObject.GetComponent<Text>().material = ArialFont.material;
+		textObject.transform.SetParent(panel.transform);
+	}
+
 	public void UpdatePlayerStats()
 	{
 		foreach (Text row in PlayerStatsHUDElement.GetComponentsInChildren<Text>()) {
@@ -165,8 +179,18 @@ public class GameStateManager : NetworkBehaviour {
 		}
 
 		var i = 0;
+		AddHeaderTextToPanel (PlayerStatsHUDElement, "Row" + i, "Player");
+		AddHeaderTextToPanel (PlayerStatsHUDElement, "Row" + i, "Current Jump");
+		AddHeaderTextToPanel (PlayerStatsHUDElement, "Row" + i++, "Current Time");
 		foreach (string stat in playerStats) {
-			AddTextToPanel (PlayerStatsHUDElement, "Row" + i++, stat);
+			if (stat.Split (':').Length > 2) {
+				string playerId = stat.Split (':') [0];
+				string courseTime = stat.Split (':') [1];
+				string jumpNumber = stat.Split (':') [2];
+				AddTextToPanel (PlayerStatsHUDElement, "Row" + i + playerId, playerId);
+				AddTextToPanel (PlayerStatsHUDElement, "Row" + i + courseTime, courseTime);
+				AddTextToPanel (PlayerStatsHUDElement, "Row" + i++ + jumpNumber, jumpNumber);
+			}
 		}
 	}
 

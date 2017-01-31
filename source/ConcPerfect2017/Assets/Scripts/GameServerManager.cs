@@ -48,7 +48,7 @@ public class GameServerManager : NetworkBehaviour {
 
 		string playerStats = "";
 		foreach (PlayerStat stat in playerStatsList) {
-			playerStats += stat.PlayerId + " : " + stat.CurrentJump + "/" + gameManager.GetCourseJumpLimit () + " : " + stat.CurrentTimerTime + "%";
+			playerStats += "Player" + stat.PlayerId + " : " + stat.CurrentJump + "/" + gameManager.GetCourseJumpLimit () + " : " + stat.CurrentTimerTime + "s" + "%";
 		}
 			
 		gameManager.RpcUpdatePlayerStats (playerStats);

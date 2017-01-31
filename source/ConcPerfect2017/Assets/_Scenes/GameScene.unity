@@ -1509,7 +1509,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 500, y: 300}
+  m_SizeDelta: {x: 600, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1139402069
 MonoBehaviour:
@@ -1552,7 +1552,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1139402067}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1297475563, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: -2095666955, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
@@ -1561,11 +1561,12 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 0
-  m_Spacing: 0
-  m_ChildForceExpandWidth: 1
-  m_ChildForceExpandHeight: 1
-  m_ChildControlWidth: 0
-  m_ChildControlHeight: 0
+  m_StartCorner: 0
+  m_StartAxis: 0
+  m_CellSize: {x: 200, y: 20}
+  m_Spacing: {x: 0, y: 0}
+  m_Constraint: 0
+  m_ConstraintCount: 2
 --- !u!1 &1158475380
 GameObject:
   m_ObjectHideFlags: 0
@@ -2805,6 +2806,7 @@ MonoBehaviour:
   EscapeMenuSeedElement: {fileID: 718413685}
   SettingsMenuHUDElement: {fileID: 245841819}
   PlayerStatsHUDElement: {fileID: 1139402067}
+  localPlayer: {fileID: 0}
   gameServerManager: {fileID: 0}
   playerStats: []
 --- !u!4 &1946431499
