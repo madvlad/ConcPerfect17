@@ -52,7 +52,8 @@ public class GameStateManager : NetworkBehaviour {
             TimeSpan timeSpan = TimeSpan.FromSeconds(CurrentTimerTime);
             TimerHUDElement.GetComponent<Text>().text = timeSpan.Minutes.ToString("00") + ":" + timeSpan.Seconds.ToString("00") + ":" + timeSpan.Milliseconds.ToString("000");
         }
-		if (GetLocalPlayerObject ().gameObject != null)
+
+		if (GetLocalPlayerObject () != null)
 		{
 			GetLocalPlayerObject ().gameObject.GetComponent<LocalPlayerStats> ().UpdateJump (CurrentJumpNumber);
 			GetLocalPlayerObject ().gameObject.GetComponent<LocalPlayerStats> ().UpdateTime (CurrentTimerTime);
