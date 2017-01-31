@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 
-public class GameStateManager : MonoBehaviour {
+public class GameStateManager : NetworkBehaviour {
     public bool TimerIsRunning;
     public GameObject TimerHUDElement;
     public GameObject JumpHUDElement;
@@ -13,7 +13,10 @@ public class GameStateManager : MonoBehaviour {
     public GameObject EscapeMenuSeedElement;
     public GameObject SettingsMenuHUDElement;
 	public GameObject PlayerStatsHUDElement;
-	public NetworkPlayerStats networkPlayerStats;
+	public GameObject localPlayer;
+
+	// Server Objects
+	public GameServerManager gameServerManager;
 
     private int GameType;
     private float CurrentTimerTime;
@@ -26,11 +29,16 @@ public class GameStateManager : MonoBehaviour {
     private bool IsCourseComplete = false;
     private int CourseSeed;
 
+	[SerializeField]
+	private List<string> playerStats;
+
     void Start ()
     {
         GameType = ApplicationManager.GameType;
         Debug.Log(GameType);
-		networkPlayerStats = GameObject.FindGameObjectWithTag("GameManager").GetComponent<NetworkPlayerStats>();    
+
+		if (isServer)
+			gameServerManager = GameObject.FindGameObjectWithTag ("GameServerManager").GetComponent<GameServerManager> ();
 	} 
 
 	void Update ()
@@ -44,6 +52,11 @@ public class GameStateManager : MonoBehaviour {
             TimeSpan timeSpan = TimeSpan.FromSeconds(CurrentTimerTime);
             TimerHUDElement.GetComponent<Text>().text = timeSpan.Minutes.ToString("00") + ":" + timeSpan.Seconds.ToString("00") + ":" + timeSpan.Milliseconds.ToString("000");
         }
+		if (GetLocalPlayerObject ().gameObject != null)
+		{
+			GetLocalPlayerObject ().gameObject.GetComponent<LocalPlayerStats> ().UpdateJump (CurrentJumpNumber);
+			GetLocalPlayerObject ().gameObject.GetComponent<LocalPlayerStats> ().UpdateTime (CurrentTimerTime);
+		}
     }
 
 
@@ -139,7 +152,7 @@ public class GameStateManager : MonoBehaviour {
 		}
 
 		var i = 0;
-		foreach (string stat in networkPlayerStats.GetPlayerStats()) {
+		foreach (string stat in playerStats) {
 			AddTextToPanel (PlayerStatsHUDElement, "Row" + i++, stat);
 		}
 	}
@@ -165,7 +178,7 @@ public class GameStateManager : MonoBehaviour {
             TimerIsRunning = set;
         }
     }
-
+		
     public void SetJumpNumber(int num)
     {
 		this.CurrentJumpNumber = num;
@@ -223,4 +236,13 @@ public class GameStateManager : MonoBehaviour {
 
         return playerObject;
     }
+
+
+
+	[ClientRpc]
+	public void RpcUpdatePlayerStats(string stats)
+	{
+		playerStats = new List<string>(stats.Split ('%'));
+	}
+
 }
