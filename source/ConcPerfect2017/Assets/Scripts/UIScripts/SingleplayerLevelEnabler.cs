@@ -31,7 +31,7 @@ public class SingleplayerLevelEnabler : MonoBehaviour {
                 Level4UIElement.GetComponent<Button>().interactable = true;
                 break;
             case 4:
-                Level4UIElement.GetComponent<Button>().interactable = true;
+                Level5UIElement.GetComponent<Button>().interactable = true;
                 break;
             default:
                 Level1UIElement.GetComponent<Button>().interactable = true;

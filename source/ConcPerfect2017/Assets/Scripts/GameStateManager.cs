@@ -67,13 +67,26 @@ public class GameStateManager : MonoBehaviour {
 
         var player = GetLocalPlayerObject();
         var camera = Camera.main;
-
-        //player.GetComponent<Rigidbody>().mass = enabled ? 1 : float.MaxValue;
-        //player.GetComponent<FirstPersonDrifter>().enabled = enabled;
         player.GetComponent<MouseLook>().enabled = enabled;
-        //player.GetComponent<Concer>().enabled = enabled;
-        //player.GetComponent<Footsteps>().enabled = enabled;
-        //player.GetComponent<ImpactReceiver>().enabled = enabled;
+        camera.GetComponent<LockMouse>().enabled = enabled;
+        camera.GetComponent<MouseLook>().enabled = enabled;
+
+        Cursor.lockState = CursorLockMode.None;
+    }
+
+    public void LockPlayer(bool locked)
+    {
+        IsPaused = !enabled;
+
+        var player = GetLocalPlayerObject();
+        var camera = Camera.main;
+
+        player.GetComponent<Rigidbody>().mass = enabled ? 1 : float.MaxValue;
+        player.GetComponent<FirstPersonDrifter>().enabled = enabled;
+        player.GetComponent<MouseLook>().enabled = enabled;
+        player.GetComponent<Concer>().enabled = enabled;
+        player.GetComponent<Footsteps>().enabled = enabled;
+        player.GetComponent<ImpactReceiver>().enabled = enabled;
         camera.GetComponent<LockMouse>().enabled = enabled;
         camera.GetComponent<MouseLook>().enabled = enabled;
 

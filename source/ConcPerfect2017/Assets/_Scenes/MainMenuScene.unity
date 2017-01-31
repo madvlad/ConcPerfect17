@@ -1281,7 +1281,7 @@ MonoBehaviour:
     m_NormalColor: {r: 0, g: 0, b: 0, a: 0.5019608}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_DisabledColor: {r: 0.7607844, g: 0.7607844, b: 0.7607844, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -1299,12 +1299,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 123548938}
-        m_MethodName: SendMessage
-        m_Mode: 5
+        m_MethodName: StartLevel
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: StartLevel1
           m_BoolArgument: 0
@@ -1393,7 +1393,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4d9bd71e9e908743afa5d72e242247b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainGameScene: TestScene
+  mainGameScene: GameScene
   mainMenuScene: MainMenuScene
   creditsUIElement: {fileID: 0}
   escapeMenuUIElement: {fileID: 0}
@@ -1427,7 +1427,7 @@ MonoBehaviour:
     m_NormalColor: {r: 0, g: 0, b: 0, a: 0.5019608}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_DisabledColor: {r: 0, g: 0, b: 0, a: 0.2509804}
+    m_DisabledColor: {r: 0.7607844, g: 0.7607844, b: 0.7607844, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -1445,12 +1445,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 151127394}
-        m_MethodName: SendMessage
-        m_Mode: 5
+        m_MethodName: StartLevel
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 4
           m_FloatArgument: 0
           m_StringArgument: StartLevel1
           m_BoolArgument: 0
@@ -2802,7 +2802,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4d9bd71e9e908743afa5d72e242247b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainGameScene: TestScene
+  mainGameScene: GameScene
   mainMenuScene: MainMenuScene
   creditsUIElement: {fileID: 0}
   escapeMenuUIElement: {fileID: 0}
@@ -2836,7 +2836,7 @@ MonoBehaviour:
     m_NormalColor: {r: 0, g: 0, b: 0, a: 0.5019608}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_DisabledColor: {r: 0, g: 0, b: 0, a: 0.2509804}
+    m_DisabledColor: {r: 0.7607844, g: 0.7607844, b: 0.7607844, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -2854,12 +2854,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 287074378}
-        m_MethodName: SendMessage
-        m_Mode: 5
+        m_MethodName: StartLevel
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 5
           m_FloatArgument: 0
           m_StringArgument: StartLevel1
           m_BoolArgument: 0
@@ -2946,7 +2946,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.5019608}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -3071,8 +3071,6 @@ GameObject:
   - component: {fileID: 297508686}
   - component: {fileID: 297508685}
   - component: {fileID: 297508689}
-  - component: {fileID: 297508691}
-  - component: {fileID: 297508690}
   m_Layer: 5
   m_Name: Menu
   m_TagString: Untagged
@@ -3166,53 +3164,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59675433e0b322c47ae0927e5b330cec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &297508690
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 297508684}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ff5cda51bc45a24fb1f4be5bf12dded, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  concPrefab: {fileID: 0}
-  ConcPushForce: 8
-  ConcCount: 3
-  MaxConcCount: 3
---- !u!114 &297508691
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 297508684}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SceneId:
-    m_Value: 0
-  m_AssetId:
-    i0: 0
-    i1: 0
-    i2: 0
-    i3: 0
-    i4: 0
-    i5: 0
-    i6: 0
-    i7: 0
-    i8: 0
-    i9: 0
-    i10: 0
-    i11: 0
-    i12: 0
-    i13: 0
-    i14: 0
-    i15: 0
-  m_ServerOnly: 0
-  m_LocalPlayerAuthority: 0
 --- !u!1 &302440411
 GameObject:
   m_ObjectHideFlags: 0
@@ -7393,7 +7344,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4d9bd71e9e908743afa5d72e242247b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainGameScene: TestScene
+  mainGameScene: GameScene
   mainMenuScene: MainMenuScene
   creditsUIElement: {fileID: 0}
   escapeMenuUIElement: {fileID: 0}
@@ -7427,7 +7378,7 @@ MonoBehaviour:
     m_NormalColor: {r: 0, g: 0, b: 0, a: 0.5019608}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_DisabledColor: {r: 0, g: 0, b: 0, a: 0.2509804}
+    m_DisabledColor: {r: 0.7607844, g: 0.7607844, b: 0.7607844, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -7445,12 +7396,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 866871200}
-        m_MethodName: SendMessage
-        m_Mode: 5
+        m_MethodName: StartLevel
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 3
           m_FloatArgument: 0
           m_StringArgument: StartLevel1
           m_BoolArgument: 0
@@ -8720,7 +8671,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.5019608}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -12867,7 +12818,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.5019608}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -13741,7 +13692,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4d9bd71e9e908743afa5d72e242247b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainGameScene: TestScene
+  mainGameScene: GameScene
   mainMenuScene: MainMenuScene
   creditsUIElement: {fileID: 0}
   escapeMenuUIElement: {fileID: 0}
@@ -13775,7 +13726,7 @@ MonoBehaviour:
     m_NormalColor: {r: 0, g: 0, b: 0, a: 0.5019608}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_DisabledColor: {r: 0, g: 0, b: 0, a: 0.2509804}
+    m_DisabledColor: {r: 0.7607844, g: 0.7607844, b: 0.7607844, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -13793,12 +13744,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1382434645}
-        m_MethodName: SendMessage
-        m_Mode: 5
+        m_MethodName: StartLevel
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 2
           m_FloatArgument: 0
           m_StringArgument: StartLevel1
           m_BoolArgument: 0
@@ -22914,7 +22865,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.5019608}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:

@@ -42,7 +42,7 @@ public class SetTimerOnTrigger : MonoBehaviour {
                 ShootConfetti(other.gameObject);
                 SaveLevelCompletion();
                 gameStateManager.SetIsCourseComplete(true);
-                gameStateManager.SetPlayerEnabled(false);
+                gameStateManager.LockPlayer(false);
                 Invoke("EndGame", 7.0f);
             }
         }
