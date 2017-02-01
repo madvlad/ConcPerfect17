@@ -13,7 +13,7 @@ public class GameServerManager : NetworkBehaviour {
 	{
 		public string PlayerId;
 		public int CurrentJump;
-		public float CurrentTimerTime;
+		public string CurrentTimerTime;
 	}
 
 	public class ListPlayerStats : List<PlayerStat>
@@ -48,14 +48,14 @@ public class GameServerManager : NetworkBehaviour {
 
 		string playerStats = "";
 		foreach (PlayerStat stat in playerStatsList) {
-			playerStats += "Player" + stat.PlayerId + " : " + stat.CurrentJump + "/" + gameManager.GetCourseJumpLimit () + " : " + stat.CurrentTimerTime + "s" + "%";
+			playerStats += "Player" + stat.PlayerId + " ; " + stat.CurrentJump + "/" + gameManager.GetCourseJumpLimit () + " ; " + stat.CurrentTimerTime + "%";
 		}
 			
 		gameManager.RpcUpdatePlayerStats (playerStats);
 
 	}
 
-	public void UpdatePlayerTime(NetworkInstanceId netId, float playerTime)
+	public void UpdatePlayerTime(NetworkInstanceId netId, string playerTime)
 	{
 		PlayerStat playerStat = playerStatsList.GetStatByPlayerId (netId.ToString());
 		if (playerStat.PlayerId == null)
@@ -80,7 +80,7 @@ public class GameServerManager : NetworkBehaviour {
 	{
 		PlayerStat newPlayer = new PlayerStat ();
 		newPlayer.PlayerId = netId;
-		newPlayer.CurrentTimerTime = 0;
+		newPlayer.CurrentTimerTime = "Not Started";
 		newPlayer.CurrentJump = 0;
 		playerStatsList.Add (newPlayer);
 		return newPlayer;
