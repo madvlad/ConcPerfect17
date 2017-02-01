@@ -100,6 +100,7 @@ public class LevelGenerator : NetworkBehaviour {
         newJumpSeparator.GetComponent<NetworkTransform>().transform.position = previousSnapPoint.transform.position;
         newJumpSeparator.transform.position = previousSnapPoint.transform.position;
         newJumpSeparator.GetComponent<JumpTrigger>().JumpNumber = CurrentJumpNumber;
+        newJumpSeparator.GetComponent<JumpTrigger>().JumpName = newJump.GetComponent<SnapPointManager>().jumpName;
         previousSnapPoint = newJump.GetComponent<SnapPointManager>().snapPointOut;
         NetworkServer.Spawn(newJump);
         NetworkServer.Spawn(newJumpSeparator);
