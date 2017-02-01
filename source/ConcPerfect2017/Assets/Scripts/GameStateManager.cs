@@ -41,24 +41,18 @@ public class GameStateManager : NetworkBehaviour {
 			gameServerManager = GameObject.FindGameObjectWithTag ("GameServerManager").GetComponent<GameServerManager> ();
 	} 
 
-	void Update ()
+
+    void Update ()
     {
-        CheckIfPaused();
-		CheckIfDisplayStats();
+        CheckIfPaused ();
+        CheckIfDisplayStats ();
 
-        if (TimerIsRunning)
-        {
+        if (TimerIsRunning) {
             CurrentTimerTime += Time.deltaTime;
-            TimeSpan timeSpan = TimeSpan.FromSeconds(CurrentTimerTime);
-            TimerHUDElement.GetComponent<Text>().text = timeSpan.Minutes.ToString("00") + ":" + timeSpan.Seconds.ToString("00") + ":" + timeSpan.Milliseconds.ToString("000");
+            TimeSpan timeSpan = TimeSpan.FromSeconds (CurrentTimerTime);
+            TimerHUDElement.GetComponent<Text> ().text = timeSpan.Minutes.ToString ("00") + ":" + timeSpan.Seconds.ToString ("00") + ":" + timeSpan.Milliseconds.ToString ("000");
         }
-
-		if (GetLocalPlayerObject () != null)
-		{
-			GetLocalPlayerObject ().gameObject.GetComponent<LocalPlayerStats> ().UpdateJump (CurrentJumpNumber);
-			GetLocalPlayerObject ().gameObject.GetComponent<LocalPlayerStats> ().UpdateTime (CurrentTimerTime);
-		}
-    }
+	}
 
 
 	// TODO - Update Stats while tab is held, currently stats only updated after open and close.
@@ -182,16 +176,16 @@ public class GameStateManager : NetworkBehaviour {
 		var i = 0;
 		AddHeaderTextToPanel (PlayerStatsHUDElement, "Row" + i, "Player");
 		AddHeaderTextToPanel (PlayerStatsHUDElement, "Row" + i, "Current Jump");
-		AddHeaderTextToPanel (PlayerStatsHUDElement, "Row" + i++, "Current Time");
+		AddHeaderTextToPanel (PlayerStatsHUDElement, "Row" + i++, "Course Status");
 		foreach (string stat in playerStats) {
-			if (stat.Split (':').Length > 2) {
-				string playerId = stat.Split (':') [0];
-				string courseTime = stat.Split (':') [1];
-				string jumpNumber = stat.Split (':') [2];
-				AddTextToPanel (PlayerStatsHUDElement, "Row" + i + playerId, playerId);
-				AddTextToPanel (PlayerStatsHUDElement, "Row" + i + courseTime, courseTime);
-				AddTextToPanel (PlayerStatsHUDElement, "Row" + i++ + jumpNumber, jumpNumber);
-			}
+            if (stat.Split (';').Length > 2) {
+                string playerId = stat.Split (';') [0];
+                string courseTime = stat.Split (';') [1];
+                string jumpNumber = stat.Split (';') [2];
+                AddTextToPanel (PlayerStatsHUDElement, "Row" + i + playerId, playerId);
+                AddTextToPanel (PlayerStatsHUDElement, "Row" + i + courseTime, courseTime);
+                AddTextToPanel (PlayerStatsHUDElement, "Row" + i++ + jumpNumber, jumpNumber);
+            }
 		}
 	}
 
@@ -221,6 +215,11 @@ public class GameStateManager : NetworkBehaviour {
     {
 		this.CurrentJumpNumber = num;
         JumpHUDElement.GetComponent<Text>().text = "Jump: " + num + " / " + (CourseJumpLimit);
+
+        if (GetLocalPlayerObject () != null)
+        {
+            GetLocalPlayerObject ().gameObject.GetComponent<LocalPlayerStats> ().UpdateJump (CurrentJumpNumber);
+        }
     }
 
 	public int GetCourseJumpLimit()
@@ -260,7 +259,7 @@ public class GameStateManager : NetworkBehaviour {
         EscapeMenuSeedElement.GetComponent<Text>().text = "Seed: " + seed;
     }
 
-    private GameObject GetLocalPlayerObject()
+    public GameObject GetLocalPlayerObject()
     {
         var playerObjects = GameObject.FindGameObjectsWithTag("Player");
         GameObject playerObject = null;

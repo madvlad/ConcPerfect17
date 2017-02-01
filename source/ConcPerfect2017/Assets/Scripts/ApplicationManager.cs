@@ -12,6 +12,7 @@ public class ApplicationManager : MonoBehaviour {
     static public string NetworkAddress = "localhost";
     static public int GameType = GameTypes.CasualGameType;
     static public int LevelsCompleted = 0;
+    static public List<int> JumpsDifficultiesAllowed = new List<int> { 0, 1, 2, 3, 4, 5 };
 
     void Start()
     {
