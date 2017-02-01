@@ -5,4 +5,5 @@ using UnityEngine;
 public class SnapPointManager : MonoBehaviour {
     public GameObject snapPointIn;
     public GameObject snapPointOut;
+    public string jumpName;
 }
