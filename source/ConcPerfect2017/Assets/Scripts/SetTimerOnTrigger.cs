@@ -31,6 +31,11 @@ public class SetTimerOnTrigger : MonoBehaviour {
                 gameStateManager.SetTimerIsRunning(SwitchToOn);
                 gameObject.GetComponent<MeshRenderer>().enabled = false;
                 startLabel.GetComponent<MeshRenderer>().enabled = false;
+
+                if (gameStateManager.GetLocalPlayerObject () != null)
+                {
+                    gameStateManager.GetLocalPlayerObject ().gameObject.GetComponent<LocalPlayerStats> ().UpdateTime ("Started");
+                }
             }
             else if (gameStateManager.TimerIsRunning && !SwitchToOn)
             {
@@ -39,6 +44,12 @@ public class SetTimerOnTrigger : MonoBehaviour {
                 GameObject.FindGameObjectWithTag("Music").GetComponent<AudioSource>().Stop();
                 courseCompleteMessage.enabled = true;
                 courseCompleteMessage.text = "Course Complete!!\n\nYour time: " + gameStateManager.GetCurrentTime();
+
+                if (gameStateManager.GetLocalPlayerObject () != null)
+                {
+                    gameStateManager.GetLocalPlayerObject ().gameObject.GetComponent<LocalPlayerStats> ().UpdateTime (gameStateManager.GetCurrentTime());
+                }
+
                 ShootConfetti(other.gameObject);
                 SaveLevelCompletion();
                 gameStateManager.SetIsCourseComplete(true);
