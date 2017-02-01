@@ -56,16 +56,21 @@ public class LevelGenerator : NetworkBehaviour {
         for (int i = 0; i < courseJumpListSize; i++)
         {
             var nextJump = Random.Range(0, jumpList.Count);
-            if (nextJump == lastNum)
+
+            if(!ApplicationManager.JumpsDifficultiesAllowed.Contains(jumpList[nextJump].GetComponent<SnapPointManager>().jumpDifficulty))
             {
                 i--;
+            }
+            else if (nextJump == lastNum)
+            {
+                i--;
+                lastNum = nextJump;
             }
             else
             {
                 previousSnapPoint = InstantiateJumpAtSnapPoint(previousSnapPoint, jumpList[nextJump]);
                 CurrentJumpNumber++;
             }
-            lastNum = nextJump;
         }
 
         InstantiateEndPoint(previousSnapPoint);
