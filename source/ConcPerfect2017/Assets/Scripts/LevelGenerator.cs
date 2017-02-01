@@ -79,6 +79,7 @@ public class LevelGenerator : NetworkBehaviour {
     void BuildCourseIteratively()
     {
         CourseJumpList = gameManager.GetComponent<LevelManager>().getLevel(ApplicationManager.currentLevel);
+        GameStateManager.SetCourseJumpLimit(CourseJumpList.Count);
         GameObject previousSnapPoint = InstantiateStartPoint();
 
         foreach (var jump in CourseJumpList)
