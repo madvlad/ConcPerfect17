@@ -19,6 +19,7 @@ public class MainMenuButtonBehavior : MonoBehaviour {
     public GameObject mouseSensitivityMenuUIElement;
     public GameObject mouseInvertYAxisMenuUIElement;
     public GameObject multiplayerMenuUIElement;
+    public GameObject settingsMenuUIElement;
 
     void Start()
     {
@@ -171,5 +172,24 @@ public class MainMenuButtonBehavior : MonoBehaviour {
         ApplicationManager.numberOfJumps = 9;
         ApplicationManager.IsSingleplayer = true;
         LoadGameScene();
+    }
+
+    public void ClearLevelProgress()
+    {
+        PlayerPrefs.SetInt("LevelsCompleted", 0);
+        ApplicationManager.LevelsCompleted = 0;
+        ShowMainMenu();
+    }
+
+    public void ShowSettingsMenu()
+    {
+        mainMenuUIElement.SetActive(false);
+        settingsMenuUIElement.SetActive(true);
+    }
+
+    public void ReturnToMainMenu()
+    {
+        mainMenuUIElement.SetActive(true);
+        settingsMenuUIElement.SetActive(false);
     }
 }

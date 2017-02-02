@@ -9,6 +9,7 @@ public class GameStateManager : NetworkBehaviour {
     public bool TimerIsRunning;
     public GameObject TimerHUDElement;
     public GameObject JumpHUDElement;
+    public GameObject JumpNameHUDElement;
     public GameObject EscapeMenuHUDElement;
     public GameObject EscapeMenuSeedElement;
     public GameObject SettingsMenuHUDElement;
@@ -220,6 +221,11 @@ public class GameStateManager : NetworkBehaviour {
         {
             GetLocalPlayerObject ().gameObject.GetComponent<LocalPlayerStats> ().UpdateJump (CurrentJumpNumber);
         }
+    }
+
+    public void SetJumpName(string name)
+    {
+        JumpNameHUDElement.GetComponent<Text>().text = name;
     }
 
 	public int GetCourseJumpLimit()

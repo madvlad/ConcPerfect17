@@ -43,7 +43,7 @@ public class SetTimerOnTrigger : MonoBehaviour {
                 gameObject.GetComponent<AudioSource>().PlayOneShot(GameEndSound);
                 GameObject.FindGameObjectWithTag("Music").GetComponent<AudioSource>().Stop();
                 courseCompleteMessage.enabled = true;
-                courseCompleteMessage.text = "Course Complete!!\n\nYour time: " + gameStateManager.GetCurrentTime();
+                courseCompleteMessage.text = "Course Complete!!\n\nYour time: " + gameStateManager.GetCurrentTime() + "\n\nPress ESC To Quit";
 
                 if (gameStateManager.GetLocalPlayerObject () != null)
                 {
@@ -53,7 +53,6 @@ public class SetTimerOnTrigger : MonoBehaviour {
                 ShootConfetti(other.gameObject);
                 SaveLevelCompletion();
                 gameStateManager.SetIsCourseComplete(true);
-                gameStateManager.LockPlayer(false);
                 Invoke("EndGame", 7.0f);
             }
         }
@@ -82,6 +81,5 @@ public class SetTimerOnTrigger : MonoBehaviour {
     private void EndGame()
     {
         courseCompleteMessage.enabled = false;
-        gameStateManager.ShowEscapeMenu(true);
     }
 }

@@ -56,16 +56,21 @@ public class LevelGenerator : NetworkBehaviour {
         for (int i = 0; i < courseJumpListSize; i++)
         {
             var nextJump = Random.Range(0, jumpList.Count);
-            if (nextJump == lastNum)
+
+            if(!ApplicationManager.JumpsDifficultiesAllowed.Contains(jumpList[nextJump].GetComponent<SnapPointManager>().jumpDifficulty))
             {
                 i--;
+            }
+            else if (nextJump == lastNum)
+            {
+                i--;
+                lastNum = nextJump;
             }
             else
             {
                 previousSnapPoint = InstantiateJumpAtSnapPoint(previousSnapPoint, jumpList[nextJump]);
                 CurrentJumpNumber++;
             }
-            lastNum = nextJump;
         }
 
         InstantiateEndPoint(previousSnapPoint);
@@ -74,6 +79,7 @@ public class LevelGenerator : NetworkBehaviour {
     void BuildCourseIteratively()
     {
         CourseJumpList = gameManager.GetComponent<LevelManager>().getLevel(ApplicationManager.currentLevel);
+        GameStateManager.SetCourseJumpLimit(CourseJumpList.Count);
         GameObject previousSnapPoint = InstantiateStartPoint();
 
         foreach (var jump in CourseJumpList)
@@ -94,6 +100,7 @@ public class LevelGenerator : NetworkBehaviour {
         newJumpSeparator.GetComponent<NetworkTransform>().transform.position = previousSnapPoint.transform.position;
         newJumpSeparator.transform.position = previousSnapPoint.transform.position;
         newJumpSeparator.GetComponent<JumpTrigger>().JumpNumber = CurrentJumpNumber;
+        newJumpSeparator.GetComponent<JumpTrigger>().JumpName = newJump.GetComponent<SnapPointManager>().jumpName;
         previousSnapPoint = newJump.GetComponent<SnapPointManager>().snapPointOut;
         NetworkServer.Spawn(newJump);
         NetworkServer.Spawn(newJumpSeparator);
