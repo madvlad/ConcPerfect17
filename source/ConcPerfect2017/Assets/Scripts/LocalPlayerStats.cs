@@ -11,6 +11,11 @@ public class LocalPlayerStats : NetworkBehaviour {
 	void Start () {
 		if (isServer)
 			gameServerManager = GameObject.FindGameObjectWithTag ("GameServerManager").GetComponent<GameServerManager> ();
+    public void RequestCourseJumpLimit() {
+        if (!isLocalPlayer)
+            return;
+        CmdRequestCourseJumpLimt();
+    }
 
 		if (this.gameObject.GetComponent<LocalPlayerStats> () != null)
 		{
@@ -28,6 +33,10 @@ public class LocalPlayerStats : NetworkBehaviour {
 			return;
 		CmdUpdateTime (netId, currentTimerTime);
 	}
+    [Command]
+    public void CmdRequestCourseJumpLimt() {
+        gameServerManager.GetCourseJumpLimit();
+    }
 
 	public void UpdateJump(int jump)
 	{

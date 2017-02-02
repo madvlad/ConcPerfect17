@@ -22,7 +22,6 @@ public class GameStateManager : NetworkBehaviour {
     private int GameType;
     private float CurrentTimerTime;
     private List<GameObject> CourseJumpList;
-    private int CourseJumpLimit;
 	private int CurrentJumpNumber;
     private bool IsCasual;
     private bool IsPaused = false;
@@ -32,6 +31,8 @@ public class GameStateManager : NetworkBehaviour {
 
 	[SerializeField]
 	private List<string> playerStats;
+    [SyncVar]
+    private int CourseJumpLimit;
 
     void Start ()
     {
@@ -288,4 +289,10 @@ public class GameStateManager : NetworkBehaviour {
 		playerStats = new List<string>(stats.Split ('%'));
 	}
 
+    [ClientRpc]
+    public void RpcUpdateCourseJumpLimit(int CourseJumpLimit) {
+        if (!isServer) {
+            this.CourseJumpLimit = CourseJumpLimit;
+        }
+    }
 }

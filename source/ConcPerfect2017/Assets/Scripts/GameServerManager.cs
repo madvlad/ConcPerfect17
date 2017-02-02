@@ -88,4 +88,7 @@ public class GameServerManager : NetworkBehaviour {
 
 
 
+    public void GetCourseJumpLimit() {
+        gameManager.RpcUpdateCourseJumpLimit(gameManager.GetCourseJumpLimit());
+    }
 }
