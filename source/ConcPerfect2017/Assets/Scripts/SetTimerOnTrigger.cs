@@ -35,6 +35,8 @@ public class SetTimerOnTrigger : MonoBehaviour {
                 if (gameStateManager.GetLocalPlayerObject () != null)
                 {
                     gameStateManager.GetLocalPlayerObject ().gameObject.GetComponent<LocalPlayerStats> ().UpdateTime ("Started");
+                    gameStateManager.GetLocalPlayerObject
+                      ().gameObject.GetComponent<LocalPlayerStats> ().RequestCourseJumpLimit ();
                 }
             }
             else if (gameStateManager.TimerIsRunning && !SwitchToOn)
