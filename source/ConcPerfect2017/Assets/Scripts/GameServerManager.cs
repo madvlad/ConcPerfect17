@@ -6,8 +6,8 @@ using UnityEngine;
 using UnityEngine.Networking;
 
 public class GameServerManager : NetworkBehaviour {
-
-	GameStateManager gameManager;
+	private GameStateManager gameManager;
+    
 
 	public struct PlayerStat
 	{
@@ -52,7 +52,6 @@ public class GameServerManager : NetworkBehaviour {
 		}
 			
 		gameManager.RpcUpdatePlayerStats (playerStats);
-
 	}
 
 	public void UpdatePlayerTime(NetworkInstanceId netId, string playerTime)
@@ -85,8 +84,6 @@ public class GameServerManager : NetworkBehaviour {
 		playerStatsList.Add (newPlayer);
 		return newPlayer;
 	}
-
-
 
     public void GetCourseJumpLimit() {
         gameManager.RpcUpdateCourseJumpLimit(gameManager.GetCourseJumpLimit());
