@@ -19,6 +19,7 @@ public class MainMenuButtonBehavior : MonoBehaviour {
     public GameObject mouseSensitivityMenuUIElement;
     public GameObject mouseInvertYAxisMenuUIElement;
     public GameObject multiplayerMenuUIElement;
+    public GameObject nicknameMenuUIElement;
     public GameObject settingsMenuUIElement;
 
     void Start()
@@ -39,7 +40,6 @@ public class MainMenuButtonBehavior : MonoBehaviour {
     {
         ApplicationManager.currentLevel = 0;
         ApplicationManager.numberOfJumps = 9;
-        ApplicationManager.IsSingleplayer = true;
         LoadGameScene();
     }
 
@@ -47,7 +47,6 @@ public class MainMenuButtonBehavior : MonoBehaviour {
     {
         ApplicationManager.currentLevel = 0;
         ApplicationManager.numberOfJumps = 18;
-        ApplicationManager.IsSingleplayer = true;
         LoadGameScene();
     }
 
@@ -65,16 +64,20 @@ public class MainMenuButtonBehavior : MonoBehaviour {
 
     void ShowSingleplayerMenu()
     {
+        ApplicationManager.IsSingleplayer = true;
         predefinedCourseMenuUIElement.SetActive(false);
         mainMenuUIElement.SetActive(false);
-        singlePlayerMenuUIElement.SetActive(true);
+        nicknameMenuUIElement.SetActive(true);
+        singlePlayerMenuUIElement.SetActive(false);
     }
 
     public void ShowMultiplayerMenu()
     {
+        ApplicationManager.IsSingleplayer = false;
         predefinedCourseMenuUIElement.SetActive(false);
         mainMenuUIElement.SetActive(false);
-        multiplayerMenuUIElement.SetActive(true);
+        nicknameMenuUIElement.SetActive(true);
+        multiplayerMenuUIElement.SetActive(false);
     }
 
     void ShowPredefinedCoursesMenu()
@@ -155,9 +158,22 @@ public class MainMenuButtonBehavior : MonoBehaviour {
         ApplicationManager.NetworkAddress = ip;
     }
 
+    public void SetNickname(string nickname) {
+        ApplicationManager.Nickname = nickname;
+    }
+
+    public void OnEnterNickname() {
+        if (ApplicationManager.IsSingleplayer) {
+            nicknameMenuUIElement.SetActive(false);
+            singlePlayerMenuUIElement.SetActive(true);
+        } else {
+            nicknameMenuUIElement.SetActive(false);
+            multiplayerMenuUIElement.SetActive(true);
+        }
+    }
+
     public void JoinMultiplayerGame()
     {
-        ApplicationManager.IsSingleplayer = false;
         LoadGameScene();
     }
 
@@ -170,7 +186,6 @@ public class MainMenuButtonBehavior : MonoBehaviour {
     {
         ApplicationManager.currentLevel = levelNum;
         ApplicationManager.numberOfJumps = 9;
-        ApplicationManager.IsSingleplayer = true;
         LoadGameScene();
     }
 

@@ -10,6 +10,7 @@ public class ApplicationManager : MonoBehaviour {
     static public bool invertYAxis = false;
     static public bool IsSingleplayer = true;
     static public string NetworkAddress = "localhost";
+    static public string Nickname = "0xD15EA5E";
     static public int GameType = GameTypes.CasualGameType;
     static public int LevelsCompleted = 0;
     static public List<int> JumpsDifficultiesAllowed = new List<int> { 0, 1, 2, 3, 4, 5 };
