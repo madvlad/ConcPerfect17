@@ -8,6 +8,7 @@ public class LevelGenerator : NetworkBehaviour {
     public GameObject startPrefab;
     public GameObject endPrefab;
     public GameObject gameManager;
+    public GameObject tutorialLevel;
     public List<GameObject> jumpList;
     public int courseJumpListSize;
     public int RandomSeed;
@@ -30,14 +31,28 @@ public class LevelGenerator : NetworkBehaviour {
         if (!isServer)
             return;
 
-        if (ApplicationManager.currentLevel > 0)
+        // Casual Mode
+        if (ApplicationManager.GameType == 0)
         {
-            BuildCourseIteratively();
+            if (ApplicationManager.currentLevel > 0)
+            {
+                BuildCourseIteratively();
+            }
+            else
+            {
+                BuildRandomCourse();
+            }
         }
-        else
+        // Tutorial
+        else if (ApplicationManager.GameType == 1)
         {
-            BuildRandomCourse();
+            BuildTutorialLevel();
         }
+    }
+
+    private void BuildTutorialLevel()
+    {
+        Instantiate(tutorialLevel);
     }
 
     private void BuildRandomCourse()

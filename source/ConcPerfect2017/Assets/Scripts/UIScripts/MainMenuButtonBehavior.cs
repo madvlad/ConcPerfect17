@@ -40,6 +40,7 @@ public class MainMenuButtonBehavior : MonoBehaviour {
         ApplicationManager.currentLevel = 0;
         ApplicationManager.numberOfJumps = 9;
         ApplicationManager.IsSingleplayer = true;
+        ApplicationManager.GameType = 0;
         LoadGameScene();
     }
 
@@ -48,6 +49,7 @@ public class MainMenuButtonBehavior : MonoBehaviour {
         ApplicationManager.currentLevel = 0;
         ApplicationManager.numberOfJumps = 18;
         ApplicationManager.IsSingleplayer = true;
+        ApplicationManager.GameType = 0;
         LoadGameScene();
     }
 
@@ -180,6 +182,7 @@ public class MainMenuButtonBehavior : MonoBehaviour {
         ApplicationManager.currentLevel = levelNum;
         ApplicationManager.numberOfJumps = 9;
         ApplicationManager.IsSingleplayer = true;
+        ApplicationManager.GameType = 0;
         LoadGameScene();
     }
 

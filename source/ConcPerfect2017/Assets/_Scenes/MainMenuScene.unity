@@ -7333,12 +7333,12 @@ RectTransform:
   m_Children:
   - {fileID: 1806839406}
   - {fileID: 405212639}
+  - {fileID: 941592464}
   - {fileID: 1176274601}
   - {fileID: 1761504012}
   - {fileID: 756490901}
   - {fileID: 727388180}
   - {fileID: 1910924122}
-  - {fileID: 941592464}
   - {fileID: 569767603}
   m_Father: {fileID: 297508688}
   m_RootOrder: 0
@@ -7705,7 +7705,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 691662644}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
@@ -8462,7 +8462,7 @@ RectTransform:
   m_Children:
   - {fileID: 1348897164}
   m_Father: {fileID: 691662644}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
@@ -10112,7 +10112,7 @@ RectTransform:
   m_Children:
   - {fileID: 264951330}
   m_Father: {fileID: 691662644}
-  m_RootOrder: 7
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
@@ -10147,8 +10147,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4d9bd71e9e908743afa5d72e242247b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainGameScene: 
-  mainMenuScene: 
+  mainGameScene: GameScene
+  mainMenuScene: MainMenuScene
   creditsUIElement: {fileID: 0}
   escapeMenuUIElement: {fileID: 0}
   gameStateManager: {fileID: 0}
@@ -10200,7 +10200,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 941592466}
-        m_MethodName: ShowSettingsMenu
+        m_MethodName: StartTutorial
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -12436,7 +12436,7 @@ RectTransform:
   m_Children:
   - {fileID: 2012367390}
   m_Father: {fileID: 691662644}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
@@ -25102,7 +25102,7 @@ RectTransform:
   m_Children:
   - {fileID: 467024875}
   m_Father: {fileID: 691662644}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
@@ -26611,7 +26611,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 691662644}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
