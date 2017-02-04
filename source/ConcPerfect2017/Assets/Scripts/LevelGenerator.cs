@@ -13,6 +13,8 @@ public class LevelGenerator : NetworkBehaviour {
     public int courseJumpListSize;
     public int RandomSeed;
 
+    public AudioClip tutorialMusic;
+
     private List<GameObject> CourseJumpList;
     private GameStateManager GameStateManager;
     private int CurrentJumpNumber = 1;
@@ -53,6 +55,8 @@ public class LevelGenerator : NetworkBehaviour {
     private void BuildTutorialLevel()
     {
         Instantiate(tutorialLevel);
+        GameObject.FindGameObjectWithTag("Music").GetComponent<AudioSource>().clip = tutorialMusic;
+        GameObject.FindGameObjectWithTag("Music").GetComponent<AudioSource>().Play();
     }
 
     private void BuildRandomCourse()
