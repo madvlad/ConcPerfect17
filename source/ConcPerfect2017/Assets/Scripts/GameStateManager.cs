@@ -39,7 +39,6 @@ public class GameStateManager : NetworkBehaviour {
 
     void Start() {
         GameType = ApplicationManager.GameType;
-        Debug.Log(GameType);
 
         if (isServer)
             gameServerManager = GameObject.FindGameObjectWithTag("GameServerManager").GetComponent<GameServerManager>();

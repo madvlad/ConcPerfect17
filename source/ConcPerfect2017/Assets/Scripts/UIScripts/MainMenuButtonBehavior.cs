@@ -40,6 +40,7 @@ public class MainMenuButtonBehavior : MonoBehaviour {
     {
         ApplicationManager.currentLevel = 0;
         ApplicationManager.numberOfJumps = 9;
+        ApplicationManager.GameType = 0;
         LoadGameScene();
     }
 
@@ -47,12 +48,22 @@ public class MainMenuButtonBehavior : MonoBehaviour {
     {
         ApplicationManager.currentLevel = 0;
         ApplicationManager.numberOfJumps = 18;
+        ApplicationManager.GameType = 0;
         LoadGameScene();
     }
 
     void StartNewGameInfinite()
     {
         ApplicationManager.numberOfJumps = 27;
+        LoadGameScene();
+    }
+
+    public void StartTutorial()
+    {
+        ApplicationManager.currentLevel = -1;
+        ApplicationManager.numberOfJumps = 3;
+        ApplicationManager.IsSingleplayer = true;
+        ApplicationManager.GameType = 1;
         LoadGameScene();
     }
 
@@ -186,6 +197,7 @@ public class MainMenuButtonBehavior : MonoBehaviour {
     {
         ApplicationManager.currentLevel = levelNum;
         ApplicationManager.numberOfJumps = 9;
+        ApplicationManager.GameType = 0;
         LoadGameScene();
     }
 
