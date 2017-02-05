@@ -27,7 +27,7 @@ public class GameStateManager : NetworkBehaviour {
     private bool IsCasual;
     private bool IsPaused = false;
     private bool IsDisplayStats = false;
-    private bool IsDisplayNicknames = false;
+    private bool IsDisplayNicknames = true;
     private bool IsCourseComplete = false;
     private int CourseSeed;
 
@@ -59,7 +59,7 @@ public class GameStateManager : NetworkBehaviour {
 
     private void CheckIfDisplayNicknames() {
         if (Input.GetButtonDown("DisplayNames")) {
-            IsDisplayNicknames = IsDisplayNicknames ? false : true;
+            IsDisplayNicknames = !IsDisplayNicknames;
             if (IsDisplayNicknames) {
                 GetLocalPlayerObject().GetComponent<LocalPlayerStats>().RequestPlayerNicknames();
             } else {
