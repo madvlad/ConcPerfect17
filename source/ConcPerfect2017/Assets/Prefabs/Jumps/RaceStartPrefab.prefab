@@ -1010,7 +1010,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: ad3e7576b24caeb4ea2c877eed4d8b4b, type: 2}
+  - {fileID: 2100000, guid: daa7cb627eaa81a4eb2b9a46f87593fb, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1343,6 +1343,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22d60ed4ab57df94a992f71540dae7a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Trigger: {fileID: 1477869601877146}
+  TriggerPlatform: {fileID: 1450677922554776}
+  Barrier: {fileID: 1714927808236828}
+  GoSound: {fileID: 8300000, guid: a5f2ed60d70789d45acd5e438396ca6b, type: 3}
 --- !u!114 &114422092714461400
 MonoBehaviour:
   m_ObjectHideFlags: 1

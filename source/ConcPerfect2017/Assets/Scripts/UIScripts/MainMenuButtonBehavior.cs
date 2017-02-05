@@ -26,6 +26,7 @@ public class MainMenuButtonBehavior : MonoBehaviour {
 
     void Start()
     {
+        ApplicationManager.GameType = GameTypes.CasualGameType;
         if (mouseSensitivityMenuUIElement != null && mouseSensitivityMenuUIElement.GetComponent<Slider>() != null)
         {
             mouseSensitivityMenuUIElement.GetComponent<Slider>().value = ApplicationManager.mouseSensitivity;
@@ -42,7 +43,6 @@ public class MainMenuButtonBehavior : MonoBehaviour {
     {
         ApplicationManager.currentLevel = 0;
         ApplicationManager.numberOfJumps = 9;
-        ApplicationManager.GameType = 0;
         EnableStartHostGameButtons(false);
         GameObject.FindGameObjectWithTag("NetworkIssuer").GetComponent<ConcPerfectNetworkManager>().StartNetworkManager();
     }
@@ -51,7 +51,6 @@ public class MainMenuButtonBehavior : MonoBehaviour {
     {
         ApplicationManager.currentLevel = 0;
         ApplicationManager.numberOfJumps = 18;
-        ApplicationManager.GameType = 0;
         EnableStartHostGameButtons(false);
         GameObject.FindGameObjectWithTag("NetworkIssuer").GetComponent<ConcPerfectNetworkManager>().StartNetworkManager();
     }
@@ -133,7 +132,8 @@ public class MainMenuButtonBehavior : MonoBehaviour {
         if (int.TryParse(randomSeedInputUIElement.GetComponent<Text>().text, out seed))
         {
             ApplicationManager.randomSeed = seed;
-        } else
+        }
+        else
         {
             // TODO :: Display some error message for the idiots trying to type letters in
         }
@@ -227,7 +227,6 @@ public class MainMenuButtonBehavior : MonoBehaviour {
     {
         ApplicationManager.currentLevel = levelNum;
         ApplicationManager.numberOfJumps = 9;
-        ApplicationManager.GameType = 0;
         EnableStartHostGameButtons(false);
         GameObject.FindGameObjectWithTag("NetworkIssuer").GetComponent<ConcPerfectNetworkManager>().StartNetworkManager();
     }
@@ -255,5 +254,17 @@ public class MainMenuButtonBehavior : MonoBehaviour {
     public void OnUnetMatchmakerToggle() {
         ApplicationManager.IsLAN = !UnetMatchMakerToggle.GetComponent<Toggle>().isOn;
         PlayerPrefs.SetInt("UseLAN", ApplicationManager.IsLAN ? 1 : 0);
+    }
+
+    public void SetRaceMode(bool on)
+    {
+        if (on)
+        {
+            ApplicationManager.GameType = GameTypes.RaceGameType;
+        }
+        else
+        {
+            ApplicationManager.GameType = GameTypes.CasualGameType;
+        }
     }
 }
