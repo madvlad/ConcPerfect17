@@ -45,6 +45,12 @@ public class LocalPlayerStats : NetworkBehaviour {
         CmdRequestCourseJumpLimt();
     }
 
+    public void RequestPlayerNicknames() {
+        if (!isLocalPlayer)
+            return;
+        CmdRequestPlayerNicknames();
+    }
+
     [Command]
     public void CmdRequestCourseJumpLimt() {
         gameServerManager.GetCourseJumpLimit();
@@ -65,5 +71,10 @@ public class LocalPlayerStats : NetworkBehaviour {
     [Command]
     public void CmdUpdateNickname(NetworkInstanceId netId, string nickname) {
         gameServerManager.UpdatePlayerNickname(netId, nickname);
+    }
+
+    [Command]
+    public void CmdRequestPlayerNicknames() {
+        gameServerManager.RequestPlayerNicknames();
     }
 }

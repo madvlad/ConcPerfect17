@@ -71,10 +71,10 @@ public class FirstPersonDrifter : NetworkBehaviour
 		playerCam = GetComponentInChildren<Camera>();
 		playerCam.gameObject.SetActive(false);
 
-        if (!(Network.isServer || Network.isClient))
-        {
-            Network.InitializeServer(1, 25000, false);
-        }
+        //if (!(Network.isServer || Network.isClient))
+        //{
+        //    Network.InitializeServer(1, 25000, false);
+        //}
     }
 
     public override void OnStartLocalPlayer()

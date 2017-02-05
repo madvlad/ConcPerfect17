@@ -60,8 +60,12 @@ public class GameStateManager : NetworkBehaviour {
     private void CheckIfDisplayNicknames() {
         if (Input.GetButtonDown("DisplayNames")) {
             IsDisplayNicknames = IsDisplayNicknames ? false : true;
-            foreach (GameObject nickname in GameObject.FindGameObjectsWithTag("Nickname")) {
-                nickname.GetComponent<Nickname>().SetDisplayNickname(IsDisplayNicknames);
+            if (IsDisplayNicknames) {
+                GetLocalPlayerObject().GetComponent<LocalPlayerStats>().RequestPlayerNicknames();
+            } else {
+                foreach (GameObject nickname in GameObject.FindGameObjectsWithTag("Nickname")) {
+                    Destroy(nickname);
+                }
             }
         }
     }
