@@ -11,14 +11,15 @@ public class GameServerManager : NetworkBehaviour {
 
 	public struct PlayerStat
 	{
-		public string PlayerId;
+		public NetworkInstanceId PlayerId;
+        public string Nickname;
 		public int CurrentJump;
 		public string CurrentTimerTime;
 	}
 
 	public class ListPlayerStats : List<PlayerStat>
 	{
-		public void RemoveStatByPlayerId(string netId)
+		public void RemoveStatByPlayerId(NetworkInstanceId netId)
 		{
 			PlayerStat s = GetStatByPlayerId (netId);
 			if (s.PlayerId != null)
@@ -26,13 +27,20 @@ public class GameServerManager : NetworkBehaviour {
 		}
 
 
-		public PlayerStat GetStatByPlayerId(string netId)
+		public PlayerStat GetStatByPlayerId(NetworkInstanceId netId)
 		{
 			foreach (PlayerStat s in this)
 				if (s.PlayerId == netId) 
 					return s;
 			return new PlayerStat ();
 		}
+
+        public bool HasStatWithPlayerId(NetworkInstanceId netId) {
+            foreach (PlayerStat s in this)
+                if (s.PlayerId == netId)
+                    return true;
+            return false; 
+        }
 
 	}
 
@@ -48,18 +56,36 @@ public class GameServerManager : NetworkBehaviour {
 
 		string playerStats = "";
 		foreach (PlayerStat stat in playerStatsList) {
-			playerStats += "Player" + stat.PlayerId + " ; " + stat.CurrentJump + "/" + gameManager.GetCourseJumpLimit () + " ; " + stat.CurrentTimerTime + "%";
+			playerStats += stat.Nickname + " ; " + stat.CurrentJump + "/" + gameManager.GetCourseJumpLimit () + " ; " + stat.CurrentTimerTime + "%";
 		}
 			
 		gameManager.RpcUpdatePlayerStats (playerStats);
 	}
 
+    public PlayerStat getPlayerStat(NetworkInstanceId netId) {
+        PlayerStat playerStat;
+        if (!playerStatsList.HasStatWithPlayerId(netId))
+            playerStat = InitializeNewPlayer(netId);
+        else
+            playerStat = playerStatsList.GetStatByPlayerId(netId);
+
+        return playerStat;
+    }
+
+    public void UpdatePlayerNickname(NetworkInstanceId netId, string nickname) {
+        PlayerStat playerStat = getPlayerStat(netId);
+        playerStatsList.RemoveStatByPlayerId(netId);
+        playerStat.Nickname = nickname;
+        playerStatsList.Add(playerStat);
+        foreach (PlayerStat stat in playerStatsList) {
+            gameManager.RpcUpdatePlayerNickname(stat.PlayerId, stat.Nickname);
+        }
+    }
+
 	public void UpdatePlayerTime(NetworkInstanceId netId, string playerTime)
 	{
-		PlayerStat playerStat = playerStatsList.GetStatByPlayerId (netId.ToString());
-		if (playerStat.PlayerId == null)
-			playerStat = InitializeNewPlayer (netId.ToString());
-		playerStatsList.RemoveStatByPlayerId (netId.ToString());
+        PlayerStat playerStat = getPlayerStat(netId);
+        playerStatsList.RemoveStatByPlayerId (netId);
 		playerStat.CurrentTimerTime = playerTime;
 		playerStatsList.Add (playerStat);
 
@@ -67,18 +93,19 @@ public class GameServerManager : NetworkBehaviour {
 
 	public void UpdatePlayerJump(NetworkInstanceId netId, int jump)
 	{
-		PlayerStat playerStat = playerStatsList.GetStatByPlayerId (netId.ToString());
+		PlayerStat playerStat = playerStatsList.GetStatByPlayerId (netId);
 		if (playerStat.PlayerId == null)
-			playerStat = InitializeNewPlayer (netId.ToString());
-		playerStatsList.RemoveStatByPlayerId (netId.ToString());
+			playerStat = InitializeNewPlayer (netId);
+		playerStatsList.RemoveStatByPlayerId (netId);
 		playerStat.CurrentJump = jump;
 		playerStatsList.Add (playerStat);
 	}
 
-	public PlayerStat InitializeNewPlayer(string netId)
+	public PlayerStat InitializeNewPlayer(NetworkInstanceId netId)
 	{
 		PlayerStat newPlayer = new PlayerStat ();
 		newPlayer.PlayerId = netId;
+        newPlayer.Nickname = "0xD15EA5E";
 		newPlayer.CurrentTimerTime = "Not Started";
 		newPlayer.CurrentJump = 0;
 		playerStatsList.Add (newPlayer);

@@ -15,6 +15,7 @@ public class GameStateManager : NetworkBehaviour {
     public GameObject SettingsMenuHUDElement;
     public GameObject PlayerStatsHUDElement;
     public GameObject localPlayer;
+    public GameObject nicknamePrefab;
 
     // Server Objects
     public GameServerManager gameServerManager;
@@ -26,6 +27,7 @@ public class GameStateManager : NetworkBehaviour {
     private bool IsCasual;
     private bool IsPaused = false;
     private bool IsDisplayStats = false;
+    private bool IsDisplayNicknames = false;
     private bool IsCourseComplete = false;
     private int CourseSeed;
 
@@ -46,6 +48,7 @@ public class GameStateManager : NetworkBehaviour {
     void Update() {
         CheckIfPaused();
         CheckIfDisplayStats();
+        CheckIfDisplayNicknames();
 
         if (TimerIsRunning) {
             CurrentTimerTime += Time.deltaTime;
@@ -54,8 +57,15 @@ public class GameStateManager : NetworkBehaviour {
         }
     }
 
+    private void CheckIfDisplayNicknames() {
+        if (Input.GetButtonDown("DisplayNames")) {
+            IsDisplayNicknames = IsDisplayNicknames ? false : true;
+            foreach (GameObject nickname in GameObject.FindGameObjectsWithTag("Nickname")) {
+                nickname.GetComponent<Nickname>().SetDisplayNickname(IsDisplayNicknames);
+            }
+        }
+    }
 
-    // TODO - Update Stats while tab is held, currently stats only updated after open and close.
     private bool CheckIfDisplayStats() {
         if (Input.GetButtonDown("Tab") && !IsPaused && !IsDisplayStats) {
             IsDisplayStats = true;
@@ -97,7 +107,8 @@ public class GameStateManager : NetworkBehaviour {
         camera.GetComponent<MouseLook>().enabled = enabled;
 
         Cursor.lockState = CursorLockMode.None;
-    }
+    } 
+
 
     public void LockPlayer(bool locked) {
         IsPaused = !enabled;
@@ -126,7 +137,8 @@ public class GameStateManager : NetworkBehaviour {
         Cursor.visible = show;
     }
 
-    public bool IsDisplayingStats() {
+    public bool IsDisplayingStats() 
+    {
         return IsDisplayStats;
     }
 
@@ -175,7 +187,6 @@ public class GameStateManager : NetworkBehaviour {
         }
     }
 
-    // TODO - Style each Row and add Table Header
     public void ShowPlayerStats(bool show) {
         if (show) {
             PlayerStatsHUDElement.SetActive(show);
@@ -258,5 +269,16 @@ public class GameStateManager : NetworkBehaviour {
         if (!isServer) {
             this.CourseJumpLimit = CourseJumpLimit;
         }
+    }
+
+    [ClientRpc]
+    public void RpcUpdatePlayerNickname(NetworkInstanceId netId, string nickname) {
+        if (nickname == ApplicationManager.Nickname)
+            return;
+        GameObject networkedPlayer = ClientScene.FindLocalObject(netId);
+        GameObject nicknamedGO = Instantiate(nicknamePrefab, networkedPlayer.transform.position + new Vector3(0, 1, 0), Camera.main.transform.rotation);
+        nicknamedGO.GetComponent<Nickname>().SetPlayerId(netId);
+        nicknamedGO.GetComponent<Nickname>().SetNickname(nickname);
+        nicknamedGO.GetComponent<Nickname>().SetDisplayNickname(IsDisplayNicknames);
     }
 }
