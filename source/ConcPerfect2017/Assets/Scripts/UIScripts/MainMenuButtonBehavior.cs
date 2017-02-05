@@ -63,7 +63,7 @@ public class MainMenuButtonBehavior : MonoBehaviour {
         ApplicationManager.currentLevel = -1;
         ApplicationManager.numberOfJumps = 3;
         ApplicationManager.IsSingleplayer = true;
-        ApplicationManager.GameType = 1;
+        ApplicationManager.GameType = GameTypes.TutorialGameType;
         LoadGameScene();
     }
 

@@ -5,6 +5,7 @@ using UnityEngine.Networking;
 
 public class LevelGenerator : NetworkBehaviour {
     public GameObject jumpSeparator;
+    public GameObject raceStartPrefab;
     public GameObject startPrefab;
     public GameObject endPrefab;
     public GameObject gameManager;
@@ -34,7 +35,7 @@ public class LevelGenerator : NetworkBehaviour {
             return;
 
         // Casual Mode
-        if (ApplicationManager.GameType == 0)
+        if (ApplicationManager.GameType == 0 || ApplicationManager.GameType == 2)
         {
             if (ApplicationManager.currentLevel > 0)
             {
@@ -128,7 +129,15 @@ public class LevelGenerator : NetworkBehaviour {
 
     private GameObject InstantiateStartPoint()
     {
-        var newStartPrefab = Instantiate(startPrefab);
+        GameObject newStartPrefab;
+        if (ApplicationManager.GameType == 0)
+        {
+            newStartPrefab = Instantiate(startPrefab);
+        }
+        else
+        {
+            newStartPrefab = Instantiate(raceStartPrefab);
+        }
         NetworkServer.Spawn(newStartPrefab);
         GameObject previousSnapPoint = newStartPrefab.GetComponent<SnapPointManager>().snapPointOut;
         return previousSnapPoint;
