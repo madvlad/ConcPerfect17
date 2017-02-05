@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ApplicationManager : MonoBehaviour {
+    static public float musicVolume = 0.5f;
     static public int numberOfJumps = 9;
     static public int randomSeed = 0;
     static public int currentLevel = 0;
@@ -24,6 +25,11 @@ public class ApplicationManager : MonoBehaviour {
     {
         CheckCompletedLevels();
         mouseSensitivity = PlayerPrefs.GetFloat("MouseSensitivity");
+        musicVolume = PlayerPrefs.GetFloat("MusicVolume");
+        if (!PlayerPrefs.HasKey("MusicVolume"))
+        {
+            musicVolume = 0.4f;
+        }
         invertYAxis = PlayerPrefs.GetInt("InvertY") == 1 ? true : false;
         if (mouseSensitivity == 0)
         {

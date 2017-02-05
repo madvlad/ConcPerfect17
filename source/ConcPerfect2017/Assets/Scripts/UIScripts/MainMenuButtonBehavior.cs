@@ -23,9 +23,15 @@ public class MainMenuButtonBehavior : MonoBehaviour {
     public GameObject nicknameMenuUIElement;
     public GameObject settingsMenuUIElement;
     public GameObject matchMakerLobbyMenuUIElement;
+    public GameObject volumeSliderMenuUIElement;
 
     void Start()
     {
+        if (Camera.main.GetComponent<AudioSource>() != null)
+        {
+            Camera.main.GetComponent<AudioSource>().volume = ApplicationManager.musicVolume;
+        }
+
         ApplicationManager.GameType = GameTypes.CasualGameType;
         if (mouseSensitivityMenuUIElement != null && mouseSensitivityMenuUIElement.GetComponent<Slider>() != null)
         {
@@ -37,6 +43,11 @@ public class MainMenuButtonBehavior : MonoBehaviour {
 			mouseInvertYAxisMenuUIElement.GetComponent<Toggle>().isOn = ApplicationManager.invertYAxis;
 			PlayerPrefs.SetInt("MouseInvertXAxis", ApplicationManager.invertYAxis ? 1 : 0);
 		}
+
+        if (volumeSliderMenuUIElement != null)
+        {
+            volumeSliderMenuUIElement.GetComponent<Slider>().value = ApplicationManager.musicVolume;
+        }
     }
 
     void StartNewGame9()
@@ -266,5 +277,12 @@ public class MainMenuButtonBehavior : MonoBehaviour {
         {
             ApplicationManager.GameType = GameTypes.CasualGameType;
         }
+    }
+
+    public void SetMusicVolume(float volume)
+    {
+        ApplicationManager.musicVolume = volume;
+        PlayerPrefs.SetFloat("MusicVolume", volume);
+        Camera.main.GetComponent<AudioSource>().volume = ApplicationManager.musicVolume;
     }
 }
