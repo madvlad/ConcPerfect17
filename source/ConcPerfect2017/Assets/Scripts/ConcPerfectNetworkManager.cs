@@ -56,6 +56,10 @@ public class ConcPerfectNetworkManager : MonoBehaviour {
     private void OnInternetMatchList(bool success, string extendedInfo, List<MatchInfoSnapshot> matches) {
         if (success) {
             if (matches.Count != 0) {
+                //Clear old snapshots
+                foreach (GameObject serverButton in GameObject.FindGameObjectsWithTag("ServerButtons")) {
+                    Destroy(serverButton);
+                }
                 foreach (MatchInfoSnapshot snapshot in matches) {
                     GameObject newServerButton = Instantiate(ServerButtonPrefab);
                     newServerButton.GetComponent<ServerButton>().SetMatchSnapshot(snapshot);

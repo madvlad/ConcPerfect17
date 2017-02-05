@@ -43,6 +43,7 @@ public class MainMenuButtonBehavior : MonoBehaviour {
         ApplicationManager.currentLevel = 0;
         ApplicationManager.numberOfJumps = 9;
         ApplicationManager.GameType = 0;
+        EnableStartHostGameButtons(false);
         GameObject.FindGameObjectWithTag("NetworkIssuer").GetComponent<ConcPerfectNetworkManager>().StartNetworkManager();
     }
 
@@ -51,12 +52,14 @@ public class MainMenuButtonBehavior : MonoBehaviour {
         ApplicationManager.currentLevel = 0;
         ApplicationManager.numberOfJumps = 18;
         ApplicationManager.GameType = 0;
+        EnableStartHostGameButtons(false);
         GameObject.FindGameObjectWithTag("NetworkIssuer").GetComponent<ConcPerfectNetworkManager>().StartNetworkManager();
     }
 
     void StartNewGameInfinite()
     {
         ApplicationManager.numberOfJumps = 27;
+        EnableStartHostGameButtons(false);
         GameObject.FindGameObjectWithTag("NetworkIssuer").GetComponent<ConcPerfectNetworkManager>().StartNetworkManager();
     }
 
@@ -65,7 +68,16 @@ public class MainMenuButtonBehavior : MonoBehaviour {
         ApplicationManager.currentLevel = -1;
         ApplicationManager.numberOfJumps = 3;
         ApplicationManager.IsSingleplayer = true;
+        ApplicationManager.IsLAN = true;
         ApplicationManager.GameType = GameTypes.TutorialGameType;
+        EnableStartHostGameButtons(false);
+        GameObject.FindGameObjectWithTag("NetworkIssuer").GetComponent<ConcPerfectNetworkManager>().StartNetworkManager();
+    }
+
+    public void EnableStartHostGameButtons(bool enable) {
+        foreach (GameObject button in GameObject.FindGameObjectsWithTag("StartHostGameButtons")) {
+            button.GetComponent<Button>().interactable = enable;
+        }
     }
 
     public void LoadGameScene()
@@ -78,7 +90,8 @@ public class MainMenuButtonBehavior : MonoBehaviour {
     {
         ApplicationManager.IsSingleplayer = true;
         ApplicationManager.IsLAN = PlayerPrefs.GetInt("UseLAN") == 1 ? true : false;
-        UnetMatchMakerToggle.GetComponent<Toggle>().isOn = true;
+        EnableStartHostGameButtons(true);
+        UnetMatchMakerToggle.GetComponent<Toggle>().isOn = !ApplicationManager.IsLAN;
         predefinedCourseMenuUIElement.SetActive(false);
         mainMenuUIElement.SetActive(false);
         nicknameMenuUIElement.SetActive(true);
@@ -215,6 +228,7 @@ public class MainMenuButtonBehavior : MonoBehaviour {
         ApplicationManager.currentLevel = levelNum;
         ApplicationManager.numberOfJumps = 9;
         ApplicationManager.GameType = 0;
+        EnableStartHostGameButtons(false);
         GameObject.FindGameObjectWithTag("NetworkIssuer").GetComponent<ConcPerfectNetworkManager>().StartNetworkManager();
     }
 
