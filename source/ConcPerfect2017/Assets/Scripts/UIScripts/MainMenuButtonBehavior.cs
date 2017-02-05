@@ -65,8 +65,7 @@ public class MainMenuButtonBehavior : MonoBehaviour {
         ApplicationManager.currentLevel = -1;
         ApplicationManager.numberOfJumps = 3;
         ApplicationManager.IsSingleplayer = true;
-        ApplicationManager.GameType = 1;
-        GameObject.FindGameObjectWithTag("NetworkIssuer").GetComponent<ConcPerfectNetworkManager>().StartNetworkManager();
+        ApplicationManager.GameType = GameTypes.TutorialGameType;
     }
 
     public void LoadGameScene()
