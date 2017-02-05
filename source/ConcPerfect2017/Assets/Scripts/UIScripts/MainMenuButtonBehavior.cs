@@ -18,9 +18,11 @@ public class MainMenuButtonBehavior : MonoBehaviour {
     public GameObject predefinedCourseMenuUIElement;
     public GameObject mouseSensitivityMenuUIElement;
     public GameObject mouseInvertYAxisMenuUIElement;
+    public GameObject UnetMatchMakerToggle;
     public GameObject multiplayerMenuUIElement;
     public GameObject nicknameMenuUIElement;
     public GameObject settingsMenuUIElement;
+    public GameObject matchMakerLobbyMenuUIElement;
 
     void Start()
     {
@@ -41,7 +43,8 @@ public class MainMenuButtonBehavior : MonoBehaviour {
         ApplicationManager.currentLevel = 0;
         ApplicationManager.numberOfJumps = 9;
         ApplicationManager.GameType = 0;
-        LoadGameScene();
+        EnableStartHostGameButtons(false);
+        GameObject.FindGameObjectWithTag("NetworkIssuer").GetComponent<ConcPerfectNetworkManager>().StartNetworkManager();
     }
 
     void StartNewGame18()
@@ -49,13 +52,15 @@ public class MainMenuButtonBehavior : MonoBehaviour {
         ApplicationManager.currentLevel = 0;
         ApplicationManager.numberOfJumps = 18;
         ApplicationManager.GameType = 0;
-        LoadGameScene();
+        EnableStartHostGameButtons(false);
+        GameObject.FindGameObjectWithTag("NetworkIssuer").GetComponent<ConcPerfectNetworkManager>().StartNetworkManager();
     }
 
     void StartNewGameInfinite()
     {
         ApplicationManager.numberOfJumps = 27;
-        LoadGameScene();
+        EnableStartHostGameButtons(false);
+        GameObject.FindGameObjectWithTag("NetworkIssuer").GetComponent<ConcPerfectNetworkManager>().StartNetworkManager();
     }
 
     public void StartTutorial()
@@ -63,11 +68,19 @@ public class MainMenuButtonBehavior : MonoBehaviour {
         ApplicationManager.currentLevel = -1;
         ApplicationManager.numberOfJumps = 3;
         ApplicationManager.IsSingleplayer = true;
+        ApplicationManager.IsLAN = true;
         ApplicationManager.GameType = GameTypes.TutorialGameType;
-        LoadGameScene();
+        EnableStartHostGameButtons(false);
+        GameObject.FindGameObjectWithTag("NetworkIssuer").GetComponent<ConcPerfectNetworkManager>().StartNetworkManager();
     }
 
-    void LoadGameScene()
+    public void EnableStartHostGameButtons(bool enable) {
+        foreach (GameObject button in GameObject.FindGameObjectsWithTag("StartHostGameButtons")) {
+            button.GetComponent<Button>().interactable = enable;
+        }
+    }
+
+    public void LoadGameScene()
     {
         SceneManager.LoadScene(mainGameScene);
         SceneManager.UnloadSceneAsync("MainMenuScene");
@@ -76,6 +89,9 @@ public class MainMenuButtonBehavior : MonoBehaviour {
     void ShowSingleplayerMenu()
     {
         ApplicationManager.IsSingleplayer = true;
+        ApplicationManager.IsLAN = PlayerPrefs.GetInt("UseLAN") == 1 ? true : false;
+        EnableStartHostGameButtons(true);
+        UnetMatchMakerToggle.GetComponent<Toggle>().isOn = !ApplicationManager.IsLAN;
         predefinedCourseMenuUIElement.SetActive(false);
         mainMenuUIElement.SetActive(false);
         nicknameMenuUIElement.SetActive(true);
@@ -89,6 +105,13 @@ public class MainMenuButtonBehavior : MonoBehaviour {
         mainMenuUIElement.SetActive(false);
         nicknameMenuUIElement.SetActive(true);
         multiplayerMenuUIElement.SetActive(false);
+    }
+
+    public void ShowMatchmakerServers() {
+        ApplicationManager.IsLAN = false;
+        multiplayerMenuUIElement.SetActive(false);
+        matchMakerLobbyMenuUIElement.SetActive(true);
+        GameObject.FindGameObjectWithTag("NetworkIssuer").GetComponent<ConcPerfectNetworkManager>().StartNetworkManager();
     }
 
     void ShowPredefinedCoursesMenu()
@@ -170,7 +193,12 @@ public class MainMenuButtonBehavior : MonoBehaviour {
     }
 
     public void SetNickname(string nickname) {
-        ApplicationManager.Nickname = nickname;
+        if (nickname != "")
+            ApplicationManager.Nickname = nickname;
+    }
+
+    public void SetServerName(string servername) {
+        ApplicationManager.ServerName = servername;
     }
 
     public void OnEnterNickname() {
@@ -180,12 +208,14 @@ public class MainMenuButtonBehavior : MonoBehaviour {
         } else {
             nicknameMenuUIElement.SetActive(false);
             multiplayerMenuUIElement.SetActive(true);
+            matchMakerLobbyMenuUIElement.SetActive(false);
         }
     }
 
     public void JoinMultiplayerGame()
     {
-        LoadGameScene();
+        ApplicationManager.IsLAN = true; 
+        GameObject.FindGameObjectWithTag("NetworkIssuer").GetComponent<ConcPerfectNetworkManager>().StartNetworkManager();
     }
 
     public void SetGameMode(int gameMode)
@@ -198,7 +228,8 @@ public class MainMenuButtonBehavior : MonoBehaviour {
         ApplicationManager.currentLevel = levelNum;
         ApplicationManager.numberOfJumps = 9;
         ApplicationManager.GameType = 0;
-        LoadGameScene();
+        EnableStartHostGameButtons(false);
+        GameObject.FindGameObjectWithTag("NetworkIssuer").GetComponent<ConcPerfectNetworkManager>().StartNetworkManager();
     }
 
     public void ClearLevelProgress()
@@ -218,5 +249,11 @@ public class MainMenuButtonBehavior : MonoBehaviour {
     {
         mainMenuUIElement.SetActive(true);
         settingsMenuUIElement.SetActive(false);
+    }
+
+
+    public void OnUnetMatchmakerToggle() {
+        ApplicationManager.IsLAN = !UnetMatchMakerToggle.GetComponent<Toggle>().isOn;
+        PlayerPrefs.SetInt("UseLAN", ApplicationManager.IsLAN ? 1 : 0);
     }
 }

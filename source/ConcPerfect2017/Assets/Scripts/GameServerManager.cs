@@ -115,4 +115,10 @@ public class GameServerManager : NetworkBehaviour {
     public void GetCourseJumpLimit() {
         gameManager.RpcUpdateCourseJumpLimit(gameManager.GetCourseJumpLimit());
     }
+
+    public void RequestPlayerNicknames() {
+        foreach (PlayerStat stat in playerStatsList) {
+            gameManager.RpcUpdatePlayerNickname(stat.PlayerId, stat.Nickname);
+        }
+    }
 }
