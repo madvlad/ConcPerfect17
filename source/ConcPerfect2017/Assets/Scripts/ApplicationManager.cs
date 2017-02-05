@@ -6,11 +6,16 @@ public class ApplicationManager : MonoBehaviour {
     static public int numberOfJumps = 9;
     static public int randomSeed = 0;
     static public int currentLevel = 0;
+    static public uint MaxNumberOfPlayers = 4;
     static public float mouseSensitivity = 0.0f;
     static public bool invertYAxis = false;
     static public bool IsSingleplayer = true;
+    static public bool AdvertiseServer = true;
+    static public bool IsLAN = false;
+    static public string ServerPassword = "";
     static public string NetworkAddress = "localhost";
     static public string Nickname = "0xD15EA5E";
+    static public string ServerName = "0xDEADBEAF";
     static public int GameType = GameTypes.CasualGameType;
     static public int LevelsCompleted = 0;
     static public List<int> JumpsDifficultiesAllowed = new List<int> { 0, 1, 2, 3, 4, 5 };
