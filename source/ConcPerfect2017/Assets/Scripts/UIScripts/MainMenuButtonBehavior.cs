@@ -20,10 +20,10 @@ public class MainMenuButtonBehavior : MonoBehaviour {
     public GameObject mouseInvertYAxisMenuUIElement;
     public GameObject UnetMatchMakerToggle;
     public GameObject multiplayerMenuUIElement;
-    public GameObject nicknameMenuUIElement;
     public GameObject settingsMenuUIElement;
     public GameObject matchMakerLobbyMenuUIElement;
     public GameObject volumeSliderMenuUIElement;
+    public GameObject nickNameInputField;
 
     void Start()
     {
@@ -104,17 +104,16 @@ public class MainMenuButtonBehavior : MonoBehaviour {
         UnetMatchMakerToggle.GetComponent<Toggle>().isOn = !ApplicationManager.IsLAN;
         predefinedCourseMenuUIElement.SetActive(false);
         mainMenuUIElement.SetActive(false);
-        nicknameMenuUIElement.SetActive(true);
-        singlePlayerMenuUIElement.SetActive(false);
+        singlePlayerMenuUIElement.SetActive(true);
     }
 
     public void ShowMultiplayerMenu()
     {
         ApplicationManager.IsSingleplayer = false;
+        matchMakerLobbyMenuUIElement.SetActive(false);
         predefinedCourseMenuUIElement.SetActive(false);
         mainMenuUIElement.SetActive(false);
-        nicknameMenuUIElement.SetActive(true);
-        multiplayerMenuUIElement.SetActive(false);
+        multiplayerMenuUIElement.SetActive(true);
     }
 
     public void ShowMatchmakerServers() {
@@ -204,22 +203,15 @@ public class MainMenuButtonBehavior : MonoBehaviour {
     }
 
     public void SetNickname(string nickname) {
-        if (nickname != "")
+        if (nickname != "") {
             ApplicationManager.Nickname = nickname;
+            PlayerPrefs.SetString("Nickname", nickname);
+        }
     }
 
     public void SetServerName(string servername) {
-        ApplicationManager.ServerName = servername;
-    }
-
-    public void OnEnterNickname() {
-        if (ApplicationManager.IsSingleplayer) {
-            nicknameMenuUIElement.SetActive(false);
-            singlePlayerMenuUIElement.SetActive(true);
-        } else {
-            nicknameMenuUIElement.SetActive(false);
-            multiplayerMenuUIElement.SetActive(true);
-            matchMakerLobbyMenuUIElement.SetActive(false);
+        if (servername != "") {
+            ApplicationManager.ServerName = servername;
         }
     }
 
@@ -251,6 +243,7 @@ public class MainMenuButtonBehavior : MonoBehaviour {
 
     public void ShowSettingsMenu()
     {
+        nickNameInputField.GetComponentInChildren<Text>().text = PlayerPrefs.HasKey("Nickname") ? PlayerPrefs.GetString("Nickname") : "Enter Nickname";
         mainMenuUIElement.SetActive(false);
         settingsMenuUIElement.SetActive(true);
     }

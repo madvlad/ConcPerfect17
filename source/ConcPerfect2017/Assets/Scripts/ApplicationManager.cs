@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class ApplicationManager : MonoBehaviour {
     static public float musicVolume = 0.5f;
@@ -21,6 +22,7 @@ public class ApplicationManager : MonoBehaviour {
     static public int LevelsCompleted = 0;
     static public List<int> JumpsDifficultiesAllowed = new List<int> { 0, 1, 2, 3, 4, 5 };
 
+    private string[] defaultNicknames = { "BAADF00D", "D15EA5E", "1CEB00DA", "DEADBEAF" };
     void Start()
     {
         CheckCompletedLevels();
@@ -35,6 +37,14 @@ public class ApplicationManager : MonoBehaviour {
         {
             mouseSensitivity = 4;
         }
+
+        if (PlayerPrefs.HasKey("Nickname")) {
+            ApplicationManager.Nickname = PlayerPrefs.GetString("Nickname");
+        } else {
+
+            ApplicationManager.Nickname = defaultNicknames[Random.Range(0, 4)];
+        }
+        ApplicationManager.ServerName = ApplicationManager.Nickname;
     }
 
     void CheckCompletedLevels()
