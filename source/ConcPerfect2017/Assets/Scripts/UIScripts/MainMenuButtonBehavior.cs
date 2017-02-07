@@ -29,10 +29,10 @@ public class MainMenuButtonBehavior : MonoBehaviour {
     {
         if (Camera.main.GetComponent<AudioSource>() != null)
         {
+            ApplicationManager.GameType = GameTypes.CasualGameType;
             Camera.main.GetComponent<AudioSource>().volume = ApplicationManager.musicVolume;
         }
 
-        ApplicationManager.GameType = GameTypes.CasualGameType;
         if (mouseSensitivityMenuUIElement != null && mouseSensitivityMenuUIElement.GetComponent<Slider>() != null)
         {
             mouseSensitivityMenuUIElement.GetComponent<Slider>().value = ApplicationManager.mouseSensitivity;
@@ -281,21 +281,29 @@ public class MainMenuButtonBehavior : MonoBehaviour {
 
     public void RestartRun()
     {
-        if (ApplicationManager.GameType == GameTypes.RaceGameType)
+        if (ApplicationManager.GameType != GameTypes.CasualGameType)
         {
-            // Display "Can't restart during a race"
+            // Display "Can't restart during a race" or just disable button
         }
         else
         {
             var player = GetLocalPlayerObject();
             player.transform.position = new Vector3(0, 2, 0);
-            player.GetComponent<Concer>().ConcCount = 0;
+            player.GetComponent<Concer>().SetConcCount(0);
             var gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameStateManager>();
             gameManager.SetTimerIsRunning(false);
             gameManager.ResetTimer();
             gameManager.SetJumpNumber(0);
+            gameManager.TimerHUDElement.GetComponent<Text>().text = "00:00:00";
+            gameManager.JumpHUDElement.GetComponent<Text>().text = "...";
+            gameManager.JumpNameHUDElement.GetComponent<Text>().text = "";
             
             var jumpSeparators = GameObject.FindGameObjectsWithTag("JumpSeparator");
+            var startTrigger = GameObject.FindGameObjectWithTag("TimerTriggerOn");
+            var startTriggerLabel = GameObject.FindGameObjectWithTag("TimerTriggerOn").GetComponent<SetTimerOnTrigger>().startLabel;
+
+            startTrigger.GetComponent<MeshRenderer>().enabled = true;
+            startTriggerLabel.GetComponent<MeshRenderer>().enabled = true;
 
             foreach(var jumpSeparator in jumpSeparators)
             {
