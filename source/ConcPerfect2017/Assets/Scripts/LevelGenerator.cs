@@ -82,18 +82,14 @@ public class LevelGenerator : NetworkBehaviour {
         {
             var nextJump = Random.Range(0, jumpList.Count);
 
-            if(!ApplicationManager.JumpsDifficultiesAllowed.Contains(jumpList[nextJump].GetComponent<SnapPointManager>().jumpDifficulty))
+            if (nextJump == lastNum || !ApplicationManager.JumpsDifficultiesAllowed.Contains(jumpList[nextJump].GetComponent<SnapPointManager>().jumpDifficulty))
             {
                 i--;
-            }
-            else if (nextJump == lastNum)
-            {
-                i--;
-                lastNum = nextJump;
             }
             else
             {
                 previousSnapPoint = InstantiateJumpAtSnapPoint(previousSnapPoint, jumpList[nextJump]);
+                lastNum = nextJump;
                 CurrentJumpNumber++;
             }
         }
