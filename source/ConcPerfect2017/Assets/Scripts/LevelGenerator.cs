@@ -63,6 +63,10 @@ public class LevelGenerator : NetworkBehaviour {
 
     private void BuildRandomCourse()
     {
+        if (ApplicationManager.JumpsDifficultiesAllowed.Count == 0)
+        {
+            ApplicationManager.JumpsDifficultiesAllowed = new List<int> { 0, 1, 2, 3, 4 };
+        }
         RandomSeed = ApplicationManager.randomSeed;
 
         if (RandomSeed != 0)
