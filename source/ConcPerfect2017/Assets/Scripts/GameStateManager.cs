@@ -251,6 +251,11 @@ public class GameStateManager : NetworkBehaviour {
         EscapeMenuSeedElement.GetComponent<Text>().text = "Seed: " + seed;
     }
 
+    public void ResetTimer()
+    {
+        this.CurrentTimerTime = 0.0f;
+    }
+
     public GameObject GetLocalPlayerObject() {
         var playerObjects = GameObject.FindGameObjectsWithTag("Player");
         GameObject playerObject = null;

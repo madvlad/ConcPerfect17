@@ -31,4 +31,9 @@ public class JumpTrigger : NetworkBehaviour {
             gameObject.GetComponent<AudioSource>().PlayOneShot(checkpointSound);
         }
     }
+
+    public void UnsetTrigger()
+    {
+        WasTriggered = false;
+    }
 }

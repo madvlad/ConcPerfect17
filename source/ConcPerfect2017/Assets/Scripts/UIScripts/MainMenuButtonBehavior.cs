@@ -278,4 +278,44 @@ public class MainMenuButtonBehavior : MonoBehaviour {
         PlayerPrefs.SetFloat("MusicVolume", volume);
         Camera.main.GetComponent<AudioSource>().volume = ApplicationManager.musicVolume;
     }
+
+    public void RestartRun()
+    {
+        if (ApplicationManager.GameType == GameTypes.RaceGameType)
+        {
+            // Display "Can't restart during a race"
+        }
+        else
+        {
+            var player = GetLocalPlayerObject();
+            player.transform.position = new Vector3(0, 2, 0);
+            player.GetComponent<Concer>().ConcCount = 0;
+            var gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameStateManager>();
+            gameManager.SetTimerIsRunning(false);
+            gameManager.ResetTimer();
+            gameManager.SetJumpNumber(0);
+            
+            var jumpSeparators = GameObject.FindGameObjectsWithTag("JumpSeparator");
+
+            foreach(var jumpSeparator in jumpSeparators)
+            {
+                jumpSeparator.GetComponent<JumpTrigger>().UnsetTrigger();
+            }
+        }
+    }
+
+    private GameObject GetLocalPlayerObject()
+    {
+        var playerObjects = GameObject.FindGameObjectsWithTag("Player");
+        GameObject playerObject = null;
+        foreach (GameObject obj in playerObjects)
+        {
+            if (obj.GetComponent<NetworkIdentity>().isLocalPlayer)
+            {
+                playerObject = obj;
+            }
+        }
+
+        return playerObject;
+    }
 }
