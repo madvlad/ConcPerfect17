@@ -22,7 +22,7 @@ public class ApplicationManager : MonoBehaviour {
     static public string ServerName = "0xDEADBEAF";
     static public int GameType = GameTypes.CasualGameType;
     static public int LevelsCompleted = 0;
-    static public List<int> JumpsDifficultiesAllowed = new List<int> { 0, 1, 2, 3, 4, 5 };
+    static public List<int> JumpsDifficultiesAllowed = new List<int> { 0, 1, 2, 3, 4 };
 
     private string[] defaultNicknames = { "BAADF00D", "D15EA5E", "1CEB00DA", "DEADBEAF" };
     void Start()
