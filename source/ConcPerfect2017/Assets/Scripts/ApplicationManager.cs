@@ -4,6 +4,8 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class ApplicationManager : MonoBehaviour {
+    public const string APPLICATION_VERSION = "0.1.0";
+
     static public float musicVolume = 0.5f;
     static public int numberOfJumps = 9;
     static public int randomSeed = 0;
