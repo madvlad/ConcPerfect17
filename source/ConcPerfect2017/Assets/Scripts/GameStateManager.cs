@@ -282,7 +282,7 @@ public class GameStateManager : NetworkBehaviour {
 
     [ClientRpc]
     public void RpcUpdatePlayerNickname(NetworkInstanceId netId, string nickname) {
-        if (nickname == ApplicationManager.Nickname)
+		if (netId == GetLocalPlayerObject().GetComponent<NetworkIdentity>().netId)
             return;
         GameObject networkedPlayer = ClientScene.FindLocalObject(netId);
         GameObject nicknamedGO = Instantiate(nicknamePrefab, networkedPlayer.transform.position + new Vector3(0, 1, 0), Camera.main.transform.rotation);

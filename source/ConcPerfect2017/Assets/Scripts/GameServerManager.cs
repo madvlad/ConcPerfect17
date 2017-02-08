@@ -41,10 +41,10 @@ public class GameServerManager : NetworkBehaviour {
                     return true;
             return false; 
         }
-
 	}
 
 	public ListPlayerStats playerStatsList = new ListPlayerStats();
+	public Dictionary<NetworkInstanceId, string> currentPlayers = new Dictionary<NetworkInstanceId, string>();
 
 	void Start () {
 		gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameStateManager>();
@@ -75,7 +75,8 @@ public class GameServerManager : NetworkBehaviour {
     public void UpdatePlayerNickname(NetworkInstanceId netId, string nickname) {
         PlayerStat playerStat = getPlayerStat(netId);
         playerStatsList.RemoveStatByPlayerId(netId);
-        playerStat.Nickname = nickname;
+		RegisterPlayer (netId, nickname);
+		playerStat.Nickname = currentPlayers[netId];
         playerStatsList.Add(playerStat);
         foreach (PlayerStat stat in playerStatsList) {
             gameManager.RpcUpdatePlayerNickname(stat.PlayerId, stat.Nickname);
@@ -105,11 +106,24 @@ public class GameServerManager : NetworkBehaviour {
 	{
 		PlayerStat newPlayer = new PlayerStat ();
 		newPlayer.PlayerId = netId;
-        newPlayer.Nickname = "0xD15EA5E";
+		newPlayer.Nickname = "0xDEADBEAF";
 		newPlayer.CurrentTimerTime = "Not Started";
 		newPlayer.CurrentJump = 0;
 		playerStatsList.Add (newPlayer);
 		return newPlayer;
+	}
+
+	public void RegisterPlayer(NetworkInstanceId netId, string nickname) {
+		if (currentPlayers.ContainsKey (netId)) {
+			currentPlayers.Remove (netId);
+		}
+
+		string newNick = nickname;
+		int i = 1;
+		while (currentPlayers.ContainsValue(newNick)) {
+			newNick = nickname + i;
+		}
+		currentPlayers [netId] = newNick;
 	}
 
     public void GetCourseJumpLimit() {
