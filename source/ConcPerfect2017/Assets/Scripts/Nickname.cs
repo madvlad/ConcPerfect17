@@ -12,8 +12,10 @@ public class Nickname : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-        if (ClientScene.FindLocalObject(playerId) == null)
-            Destroy(this);
+        if (ClientScene.FindLocalObject(playerId) == null) {
+            Destroy(this.gameObject);
+            return;
+        }
          
         if (GetComponent<MeshRenderer>().enabled) {
             this.gameObject.transform.position = getPlayerPosition() + new Vector3(0, 1, 0);
