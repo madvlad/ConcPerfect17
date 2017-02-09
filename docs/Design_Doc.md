@@ -86,9 +86,9 @@ There are not too many games out there that are like this exactly. What is diffe
 
 - 45 jump components
 - Randomized courses (Unlimited, 9-jump, or 18-jump)
+- 5 preorganized courses
+- Designed tutorial course
 - Well defined and smooth conc jumping mechanics
-- 3D graphics
-- Customizable character models
 - Multiplayer functionality
 - Ability to customize experience:
   - FOV customization

@@ -31,6 +31,13 @@ public class SetTimerOnTrigger : MonoBehaviour {
                 gameStateManager.SetTimerIsRunning(SwitchToOn);
                 gameObject.GetComponent<MeshRenderer>().enabled = false;
                 startLabel.GetComponent<MeshRenderer>().enabled = false;
+
+                if (gameStateManager.GetLocalPlayerObject () != null)
+                {
+                    gameStateManager.GetLocalPlayerObject ().gameObject.GetComponent<LocalPlayerStats> ().UpdateTime ("Started");
+                    gameStateManager.GetLocalPlayerObject
+                      ().gameObject.GetComponent<LocalPlayerStats> ().RequestCourseJumpLimit ();
+                }
             }
             else if (gameStateManager.TimerIsRunning && !SwitchToOn)
             {
@@ -38,12 +45,28 @@ public class SetTimerOnTrigger : MonoBehaviour {
                 gameObject.GetComponent<AudioSource>().PlayOneShot(GameEndSound);
                 GameObject.FindGameObjectWithTag("Music").GetComponent<AudioSource>().Stop();
                 courseCompleteMessage.enabled = true;
-                courseCompleteMessage.text = "Course Complete!!\n\nYour time: " + gameStateManager.GetCurrentTime();
+                courseCompleteMessage.text = "Course Complete!!\n\nYour time: " + gameStateManager.GetCurrentTime() + "\n\nPress ESC To Quit";
+
+                if (gameStateManager.GetLocalPlayerObject () != null)
+                {
+                    gameStateManager.GetLocalPlayerObject ().gameObject.GetComponent<LocalPlayerStats> ().UpdateTime (gameStateManager.GetCurrentTime());
+                }
+
                 ShootConfetti(other.gameObject);
+                SaveLevelCompletion();
                 gameStateManager.SetIsCourseComplete(true);
-                gameStateManager.SetPlayerEnabled(false);
                 Invoke("EndGame", 7.0f);
             }
+        }
+    }
+
+    private void SaveLevelCompletion()
+    {
+        var levelsCompleted = ApplicationManager.LevelsCompleted;
+        if (levelsCompleted < ApplicationManager.currentLevel)
+        {
+            levelsCompleted = ApplicationManager.currentLevel;
+            PlayerPrefs.SetInt("LevelsCompleted", levelsCompleted);
         }
     }
 
@@ -60,6 +83,5 @@ public class SetTimerOnTrigger : MonoBehaviour {
     private void EndGame()
     {
         courseCompleteMessage.enabled = false;
-        gameStateManager.ShowEscapeMenu(true);
     }
 }

@@ -7,6 +7,10 @@ public class JumpTrigger : NetworkBehaviour {
 
     [SyncVar]
     public int JumpNumber;
+
+    [SyncVar]
+    public string JumpName;
+
     public AudioClip checkpointSound;
 
     private bool WasTriggered = false;
@@ -23,7 +27,13 @@ public class JumpTrigger : NetworkBehaviour {
         {
             WasTriggered = true;
             gameManager.SetJumpNumber(JumpNumber);
+            gameManager.SetJumpName(JumpName);
             gameObject.GetComponent<AudioSource>().PlayOneShot(checkpointSound);
         }
+    }
+
+    public void UnsetTrigger()
+    {
+        WasTriggered = false;
     }
 }
