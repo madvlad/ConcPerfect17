@@ -2,25 +2,74 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
+using UnityEngine.UI;
 
-public class RaceStarter : MonoBehaviour {
+public class RaceStarter : NetworkBehaviour {
 
     public GameObject Trigger;
     public GameObject TriggerPlatform;
     public GameObject Barrier;
     public AudioClip GoSound;
 
-    private int Timer = 30;
+    [SyncVar]
+    private float Timer = 30;
+    [SyncVar]
+    private bool IsTriggered = false;
+    [SyncVar]
+    private bool GateOpened = false;
+
+    void OnStart()
+    {
+            Trigger.GetComponent<Renderer>().enabled = true;
+            GetComponent<CapsuleCollider>().enabled = true;
+            TriggerPlatform.GetComponent<Renderer>().enabled = true;
+    }
 
     void OnTriggerEnter(Collider other)
     {
-        Trigger.GetComponent<Renderer>().enabled = false;
-        TriggerPlatform.GetComponent<Renderer>().enabled = false;
+        CmdStartTimeYaNobHead();
+    }
 
-        Debug.Log("Gate will open in " + Timer + " seconds");
-        if (other.gameObject.CompareTag("Player"))
+    [Command]
+    void CmdStartTimeYaNobHead()
+    {
+        IsTriggered = true;
+    }
+
+    void FixedUpdate()
+    {
+        if (IsTriggered && !GateOpened)
         {
-            Invoke("LongCountdown", 5.0f);
+            var GatePanel = GameObject.FindGameObjectWithTag("GatePanel").GetComponent<Text>();
+            Trigger.SetActive(false);
+            TriggerPlatform.SetActive(false);
+
+            if (Timer > 10)
+            {
+                if (Math.Floor(Timer) % 5 == 0)
+                {
+                    GatePanel.text = ("Gate opens in " + Math.Floor(Timer) + " seconds");
+                }
+                Timer -= Time.deltaTime;
+            }
+            else if (Timer > 0)
+            {
+                GatePanel.text = ("Gate opens in " + Math.Floor(Timer) + " seconds");
+                Timer -= Time.deltaTime;
+            }
+            else
+            {
+                GatePanel.text = "";
+                ReleaseGate();
+            }
+        }
+        else
+        {
+            if (Timer < 0)
+            {
+                Invoke("ShutGate", 10.0f);
+            }
         }
     }
 
@@ -57,7 +106,9 @@ public class RaceStarter : MonoBehaviour {
 
     private void ReleaseGate()
     {
-        AudioSource.PlayClipAtPoint(GoSound, gameObject.transform.position);
+        GateOpened = true;
+        IsTriggered = false;
+        GetComponent<AudioSource>().PlayOneShot(GoSound);
         Barrier.SetActive(false);
         Debug.Log("Gate open");
     }

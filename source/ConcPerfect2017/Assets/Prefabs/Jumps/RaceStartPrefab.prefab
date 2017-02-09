@@ -58,6 +58,9 @@ GameObject:
   - component: {fileID: 114830024380756188}
   - component: {fileID: 114422092714461400}
   - component: {fileID: 114539500184767612}
+  - component: {fileID: 114977376876110882}
+  - component: {fileID: 136010188046874986}
+  - component: {fileID: 82972588729286906}
   m_Layer: 0
   m_Name: RaceStartPrefab
   m_TagString: Untagged
@@ -213,7 +216,6 @@ GameObject:
   - component: {fileID: 33675872296210818}
   - component: {fileID: 136389195889700912}
   - component: {fileID: 23098632368246048}
-  - component: {fileID: 114220290997661468}
   m_Layer: 0
   m_Name: StartRaceTrigger
   m_TagString: Untagged
@@ -525,7 +527,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1851455196622746}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 12.396, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 2.6291718, y: 1, z: 1}
   m_Children:
   - {fileID: 4055656267847140}
@@ -1277,6 +1279,86 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!82 &82972588729286906
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1146281680476490}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 9999
+  Pan2D: 0
+  rolloffMode: 2
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 0.99
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
 --- !u!102 &102144703385896430
 TextMesh:
   serializedVersion: 3
@@ -1332,21 +1414,6 @@ Light:
   m_BounceIntensity: 6.75
   m_ShadowRadius: 0
   m_ShadowAngle: 0
---- !u!114 &114220290997661468
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1477869601877146}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 22d60ed4ab57df94a992f71540dae7a6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Trigger: {fileID: 1477869601877146}
-  TriggerPlatform: {fileID: 1450677922554776}
-  Barrier: {fileID: 1714927808236828}
-  GoSound: {fileID: 8300000, guid: a5f2ed60d70789d45acd5e438396ca6b, type: 3}
 --- !u!114 &114422092714461400
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1432,6 +1499,34 @@ MonoBehaviour:
   snapPointOut: {fileID: 1983074508216756}
   jumpName: Start
   jumpDifficulty: 0
+--- !u!114 &114977376876110882
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1146281680476490}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22d60ed4ab57df94a992f71540dae7a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Trigger: {fileID: 1477869601877146}
+  TriggerPlatform: {fileID: 1450677922554776}
+  Barrier: {fileID: 1714927808236828}
+  GoSound: {fileID: 8300000, guid: a5f2ed60d70789d45acd5e438396ca6b, type: 3}
+--- !u!136 &136010188046874986
+CapsuleCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1146281680476490}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 1.4765259
+  m_Height: 13.820379
+  m_Direction: 1
+  m_Center: {x: -15.54, y: 0, z: 0}
 --- !u!136 &136389195889700912
 CapsuleCollider:
   m_ObjectHideFlags: 1
@@ -1440,7 +1535,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 1477869601877146}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   m_Radius: 0.5
   m_Height: 3.1769738
   m_Direction: 1
