@@ -28,7 +28,7 @@ public class Concer : NetworkBehaviour
 
     public void SetConcCount(int newConcCount)
     {
-        concCountHUDElement.GetComponent<Text>().text = "Concs: " + newConcCount;
+        concCountHUDElement.GetComponent<Text>().text = "Concs: " + newConcCount +"/3";
         ConcCount = newConcCount;
     }
     
