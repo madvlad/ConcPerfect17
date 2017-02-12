@@ -238,6 +238,8 @@ public class MainMenuButtonBehavior : MonoBehaviour {
     public void ClearLevelProgress()
     {
         PlayerPrefs.SetInt("LevelsCompleted", 0);
+        PlayerPrefs.DeleteKey("CourseRecords");
+        PlayerPrefs.DeleteKey("RecentPlayed");
         ApplicationManager.LevelsCompleted = 0;
         ShowMainMenu();
     }
