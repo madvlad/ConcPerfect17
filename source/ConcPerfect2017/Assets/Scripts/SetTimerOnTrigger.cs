@@ -58,6 +58,7 @@ public class SetTimerOnTrigger : MonoBehaviour {
                 SaveLevelCompletion();
                 gameStateManager.SetIsCourseComplete(true);
                 courseHistoryManager.StoreNewRecord(gameStateManager.GetCourseSeed(), gameStateManager.GetRawTime(), gameStateManager.GetIsCourseFavorited());
+                courseHistoryManager.AddRecentlyPlayed(gameStateManager.GetCourseSeed(), gameStateManager.GetRawTime());
                 Invoke("EndGame", 7.0f);
             }
         }
