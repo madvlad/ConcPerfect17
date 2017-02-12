@@ -256,6 +256,11 @@ public class GameStateManager : NetworkBehaviour {
         this.CurrentTimerTime = 0.0f;
     }
 
+    public bool IsGamePause()
+    {
+        return IsPaused;
+    }
+
     public GameObject GetLocalPlayerObject() {
         var playerObjects = GameObject.FindGameObjectsWithTag("Player");
         GameObject playerObject = null;

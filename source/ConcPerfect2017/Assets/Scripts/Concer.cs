@@ -48,7 +48,7 @@ public class Concer : NetworkBehaviour
             concPrimedHUDElement.SetActive(false);
         }
 
-        if (Input.GetButtonDown("Conc") && ConcCount > 0 && !primed)
+        if (Input.GetButtonDown("Conc") && ConcCount > 0 && !primed && !GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameStateManager>().IsGamePause())
         {
             if (timer <= 0)
             {
