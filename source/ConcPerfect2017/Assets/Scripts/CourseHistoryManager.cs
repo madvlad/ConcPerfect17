@@ -15,18 +15,13 @@ public class CourseHistoryManager : MonoBehaviour {
 
         if (IsFirstRecord(currentRecords, entry))
         {
-            listChanged = true;
             currentRecords.Add(entry);
+            SerializeAndSave(currentRecords);
         }
         else if (IsBestTime(currentRecords, entry))
         {
-            listChanged = true;
             currentRecords.Remove(previousBestTime);
             currentRecords.Add(entry);
-        }
-
-        if (listChanged)
-        {
             SerializeAndSave(currentRecords);
         }
     }
