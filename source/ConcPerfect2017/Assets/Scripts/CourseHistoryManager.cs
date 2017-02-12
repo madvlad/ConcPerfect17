@@ -18,7 +18,28 @@ public class CourseHistoryManager : MonoBehaviour {
                 return record.TimeCompleted;
             }
         }
-        return 0.0f;
+        return float.PositiveInfinity;
+    }
+
+    public void FavoriteCourse(int CourseSeed, bool IsFavorited)
+    {
+        var TimeCompleted = GetCurrentCourseRecord(CourseSeed);
+        var entry = new CourseHistoryEntry { CourseSeed = CourseSeed, TimeCompleted = TimeCompleted, IsFavorited = IsFavorited };
+        StoreNewRecord(CourseSeed, TimeCompleted, IsFavorited);
+    }
+
+    public bool IsCourseFavorited(int CourseSeed)
+    {
+        var currentRecords = GetCurrentRecords();
+
+        foreach (var record in currentRecords)
+        {
+            if (record.CourseSeed == CourseSeed)
+            {
+                return record.IsFavorited;
+            }
+        }
+        return false;
     }
 
     public void StoreNewRecord(int CourseSeed, float TimeCompleted, bool IsFavorited)
@@ -56,7 +77,7 @@ public class CourseHistoryManager : MonoBehaviour {
     {
         foreach (var record in currentRecords)
         {
-            if (record.CourseSeed == entry.CourseSeed && entry.TimeCompleted < record.TimeCompleted)
+            if (record.CourseSeed == entry.CourseSeed && entry.TimeCompleted <= record.TimeCompleted)
             {
                 previousBestTime = record;
                 return true;
