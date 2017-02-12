@@ -6,13 +6,26 @@ using UnityEngine;
 public class CourseHistoryManager : MonoBehaviour {
 
     private CourseHistoryEntry previousBestTime;
-    
-    public void StoreNewRecord(string CourseSeed, float TimeCompleted, bool IsFavorited)
+
+    public float GetCurrentCourseRecord(int CourseSeed)
+    {
+        var currentRecords = GetCurrentRecords();
+
+        foreach (var record in currentRecords)
+        {
+            if (record.CourseSeed == CourseSeed)
+            {
+                return record.TimeCompleted;
+            }
+        }
+        return 0.0f;
+    }
+
+    public void StoreNewRecord(int CourseSeed, float TimeCompleted, bool IsFavorited)
     {
         var entry = new CourseHistoryEntry { CourseSeed = CourseSeed, TimeCompleted = TimeCompleted, IsFavorited = IsFavorited };
         var currentRecords = GetCurrentRecords();
-        bool listChanged = false;
-
+        
         if (IsFirstRecord(currentRecords, entry))
         {
             currentRecords.Add(entry);
@@ -30,7 +43,7 @@ public class CourseHistoryManager : MonoBehaviour {
     {
         foreach (var record in currentRecords)
         {
-            if (String.Equals(record.CourseSeed, entry.CourseSeed))
+            if (record.CourseSeed == entry.CourseSeed)
             {
                 return false;
             }
@@ -43,7 +56,7 @@ public class CourseHistoryManager : MonoBehaviour {
     {
         foreach (var record in currentRecords)
         {
-            if (String.Equals(record.CourseSeed, entry.CourseSeed) && entry.TimeCompleted < record.TimeCompleted)
+            if (record.CourseSeed == entry.CourseSeed && entry.TimeCompleted < record.TimeCompleted)
             {
                 previousBestTime = record;
                 return true;
@@ -58,7 +71,8 @@ public class CourseHistoryManager : MonoBehaviour {
         if (PlayerPrefs.HasKey("CourseRecords"))
         {
             var serializedList = PlayerPrefs.GetString("CourseRecords");
-            return JsonUtility.FromJson<List<CourseHistoryEntry>>(serializedList);
+            var historyListObject = JsonUtility.FromJson<CourseHistoryList>(serializedList);
+            return historyListObject.entries;
         }
         else
         {
@@ -68,18 +82,31 @@ public class CourseHistoryManager : MonoBehaviour {
 
     private void SerializeAndSave(List<CourseHistoryEntry> currentRecords)
     {
-        string serializedList = JsonUtility.ToJson(currentRecords);
+        // Fucking unity doesn't support top-level array serialization?
+        // What the fuck is this shit?
+        var list = new CourseHistoryList();
+        list.entries = currentRecords;
+        var serializedList = JsonUtility.ToJson(list);
         PlayerPrefs.SetString("CourseRecords", serializedList);
     }
 
     void Start () { }
 	void Update () { }
 
-    [Serializable]
-    private class CourseHistoryEntry
+    [System.Serializable]
+    class CourseHistoryEntry : object
     {
-        public string CourseSeed;
+        [SerializeField]
+        public int CourseSeed;
+        [SerializeField]
         public float TimeCompleted;
+        [SerializeField]
         public bool IsFavorited;
+    }
+
+    [Serializable]
+    class CourseHistoryList
+    {
+        public List<CourseHistoryEntry> entries;
     }
 }

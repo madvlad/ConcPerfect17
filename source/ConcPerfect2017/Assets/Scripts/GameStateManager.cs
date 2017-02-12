@@ -29,6 +29,7 @@ public class GameStateManager : NetworkBehaviour {
     private bool IsDisplayStats = false;
     private bool IsDisplayNicknames = true;
     private bool IsCourseComplete = false;
+    private bool IsCourseFavorited = false;
     private int CourseSeed;
 
     [SyncVar]
@@ -251,14 +252,29 @@ public class GameStateManager : NetworkBehaviour {
         EscapeMenuSeedElement.GetComponent<Text>().text = "Seed: " + seed;
     }
 
+    public int GetCourseSeed()
+    {
+        return CourseSeed;
+    }
+
     public void ResetTimer()
     {
         this.CurrentTimerTime = 0.0f;
     }
 
+    public float GetRawTime()
+    {
+        return this.CurrentTimerTime;
+    }
+
     public bool IsGamePause()
     {
         return IsPaused;
+    }
+
+    public bool GetIsCourseFavorited()
+    {
+        return IsCourseFavorited;
     }
 
     public GameObject GetLocalPlayerObject() {

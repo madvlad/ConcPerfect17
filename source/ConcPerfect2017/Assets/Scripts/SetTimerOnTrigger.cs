@@ -14,11 +14,13 @@ public class SetTimerOnTrigger : MonoBehaviour {
     public ParticleSystem confetti3;
 
     private GameStateManager gameStateManager;
+    private CourseHistoryManager courseHistoryManager;
     private Text courseCompleteMessage;
 
     void Start()
     {
         gameStateManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameStateManager>();
+        courseHistoryManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<CourseHistoryManager>();
         courseCompleteMessage = GameObject.FindGameObjectWithTag("CourseEndText").GetComponent<Text>();
     }
 
@@ -55,6 +57,7 @@ public class SetTimerOnTrigger : MonoBehaviour {
                 ShootConfetti(other.gameObject);
                 SaveLevelCompletion();
                 gameStateManager.SetIsCourseComplete(true);
+                courseHistoryManager.StoreNewRecord(gameStateManager.GetCourseSeed(), gameStateManager.GetRawTime(), gameStateManager.GetIsCourseFavorited());
                 Invoke("EndGame", 7.0f);
             }
         }
