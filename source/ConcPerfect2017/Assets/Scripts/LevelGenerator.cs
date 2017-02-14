@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -13,6 +12,10 @@ public class LevelGenerator : NetworkBehaviour {
     public List<GameObject> jumpList;
     public int courseJumpListSize;
     public int RandomSeed;
+    public List<Material> levelSkyboxList;
+    public List<Texture> levelFloorTexture;
+    public List<Texture> levelWallTexture;
+    public List<AudioClip> levelMusicList;
 
     public AudioClip tutorialMusic;
 
@@ -30,6 +33,11 @@ public class LevelGenerator : NetworkBehaviour {
             courseJumpListSize = ApplicationManager.numberOfJumps;
         }
 
+        if (ApplicationManager.currentLevel > 0)
+        {
+            SetCourseEnvironment(ApplicationManager.currentLevel);
+        }
+
         GameStateManager.SetCourseJumpLimit(courseJumpListSize);
 
         if (!isServer)
@@ -41,6 +49,7 @@ public class LevelGenerator : NetworkBehaviour {
             if (ApplicationManager.currentLevel > 0)
             {
                 BuildCourseIteratively();
+                SetJumpTextures();
             }
             else
             {
@@ -52,6 +61,75 @@ public class LevelGenerator : NetworkBehaviour {
         {
             BuildTutorialLevel();
         }
+    }
+
+    public bool IsSetting = false;
+    public bool HasSet = false;
+    public bool StartWall = true;
+    public int NumberOfCalls = 0;
+
+    private void SetJumpTextures()
+    {
+        if (Application.isLoadingLevel && !IsSetting)
+        {
+            Invoke("SetJumpTextures", 0.1f);
+            return;
+        }
+        IsSetting = true;
+        var assetIndex = ApplicationManager.currentLevel - 1;
+        var floors = GameObject.FindGameObjectsWithTag("Floor");
+        foreach (var floor in floors)
+        {
+            if (floor.GetComponent<Renderer>() != null)
+            {
+                HasSet = true;
+                if (StartWall)
+                {
+                    StartWall = false;
+                    SetWallTextures();
+                    SetMoveableTextures();
+                }
+                var MeshRenderer = floor.GetComponents(typeof(MeshRenderer))[0] as MeshRenderer;
+                MeshRenderer.material.mainTexture = levelFloorTexture[assetIndex];
+            }
+            else if (!HasSet)
+            {
+                Invoke("SetJumpTextures", 0.1f);
+            }
+        }
+    }
+
+    private void SetWallTextures()
+    {
+        var walls = GameObject.FindGameObjectsWithTag("Wall");
+        var assetIndex = ApplicationManager.currentLevel - 1;
+
+        foreach (var wall in walls)
+        {
+            var MeshRenderer = wall.GetComponents(typeof(MeshRenderer))[0] as MeshRenderer;
+            MeshRenderer.material.mainTexture = levelWallTexture[assetIndex];
+        }
+    }
+
+    private void SetMoveableTextures()
+    {
+        var walls = GameObject.FindGameObjectsWithTag("Moveable");
+        var assetIndex = ApplicationManager.currentLevel - 1;
+
+        foreach (var wall in walls)
+        {
+            var MeshRenderer = wall.GetComponents(typeof(MeshRenderer))[0] as MeshRenderer;
+            MeshRenderer.material.mainTexture = levelFloorTexture[assetIndex];
+        }
+    }
+
+    private void SetCourseEnvironment(int currentLevel)
+    {
+        var assetIndex = currentLevel - 1;
+        GameObject.FindGameObjectWithTag("Music").GetComponent<AudioSource>().clip = levelMusicList[assetIndex];
+        GameObject.FindGameObjectWithTag("Music").GetComponent<AudioSource>().Play();
+        RenderSettings.skybox = levelSkyboxList[assetIndex];
+        SetJumpTextures();
     }
 
     private void BuildTutorialLevel()

@@ -11,12 +11,15 @@ public class WeatherManager : MonoBehaviour {
     private bool isRaining = false;
 
 	void Start () {
-        var petesRainDance = Random.value;
-        
-        if (petesRainDance < 0.15f)
+        if (ApplicationManager.currentLevel == 0)
         {
-            rainInstance = Instantiate(rain);
-            isRaining = true;
+            var petesRainDance = Random.value;
+
+            if (petesRainDance < 0.15f)
+            {
+                rainInstance = Instantiate(rain);
+                isRaining = true;
+            }
         }
 	}
 
