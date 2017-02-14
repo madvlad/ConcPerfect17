@@ -130,11 +130,23 @@ public class LevelGenerator : NetworkBehaviour {
 
     private void SetCourseEnvironment(int currentLevel)
     {
+        SetPossibleWeatherEvents(currentLevel);
         var assetIndex = currentLevel - 1;
         GameObject.FindGameObjectWithTag("Music").GetComponent<AudioSource>().clip = levelMusicList[assetIndex];
         GameObject.FindGameObjectWithTag("Music").GetComponent<AudioSource>().Play();
         RenderSettings.skybox = levelSkyboxList[assetIndex];
         SetJumpTextures();
+    }
+
+    private void SetPossibleWeatherEvents(int currentLevel)
+    {
+        var weatherManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<WeatherManager>();
+        switch (currentLevel)
+        {
+            case 4:
+                weatherManager.MakeItSnow();
+                break;
+        }
     }
 
     private void BuildTutorialLevel()

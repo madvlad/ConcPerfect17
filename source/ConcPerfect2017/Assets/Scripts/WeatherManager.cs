@@ -4,11 +4,25 @@ using UnityEngine;
 
 public class WeatherManager : MonoBehaviour {
     public GameObject rain;
+    public GameObject snow;
     public Material rainSkybox;
 
-    private GameObject rainInstance;
+    private GameObject weatherEventInstance;
     private bool parentSet = false;
     private bool isRaining = false;
+
+    public void MakeItRain()
+    {
+        weatherEventInstance = Instantiate(rain);
+        RenderSettings.skybox = rainSkybox;
+        isRaining = true;
+    }
+
+    public void MakeItSnow()
+    {
+        weatherEventInstance = Instantiate(snow);
+        isRaining = true;
+    }
 
 	void Start () {
         if (ApplicationManager.currentLevel == 0)
@@ -17,8 +31,7 @@ public class WeatherManager : MonoBehaviour {
 
             if (petesRainDance < 0.15f)
             {
-                rainInstance = Instantiate(rain);
-                isRaining = true;
+                MakeItRain();
             }
         }
 	}
@@ -28,9 +41,8 @@ public class WeatherManager : MonoBehaviour {
         if (!parentSet && isRaining)
         {
             if (GameObject.FindGameObjectWithTag("Player") != null) {
-                rainInstance.transform.parent = GameObject.FindGameObjectWithTag("Player").transform;
+                weatherEventInstance.transform.parent = GameObject.FindGameObjectWithTag("Player").transform;
                 parentSet = true;
-                RenderSettings.skybox = rainSkybox;
             }
         }
     }
