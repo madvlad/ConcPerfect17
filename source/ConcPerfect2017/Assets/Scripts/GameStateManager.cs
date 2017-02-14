@@ -35,6 +35,12 @@ public class GameStateManager : NetworkBehaviour {
     [SyncVar]
     private int CourseJumpLimit;
 
+    [SyncVar]
+    public int CurrentServerLevel;
+
+    [SyncVar]
+    public int CurrentGameType;
+
     [SerializeField]
     private List<string> playerStats;
 
@@ -42,7 +48,16 @@ public class GameStateManager : NetworkBehaviour {
         GameType = ApplicationManager.GameType;
 
         if (isServer)
+        {
             gameServerManager = GameObject.FindGameObjectWithTag("GameServerManager").GetComponent<GameServerManager>();
+            CurrentServerLevel = ApplicationManager.currentLevel;
+            CurrentGameType = ApplicationManager.GameType;
+        }
+        else
+        {
+            ApplicationManager.currentLevel = CurrentServerLevel;
+            ApplicationManager.GameType = CurrentGameType;
+        }
     }
 
 

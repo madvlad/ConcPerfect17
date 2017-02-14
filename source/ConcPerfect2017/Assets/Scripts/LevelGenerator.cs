@@ -27,6 +27,11 @@ public class LevelGenerator : NetworkBehaviour {
     {
         GameObject.FindGameObjectWithTag("Music").GetComponent<AudioSource>().volume = ApplicationManager.musicVolume;
         GameStateManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameStateManager>();
+        if (!isServer)
+        {
+            ApplicationManager.currentLevel = GameStateManager.CurrentServerLevel;
+            ApplicationManager.GameType = GameStateManager.CurrentGameType;
+        }
 
         if (courseJumpListSize == 0)
         {
