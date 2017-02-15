@@ -216,7 +216,7 @@ The camera will be in the first person perspective.
 
  Players will create their player by selecting a base model and supplying a name. They will have the option to customize their model with various items in their inventory, though these changes will only be cosmetic.
 
-### User Interface
+# User Interface
 
 ## Overview
 
