@@ -285,7 +285,15 @@ public class MainMenuButtonBehavior : MonoBehaviour {
     {
         ApplicationManager.musicVolume = volume;
         PlayerPrefs.SetFloat("MusicVolume", volume);
-        Camera.main.GetComponent<AudioSource>().volume = ApplicationManager.musicVolume;
+        var music = GameObject.FindGameObjectWithTag("Music");
+        if (music == null)
+        {
+            Camera.main.GetComponent<AudioSource>().volume = ApplicationManager.musicVolume;
+        }
+        else
+        {
+            music.GetComponent<AudioSource>().volume = ApplicationManager.musicVolume;
+        }
     }
 
     public void SetSFXVolume(float volume)
