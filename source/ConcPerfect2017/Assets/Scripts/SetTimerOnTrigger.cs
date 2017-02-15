@@ -44,7 +44,7 @@ public class SetTimerOnTrigger : MonoBehaviour {
             else if (gameStateManager.TimerIsRunning && !SwitchToOn)
             {
                 gameStateManager.SetTimerIsRunning(SwitchToOn);
-                gameObject.GetComponent<AudioSource>().PlayOneShot(GameEndSound);
+                gameObject.GetComponent<AudioSource>().PlayOneShot(GameEndSound, ApplicationManager.sfxVolume);
                 GameObject.FindGameObjectWithTag("Music").GetComponent<AudioSource>().Stop();
                 courseCompleteMessage.enabled = true;
                 courseCompleteMessage.text = "Course Complete!!\n\nYour time: " + gameStateManager.GetCurrentTime() + "\n\nPress ESC To Quit";

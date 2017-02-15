@@ -23,6 +23,7 @@ public class MainMenuButtonBehavior : MonoBehaviour {
     public GameObject settingsMenuUIElement;
     public GameObject matchMakerLobbyMenuUIElement;
     public GameObject volumeSliderMenuUIElement;
+    public GameObject sfxVolumeSliderMenuUIElement;
     public GameObject nickNameInputField;
 
     void Start()
@@ -48,6 +49,11 @@ public class MainMenuButtonBehavior : MonoBehaviour {
         if (volumeSliderMenuUIElement != null)
         {
             volumeSliderMenuUIElement.GetComponent<Slider>().value = ApplicationManager.musicVolume;
+        }
+
+        if (sfxVolumeSliderMenuUIElement != null)
+        {
+            sfxVolumeSliderMenuUIElement.GetComponent<Slider>().value = ApplicationManager.sfxVolume;
         }
     }
 
@@ -280,6 +286,12 @@ public class MainMenuButtonBehavior : MonoBehaviour {
         ApplicationManager.musicVolume = volume;
         PlayerPrefs.SetFloat("MusicVolume", volume);
         Camera.main.GetComponent<AudioSource>().volume = ApplicationManager.musicVolume;
+    }
+
+    public void SetSFXVolume(float volume)
+    {
+        ApplicationManager.sfxVolume = volume;
+        PlayerPrefs.SetFloat("SfxVolume", volume);
     }
 
     public void AdjustJumpComponentInclusion(bool include) {

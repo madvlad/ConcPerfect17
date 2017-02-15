@@ -7,6 +7,7 @@ public class ApplicationManager : MonoBehaviour {
     public const string APPLICATION_VERSION = "0.1.0";
 
     static public float musicVolume = 0.5f;
+    static public float sfxVolume = 0.5f;
     static public int numberOfJumps = 9;
     static public int randomSeed = 0;
     static public int currentLevel = 0;
@@ -30,10 +31,17 @@ public class ApplicationManager : MonoBehaviour {
         CheckCompletedLevels();
         mouseSensitivity = PlayerPrefs.GetFloat("MouseSensitivity");
         musicVolume = PlayerPrefs.GetFloat("MusicVolume");
+        sfxVolume = PlayerPrefs.GetFloat("SfxVolume");
+
         if (!PlayerPrefs.HasKey("MusicVolume"))
         {
             musicVolume = 0.4f;
         }
+        if (!PlayerPrefs.HasKey("SfxVolume"))
+        {
+            sfxVolume = 0.4f;
+        }
+
         invertYAxis = PlayerPrefs.GetInt("InvertY") == 1 ? true : false;
         if (mouseSensitivity == 0)
         {

@@ -14,7 +14,7 @@ public class ConcPack : MonoBehaviour {
             var currentConcer = other.GetComponent<Concer>();
             if (currentConcer.ConcCount < currentConcer.MaxConcCount)
             {
-                AudioSource.PlayClipAtPoint(PickupSound, other.transform.position);
+                AudioSource.PlayClipAtPoint(PickupSound, other.transform.position, ApplicationManager.sfxVolume);
                 var concsToAdd = currentConcer.MaxConcCount - currentConcer.ConcCount;
                 currentConcer.SetConcCount(currentConcer.ConcCount + concsToAdd);
                 DisablePack();

@@ -17,7 +17,7 @@ public class Footsteps : MonoBehaviour
             if (grounded && (Input.GetAxis("Horizontal") > 0.25 || Input.GetAxis("Vertical") > 0.25 || Input.GetAxis("Horizontal") < -0.25 || Input.GetAxis("Vertical") < -0.25))
             {
                 var index = Random.Range(0, footstepSounds.Count);
-                gameObject.GetComponent<AudioSource>().PlayOneShot(footstepSounds[index]);
+                gameObject.GetComponent<AudioSource>().PlayOneShot(footstepSounds[index], ApplicationManager.sfxVolume);
             }
             timer = Random.Range(0.20f, 0.35f);
         }

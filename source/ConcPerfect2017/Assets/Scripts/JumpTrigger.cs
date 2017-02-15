@@ -28,7 +28,7 @@ public class JumpTrigger : NetworkBehaviour {
             WasTriggered = true;
             gameManager.SetJumpNumber(JumpNumber);
             gameManager.SetJumpName(JumpName);
-            gameObject.GetComponent<AudioSource>().PlayOneShot(checkpointSound);
+            gameObject.GetComponent<AudioSource>().PlayOneShot(checkpointSound, ApplicationManager.sfxVolume);
         }
     }
 
