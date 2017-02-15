@@ -136,13 +136,13 @@ There are not too many games out there that are like this exactly. What is diffe
 
 ### Key Locations
 
- There are five different jump themes in ConcPerfect &#39;17. They are based on the following locations
+ There are five different jump themes in ConcPerfect &#39;17.
 
-- Taos, New Mexico
-- Pyramid Lake, Nevada
-- Panther Gap, California
-- Carlsbad, New Mexico
-- Monument Valley, Arizona
+- Green Hills and Grass
+- Desert background and sand
+- 80s Arcade and neon lights
+- Snowy mountains and falling snow
+- Hellscape, old stone building
 
 ### Scale
 
