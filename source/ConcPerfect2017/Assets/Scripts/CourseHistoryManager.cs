@@ -94,7 +94,7 @@ public class CourseHistoryManager : MonoBehaviour {
         return false;
     }
 
-    private List<CourseHistoryEntry> GetSavedRecords(string key)
+    public List<CourseHistoryEntry> GetSavedRecords(string key)
     {
         if (PlayerPrefs.HasKey(key))
         {

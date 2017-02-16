@@ -24,6 +24,7 @@ public class MainMenuButtonBehavior : MonoBehaviour {
     public GameObject matchMakerLobbyMenuUIElement;
     public GameObject volumeSliderMenuUIElement;
     public GameObject sfxVolumeSliderMenuUIElement;
+    public GameObject historyListMenuUIElement;
     public GameObject nickNameInputField;
 
     void Start()
@@ -263,6 +264,17 @@ public class MainMenuButtonBehavior : MonoBehaviour {
         settingsMenuUIElement.SetActive(false);
     }
 
+    public void GoToHistoryMenu()
+    {
+        settingsMenuUIElement.SetActive(false);
+        historyListMenuUIElement.SetActive(true);
+    }
+
+    public void ReturnToSettingsFromHistory()
+    {
+        historyListMenuUIElement.SetActive(false);
+        settingsMenuUIElement.SetActive(true);
+    }
 
     public void OnUnetMatchmakerToggle() {
         ApplicationManager.IsLAN = !UnetMatchMakerToggle.GetComponent<Toggle>().isOn;
