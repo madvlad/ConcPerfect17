@@ -36,6 +36,11 @@ public class MainMenuButtonBehavior : MonoBehaviour {
             Camera.main.GetComponent<AudioSource>().volume = ApplicationManager.musicVolume;
         }
 
+        if (randomSeedInputUIElement != null)
+        {
+            ApplicationManager.randomSeed = 0;
+        }
+
         if (mouseSensitivityMenuUIElement != null && mouseSensitivityMenuUIElement.GetComponent<Slider>() != null)
         {
             mouseSensitivityMenuUIElement.GetComponent<Slider>().value = ApplicationManager.mouseSensitivity;
@@ -149,7 +154,10 @@ public class MainMenuButtonBehavior : MonoBehaviour {
         int seed = 0;
         if (int.TryParse(randomSeedInputUIElement.GetComponent<Text>().text, out seed))
         {
-            ApplicationManager.randomSeed = seed;
+            if (seed != 0)
+            {
+                ApplicationManager.randomSeed = seed;
+            }
         }
         else
         {
