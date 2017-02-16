@@ -162,6 +162,9 @@ public class LevelGenerator : NetworkBehaviour {
             case 4:
                 weatherManager.MakeItSnow();
                 break;
+            case 5:
+                weatherManager.TurnOnThunderstorm();
+                break;
         }
     }
 
