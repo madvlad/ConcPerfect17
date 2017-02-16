@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -20,11 +21,26 @@ public class LevelHistoryTable : MonoBehaviour {
 
         foreach (var entry in list)
         {
-            var entryInstance = Instantiate(EntryPrefab);
-            var entryManager = entryInstance.GetComponent<HistoryEntryManager>();
-            entryManager.SetFields(idx.ToString(), entry.CourseSeed.ToString(), entry.TimeCompleted.ToString(), entry.IsFavorited);
-            entryInstance.transform.parent = GridElement.transform;
-            idx++;
+            if (entry.TimeCompleted < float.PositiveInfinity)
+            {
+                var entryInstance = Instantiate(EntryPrefab);
+                var entryManager = entryInstance.GetComponent<HistoryEntryManager>();
+
+                TimeSpan timeSpan = TimeSpan.FromSeconds(entry.TimeCompleted);
+                var timeString = timeSpan.Minutes.ToString("00") + ":" + timeSpan.Seconds.ToString("00") + ":" + timeSpan.Milliseconds.ToString("000");
+
+                if (entry.CourseSeed == 0)
+                {
+                    entryManager.SetFields(idx.ToString(), entry.CourseName, timeString, entry.IsFavorited);
+                }
+                else
+                {
+                    entryManager.SetFields(idx.ToString(), entry.CourseSeed.ToString(), timeString, entry.IsFavorited);
+                }
+
+                entryInstance.transform.parent = GridElement.transform;
+                idx++;
+            }
         }
     }
 

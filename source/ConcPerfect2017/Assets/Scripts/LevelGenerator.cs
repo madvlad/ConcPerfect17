@@ -16,6 +16,7 @@ public class LevelGenerator : NetworkBehaviour {
     public List<Texture> levelFloorTexture;
     public List<Texture> levelWallTexture;
     public List<AudioClip> levelMusicList;
+    public Texture lavaTexture;
 
     public AudioClip tutorialMusic;
 
@@ -93,6 +94,10 @@ public class LevelGenerator : NetworkBehaviour {
                     StartWall = false;
                     SetWallTextures();
                     SetMoveableTextures();
+                    if (ApplicationManager.currentLevel == 5)
+                    {
+                        SetLavaTextures();
+                    }
                 }
                 var MeshRenderer = floor.GetComponents(typeof(MeshRenderer))[0] as MeshRenderer;
                 MeshRenderer.material.mainTexture = levelFloorTexture[assetIndex];
@@ -101,6 +106,17 @@ public class LevelGenerator : NetworkBehaviour {
             {
                 Invoke("SetJumpTextures", 0.1f);
             }
+        }
+    }
+
+    private void SetLavaTextures()
+    {
+        var walls = GameObject.FindGameObjectsWithTag("Lava");
+
+        foreach (var wall in walls)
+        {
+            var MeshRenderer = wall.GetComponents(typeof(MeshRenderer))[0] as MeshRenderer;
+            MeshRenderer.material.mainTexture = lavaTexture;
         }
     }
 

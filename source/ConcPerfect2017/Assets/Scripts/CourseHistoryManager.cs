@@ -24,7 +24,6 @@ public class CourseHistoryManager : MonoBehaviour {
     public void FavoriteCourse(int CourseSeed, bool IsFavorited)
     {
         var TimeCompleted = GetCurrentCourseRecord(CourseSeed);
-        var entry = new CourseHistoryEntry { CourseSeed = CourseSeed, TimeCompleted = TimeCompleted, IsFavorited = IsFavorited };
         StoreNewRecord(CourseSeed, TimeCompleted, IsFavorited);
     }
 
@@ -44,7 +43,17 @@ public class CourseHistoryManager : MonoBehaviour {
 
     public void StoreNewRecord(int CourseSeed, float TimeCompleted, bool IsFavorited)
     {
-        var entry = new CourseHistoryEntry { CourseSeed = CourseSeed, TimeCompleted = TimeCompleted, IsFavorited = IsFavorited };
+        CourseHistoryEntry entry;
+
+        if (CourseSeed == 0)
+        {
+            entry = new CourseHistoryEntry { CourseSeed = CourseSeed, TimeCompleted = TimeCompleted, IsFavorited = IsFavorited, CourseName = GetCourseName(ApplicationManager.currentLevel) };
+        }
+        else
+        {
+            entry = new CourseHistoryEntry { CourseSeed = CourseSeed, TimeCompleted = TimeCompleted, IsFavorited = IsFavorited };
+        }
+
         var currentRecords = GetSavedRecords("CourseRecords");
         
         if (IsFirstRecord(currentRecords, entry))
@@ -63,17 +72,41 @@ public class CourseHistoryManager : MonoBehaviour {
     public void AddRecentlyPlayed(int CourseSeed, float TimeCompleted)
     {
         var recentPlayed = GetSavedRecords("RecentPlayed");
-        recentPlayed.Insert(0, new CourseHistoryEntry { CourseSeed = CourseSeed, TimeCompleted = TimeCompleted });
+        CourseHistoryEntry entry;
+
+        if (CourseSeed == 0)
+        {
+            entry = new CourseHistoryEntry { CourseSeed = CourseSeed, TimeCompleted = TimeCompleted, CourseName = GetCourseName(ApplicationManager.currentLevel) };
+        }
+        else
+        {
+            entry = new CourseHistoryEntry { CourseSeed = CourseSeed, TimeCompleted = TimeCompleted};
+        }
+
+        recentPlayed.Insert(0, entry);
         SerializeAndSaveRecords("RecentPlayed", recentPlayed);
     }
 
     private bool IsFirstRecord(List<CourseHistoryEntry> currentRecords, CourseHistoryEntry entry)
     {
-        foreach (var record in currentRecords)
+        if (entry.CourseSeed != 0)
         {
-            if (record.CourseSeed == entry.CourseSeed)
+            foreach (var record in currentRecords)
             {
-                return false;
+                if (record.CourseSeed == entry.CourseSeed)
+                {
+                    return false;
+                }
+            }
+        }
+        else
+        {
+            foreach (var record in currentRecords)
+            {
+                if (String.Equals(record.CourseName, entry.CourseName))
+                {
+                    return false;
+                }
             }
         }
 
@@ -82,12 +115,26 @@ public class CourseHistoryManager : MonoBehaviour {
 
     private bool IsBestTime(List<CourseHistoryEntry> currentRecords, CourseHistoryEntry entry)
     {
-        foreach (var record in currentRecords)
+        if (entry.CourseSeed != 0)
         {
-            if (record.CourseSeed == entry.CourseSeed && entry.TimeCompleted <= record.TimeCompleted)
+            foreach (var record in currentRecords)
             {
-                previousBestTime = record;
-                return true;
+                if (record.CourseSeed == entry.CourseSeed && entry.TimeCompleted <= record.TimeCompleted)
+                {
+                    previousBestTime = record;
+                    return true;
+                }
+            }
+        }
+        else
+        {
+            foreach (var record in currentRecords)
+            {
+                if (String.Equals(record.CourseName, entry.CourseName) && entry.TimeCompleted <= record.TimeCompleted)
+                {
+                    previousBestTime = record;
+                    return true;
+                }
             }
         }
 
@@ -108,6 +155,25 @@ public class CourseHistoryManager : MonoBehaviour {
         }
     }
 
+    private string GetCourseName(int number)
+    {
+        switch(number)
+        {
+            case 1:
+                return "Smooth Conc'in";
+            case 2:
+                return "Boris's Banging Butte";
+            case 3:
+                return "Wesley's Wild World";
+            case 4:
+                return "Gerald's Grand Gallery";
+            case 5:
+                return "Pete's Perilous Park";
+            default:
+                return "";
+        }
+    }
+
     private void SerializeAndSaveRecords(string key, List<CourseHistoryEntry> currentRecords)
     {
         // Fucking unity doesn't support top-level array serialization?
@@ -124,6 +190,8 @@ public class CourseHistoryManager : MonoBehaviour {
     [Serializable]
     public class CourseHistoryEntry : object
     {
+        [SerializeField]
+        public string CourseName;
         [SerializeField]
         public int CourseSeed;
         [SerializeField]
