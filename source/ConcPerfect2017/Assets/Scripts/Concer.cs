@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.Networking;
 using System;
+using System.Collections.Generic;
 
 public class Concer : NetworkBehaviour
 {
@@ -10,11 +11,13 @@ public class Concer : NetworkBehaviour
     public int ConcPushForce = 8;
     public int ConcCount = 3;
     public int MaxConcCount = 3;
+    private GameObject[] ConcTimers;
 
     private GameObject concCountHUDElement;
     private GameObject concPrimedHUDElement;
     private bool primed = false;
     private float timer = 0.0f;
+    private int currentConc = 0;
     private GameObject concInstance;
     private GameObject playerCamera;
 
@@ -23,6 +26,7 @@ public class Concer : NetworkBehaviour
         playerCamera = Camera.main.gameObject;
         concCountHUDElement = GameObject.FindGameObjectWithTag("ConcCounter");
         concPrimedHUDElement = GameObject.FindGameObjectWithTag("PrimedNotification");
+        ConcTimers = GameObject.FindGameObjectsWithTag("VisualTimer");
         concPrimedHUDElement.SetActive(false);
     }
 
@@ -36,6 +40,11 @@ public class Concer : NetworkBehaviour
     {
         if (!isLocalPlayer)
             return;
+
+        if (ConcTimersNotPlaying())
+        {
+            currentConc = 0;
+        }
 
         if (timer > 0)
         {
@@ -52,6 +61,7 @@ public class Concer : NetworkBehaviour
         {
             if (timer <= 0)
             {
+                StartVisualTimer();
                 SetConcCount(ConcCount - 1);
                 timer = 0.45f;
                 primed = true;
@@ -80,6 +90,39 @@ public class Concer : NetworkBehaviour
         else if (primed)
         {
             concInstance.transform.position = playerCamera.transform.position;
+        }
+    }
+
+    private bool ConcTimersNotPlaying()
+    {
+        foreach (var timer in ConcTimers)
+        {
+            if (timer.GetComponent<Animation>().isPlaying)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private void StartVisualTimer()
+    {
+        if (ConcTimers[currentConc].GetComponent<Animation>().isPlaying)
+        {
+            ConcTimers[currentConc].GetComponent<Animation>().Rewind();
+        }
+        else
+        {
+            ConcTimers[currentConc].GetComponent<Animation>().Play();
+        }
+
+        if (currentConc == 2)
+        {
+            currentConc = 0;
+        }
+        else
+        {
+            currentConc++;
         }
     }
 
