@@ -7,7 +7,7 @@ public class CourseHistoryManager : MonoBehaviour {
 
     private CourseHistoryEntry previousBestTime;
 
-    public float GetCurrentCourseRecord(int CourseSeed)
+    public float GetCurrentCourseRecordBySeed(int CourseSeed)
     {
         var currentRecords = GetSavedRecords("CourseRecords");
 
@@ -21,9 +21,24 @@ public class CourseHistoryManager : MonoBehaviour {
         return float.PositiveInfinity;
     }
 
+    public float GetCurrentCourseRecordByLevel(int levelNumber)
+    {
+        var CourseName = GetCourseName(levelNumber);
+        var currentRecords = GetSavedRecords("CourseRecords");
+
+        foreach (var record in currentRecords)
+        {
+            if (String.Equals(record.CourseName, CourseName))
+            {
+                return record.TimeCompleted;
+            }
+        }
+        return float.PositiveInfinity;
+    }
+
     public void FavoriteCourse(int CourseSeed, bool IsFavorited)
     {
-        var TimeCompleted = GetCurrentCourseRecord(CourseSeed);
+        var TimeCompleted = GetCurrentCourseRecordBySeed(CourseSeed);
         StoreNewRecord(CourseSeed, TimeCompleted, IsFavorited);
     }
 
@@ -41,7 +56,7 @@ public class CourseHistoryManager : MonoBehaviour {
         return false;
     }
 
-    public void StoreNewRecord(int CourseSeed, float TimeCompleted, bool IsFavorited)
+    public bool StoreNewRecord(int CourseSeed, float TimeCompleted, bool IsFavorited)
     {
         CourseHistoryEntry entry;
 
@@ -60,13 +75,16 @@ public class CourseHistoryManager : MonoBehaviour {
         {
             currentRecords.Add(entry);
             SerializeAndSaveRecords("CourseRecords", currentRecords);
+            return true;
         }
         else if (IsBestTime(currentRecords, entry))
         {
             currentRecords.Remove(previousBestTime);
             currentRecords.Add(entry);
             SerializeAndSaveRecords("CourseRecords", currentRecords);
+            return true;
         }
+        return false;
     }
 
     public void AddRecentlyPlayed(int CourseSeed, float TimeCompleted)

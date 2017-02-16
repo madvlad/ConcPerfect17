@@ -14,6 +14,7 @@ public class GameStateManager : NetworkBehaviour {
     public GameObject EscapeMenuSeedElement;
     public GameObject SettingsMenuHUDElement;
     public GameObject PlayerStatsHUDElement;
+    public GameObject BestTimeHudElement;
     public GameObject localPlayer;
     public GameObject nicknamePrefab;
 
@@ -30,6 +31,8 @@ public class GameStateManager : NetworkBehaviour {
     private bool IsDisplayNicknames = true;
     private bool IsCourseComplete = false;
     private bool IsCourseFavorited = false;
+
+    [SyncVar]
     private int CourseSeed;
 
     [SyncVar]
@@ -58,8 +61,27 @@ public class GameStateManager : NetworkBehaviour {
             ApplicationManager.currentLevel = CurrentServerLevel;
             ApplicationManager.GameType = CurrentGameType;
         }
+
+        SetBestTime();
     }
 
+    private void SetBestTime()
+    {
+        float bestTimeForCourse;
+
+        if(CourseSeed == 0)
+        {
+            bestTimeForCourse = GetComponent<CourseHistoryManager>().GetCurrentCourseRecordByLevel(ApplicationManager.currentLevel);
+        }
+        else
+        {
+            bestTimeForCourse = GetComponent<CourseHistoryManager>().GetCurrentCourseRecordBySeed(CourseSeed);
+        }
+        var bestTimeText = BestTimeHudElement.GetComponent<Text>();
+        TimeSpan timeSpan = TimeSpan.FromSeconds(bestTimeForCourse);
+        var timeString = timeSpan.Minutes.ToString("00") + ":" + timeSpan.Seconds.ToString("00") + ":" + timeSpan.Milliseconds.ToString("000");
+        bestTimeText.text = "Best time: " + timeString;
+    }
 
     void Update() {
         CheckIfPaused();
