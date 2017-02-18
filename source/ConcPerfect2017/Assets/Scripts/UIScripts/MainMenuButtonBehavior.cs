@@ -116,7 +116,6 @@ public class MainMenuButtonBehavior : MonoBehaviour {
         EnableStartHostGameButtons(true);
         UnetMatchMakerToggle.GetComponent<Toggle>().isOn = !ApplicationManager.IsLAN;
         predefinedCourseMenuUIElement.SetActive(false);
-        mainMenuUIElement.SetActive(false);
         singlePlayerMenuUIElement.SetActive(true);
     }
 
@@ -138,8 +137,8 @@ public class MainMenuButtonBehavior : MonoBehaviour {
 
     void ShowPredefinedCoursesMenu()
     {
+        mainMenuUIElement.SetActive(false);
         singlePlayerMenuUIElement.SetActive(false);
-        multiplayerMenuUIElement.SetActive(false);
         predefinedCourseMenuUIElement.SetActive(true);
     }
 
