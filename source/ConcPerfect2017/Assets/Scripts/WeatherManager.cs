@@ -32,6 +32,12 @@ public class WeatherManager : MonoBehaviour {
         isThunderStorming = true;
     }
 
+    public void TurnTheDangSunOff()
+    {
+        var sun = GameObject.FindGameObjectWithTag("Sun").GetComponent<Light>();
+        sun.flare = null;
+    }
+
 	void Start () {
         if (ApplicationManager.currentLevel == 0)
         {

@@ -159,6 +159,9 @@ public class LevelGenerator : NetworkBehaviour {
         var weatherManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<WeatherManager>();
         switch (currentLevel)
         {
+            case 3:
+                weatherManager.TurnTheDangSunOff();
+                break;
             case 4:
                 weatherManager.MakeItSnow();
                 break;
