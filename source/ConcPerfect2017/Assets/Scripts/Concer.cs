@@ -17,9 +17,10 @@ public class Concer : NetworkBehaviour
     private GameObject concPrimedHUDElement;
     private bool primed = false;
     private float timer = 0.0f;
-    private int currentConc = 0;
+    private int currentConc = 2;
     private GameObject concInstance;
     private GameObject playerCamera;
+    private bool NotFaded = false;
 
     public override void OnStartLocalPlayer()
     {
@@ -43,7 +44,12 @@ public class Concer : NetworkBehaviour
 
         if (ConcTimersNotPlaying())
         {
-            currentConc = 0;
+            currentConc = 2;
+            if (NotFaded)
+            {
+                NotFaded = false;
+                GameObject.FindGameObjectWithTag("VisualTimerPanel").GetComponent<Animation>().Play();
+            }
         }
 
         if (timer > 0)
@@ -107,6 +113,8 @@ public class Concer : NetworkBehaviour
 
     private void StartVisualTimer()
     {
+        NotFaded = true;
+        GameObject.FindGameObjectWithTag("VisualTimerPanel").GetComponent<Animation>().Play("FadeTimerPauseAnimation");
         if (ConcTimers[currentConc].GetComponent<Animation>().isPlaying)
         {
             ConcTimers[currentConc].GetComponent<Animation>().Rewind();
@@ -116,13 +124,13 @@ public class Concer : NetworkBehaviour
             ConcTimers[currentConc].GetComponent<Animation>().Play();
         }
 
-        if (currentConc == 2)
+        if (currentConc == 0)
         {
-            currentConc = 0;
+            currentConc = 2;
         }
         else
         {
-            currentConc++;
+            currentConc--;
         }
     }
 
