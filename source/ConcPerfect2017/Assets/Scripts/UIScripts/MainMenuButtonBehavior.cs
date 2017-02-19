@@ -200,6 +200,12 @@ public class MainMenuButtonBehavior : MonoBehaviour {
         escapeMenuUIElement.SetActive(false);
     }
 
+    public void BackToMainEscapeMenu()
+    {
+        mouseSensitivityMenuUIElement.SetActive(false);
+        escapeMenuUIElement.SetActive(true);
+    }
+
     public void SetMouseSensitivity(float sensitivity)
     {
         ApplicationManager.mouseSensitivity = sensitivity;
@@ -342,6 +348,8 @@ public class MainMenuButtonBehavior : MonoBehaviour {
         }
         else
         {
+            gameStateManager = GameObject.FindGameObjectWithTag("GameManager");
+            HideEscapeMenu();
             var player = GetLocalPlayerObject();
 			player.GetComponent<LocalPlayerStats> ().UpdateStatus ("Not Started");
             player.transform.position = new Vector3(0, 2, 0);
