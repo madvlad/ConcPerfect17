@@ -74,6 +74,8 @@ public class GameServerManager : NetworkBehaviour {
 		if (!isServer)
 			return;
 
+		CleanupDisconnectedPlayers ();
+
 		string playerInfo = ""; 
 		List<PlayerInfo> players = currentPlayers.Select (kvp => kvp.Value).ToList ();
 		players.Sort ((s1, s2) => s1.CompareTo (s2));
@@ -82,6 +84,19 @@ public class GameServerManager : NetworkBehaviour {
 		}
 			
 		gameManager.RpcUpdatePlayerInfo (playerInfo);
+	}
+
+	public void CleanupDisconnectedPlayers() {
+		List<NetworkInstanceId> idsToRemove = new List<NetworkInstanceId> ();
+		foreach (NetworkInstanceId id in currentPlayers.Keys) {
+			if (ClientScene.FindLocalObject(id) == null) {
+				idsToRemove.Add (id);
+			}
+		}
+			
+		foreach (NetworkInstanceId id in idsToRemove) {
+			currentPlayers.Remove (id);
+		}
 	}
 
     public void UpdatePlayerNickname(NetworkInstanceId netId, string nickname) {

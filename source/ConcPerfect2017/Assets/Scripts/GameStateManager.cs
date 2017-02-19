@@ -362,7 +362,6 @@ public class GameStateManager : NetworkBehaviour {
 
 	[ClientRpc]
 	public void RpcUpdatePlayerInfo(string stats) {
-		Debug.Log (stats);
 		playerInfo = new List<string> (stats.Split ('%'));
 	}
 
