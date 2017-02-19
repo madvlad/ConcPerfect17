@@ -61,4 +61,37 @@ public class ApplicationManager : MonoBehaviour {
     {
         LevelsCompleted = PlayerPrefs.GetInt("LevelsCompleted");
     }
+
+    public static int GetDifficultyLevel()
+    {
+        var sum = 0;
+
+        foreach (var difficulty in ApplicationManager.JumpsDifficultiesAllowed)
+        {
+            sum += GetDifficultyIndex(difficulty);
+        }
+
+        return sum;
+    }
+
+    static int GetDifficultyIndex(int jumpDifficulty)
+    {
+        switch (jumpDifficulty)
+        {
+            case 0:
+                return 1;
+            case 1:
+                return 2;
+            case 2:
+                return 4;
+            case 3:
+                return 8;
+            case 4:
+                return 16;
+            case 5:
+                return 32;
+        }
+
+        return 0;
+    }
 }

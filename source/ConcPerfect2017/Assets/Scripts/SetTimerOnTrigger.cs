@@ -56,13 +56,13 @@ public class SetTimerOnTrigger : MonoBehaviour {
                 ShootConfetti(other.gameObject);
                 SaveLevelCompletion();
                 gameStateManager.SetIsCourseComplete(true);
-                if (courseHistoryManager.StoreNewRecord(gameStateManager.GetCourseSeed(), gameStateManager.GetRawTime(), gameStateManager.GetIsCourseFavorited()))
+                if (courseHistoryManager.StoreNewRecord(gameStateManager.GetCourseSeed(), gameStateManager.GetRawTime(), gameStateManager.GetIsCourseFavorited(), ApplicationManager.GetDifficultyLevel()))
                 {
                     TimeSpan timeSpan = TimeSpan.FromSeconds(gameStateManager.GetRawTime());
                     var timeString = "Best time: " + timeSpan.Minutes.ToString("00") + ":" + timeSpan.Seconds.ToString("00") + ":" + timeSpan.Milliseconds.ToString("000");
                     GameObject.FindGameObjectWithTag("BestTime").GetComponent<Text>().text = timeString;
                 }
-                courseHistoryManager.AddRecentlyPlayed(gameStateManager.GetCourseSeed(), gameStateManager.GetRawTime());
+                courseHistoryManager.AddRecentlyPlayed(gameStateManager.GetCourseSeed(), gameStateManager.GetRawTime(), ApplicationManager.GetDifficultyLevel());
                 Invoke("EndGame", 7.0f);
             }
         }

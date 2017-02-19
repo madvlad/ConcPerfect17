@@ -31,11 +31,11 @@ public class LevelHistoryTable : MonoBehaviour {
 
                 if (entry.CourseSeed == 0)
                 {
-                    entryManager.SetFields(idx.ToString(), entry.CourseName, timeString, entry.IsFavorited);
+                    entryManager.SetFields(idx.ToString(), entry.CourseName, timeString, entry.IsFavorited, "");
                 }
                 else
                 {
-                    entryManager.SetFields(idx.ToString(), entry.CourseSeed.ToString(), timeString, entry.IsFavorited);
+                    entryManager.SetFields(idx.ToString(), entry.CourseSeed.ToString(), timeString, entry.IsFavorited, entry.DifficultyLevel.ToString());
                 }
 
                 entryInstance.transform.parent = GridElement.transform;

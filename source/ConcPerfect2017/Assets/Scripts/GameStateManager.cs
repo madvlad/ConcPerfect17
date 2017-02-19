@@ -79,7 +79,7 @@ public class GameStateManager : NetworkBehaviour {
         }
         else
         {
-            bestTimeForCourse = GetComponent<CourseHistoryManager>().GetCurrentCourseRecordBySeed(CourseSeed);
+            bestTimeForCourse = GetComponent<CourseHistoryManager>().GetCurrentCourseRecordBySeed(CourseSeed, ApplicationManager.GetDifficultyLevel());
         }
 
         if (bestTimeForCourse < float.PositiveInfinity)

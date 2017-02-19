@@ -9,7 +9,7 @@ public class FavoriteCourseUIScript : MonoBehaviour {
         var courseSeed = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameStateManager>().GetCourseSeed();
         if (courseSeed != 0)
         {
-            var IsFavorited = GameObject.FindGameObjectWithTag("GameManager").GetComponent<CourseHistoryManager>().IsCourseFavorited(courseSeed);
+            var IsFavorited = GameObject.FindGameObjectWithTag("GameManager").GetComponent<CourseHistoryManager>().IsCourseFavorited(courseSeed, ApplicationManager.GetDifficultyLevel());
             GetComponent<Toggle>().isOn = IsFavorited;
         }
         else
@@ -21,6 +21,6 @@ public class FavoriteCourseUIScript : MonoBehaviour {
     public void AddCourseToFavorite(bool SetFavorite)
     {
         var courseSeed = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameStateManager>().GetCourseSeed();
-        GameObject.FindGameObjectWithTag("GameManager").GetComponent<CourseHistoryManager>().FavoriteCourse(courseSeed, SetFavorite);
+        GameObject.FindGameObjectWithTag("GameManager").GetComponent<CourseHistoryManager>().FavoriteCourse(courseSeed, ApplicationManager.GetDifficultyLevel(), SetFavorite);
     }
 }

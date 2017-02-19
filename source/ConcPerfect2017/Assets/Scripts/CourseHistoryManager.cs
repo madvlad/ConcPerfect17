@@ -7,13 +7,13 @@ public class CourseHistoryManager : MonoBehaviour {
 
     private CourseHistoryEntry previousBestTime;
 
-    public float GetCurrentCourseRecordBySeed(int CourseSeed)
+    public float GetCurrentCourseRecordBySeed(int CourseSeed, int DifficultyLevel)
     {
         var currentRecords = GetSavedRecords("CourseRecords");
 
         foreach (var record in currentRecords)
         {
-            if (record.CourseSeed == CourseSeed)
+            if (record.CourseSeed == CourseSeed && record.DifficultyLevel == DifficultyLevel)
             {
                 return record.TimeCompleted;
             }
@@ -36,19 +36,19 @@ public class CourseHistoryManager : MonoBehaviour {
         return float.PositiveInfinity;
     }
 
-    public void FavoriteCourse(int CourseSeed, bool IsFavorited)
+    public void FavoriteCourse(int CourseSeed, int DifficultyLevel, bool IsFavorited)
     {
-        var TimeCompleted = GetCurrentCourseRecordBySeed(CourseSeed);
-        StoreNewRecord(CourseSeed, TimeCompleted, IsFavorited);
+        var TimeCompleted = GetCurrentCourseRecordBySeed(CourseSeed, DifficultyLevel);
+        StoreNewRecord(CourseSeed, TimeCompleted, IsFavorited, DifficultyLevel);
     }
 
-    public bool IsCourseFavorited(int CourseSeed)
+    public bool IsCourseFavorited(int CourseSeed, int DifficultyLevel)
     {
         var currentRecords = GetSavedRecords("CourseRecords");
 
         foreach (var record in currentRecords)
         {
-            if (record.CourseSeed == CourseSeed)
+            if (record.CourseSeed == CourseSeed && record.DifficultyLevel == DifficultyLevel)
             {
                 return record.IsFavorited;
             }
@@ -56,17 +56,17 @@ public class CourseHistoryManager : MonoBehaviour {
         return false;
     }
 
-    public bool StoreNewRecord(int CourseSeed, float TimeCompleted, bool IsFavorited)
+    public bool StoreNewRecord(int CourseSeed, float TimeCompleted, bool IsFavorited, int DifficultyLevel)
     {
         CourseHistoryEntry entry;
 
         if (CourseSeed == 0)
         {
-            entry = new CourseHistoryEntry { CourseSeed = CourseSeed, TimeCompleted = TimeCompleted, IsFavorited = IsFavorited, CourseName = GetCourseName(ApplicationManager.currentLevel) };
+            entry = new CourseHistoryEntry { CourseSeed = CourseSeed, TimeCompleted = TimeCompleted, IsFavorited = IsFavorited, CourseName = GetCourseName(ApplicationManager.currentLevel), DifficultyLevel = 0 };
         }
         else
         {
-            entry = new CourseHistoryEntry { CourseSeed = CourseSeed, TimeCompleted = TimeCompleted, IsFavorited = IsFavorited };
+            entry = new CourseHistoryEntry { CourseSeed = CourseSeed, TimeCompleted = TimeCompleted, IsFavorited = IsFavorited, DifficultyLevel = DifficultyLevel };
         }
 
         var currentRecords = GetSavedRecords("CourseRecords");
@@ -87,18 +87,18 @@ public class CourseHistoryManager : MonoBehaviour {
         return false;
     }
 
-    public void AddRecentlyPlayed(int CourseSeed, float TimeCompleted)
+    public void AddRecentlyPlayed(int CourseSeed, float TimeCompleted, int DifficultyLevel)
     {
         var recentPlayed = GetSavedRecords("RecentPlayed");
         CourseHistoryEntry entry;
 
         if (CourseSeed == 0)
         {
-            entry = new CourseHistoryEntry { CourseSeed = CourseSeed, TimeCompleted = TimeCompleted, CourseName = GetCourseName(ApplicationManager.currentLevel) };
+            entry = new CourseHistoryEntry { CourseSeed = CourseSeed, TimeCompleted = TimeCompleted, CourseName = GetCourseName(ApplicationManager.currentLevel), DifficultyLevel = DifficultyLevel };
         }
         else
         {
-            entry = new CourseHistoryEntry { CourseSeed = CourseSeed, TimeCompleted = TimeCompleted};
+            entry = new CourseHistoryEntry { CourseSeed = CourseSeed, TimeCompleted = TimeCompleted, DifficultyLevel = DifficultyLevel };
         }
 
         recentPlayed.Insert(0, entry);
@@ -111,7 +111,7 @@ public class CourseHistoryManager : MonoBehaviour {
         {
             foreach (var record in currentRecords)
             {
-                if (record.CourseSeed == entry.CourseSeed)
+                if (record.CourseSeed == entry.CourseSeed && record.DifficultyLevel == entry.DifficultyLevel)
                 {
                     return false;
                 }
@@ -137,7 +137,7 @@ public class CourseHistoryManager : MonoBehaviour {
         {
             foreach (var record in currentRecords)
             {
-                if (record.CourseSeed == entry.CourseSeed && entry.TimeCompleted <= record.TimeCompleted)
+                if (record.CourseSeed == entry.CourseSeed && entry.TimeCompleted <= record.TimeCompleted && entry.DifficultyLevel == record.DifficultyLevel)
                 {
                     previousBestTime = record;
                     return true;
@@ -212,6 +212,8 @@ public class CourseHistoryManager : MonoBehaviour {
         public string CourseName;
         [SerializeField]
         public int CourseSeed;
+        [SerializeField]
+        public int DifficultyLevel;
         [SerializeField]
         public float TimeCompleted;
         [SerializeField]
