@@ -15,6 +15,12 @@ public class GameServerManager : NetworkBehaviour {
         public string Nickname;
 		public int CurrentJump;
 		public string CurrentTimerTime;
+
+		public int CompareTo(PlayerStat that)
+		{
+			int timeCompare = this.CurrentTimerTime.CompareTo (that.CurrentTimerTime);
+			return (timeCompare == 0) ? this.Nickname.CompareTo (that.Nickname) : timeCompare;
+		}
 	}
 
 	public class ListPlayerStats : List<PlayerStat>
@@ -25,7 +31,6 @@ public class GameServerManager : NetworkBehaviour {
 			if (s.PlayerId != null)
 				this.Remove (s);
 		}
-
 
 		public PlayerStat GetStatByPlayerId(NetworkInstanceId netId)
 		{
@@ -54,6 +59,7 @@ public class GameServerManager : NetworkBehaviour {
 		if (!isServer)
 			return;
 
+		playerStatsList.Sort ((s1, s2) => s1.CompareTo (s2));
 		string playerStats = "";
 		foreach (PlayerStat stat in playerStatsList) {
 			playerStats += stat.Nickname + " ; " + stat.CurrentJump + "/" + gameManager.GetCourseJumpLimit () + " ; " + stat.CurrentTimerTime + "%";
