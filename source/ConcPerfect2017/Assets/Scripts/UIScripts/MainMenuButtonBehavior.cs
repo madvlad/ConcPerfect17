@@ -27,6 +27,7 @@ public class MainMenuButtonBehavior : MonoBehaviour {
     public GameObject historyListMenuUIElement;
     public GameObject nickNameInputField;
     public GameObject loadingScreenUIElement;
+    public GameObject failedMessage;
 
     void Start()
     {
@@ -69,7 +70,7 @@ public class MainMenuButtonBehavior : MonoBehaviour {
         ApplicationManager.currentLevel = 0;
         ApplicationManager.numberOfJumps = 9;
         EnableStartHostGameButtons(false);
-        loadingScreenUIElement.SetActive(true);
+        loadingScreenUIElement.GetComponent<Canvas>().enabled = true;
         GameObject.FindGameObjectWithTag("NetworkIssuer").GetComponent<ConcPerfectNetworkManager>().StartNetworkManager();
     }
 
@@ -78,7 +79,7 @@ public class MainMenuButtonBehavior : MonoBehaviour {
         ApplicationManager.currentLevel = 0;
         ApplicationManager.numberOfJumps = 18;
         EnableStartHostGameButtons(false);
-        loadingScreenUIElement.SetActive(true);
+        loadingScreenUIElement.GetComponent<Canvas>().enabled = true;
         GameObject.FindGameObjectWithTag("NetworkIssuer").GetComponent<ConcPerfectNetworkManager>().StartNetworkManager();
     }
 
@@ -241,8 +242,17 @@ public class MainMenuButtonBehavior : MonoBehaviour {
 
     public void JoinMultiplayerGame()
     {
+        failedMessage.GetComponent<Text>().enabled = false;
+        loadingScreenUIElement.GetComponent<Canvas>().enabled = true;
         ApplicationManager.IsLAN = true; 
         GameObject.FindGameObjectWithTag("NetworkIssuer").GetComponent<ConcPerfectNetworkManager>().StartNetworkManager();
+        Invoke("TimeOut", 20.0f);
+    }
+
+    public void TimeOut()
+    {
+        failedMessage.GetComponent<Text>().enabled = true;
+        loadingScreenUIElement.GetComponent<Canvas>().enabled = false;
     }
 
     public void SetGameMode(int gameMode)
@@ -255,7 +265,7 @@ public class MainMenuButtonBehavior : MonoBehaviour {
         ApplicationManager.currentLevel = levelNum;
         ApplicationManager.numberOfJumps = 9;
         EnableStartHostGameButtons(false);
-        loadingScreenUIElement.SetActive(true);
+        loadingScreenUIElement.GetComponent<Canvas>().enabled = true;
         GameObject.FindGameObjectWithTag("NetworkIssuer").GetComponent<ConcPerfectNetworkManager>().StartNetworkManager();
     }
 
