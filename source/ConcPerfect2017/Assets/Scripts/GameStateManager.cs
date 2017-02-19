@@ -347,9 +347,11 @@ public class GameStateManager : NetworkBehaviour {
 		if (netId == GetLocalPlayerObject().GetComponent<NetworkIdentity>().netId)
             return;
         GameObject networkedPlayer = ClientScene.FindLocalObject(netId);
-        GameObject nicknamedGO = Instantiate(nicknamePrefab, networkedPlayer.transform.position + new Vector3(0, 1, 0), Camera.main.transform.rotation);
-        nicknamedGO.GetComponent<Nickname>().SetPlayerId(netId);
-        nicknamedGO.GetComponent<Nickname>().SetNickname(nickname);
-        nicknamedGO.GetComponent<Nickname>().SetDisplayNickname(IsDisplayNicknames);
+		if (networkedPlayer != null) {
+			GameObject nicknamedGO = Instantiate (nicknamePrefab, networkedPlayer.transform.position + new Vector3 (0, 1, 0), Camera.main.transform.rotation);
+			nicknamedGO.GetComponent<Nickname> ().SetPlayerId (netId);
+			nicknamedGO.GetComponent<Nickname> ().SetNickname (nickname);
+			nicknamedGO.GetComponent<Nickname> ().SetDisplayNickname (IsDisplayNicknames);
+		}
     }
 }
