@@ -13,7 +13,9 @@ public class GameStateManager : NetworkBehaviour {
     public GameObject EscapeMenuHUDElement;
     public GameObject EscapeMenuSeedElement;
     public GameObject SettingsMenuHUDElement;
-    public GameObject PlayerStatsHUDElement;
+	public GameObject PlayerStatsHUDElement;
+    public GameObject PlayerScoresHUDElement;
+	public GameObject PlayerInfoHUDElement;
     public GameObject BestTimeHudElement;
     public GameObject localPlayer;
     public GameObject nicknamePrefab;
@@ -45,7 +47,10 @@ public class GameStateManager : NetworkBehaviour {
     public int CurrentGameType;
 
     [SerializeField]
-    private List<string> playerStats;
+    private List<string> playerScores;
+
+	[SerializeField]
+	private List<string> playerInfo;
 
     void Start() {
         GameType = ApplicationManager.GameType;
@@ -199,7 +204,7 @@ public class GameStateManager : NetworkBehaviour {
         textObject.transform.SetParent(panel.transform);
     }
 
-    private void AddHeaderTextToPanel(GameObject panel, string label, string text) {
+	private void AddHeaderTextToPanel(GameObject panel, string label, string text, int headerLevel) {
         Font ArialFont = (Font)Resources.GetBuiltinResource(typeof(Font), "Arial.ttf");
 
         GameObject textObject = new GameObject(label);
@@ -207,30 +212,53 @@ public class GameStateManager : NetworkBehaviour {
         textObject.GetComponent<Text>().text = text;
         textObject.GetComponent<Text>().font = ArialFont;
         textObject.GetComponent<Text>().fontStyle = FontStyle.Bold;
-        textObject.GetComponent<Text>().fontSize = 18;
+		if (headerLevel == 1)
+			textObject.GetComponent<Text>().fontSize = 18;
+		else
+			textObject.GetComponent<Text>().fontSize = 16;
         textObject.GetComponent<Text>().material = ArialFont.material;
         textObject.transform.SetParent(panel.transform);
     }
 
     public void UpdatePlayerStats() {
-        foreach (Text row in PlayerStatsHUDElement.GetComponentsInChildren<Text>()) {
+        foreach (Text row in PlayerScoresHUDElement.GetComponentsInChildren<Text>()) {
             Destroy(row.gameObject);
         }
+		foreach (Text row in PlayerInfoHUDElement.GetComponentsInChildren<Text>()) {
+			Destroy(row.gameObject);
+		}
 
         var i = 0;
-        AddHeaderTextToPanel(PlayerStatsHUDElement, "Row" + i, "Player");
-        AddHeaderTextToPanel(PlayerStatsHUDElement, "Row" + i, "Current Jump");
-        AddHeaderTextToPanel(PlayerStatsHUDElement, "Row" + i++, "Course Status");
-        foreach (string stat in playerStats) {
-            if (stat.Split(';').Length > 2) {
-                string playerId = stat.Split(';')[0];
-                string courseTime = stat.Split(';')[1];
-                string jumpNumber = stat.Split(';')[2];
-                AddTextToPanel(PlayerStatsHUDElement, "Row" + i + playerId, playerId);
-                AddTextToPanel(PlayerStatsHUDElement, "Row" + i + courseTime, courseTime);
-                AddTextToPanel(PlayerStatsHUDElement, "Row" + i++ + jumpNumber, jumpNumber);
+		AddHeaderTextToPanel (PlayerScoresHUDElement, "ScoreRow" + i, "High Scores", 1);
+		AddHeaderTextToPanel (PlayerScoresHUDElement, "ScoreRow" + i++, "", 1);
+        AddHeaderTextToPanel(PlayerScoresHUDElement, "ScoreRow" + i, "Player", 2);
+        AddHeaderTextToPanel(PlayerScoresHUDElement, "ScoreRow" + i++, "Course Time", 2);
+        foreach (string score in playerScores) {
+            if (score.Split(';').Length > 1) {
+                string nickname = score.Split(';')[0];
+                string courseTime = score.Split(';')[1];
+                AddTextToPanel(PlayerScoresHUDElement, "ScoreRow" + i + nickname, nickname);
+                AddTextToPanel(PlayerScoresHUDElement, "ScoreRow" + i + courseTime, courseTime);
             }
         }
+
+		i = 0;
+		AddHeaderTextToPanel (PlayerInfoHUDElement, "ScoreRow" + i, "In Game", 1);
+		AddHeaderTextToPanel (PlayerInfoHUDElement, "ScoreRow" + i++, "", 1);
+		AddHeaderTextToPanel (PlayerInfoHUDElement, "ScoreRow" + i++, "", 1);
+		AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i, "Player", 2);
+		AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i, "Current Jump", 2);
+		AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i++, "Course Status", 2);
+		foreach (string info in playerInfo) {
+			if (info.Split(';').Length > 2) {
+				string nickname = info.Split(';')[0];
+				string status = info.Split(';')[1];
+				string jumpNumber = info.Split(';')[2];
+				AddTextToPanel(PlayerInfoHUDElement, "InfoRow" + i + nickname, nickname);
+				AddTextToPanel(PlayerInfoHUDElement, "InfoRow" + i + status, status);
+				AddTextToPanel(PlayerInfoHUDElement, "InfoRow" + i++ + jumpNumber, jumpNumber);
+			}
+		}
     }
 
     public void ShowPlayerStats(bool show) {
@@ -331,9 +359,14 @@ public class GameStateManager : NetworkBehaviour {
     }
 
     [ClientRpc]
-    public void RpcUpdatePlayerStats(string stats) {
-        playerStats = new List<string>(stats.Split('%'));
+    public void RpcUpdatePlayerScores(string scores) {
+        playerScores = new List<string>(scores.Split('%'));
     }
+
+	[ClientRpc]
+	public void RpcUpdatePlayerInfo(string stats) {
+		playerInfo = new List<string> (stats.Split ('%'));
+	}
 
     [ClientRpc]
     public void RpcUpdateCourseJumpLimit(int CourseJumpLimit) {

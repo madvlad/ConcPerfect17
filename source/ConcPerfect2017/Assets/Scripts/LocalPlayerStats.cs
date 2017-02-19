@@ -12,7 +12,6 @@ public class LocalPlayerStats : NetworkBehaviour {
             gameServerManager = GameObject.FindGameObjectWithTag("GameServerManager").GetComponent<GameServerManager>();
 
         if (this.gameObject.GetComponent<LocalPlayerStats>() != null) {
-            this.gameObject.GetComponent<LocalPlayerStats>().UpdateTime("Not Started");
             this.gameObject.GetComponent<LocalPlayerStats>().UpdateNickname();
         }
     }
@@ -32,6 +31,12 @@ public class LocalPlayerStats : NetworkBehaviour {
             return;
         CmdUpdateTime(netId, currentTimerTime);
     }
+
+	public void UpdateStatus(string status) {
+		if (!isLocalPlayer)
+			return;
+		CmdUpdateStatus (netId, status);
+	}
 
     public void UpdateJump(int jump) {
         if (!isLocalPlayer)
@@ -60,6 +65,11 @@ public class LocalPlayerStats : NetworkBehaviour {
 	public void CmdUpdateTime(NetworkInstanceId netId, string currentTimerTime)
 	{
 		gameServerManager.UpdatePlayerTime (netId, currentTimerTime);
+	}
+
+	[Command]
+	public void CmdUpdateStatus(NetworkInstanceId netId, string status) {
+		gameServerManager.UpdatePlayerStatus (netId, status);
 	}
 
 	[Command]
