@@ -26,6 +26,7 @@ public class MainMenuButtonBehavior : MonoBehaviour {
     public GameObject sfxVolumeSliderMenuUIElement;
     public GameObject historyListMenuUIElement;
     public GameObject nickNameInputField;
+    public GameObject loadingScreenUIElement;
 
     void Start()
     {
@@ -68,6 +69,7 @@ public class MainMenuButtonBehavior : MonoBehaviour {
         ApplicationManager.currentLevel = 0;
         ApplicationManager.numberOfJumps = 9;
         EnableStartHostGameButtons(false);
+        loadingScreenUIElement.SetActive(true);
         GameObject.FindGameObjectWithTag("NetworkIssuer").GetComponent<ConcPerfectNetworkManager>().StartNetworkManager();
     }
 
@@ -76,6 +78,7 @@ public class MainMenuButtonBehavior : MonoBehaviour {
         ApplicationManager.currentLevel = 0;
         ApplicationManager.numberOfJumps = 18;
         EnableStartHostGameButtons(false);
+        loadingScreenUIElement.SetActive(true);
         GameObject.FindGameObjectWithTag("NetworkIssuer").GetComponent<ConcPerfectNetworkManager>().StartNetworkManager();
     }
 
@@ -252,6 +255,7 @@ public class MainMenuButtonBehavior : MonoBehaviour {
         ApplicationManager.currentLevel = levelNum;
         ApplicationManager.numberOfJumps = 9;
         EnableStartHostGameButtons(false);
+        loadingScreenUIElement.SetActive(true);
         GameObject.FindGameObjectWithTag("NetworkIssuer").GetComponent<ConcPerfectNetworkManager>().StartNetworkManager();
     }
 
