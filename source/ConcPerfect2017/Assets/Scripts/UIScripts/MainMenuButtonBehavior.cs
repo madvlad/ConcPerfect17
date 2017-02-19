@@ -343,6 +343,7 @@ public class MainMenuButtonBehavior : MonoBehaviour {
         else
         {
             var player = GetLocalPlayerObject();
+			player.GetComponent<LocalPlayerStats> ().UpdateStatus ("Not Started");
             player.transform.position = new Vector3(0, 2, 0);
             player.GetComponent<Concer>().SetConcCount(0);
             var gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameStateManager>();

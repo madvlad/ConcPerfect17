@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Runtime.Serialization.Formatters;
 using System.Runtime.Serialization;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -27,6 +28,13 @@ public class GameServerManager : NetworkBehaviour {
 		public string Nickname;
 		public string Status;
 		public int CurrentJump;
+		public string BestTime;
+		public int TimesCompleted;
+
+		public int CompareTo(PlayerInfo that) {
+			int timeCompare = this.BestTime.CompareTo (that.BestTime);
+			return (timeCompare == 0) ? this.Nickname.CompareTo (that.Nickname) : timeCompare;
+		}
 	}
 
 	public class ListPlayerScores : List<PlayerScore>
@@ -66,17 +74,13 @@ public class GameServerManager : NetworkBehaviour {
 		if (!isServer)
 			return;
 
-		string playerScores = "";
-		foreach (PlayerScore stat in playerScoresList) {
-			playerScores += stat.pInfo.Nickname + " ; " + stat.CurrentTimerTime + "%";
-		}
-
 		string playerInfo = ""; 
-		foreach (KeyValuePair<NetworkInstanceId, PlayerInfo> entry in currentPlayers) {
-			playerInfo += entry.Value.PlayerId.ToString() + " ; " + entry.Value.Nickname + " ; " + entry.Value.Status + " ; " + entry.Value.CurrentJump + "/" + gameManager.GetCourseJumpLimit () + " % " ;
+		List<PlayerInfo> players = currentPlayers.Select (kvp => kvp.Value).ToList ();
+		players.Sort ((s1, s2) => s1.CompareTo (s2));
+		foreach (PlayerInfo pInfo in players) {
+			playerInfo += pInfo.PlayerId.ToString() + " ; " + pInfo.Nickname + " ; " + pInfo.Status + " ; " + pInfo.CurrentJump + "/" + gameManager.GetCourseJumpLimit () + " ; " + pInfo.BestTime + " ; " + pInfo.TimesCompleted  + " % " ;
 		}
 			
-		gameManager.RpcUpdatePlayerScores (playerScores);
 		gameManager.RpcUpdatePlayerInfo (playerInfo);
 	}
 
@@ -94,6 +98,18 @@ public class GameServerManager : NetworkBehaviour {
 		stat.CurrentTimerTime = playerTime;
 		playerScoresList.Add(stat);
 		playerScoresList.Sort ((s1, s2) => s1.CompareTo (s2));
+
+		if (currentPlayers.ContainsKey(netId)) {
+			PlayerInfo pInfo = currentPlayers [netId];
+			if (pInfo.BestTime == "- -") {
+				pInfo.BestTime = playerTime;
+			} else {
+				pInfo.BestTime = (pInfo.BestTime.CompareTo (playerTime) == 1) ? playerTime : pInfo.BestTime;
+			}
+			pInfo.TimesCompleted++;
+			currentPlayers.Remove (netId);
+			currentPlayers [netId] = pInfo;
+		}
 	}
 
 	public void UpdatePlayerStatus(NetworkInstanceId netId, string status) {
@@ -134,6 +150,8 @@ public class GameServerManager : NetworkBehaviour {
 		pInfo.Nickname = playerNicknames [netId];
 		pInfo.Status = "Not Started";
 		pInfo.CurrentJump = 0;
+		pInfo.BestTime = "- -";
+		pInfo.TimesCompleted = 0;
 		currentPlayers [netId] = pInfo;
 	}
 

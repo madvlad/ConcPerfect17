@@ -14,7 +14,6 @@ public class GameStateManager : NetworkBehaviour {
     public GameObject EscapeMenuSeedElement;
     public GameObject SettingsMenuHUDElement;
 	public GameObject PlayerStatsHUDElement;
-    public GameObject PlayerScoresHUDElement;
 	public GameObject PlayerInfoHUDElement;
     public GameObject BestTimeHudElement;
     public GameObject localPlayer;
@@ -216,53 +215,45 @@ public class GameStateManager : NetworkBehaviour {
 		if (headerLevel == 1)
 			textObject.GetComponent<Text>().fontSize = 18;
 		else
-			textObject.GetComponent<Text>().fontSize = 16;
+			textObject.GetComponent<Text>().fontSize = 14;
         textObject.GetComponent<Text>().material = ArialFont.material;
         textObject.transform.SetParent(panel.transform);
     }
 
     public void UpdatePlayerStats() {
-        foreach (Text row in PlayerScoresHUDElement.GetComponentsInChildren<Text>()) {
-            Destroy(row.gameObject);
-        }
 		foreach (Text row in PlayerInfoHUDElement.GetComponentsInChildren<Text>()) {
 			Destroy(row.gameObject);
 		}
 
-        var i = 0;
-		AddHeaderTextToPanel (PlayerScoresHUDElement, "ScoreRow" + i, "High Scores", 1);
-		AddHeaderTextToPanel (PlayerScoresHUDElement, "ScoreRow" + i++, "", 1);
-        AddHeaderTextToPanel(PlayerScoresHUDElement, "ScoreRow" + i, "Player", 2);
-        AddHeaderTextToPanel(PlayerScoresHUDElement, "ScoreRow" + i++, "Course Time", 2);
-        foreach (string score in playerScores) {
-            if (score.Split(';').Length > 1) {
-                string nickname = score.Split(';')[0];
-                string courseTime = score.Split(';')[1];
-				AddTextToPanel(PlayerScoresHUDElement, "ScoreRow" + i + nickname, nickname, Color.white);
-				AddTextToPanel(PlayerScoresHUDElement, "ScoreRow" + i + courseTime, courseTime, Color.white);
-            }
-        }
-
-		i = 0;
-		AddHeaderTextToPanel (PlayerInfoHUDElement, "ScoreRow" + i, "In Game", 1);
-		AddHeaderTextToPanel (PlayerInfoHUDElement, "ScoreRow" + i++, "", 1);
-		AddHeaderTextToPanel (PlayerInfoHUDElement, "ScoreRow" + i++, "", 1);
+		var i = 0;
+		AddHeaderTextToPanel (PlayerInfoHUDElement, "InfoRow" + i, "In Game", 1);
+		AddHeaderTextToPanel (PlayerInfoHUDElement, "InfoRow" + i, "", 1);
+		AddHeaderTextToPanel (PlayerInfoHUDElement, "InfoRow" + i, "", 1);
+		AddHeaderTextToPanel (PlayerInfoHUDElement, "InfoRow" + i, "", 1);
+		AddHeaderTextToPanel (PlayerInfoHUDElement, "InfoRow" + i++, "", 1);
 		AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i, "Player", 2);
+		AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i, "Status", 2);
 		AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i, "Current Jump", 2);
-		AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i++, "Course Status", 2);
+		AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i, "Best Time", 2);
+		AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i++, "Times Completed", 2);
+
 		foreach (string info in playerInfo) {
-			if (info.Split(';').Length > 3) {
+			if (info.Split(';').Length > 5) {
 				string pId = info.Split(';')[0];
 				string nickname = info.Split(';')[1];
 				string status = info.Split(';')[2];
 				string jumpNumber = info.Split(';')[3];
+				string bestScore = info.Split (';') [4];
+				string timesCompleted = info.Split (';') [5];
 				Color rowColor = Color.white;
 				if (pId.Trim().Equals(GetLocalPlayerObject().GetComponent<NetworkIdentity>().netId.ToString().Trim())) {
 					nickname = "*" + nickname; 
 				}
-				AddTextToPanel(PlayerInfoHUDElement, "InfoRow" + i + nickname, nickname, rowColor);
-				AddTextToPanel(PlayerInfoHUDElement, "InfoRow" + i + status, status, rowColor);
-				AddTextToPanel(PlayerInfoHUDElement, "InfoRow" + i++ + jumpNumber, jumpNumber, rowColor);
+				AddTextToPanel(PlayerInfoHUDElement, "InfoRow" + i + "nickname", nickname, rowColor);
+				AddTextToPanel(PlayerInfoHUDElement, "InfoRow" + i + "status", status, rowColor);
+				AddTextToPanel(PlayerInfoHUDElement, "InfoRow" + i++ + "jumpNumber", jumpNumber, rowColor);
+				AddTextToPanel(PlayerInfoHUDElement, "InfoRow" + i++ + "bestScore", bestScore, rowColor);
+				AddTextToPanel(PlayerInfoHUDElement, "InfoRow" + i++ + "timesCompleted", timesCompleted, rowColor);
 			}
 		}
     }
@@ -371,6 +362,7 @@ public class GameStateManager : NetworkBehaviour {
 
 	[ClientRpc]
 	public void RpcUpdatePlayerInfo(string stats) {
+		Debug.Log (stats);
 		playerInfo = new List<string> (stats.Split ('%'));
 	}
 
