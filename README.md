@@ -2,7 +2,9 @@
 
 This is the source code for Conc Perfect 2017.
 
-Build with Unity 5.5
+Build with Unity 5.5.
+
+Current Version: *0.1.0*
 
 Important documents are as follows:
 

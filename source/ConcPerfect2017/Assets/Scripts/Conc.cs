@@ -38,7 +38,7 @@ public class Conc : NetworkBehaviour
         {
             if (gameObject.GetComponent<AudioSource>())
             {
-                AudioSource.PlayClipAtPoint(primeSFX, playerObject.transform.position);
+                AudioSource.PlayClipAtPoint(primeSFX, playerObject.transform.position, ApplicationManager.sfxVolume);
                 Invoke("Beep", 1.0f);
             }
         }
@@ -92,7 +92,7 @@ public class Conc : NetworkBehaviour
     {
         if (explodeSFX)
         {
-            AudioSource.PlayClipAtPoint(explodeSFX, playerObject.transform.position);
+            AudioSource.PlayClipAtPoint(explodeSFX, playerObject.transform.position, ApplicationManager.sfxVolume);
         }
     }
 
@@ -100,7 +100,7 @@ public class Conc : NetworkBehaviour
     {
         if (!exploded)
         {
-            AudioSource.PlayClipAtPoint(timerSFX, playerObject.transform.position);
+            AudioSource.PlayClipAtPoint(timerSFX, playerObject.transform.position, ApplicationManager.sfxVolume);
             if (BeepCount == (int)timer - 1)
             {
                 Invoke("WarningBeep", 1.0f);
@@ -115,7 +115,7 @@ public class Conc : NetworkBehaviour
 
     void WarningBeep()
     {
-        AudioSource.PlayClipAtPoint(warningSFX, playerObject.transform.position);
+        AudioSource.PlayClipAtPoint(warningSFX, playerObject.transform.position, ApplicationManager.sfxVolume);
     }
 
     void Destroy()

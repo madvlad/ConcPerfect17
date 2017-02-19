@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -13,6 +12,11 @@ public class LevelGenerator : NetworkBehaviour {
     public List<GameObject> jumpList;
     public int courseJumpListSize;
     public int RandomSeed;
+    public List<Material> levelSkyboxList;
+    public List<Texture> levelFloorTexture;
+    public List<Texture> levelWallTexture;
+    public List<AudioClip> levelMusicList;
+    public Texture lavaTexture;
 
     public AudioClip tutorialMusic;
 
@@ -24,10 +28,20 @@ public class LevelGenerator : NetworkBehaviour {
     {
         GameObject.FindGameObjectWithTag("Music").GetComponent<AudioSource>().volume = ApplicationManager.musicVolume;
         GameStateManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameStateManager>();
+        if (!isServer)
+        {
+            ApplicationManager.currentLevel = GameStateManager.CurrentServerLevel;
+            ApplicationManager.GameType = GameStateManager.CurrentGameType;
+        }
 
         if (courseJumpListSize == 0)
         {
             courseJumpListSize = ApplicationManager.numberOfJumps;
+        }
+
+        if (ApplicationManager.currentLevel > 0)
+        {
+            SetCourseEnvironment(ApplicationManager.currentLevel);
         }
 
         GameStateManager.SetCourseJumpLimit(courseJumpListSize);
@@ -41,6 +55,7 @@ public class LevelGenerator : NetworkBehaviour {
             if (ApplicationManager.currentLevel > 0)
             {
                 BuildCourseIteratively();
+                SetJumpTextures();
             }
             else
             {
@@ -51,6 +66,108 @@ public class LevelGenerator : NetworkBehaviour {
         else if (ApplicationManager.GameType == 1)
         {
             BuildTutorialLevel();
+        }
+    }
+
+    public bool IsSetting = false;
+    public bool HasSet = false;
+    public bool StartWall = true;
+    public int NumberOfCalls = 0;
+
+    private void SetJumpTextures()
+    {
+        if (Application.isLoadingLevel && !IsSetting)
+        {
+            Invoke("SetJumpTextures", 0.1f);
+            return;
+        }
+        IsSetting = true;
+        var assetIndex = ApplicationManager.currentLevel - 1;
+        var floors = GameObject.FindGameObjectsWithTag("Floor");
+        foreach (var floor in floors)
+        {
+            if (floor.GetComponent<Renderer>() != null)
+            {
+                HasSet = true;
+                if (StartWall)
+                {
+                    StartWall = false;
+                    SetWallTextures();
+                    SetMoveableTextures();
+                    if (ApplicationManager.currentLevel == 5)
+                    {
+                        SetLavaTextures();
+                    }
+                }
+                var MeshRenderer = floor.GetComponents(typeof(MeshRenderer))[0] as MeshRenderer;
+                MeshRenderer.material.mainTexture = levelFloorTexture[assetIndex];
+            }
+            else if (!HasSet)
+            {
+                Invoke("SetJumpTextures", 0.1f);
+            }
+        }
+    }
+
+    private void SetLavaTextures()
+    {
+        var walls = GameObject.FindGameObjectsWithTag("Lava");
+
+        foreach (var wall in walls)
+        {
+            var MeshRenderer = wall.GetComponents(typeof(MeshRenderer))[0] as MeshRenderer;
+            MeshRenderer.material.mainTexture = lavaTexture;
+        }
+    }
+
+    private void SetWallTextures()
+    {
+        var walls = GameObject.FindGameObjectsWithTag("Wall");
+        var assetIndex = ApplicationManager.currentLevel - 1;
+
+        foreach (var wall in walls)
+        {
+            var MeshRenderer = wall.GetComponents(typeof(MeshRenderer))[0] as MeshRenderer;
+            MeshRenderer.material.mainTexture = levelWallTexture[assetIndex];
+        }
+    }
+
+    private void SetMoveableTextures()
+    {
+        var walls = GameObject.FindGameObjectsWithTag("Moveable");
+        var assetIndex = ApplicationManager.currentLevel - 1;
+
+        foreach (var wall in walls)
+        {
+            var MeshRenderer = wall.GetComponents(typeof(MeshRenderer))[0] as MeshRenderer;
+            MeshRenderer.material.mainTexture = levelFloorTexture[assetIndex];
+        }
+    }
+
+    private void SetCourseEnvironment(int currentLevel)
+    {
+        SetPossibleWeatherEvents(currentLevel);
+        var assetIndex = currentLevel - 1;
+        GameObject.FindGameObjectWithTag("Music").GetComponent<AudioSource>().clip = levelMusicList[assetIndex];
+        GameObject.FindGameObjectWithTag("Music").GetComponent<AudioSource>().Play();
+        RenderSettings.skybox = levelSkyboxList[assetIndex];
+        SetJumpTextures();
+    }
+
+    private void SetPossibleWeatherEvents(int currentLevel)
+    {
+        var weatherManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<WeatherManager>();
+        switch (currentLevel)
+        {
+            case 3:
+                weatherManager.TurnTheDangSunOff();
+                break;
+            case 4:
+                weatherManager.MakeItSnow();
+                break;
+            case 5:
+                weatherManager.TurnOnThunderstorm();
+                break;
         }
     }
 

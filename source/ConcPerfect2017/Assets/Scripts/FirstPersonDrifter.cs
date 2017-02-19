@@ -28,6 +28,8 @@ public class FirstPersonDrifter : NetworkBehaviour
     // Player Model
     public GameObject playerModel;
 
+    public AudioClip jumpSoundClip;
+
     // Units that player can fall before a falling damage function is run. To disable, type "infinity" in the inspector
     private float fallingDamageThreshold = 10.0f;
 
@@ -67,7 +69,7 @@ public class FirstPersonDrifter : NetworkBehaviour
     private Vector3 lastPosition;
     private float animTimer;
 
-	void Awake() {
+    void Awake() {
 		playerCam = GetComponentInChildren<Camera>();
 		playerCam.gameObject.SetActive(false);
 
@@ -189,6 +191,7 @@ public class FirstPersonDrifter : NetworkBehaviour
             }
             else if (jumpTimer >= antiBunnyHopFactor)
             {
+                gameObject.GetComponent<AudioSource>().PlayOneShot(jumpSoundClip, ApplicationManager.sfxVolume);
                 moveDirection.y = jumpSpeed;
                 jumpTimer = 0;
             }

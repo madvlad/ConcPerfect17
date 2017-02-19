@@ -54,6 +54,7 @@ public class ConcPerfectNetworkManager : MonoBehaviour {
     }
 
     private void OnInternetMatchList(bool success, string extendedInfo, List<MatchInfoSnapshot> matches) {
+        GameObject.FindGameObjectWithTag("LoadingCanvas").GetComponent<Canvas>().enabled = false;
         if (success) {
             if (matches.Count != 0) {
                 //Clear old snapshots

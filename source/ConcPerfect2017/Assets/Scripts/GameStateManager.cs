@@ -13,7 +13,9 @@ public class GameStateManager : NetworkBehaviour {
     public GameObject EscapeMenuHUDElement;
     public GameObject EscapeMenuSeedElement;
     public GameObject SettingsMenuHUDElement;
-    public GameObject PlayerStatsHUDElement;
+	public GameObject PlayerStatsHUDElement;
+	public GameObject PlayerInfoHUDElement;
+    public GameObject BestTimeHudElement;
     public GameObject localPlayer;
     public GameObject nicknamePrefab;
 
@@ -29,21 +31,65 @@ public class GameStateManager : NetworkBehaviour {
     private bool IsDisplayStats = false;
     private bool IsDisplayNicknames = true;
     private bool IsCourseComplete = false;
+    private bool IsCourseFavorited = false;
+
+    [SyncVar]
     private int CourseSeed;
 
     [SyncVar]
     private int CourseJumpLimit;
 
+    [SyncVar]
+    public int CurrentServerLevel;
+
+    [SyncVar]
+    public int CurrentGameType;
+
     [SerializeField]
-    private List<string> playerStats;
+    private List<string> playerScores;
+
+	[SerializeField]
+	private List<string> playerInfo;
 
     void Start() {
         GameType = ApplicationManager.GameType;
 
         if (isServer)
+        {
             gameServerManager = GameObject.FindGameObjectWithTag("GameServerManager").GetComponent<GameServerManager>();
+            CurrentServerLevel = ApplicationManager.currentLevel;
+            CurrentGameType = ApplicationManager.GameType;
+        }
+        else
+        {
+            ApplicationManager.currentLevel = CurrentServerLevel;
+            ApplicationManager.GameType = CurrentGameType;
+        }
+
+        SetBestTime();
     }
 
+    private void SetBestTime()
+    {
+        float bestTimeForCourse;
+
+        if(CourseSeed == 0)
+        {
+            bestTimeForCourse = GetComponent<CourseHistoryManager>().GetCurrentCourseRecordByLevel(ApplicationManager.currentLevel);
+        }
+        else
+        {
+            bestTimeForCourse = GetComponent<CourseHistoryManager>().GetCurrentCourseRecordBySeed(CourseSeed, ApplicationManager.GetDifficultyLevel());
+        }
+
+        if (bestTimeForCourse < float.PositiveInfinity)
+        {
+            var bestTimeText = BestTimeHudElement.GetComponent<Text>();
+            TimeSpan timeSpan = TimeSpan.FromSeconds(bestTimeForCourse);
+            var timeString = timeSpan.Minutes.ToString("00") + ":" + timeSpan.Seconds.ToString("00") + ":" + timeSpan.Milliseconds.ToString("000");
+            bestTimeText.text = "Best time: " + timeString;
+        }
+    }
 
     void Update() {
         CheckIfPaused();
@@ -146,18 +192,19 @@ public class GameStateManager : NetworkBehaviour {
         return IsDisplayStats;
     }
 
-    private void AddTextToPanel(GameObject panel, string label, string text) {
+	private void AddTextToPanel(GameObject panel, string label, string text, Color fontColor) {
         Font ArialFont = (Font)Resources.GetBuiltinResource(typeof(Font), "Arial.ttf");
 
         GameObject textObject = new GameObject(label);
         textObject.AddComponent<Text>();
         textObject.GetComponent<Text>().text = text;
         textObject.GetComponent<Text>().font = ArialFont;
+		textObject.GetComponent<Text> ().color = fontColor;
         textObject.GetComponent<Text>().material = ArialFont.material;
         textObject.transform.SetParent(panel.transform);
     }
 
-    private void AddHeaderTextToPanel(GameObject panel, string label, string text) {
+	private void AddHeaderTextToPanel(GameObject panel, string label, string text, int headerLevel) {
         Font ArialFont = (Font)Resources.GetBuiltinResource(typeof(Font), "Arial.ttf");
 
         GameObject textObject = new GameObject(label);
@@ -165,30 +212,50 @@ public class GameStateManager : NetworkBehaviour {
         textObject.GetComponent<Text>().text = text;
         textObject.GetComponent<Text>().font = ArialFont;
         textObject.GetComponent<Text>().fontStyle = FontStyle.Bold;
-        textObject.GetComponent<Text>().fontSize = 18;
+		if (headerLevel == 1)
+			textObject.GetComponent<Text>().fontSize = 18;
+		else
+			textObject.GetComponent<Text>().fontSize = 14;
         textObject.GetComponent<Text>().material = ArialFont.material;
         textObject.transform.SetParent(panel.transform);
     }
 
     public void UpdatePlayerStats() {
-        foreach (Text row in PlayerStatsHUDElement.GetComponentsInChildren<Text>()) {
-            Destroy(row.gameObject);
-        }
+		foreach (Text row in PlayerInfoHUDElement.GetComponentsInChildren<Text>()) {
+			Destroy(row.gameObject);
+		}
 
-        var i = 0;
-        AddHeaderTextToPanel(PlayerStatsHUDElement, "Row" + i, "Player");
-        AddHeaderTextToPanel(PlayerStatsHUDElement, "Row" + i, "Current Jump");
-        AddHeaderTextToPanel(PlayerStatsHUDElement, "Row" + i++, "Course Status");
-        foreach (string stat in playerStats) {
-            if (stat.Split(';').Length > 2) {
-                string playerId = stat.Split(';')[0];
-                string courseTime = stat.Split(';')[1];
-                string jumpNumber = stat.Split(';')[2];
-                AddTextToPanel(PlayerStatsHUDElement, "Row" + i + playerId, playerId);
-                AddTextToPanel(PlayerStatsHUDElement, "Row" + i + courseTime, courseTime);
-                AddTextToPanel(PlayerStatsHUDElement, "Row" + i++ + jumpNumber, jumpNumber);
-            }
-        }
+		var i = 0;
+		AddHeaderTextToPanel (PlayerInfoHUDElement, "InfoRow" + i, "In Game", 1);
+		AddHeaderTextToPanel (PlayerInfoHUDElement, "InfoRow" + i, "", 1);
+		AddHeaderTextToPanel (PlayerInfoHUDElement, "InfoRow" + i, "", 1);
+		AddHeaderTextToPanel (PlayerInfoHUDElement, "InfoRow" + i, "", 1);
+		AddHeaderTextToPanel (PlayerInfoHUDElement, "InfoRow" + i++, "", 1);
+		AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i, "Player", 2);
+		AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i, "Status", 2);
+		AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i, "Current Jump", 2);
+		AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i, "Best Time", 2);
+		AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i++, "Times Completed", 2);
+
+		foreach (string info in playerInfo) {
+			if (info.Split(';').Length > 5) {
+				string pId = info.Split(';')[0];
+				string nickname = info.Split(';')[1];
+				string status = info.Split(';')[2];
+				string jumpNumber = info.Split(';')[3];
+				string bestScore = info.Split (';') [4];
+				string timesCompleted = info.Split (';') [5];
+				Color rowColor = Color.white;
+				if (pId.Trim().Equals(GetLocalPlayerObject().GetComponent<NetworkIdentity>().netId.ToString().Trim())) {
+					nickname = "*" + nickname; 
+				}
+				AddTextToPanel(PlayerInfoHUDElement, "InfoRow" + i + "nickname", nickname, rowColor);
+				AddTextToPanel(PlayerInfoHUDElement, "InfoRow" + i + "status", status, rowColor);
+				AddTextToPanel(PlayerInfoHUDElement, "InfoRow" + i++ + "jumpNumber", jumpNumber, rowColor);
+				AddTextToPanel(PlayerInfoHUDElement, "InfoRow" + i++ + "bestScore", bestScore, rowColor);
+				AddTextToPanel(PlayerInfoHUDElement, "InfoRow" + i++ + "timesCompleted", timesCompleted, rowColor);
+			}
+		}
     }
 
     public void ShowPlayerStats(bool show) {
@@ -251,9 +318,29 @@ public class GameStateManager : NetworkBehaviour {
         EscapeMenuSeedElement.GetComponent<Text>().text = "Seed: " + seed;
     }
 
+    public int GetCourseSeed()
+    {
+        return CourseSeed;
+    }
+
     public void ResetTimer()
     {
         this.CurrentTimerTime = 0.0f;
+    }
+
+    public float GetRawTime()
+    {
+        return this.CurrentTimerTime;
+    }
+
+    public bool IsGamePause()
+    {
+        return IsPaused;
+    }
+
+    public bool GetIsCourseFavorited()
+    {
+        return IsCourseFavorited;
     }
 
     public GameObject GetLocalPlayerObject() {
@@ -269,9 +356,14 @@ public class GameStateManager : NetworkBehaviour {
     }
 
     [ClientRpc]
-    public void RpcUpdatePlayerStats(string stats) {
-        playerStats = new List<string>(stats.Split('%'));
+    public void RpcUpdatePlayerScores(string scores) {
+        playerScores = new List<string>(scores.Split('%'));
     }
+
+	[ClientRpc]
+	public void RpcUpdatePlayerInfo(string stats) {
+		playerInfo = new List<string> (stats.Split ('%'));
+	}
 
     [ClientRpc]
     public void RpcUpdateCourseJumpLimit(int CourseJumpLimit) {
@@ -285,9 +377,11 @@ public class GameStateManager : NetworkBehaviour {
 		if (netId == GetLocalPlayerObject().GetComponent<NetworkIdentity>().netId)
             return;
         GameObject networkedPlayer = ClientScene.FindLocalObject(netId);
-        GameObject nicknamedGO = Instantiate(nicknamePrefab, networkedPlayer.transform.position + new Vector3(0, 1, 0), Camera.main.transform.rotation);
-        nicknamedGO.GetComponent<Nickname>().SetPlayerId(netId);
-        nicknamedGO.GetComponent<Nickname>().SetNickname(nickname);
-        nicknamedGO.GetComponent<Nickname>().SetDisplayNickname(IsDisplayNicknames);
+		if (networkedPlayer != null) {
+			GameObject nicknamedGO = Instantiate (nicknamePrefab, networkedPlayer.transform.position + new Vector3 (0, 1, 0), Camera.main.transform.rotation);
+			nicknamedGO.GetComponent<Nickname> ().SetPlayerId (netId);
+			nicknamedGO.GetComponent<Nickname> ().SetNickname (nickname);
+			nicknamedGO.GetComponent<Nickname> ().SetDisplayNickname (IsDisplayNicknames);
+		}
     }
 }

@@ -14,11 +14,13 @@ public class SetTimerOnTrigger : MonoBehaviour {
     public ParticleSystem confetti3;
 
     private GameStateManager gameStateManager;
+    private CourseHistoryManager courseHistoryManager;
     private Text courseCompleteMessage;
 
     void Start()
     {
         gameStateManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameStateManager>();
+        courseHistoryManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<CourseHistoryManager>();
         courseCompleteMessage = GameObject.FindGameObjectWithTag("CourseEndText").GetComponent<Text>();
     }
 
@@ -34,15 +36,14 @@ public class SetTimerOnTrigger : MonoBehaviour {
 
                 if (gameStateManager.GetLocalPlayerObject () != null)
                 {
-                    gameStateManager.GetLocalPlayerObject ().gameObject.GetComponent<LocalPlayerStats> ().UpdateTime ("Started");
-                    gameStateManager.GetLocalPlayerObject
-                      ().gameObject.GetComponent<LocalPlayerStats> ().RequestCourseJumpLimit ();
+					gameStateManager.GetLocalPlayerObject ().gameObject.GetComponent<LocalPlayerStats> ().UpdateStatus ("Started");
+                    gameStateManager.GetLocalPlayerObject ().gameObject.GetComponent<LocalPlayerStats> ().RequestCourseJumpLimit ();
                 }
             }
             else if (gameStateManager.TimerIsRunning && !SwitchToOn)
             {
                 gameStateManager.SetTimerIsRunning(SwitchToOn);
-                gameObject.GetComponent<AudioSource>().PlayOneShot(GameEndSound);
+                gameObject.GetComponent<AudioSource>().PlayOneShot(GameEndSound, ApplicationManager.sfxVolume);
                 GameObject.FindGameObjectWithTag("Music").GetComponent<AudioSource>().Stop();
                 courseCompleteMessage.enabled = true;
                 courseCompleteMessage.text = "Course Complete!!\n\nYour time: " + gameStateManager.GetCurrentTime() + "\n\nPress ESC To Quit";
@@ -55,6 +56,13 @@ public class SetTimerOnTrigger : MonoBehaviour {
                 ShootConfetti(other.gameObject);
                 SaveLevelCompletion();
                 gameStateManager.SetIsCourseComplete(true);
+                if (courseHistoryManager.StoreNewRecord(gameStateManager.GetCourseSeed(), gameStateManager.GetRawTime(), gameStateManager.GetIsCourseFavorited(), ApplicationManager.GetDifficultyLevel()))
+                {
+                    TimeSpan timeSpan = TimeSpan.FromSeconds(gameStateManager.GetRawTime());
+                    var timeString = "Best time: " + timeSpan.Minutes.ToString("00") + ":" + timeSpan.Seconds.ToString("00") + ":" + timeSpan.Milliseconds.ToString("000");
+                    GameObject.FindGameObjectWithTag("BestTime").GetComponent<Text>().text = timeString;
+                }
+                courseHistoryManager.AddRecentlyPlayed(gameStateManager.GetCourseSeed(), gameStateManager.GetRawTime(), ApplicationManager.GetDifficultyLevel());
                 Invoke("EndGame", 7.0f);
             }
         }

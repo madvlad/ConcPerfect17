@@ -1577,12 +1577,13 @@ MonoBehaviour:
   walkSpeed: 12
   runSpeed: 10
   enableRunning: 0
-  jumpSpeed: 2
+  jumpSpeed: 3
   gravity: 15
   walkAnimation: {fileID: 7400004, guid: 46176b0ab27346945b4bebad1fef1d01, type: 3}
   idleAnimation: {fileID: 7400002, guid: 46176b0ab27346945b4bebad1fef1d01, type: 3}
   fallAnimation: {fileID: 7400000, guid: 46176b0ab27346945b4bebad1fef1d01, type: 3}
   playerModel: {fileID: 1131231338853382}
+  jumpSoundClip: {fileID: 8300000, guid: 515b2b8c0150efd48be7ea0cb2095a69, type: 3}
   slideWhenOverSlopeLimit: 1
   slideOnTaggedObjects: 0
   slideSpeed: 5
@@ -1662,7 +1663,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_TransformSyncMode: 3
-  m_SendInterval: 0.1
+  m_SendInterval: 0.03448276
   m_SyncRotationAxis: 7
   m_RotationSyncCompression: 0
   m_SyncSpin: 0

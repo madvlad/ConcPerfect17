@@ -21,7 +21,6 @@ public class LockMouse : MonoBehaviour
 
     public void LockCursor(bool lockCursor)
     {
-        Cursor.visible = lockCursor;
         if (lockCursor)
         {
             Cursor.lockState = CursorLockMode.Locked;

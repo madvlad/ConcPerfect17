@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.Networking;
 using System;
+using System.Collections.Generic;
 
 public class Concer : NetworkBehaviour
 {
@@ -10,25 +11,29 @@ public class Concer : NetworkBehaviour
     public int ConcPushForce = 8;
     public int ConcCount = 3;
     public int MaxConcCount = 3;
+    private GameObject[] ConcTimers;
 
     private GameObject concCountHUDElement;
     private GameObject concPrimedHUDElement;
     private bool primed = false;
     private float timer = 0.0f;
+    private int currentConc = 2;
     private GameObject concInstance;
     private GameObject playerCamera;
+    private bool NotFaded = false;
 
     public override void OnStartLocalPlayer()
     {
         playerCamera = Camera.main.gameObject;
         concCountHUDElement = GameObject.FindGameObjectWithTag("ConcCounter");
         concPrimedHUDElement = GameObject.FindGameObjectWithTag("PrimedNotification");
+        ConcTimers = GameObject.FindGameObjectsWithTag("VisualTimer");
         concPrimedHUDElement.SetActive(false);
     }
 
     public void SetConcCount(int newConcCount)
     {
-        concCountHUDElement.GetComponent<Text>().text = "Concs: " + newConcCount;
+        concCountHUDElement.GetComponent<Text>().text = "Concs: " + newConcCount +"/3";
         ConcCount = newConcCount;
     }
     
@@ -36,6 +41,16 @@ public class Concer : NetworkBehaviour
     {
         if (!isLocalPlayer)
             return;
+
+        if (ConcTimersNotPlaying())
+        {
+            currentConc = 2;
+            if (NotFaded)
+            {
+                NotFaded = false;
+                GameObject.FindGameObjectWithTag("VisualTimerPanel").GetComponent<Animation>().Play();
+            }
+        }
 
         if (timer > 0)
         {
@@ -48,10 +63,11 @@ public class Concer : NetworkBehaviour
             concPrimedHUDElement.SetActive(false);
         }
 
-        if (Input.GetButtonDown("Conc") && ConcCount > 0 && !primed)
+        if (Input.GetButtonDown("Conc") && ConcCount > 0 && !primed && !GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameStateManager>().IsGamePause())
         {
             if (timer <= 0)
             {
+                StartVisualTimer();
                 SetConcCount(ConcCount - 1);
                 timer = 0.45f;
                 primed = true;
@@ -80,6 +96,41 @@ public class Concer : NetworkBehaviour
         else if (primed)
         {
             concInstance.transform.position = playerCamera.transform.position;
+        }
+    }
+
+    private bool ConcTimersNotPlaying()
+    {
+        foreach (var timer in ConcTimers)
+        {
+            if (timer.GetComponent<Animation>().isPlaying)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private void StartVisualTimer()
+    {
+        NotFaded = true;
+        GameObject.FindGameObjectWithTag("VisualTimerPanel").GetComponent<Animation>().Play("FadeTimerPauseAnimation");
+        if (ConcTimers[currentConc].GetComponent<Animation>().isPlaying)
+        {
+            ConcTimers[currentConc].GetComponent<Animation>().Rewind();
+        }
+        else
+        {
+            ConcTimers[currentConc].GetComponent<Animation>().Play();
+        }
+
+        if (currentConc == 0)
+        {
+            currentConc = 2;
+        }
+        else
+        {
+            currentConc--;
         }
     }
 

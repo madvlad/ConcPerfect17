@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Runtime.Serialization.Formatters;
 using System.Runtime.Serialization;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -9,42 +10,61 @@ public class GameServerManager : NetworkBehaviour {
 	private GameStateManager gameManager;
     
 
-	public struct PlayerStat
+	public struct PlayerScore
 	{
-		public NetworkInstanceId PlayerId;
-        public string Nickname;
-		public int CurrentJump;
+		public PlayerInfo pInfo;
 		public string CurrentTimerTime;
+
+		public int CompareTo(PlayerScore that)
+		{
+			int timeCompare = this.CurrentTimerTime.CompareTo (that.CurrentTimerTime);
+			return (timeCompare == 0) ? this.pInfo.Nickname.CompareTo (that.pInfo.Nickname) : timeCompare;
+		}
 	}
 
-	public class ListPlayerStats : List<PlayerStat>
+	public struct PlayerInfo
+	{
+		public NetworkInstanceId PlayerId;
+		public string Nickname;
+		public string Status;
+		public int CurrentJump;
+		public string BestTime;
+		public int TimesCompleted;
+
+		public int CompareTo(PlayerInfo that) {
+			int timeCompare = this.BestTime.CompareTo (that.BestTime);
+			return (timeCompare == 0) ? this.Nickname.CompareTo (that.Nickname) : timeCompare;
+		}
+	}
+
+	public class ListPlayerScores : List<PlayerScore>
 	{
 		public void RemoveStatByPlayerId(NetworkInstanceId netId)
 		{
-			PlayerStat s = GetStatByPlayerId (netId);
-			if (s.PlayerId != null)
+			PlayerScore s = GetStatByPlayerId (netId);
+			if (s.pInfo.PlayerId != null)
 				this.Remove (s);
 		}
 
-
-		public PlayerStat GetStatByPlayerId(NetworkInstanceId netId)
+		public PlayerScore GetStatByPlayerId(NetworkInstanceId netId)
 		{
-			foreach (PlayerStat s in this)
-				if (s.PlayerId == netId) 
+			foreach (PlayerScore s in this)
+				if (s.pInfo.PlayerId == netId) 
 					return s;
-			return new PlayerStat ();
+			return new PlayerScore ();
 		}
 
         public bool HasStatWithPlayerId(NetworkInstanceId netId) {
-            foreach (PlayerStat s in this)
-                if (s.PlayerId == netId)
+            foreach (PlayerScore s in this)
+                if (s.pInfo.PlayerId == netId)
                     return true;
             return false; 
         }
 	}
 
-	public ListPlayerStats playerStatsList = new ListPlayerStats();
-	public Dictionary<NetworkInstanceId, string> currentPlayers = new Dictionary<NetworkInstanceId, string>();
+	public ListPlayerScores playerScoresList = new ListPlayerScores();
+	public Dictionary<NetworkInstanceId, PlayerInfo> currentPlayers = new Dictionary<NetworkInstanceId, PlayerInfo> ();
+	public Dictionary<NetworkInstanceId, string> playerNicknames = new Dictionary<NetworkInstanceId, string> ();
 
 	void Start () {
 		gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameStateManager>();
@@ -54,76 +74,100 @@ public class GameServerManager : NetworkBehaviour {
 		if (!isServer)
 			return;
 
-		string playerStats = "";
-		foreach (PlayerStat stat in playerStatsList) {
-			playerStats += stat.Nickname + " ; " + stat.CurrentJump + "/" + gameManager.GetCourseJumpLimit () + " ; " + stat.CurrentTimerTime + "%";
+		CleanupDisconnectedPlayers ();
+
+		string playerInfo = ""; 
+		List<PlayerInfo> players = currentPlayers.Select (kvp => kvp.Value).ToList ();
+		players.Sort ((s1, s2) => s1.CompareTo (s2));
+		foreach (PlayerInfo pInfo in players) {
+			playerInfo += pInfo.PlayerId.ToString() + " ; " + pInfo.Nickname + " ; " + pInfo.Status + " ; " + pInfo.CurrentJump + "/" + gameManager.GetCourseJumpLimit () + " ; " + pInfo.BestTime + " ; " + pInfo.TimesCompleted  + " % " ;
 		}
 			
-		gameManager.RpcUpdatePlayerStats (playerStats);
+		gameManager.RpcUpdatePlayerInfo (playerInfo);
 	}
 
-    public PlayerStat getPlayerStat(NetworkInstanceId netId) {
-        PlayerStat playerStat;
-        if (!playerStatsList.HasStatWithPlayerId(netId))
-            playerStat = InitializeNewPlayer(netId);
-        else
-            playerStat = playerStatsList.GetStatByPlayerId(netId);
-
-        return playerStat;
-    }
+	public void CleanupDisconnectedPlayers() {
+		List<NetworkInstanceId> idsToRemove = new List<NetworkInstanceId> ();
+		foreach (NetworkInstanceId id in currentPlayers.Keys) {
+			if (ClientScene.FindLocalObject(id) == null) {
+				idsToRemove.Add (id);
+			}
+		}
+			
+		foreach (NetworkInstanceId id in idsToRemove) {
+			currentPlayers.Remove (id);
+		}
+	}
 
     public void UpdatePlayerNickname(NetworkInstanceId netId, string nickname) {
-        PlayerStat playerStat = getPlayerStat(netId);
-        playerStatsList.RemoveStatByPlayerId(netId);
 		RegisterPlayer (netId, nickname);
-		playerStat.Nickname = currentPlayers[netId];
-        playerStatsList.Add(playerStat);
-        foreach (PlayerStat stat in playerStatsList) {
-            gameManager.RpcUpdatePlayerNickname(stat.PlayerId, stat.Nickname);
+		foreach (KeyValuePair<NetworkInstanceId, string> entry in playerNicknames) {
+			gameManager.RpcUpdatePlayerNickname(entry.Key, entry.Value);
         }
     }
 
 	public void UpdatePlayerTime(NetworkInstanceId netId, string playerTime)
 	{
-        PlayerStat playerStat = getPlayerStat(netId);
-        playerStatsList.RemoveStatByPlayerId (netId);
-		playerStat.CurrentTimerTime = playerTime;
-		playerStatsList.Add (playerStat);
+		PlayerScore stat = new PlayerScore ();
+		stat.pInfo = currentPlayers [netId];
+		stat.CurrentTimerTime = playerTime;
+		playerScoresList.Add(stat);
+		playerScoresList.Sort ((s1, s2) => s1.CompareTo (s2));
 
+		if (currentPlayers.ContainsKey(netId)) {
+			PlayerInfo pInfo = currentPlayers [netId];
+			if (pInfo.BestTime == "- -") {
+				pInfo.BestTime = playerTime;
+			} else {
+				pInfo.BestTime = (pInfo.BestTime.CompareTo (playerTime) == 1) ? playerTime : pInfo.BestTime;
+			}
+			pInfo.TimesCompleted++;
+			currentPlayers.Remove (netId);
+			currentPlayers [netId] = pInfo;
+		}
 	}
 
-	public void UpdatePlayerJump(NetworkInstanceId netId, int jump)
-	{
-		PlayerStat playerStat = playerStatsList.GetStatByPlayerId (netId);
-		if (playerStat.PlayerId == null)
-			playerStat = InitializeNewPlayer (netId);
-		playerStatsList.RemoveStatByPlayerId (netId);
-		playerStat.CurrentJump = jump;
-		playerStatsList.Add (playerStat);
+	public void UpdatePlayerStatus(NetworkInstanceId netId, string status) {
+		if (currentPlayers.ContainsKey(netId)) {
+			PlayerInfo pInfo = currentPlayers [netId];
+			pInfo.Status = status;
+			currentPlayers.Remove (netId);
+			currentPlayers [netId] = pInfo;
+		}
 	}
 
-	public PlayerStat InitializeNewPlayer(NetworkInstanceId netId)
-	{
-		PlayerStat newPlayer = new PlayerStat ();
-		newPlayer.PlayerId = netId;
-		newPlayer.Nickname = "0xDEADBEAF";
-		newPlayer.CurrentTimerTime = "Not Started";
-		newPlayer.CurrentJump = 0;
-		playerStatsList.Add (newPlayer);
-		return newPlayer;
+	public void UpdatePlayerJump(NetworkInstanceId netId, int jump) {
+		if (currentPlayers.ContainsKey (netId)) {
+			PlayerInfo pInfo = currentPlayers [netId];
+			pInfo.CurrentJump = jump;
+			currentPlayers.Remove (netId);
+			currentPlayers[netId] = pInfo;
+		} 
 	}
-
+		
 	public void RegisterPlayer(NetworkInstanceId netId, string nickname) {
+		if (playerNicknames.ContainsKey (netId)) {
+			playerNicknames.Remove (netId);
+		}
+
 		if (currentPlayers.ContainsKey (netId)) {
 			currentPlayers.Remove (netId);
 		}
 
 		string newNick = nickname;
 		int i = 1;
-		while (currentPlayers.ContainsValue(newNick)) {
-			newNick = nickname + i;
+		while (playerNicknames.ContainsValue(newNick)) {
+			newNick = nickname + (i++);
 		}
-		currentPlayers [netId] = newNick;
+		playerNicknames [netId] = newNick;
+		PlayerInfo pInfo = new PlayerInfo();
+		pInfo.PlayerId = netId;
+		pInfo.Nickname = playerNicknames [netId];
+		pInfo.Status = "Not Started";
+		pInfo.CurrentJump = 0;
+		pInfo.BestTime = "- -";
+		pInfo.TimesCompleted = 0;
+		currentPlayers [netId] = pInfo;
 	}
 
     public void GetCourseJumpLimit() {
@@ -131,8 +175,8 @@ public class GameServerManager : NetworkBehaviour {
     }
 
     public void RequestPlayerNicknames() {
-        foreach (PlayerStat stat in playerStatsList) {
-            gameManager.RpcUpdatePlayerNickname(stat.PlayerId, stat.Nickname);
+		foreach (KeyValuePair<NetworkInstanceId, string> entry in playerNicknames) {
+			gameManager.RpcUpdatePlayerNickname(entry.Key, entry.Value);
         }
     }
 }

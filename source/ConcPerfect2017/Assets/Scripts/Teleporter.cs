@@ -9,7 +9,6 @@ public class Teleporter : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            Input.ResetInputAxes();
             other.transform.position = destination.transform.position;
             other.transform.rotation = Quaternion.Euler(destination.transform.rotation.x, destination.transform.rotation.y, destination.transform.rotation.z);
         }

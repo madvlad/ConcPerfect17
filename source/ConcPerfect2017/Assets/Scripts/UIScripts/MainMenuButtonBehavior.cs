@@ -23,7 +23,11 @@ public class MainMenuButtonBehavior : MonoBehaviour {
     public GameObject settingsMenuUIElement;
     public GameObject matchMakerLobbyMenuUIElement;
     public GameObject volumeSliderMenuUIElement;
+    public GameObject sfxVolumeSliderMenuUIElement;
+    public GameObject historyListMenuUIElement;
     public GameObject nickNameInputField;
+    public GameObject loadingScreenUIElement;
+    public GameObject failedMessage;
 
     void Start()
     {
@@ -32,6 +36,11 @@ public class MainMenuButtonBehavior : MonoBehaviour {
             ApplicationManager.JumpsDifficultiesAllowed = new List<int> { 0, 1, 2, 3, 4 };
             ApplicationManager.GameType = GameTypes.CasualGameType;
             Camera.main.GetComponent<AudioSource>().volume = ApplicationManager.musicVolume;
+        }
+
+        if (randomSeedInputUIElement != null)
+        {
+            ApplicationManager.randomSeed = 0;
         }
 
         if (mouseSensitivityMenuUIElement != null && mouseSensitivityMenuUIElement.GetComponent<Slider>() != null)
@@ -49,6 +58,11 @@ public class MainMenuButtonBehavior : MonoBehaviour {
         {
             volumeSliderMenuUIElement.GetComponent<Slider>().value = ApplicationManager.musicVolume;
         }
+
+        if (sfxVolumeSliderMenuUIElement != null)
+        {
+            sfxVolumeSliderMenuUIElement.GetComponent<Slider>().value = ApplicationManager.sfxVolume;
+        }
     }
 
     void StartNewGame9()
@@ -56,6 +70,7 @@ public class MainMenuButtonBehavior : MonoBehaviour {
         ApplicationManager.currentLevel = 0;
         ApplicationManager.numberOfJumps = 9;
         EnableStartHostGameButtons(false);
+        loadingScreenUIElement.GetComponent<Canvas>().enabled = true;
         GameObject.FindGameObjectWithTag("NetworkIssuer").GetComponent<ConcPerfectNetworkManager>().StartNetworkManager();
     }
 
@@ -64,6 +79,7 @@ public class MainMenuButtonBehavior : MonoBehaviour {
         ApplicationManager.currentLevel = 0;
         ApplicationManager.numberOfJumps = 18;
         EnableStartHostGameButtons(false);
+        loadingScreenUIElement.GetComponent<Canvas>().enabled = true;
         GameObject.FindGameObjectWithTag("NetworkIssuer").GetComponent<ConcPerfectNetworkManager>().StartNetworkManager();
     }
 
@@ -104,7 +120,6 @@ public class MainMenuButtonBehavior : MonoBehaviour {
         EnableStartHostGameButtons(true);
         UnetMatchMakerToggle.GetComponent<Toggle>().isOn = !ApplicationManager.IsLAN;
         predefinedCourseMenuUIElement.SetActive(false);
-        mainMenuUIElement.SetActive(false);
         singlePlayerMenuUIElement.SetActive(true);
     }
 
@@ -126,8 +141,8 @@ public class MainMenuButtonBehavior : MonoBehaviour {
 
     void ShowPredefinedCoursesMenu()
     {
+        mainMenuUIElement.SetActive(false);
         singlePlayerMenuUIElement.SetActive(false);
-        multiplayerMenuUIElement.SetActive(false);
         predefinedCourseMenuUIElement.SetActive(true);
     }
 
@@ -142,7 +157,10 @@ public class MainMenuButtonBehavior : MonoBehaviour {
         int seed = 0;
         if (int.TryParse(randomSeedInputUIElement.GetComponent<Text>().text, out seed))
         {
-            ApplicationManager.randomSeed = seed;
+            if (seed != 0)
+            {
+                ApplicationManager.randomSeed = seed;
+            }
         }
         else
         {
@@ -186,6 +204,12 @@ public class MainMenuButtonBehavior : MonoBehaviour {
         escapeMenuUIElement.SetActive(false);
     }
 
+    public void BackToMainEscapeMenu()
+    {
+        mouseSensitivityMenuUIElement.SetActive(false);
+        escapeMenuUIElement.SetActive(true);
+    }
+
     public void SetMouseSensitivity(float sensitivity)
     {
         ApplicationManager.mouseSensitivity = sensitivity;
@@ -218,8 +242,17 @@ public class MainMenuButtonBehavior : MonoBehaviour {
 
     public void JoinMultiplayerGame()
     {
+        failedMessage.GetComponent<Text>().enabled = false;
+        loadingScreenUIElement.GetComponent<Canvas>().enabled = true;
         ApplicationManager.IsLAN = true; 
         GameObject.FindGameObjectWithTag("NetworkIssuer").GetComponent<ConcPerfectNetworkManager>().StartNetworkManager();
+        Invoke("TimeOut", 20.0f);
+    }
+
+    public void TimeOut()
+    {
+        failedMessage.GetComponent<Text>().enabled = true;
+        loadingScreenUIElement.GetComponent<Canvas>().enabled = false;
     }
 
     public void SetGameMode(int gameMode)
@@ -232,12 +265,15 @@ public class MainMenuButtonBehavior : MonoBehaviour {
         ApplicationManager.currentLevel = levelNum;
         ApplicationManager.numberOfJumps = 9;
         EnableStartHostGameButtons(false);
+        loadingScreenUIElement.GetComponent<Canvas>().enabled = true;
         GameObject.FindGameObjectWithTag("NetworkIssuer").GetComponent<ConcPerfectNetworkManager>().StartNetworkManager();
     }
 
     public void ClearLevelProgress()
     {
         PlayerPrefs.SetInt("LevelsCompleted", 0);
+        PlayerPrefs.DeleteKey("CourseRecords");
+        PlayerPrefs.DeleteKey("RecentPlayed");
         ApplicationManager.LevelsCompleted = 0;
         ShowMainMenu();
     }
@@ -255,6 +291,17 @@ public class MainMenuButtonBehavior : MonoBehaviour {
         settingsMenuUIElement.SetActive(false);
     }
 
+    public void GoToHistoryMenu()
+    {
+        settingsMenuUIElement.SetActive(false);
+        historyListMenuUIElement.SetActive(true);
+    }
+
+    public void ReturnToSettingsFromHistory()
+    {
+        historyListMenuUIElement.SetActive(false);
+        settingsMenuUIElement.SetActive(true);
+    }
 
     public void OnUnetMatchmakerToggle() {
         ApplicationManager.IsLAN = !UnetMatchMakerToggle.GetComponent<Toggle>().isOn;
@@ -277,7 +324,21 @@ public class MainMenuButtonBehavior : MonoBehaviour {
     {
         ApplicationManager.musicVolume = volume;
         PlayerPrefs.SetFloat("MusicVolume", volume);
-        Camera.main.GetComponent<AudioSource>().volume = ApplicationManager.musicVolume;
+        var music = GameObject.FindGameObjectWithTag("Music");
+        if (music == null)
+        {
+            Camera.main.GetComponent<AudioSource>().volume = ApplicationManager.musicVolume;
+        }
+        else
+        {
+            music.GetComponent<AudioSource>().volume = ApplicationManager.musicVolume;
+        }
+    }
+
+    public void SetSFXVolume(float volume)
+    {
+        ApplicationManager.sfxVolume = volume;
+        PlayerPrefs.SetFloat("SfxVolume", volume);
     }
 
     public void AdjustJumpComponentInclusion(bool include) {
@@ -301,7 +362,10 @@ public class MainMenuButtonBehavior : MonoBehaviour {
         }
         else
         {
+            gameStateManager = GameObject.FindGameObjectWithTag("GameManager");
+            HideEscapeMenu();
             var player = GetLocalPlayerObject();
+			player.GetComponent<LocalPlayerStats> ().UpdateStatus ("Not Started");
             player.transform.position = new Vector3(0, 2, 0);
             player.GetComponent<Concer>().SetConcCount(0);
             var gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameStateManager>();

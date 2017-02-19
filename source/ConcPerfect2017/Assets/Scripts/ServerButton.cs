@@ -26,6 +26,7 @@ public class ServerButton : MonoBehaviour {
     }
 
     public void OnClick() {
+        GameObject.FindGameObjectWithTag("LoadingCanvas").GetComponent<Canvas>().enabled = true;
         foreach (GameObject server in GameObject.FindGameObjectsWithTag("ServerButtons")) {
             server.GetComponent<Button>().interactable = false;
         }

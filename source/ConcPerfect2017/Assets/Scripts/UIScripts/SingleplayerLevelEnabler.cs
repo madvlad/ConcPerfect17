@@ -11,11 +11,20 @@ public class SingleplayerLevelEnabler : MonoBehaviour {
     public GameObject Level5UIElement;
 
 	void Start () {
-		for (int i = 0; i <= ApplicationManager.LevelsCompleted; i++)
+        for (int i = 0; i <= ApplicationManager.LevelsCompleted; i++)
         {
             EnableLevel(i);
         }
-	}
+    }
+
+    void OnEnable()
+    {
+        Level2UIElement.GetComponent<Button>().interactable = false;
+        Level3UIElement.GetComponent<Button>().interactable = false;
+        Level4UIElement.GetComponent<Button>().interactable = false;
+        Level5UIElement.GetComponent<Button>().interactable = false;
+        Start();
+    }
 
     void EnableLevel(int i)
     {
