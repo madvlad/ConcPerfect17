@@ -66,7 +66,6 @@ public class GameServerManager : NetworkBehaviour {
 		if (!isServer)
 			return;
 
-
 		string playerScores = "";
 		foreach (PlayerScore stat in playerScoresList) {
 			playerScores += stat.pInfo.Nickname + " ; " + stat.CurrentTimerTime + "%";
@@ -74,7 +73,7 @@ public class GameServerManager : NetworkBehaviour {
 
 		string playerInfo = ""; 
 		foreach (KeyValuePair<NetworkInstanceId, PlayerInfo> entry in currentPlayers) {
-			playerInfo += entry.Value.Nickname + " ; " + entry.Value.Status + " ; " + entry.Value.CurrentJump + "/" + gameManager.GetCourseJumpLimit () + " % " ;
+			playerInfo += entry.Value.PlayerId.ToString() + " ; " + entry.Value.Nickname + " ; " + entry.Value.Status + " ; " + entry.Value.CurrentJump + "/" + gameManager.GetCourseJumpLimit () + " % " ;
 		}
 			
 		gameManager.RpcUpdatePlayerScores (playerScores);

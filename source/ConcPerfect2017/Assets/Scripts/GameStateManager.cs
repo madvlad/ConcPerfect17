@@ -193,13 +193,14 @@ public class GameStateManager : NetworkBehaviour {
         return IsDisplayStats;
     }
 
-    private void AddTextToPanel(GameObject panel, string label, string text) {
+	private void AddTextToPanel(GameObject panel, string label, string text, Color fontColor) {
         Font ArialFont = (Font)Resources.GetBuiltinResource(typeof(Font), "Arial.ttf");
 
         GameObject textObject = new GameObject(label);
         textObject.AddComponent<Text>();
         textObject.GetComponent<Text>().text = text;
         textObject.GetComponent<Text>().font = ArialFont;
+		textObject.GetComponent<Text> ().color = fontColor;
         textObject.GetComponent<Text>().material = ArialFont.material;
         textObject.transform.SetParent(panel.transform);
     }
@@ -237,8 +238,8 @@ public class GameStateManager : NetworkBehaviour {
             if (score.Split(';').Length > 1) {
                 string nickname = score.Split(';')[0];
                 string courseTime = score.Split(';')[1];
-                AddTextToPanel(PlayerScoresHUDElement, "ScoreRow" + i + nickname, nickname);
-                AddTextToPanel(PlayerScoresHUDElement, "ScoreRow" + i + courseTime, courseTime);
+				AddTextToPanel(PlayerScoresHUDElement, "ScoreRow" + i + nickname, nickname, Color.white);
+				AddTextToPanel(PlayerScoresHUDElement, "ScoreRow" + i + courseTime, courseTime, Color.white);
             }
         }
 
@@ -250,13 +251,18 @@ public class GameStateManager : NetworkBehaviour {
 		AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i, "Current Jump", 2);
 		AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i++, "Course Status", 2);
 		foreach (string info in playerInfo) {
-			if (info.Split(';').Length > 2) {
-				string nickname = info.Split(';')[0];
-				string status = info.Split(';')[1];
-				string jumpNumber = info.Split(';')[2];
-				AddTextToPanel(PlayerInfoHUDElement, "InfoRow" + i + nickname, nickname);
-				AddTextToPanel(PlayerInfoHUDElement, "InfoRow" + i + status, status);
-				AddTextToPanel(PlayerInfoHUDElement, "InfoRow" + i++ + jumpNumber, jumpNumber);
+			if (info.Split(';').Length > 3) {
+				string pId = info.Split(';')[0];
+				string nickname = info.Split(';')[1];
+				string status = info.Split(';')[2];
+				string jumpNumber = info.Split(';')[3];
+				Color rowColor = Color.white;
+				if (pId.Trim().Equals(GetLocalPlayerObject().GetComponent<NetworkIdentity>().netId.ToString().Trim())) {
+					nickname = "*" + nickname; 
+				}
+				AddTextToPanel(PlayerInfoHUDElement, "InfoRow" + i + nickname, nickname, rowColor);
+				AddTextToPanel(PlayerInfoHUDElement, "InfoRow" + i + status, status, rowColor);
+				AddTextToPanel(PlayerInfoHUDElement, "InfoRow" + i++ + jumpNumber, jumpNumber, rowColor);
 			}
 		}
     }
