@@ -121,7 +121,7 @@ public class GameServerManager : NetworkBehaviour {
 		string newNick = nickname;
 		int i = 1;
 		while (currentPlayers.ContainsValue(newNick)) {
-			newNick = nickname + i;
+			newNick = nickname + (i++);
 		}
 		currentPlayers [netId] = newNick;
 	}
