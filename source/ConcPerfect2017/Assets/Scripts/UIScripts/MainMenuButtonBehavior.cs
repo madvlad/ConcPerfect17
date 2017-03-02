@@ -98,6 +98,7 @@ public class MainMenuButtonBehavior : MonoBehaviour {
         ApplicationManager.IsLAN = true;
         ApplicationManager.GameType = GameTypes.TutorialGameType;
         EnableStartHostGameButtons(false);
+        loadingScreenUIElement.GetComponent<Canvas>().enabled = true;
         GameObject.FindGameObjectWithTag("NetworkIssuer").GetComponent<ConcPerfectNetworkManager>().StartNetworkManager();
     }
 
