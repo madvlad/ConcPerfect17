@@ -9,6 +9,7 @@ public class LevelGenerator : NetworkBehaviour {
     public GameObject endPrefab;
     public GameObject gameManager;
     public GameObject tutorialLevel;
+    public List<GameObject> levelList;
     public List<GameObject> jumpList;
     public int courseJumpListSize;
     public int RandomSeed;
@@ -54,8 +55,9 @@ public class LevelGenerator : NetworkBehaviour {
         {
             if (ApplicationManager.currentLevel > 0)
             {
-                BuildCourseIteratively();
-                SetJumpTextures();
+                //BuildCourseIteratively();
+                //SetJumpTextures();
+                SpawnLevelPrefab(ApplicationManager.currentLevel);
             }
             else
             {
@@ -151,7 +153,7 @@ public class LevelGenerator : NetworkBehaviour {
         GameObject.FindGameObjectWithTag("Music").GetComponent<AudioSource>().clip = levelMusicList[assetIndex];
         GameObject.FindGameObjectWithTag("Music").GetComponent<AudioSource>().Play();
         RenderSettings.skybox = levelSkyboxList[assetIndex];
-        SetJumpTextures();
+        //SetJumpTextures();
     }
 
     private void SetPossibleWeatherEvents(int currentLevel)
@@ -176,6 +178,11 @@ public class LevelGenerator : NetworkBehaviour {
         Instantiate(tutorialLevel);
         GameObject.FindGameObjectWithTag("Music").GetComponent<AudioSource>().clip = tutorialMusic;
         GameObject.FindGameObjectWithTag("Music").GetComponent<AudioSource>().Play();
+    }
+
+    private void SpawnLevelPrefab(int currentLevel)
+    {
+        Instantiate(levelList[currentLevel - 1]);
     }
 
     private void BuildRandomCourse()
