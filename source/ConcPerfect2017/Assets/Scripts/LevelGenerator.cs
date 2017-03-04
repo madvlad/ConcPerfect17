@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -68,6 +69,16 @@ public class LevelGenerator : NetworkBehaviour {
         else if (ApplicationManager.GameType == 1)
         {
             BuildTutorialLevel();
+        }
+        SetSFXVolume();
+    }
+
+    private void SetSFXVolume()
+    {
+        var sfxObjects = GameObject.FindGameObjectsWithTag("SFX");
+        foreach (var sfx in sfxObjects)
+        {
+            sfx.GetComponent<AudioSource>().volume = ApplicationManager.sfxVolume;
         }
     }
 

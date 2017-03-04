@@ -340,6 +340,11 @@ public class MainMenuButtonBehavior : MonoBehaviour {
     {
         ApplicationManager.sfxVolume = volume;
         PlayerPrefs.SetFloat("SfxVolume", volume);
+        var sfxObjects = GameObject.FindGameObjectsWithTag("SFX");
+        foreach (var sfx in sfxObjects)
+        {
+            sfx.GetComponent<AudioSource>().volume = volume;
+        }
     }
 
     public void AdjustJumpComponentInclusion(bool include) {
