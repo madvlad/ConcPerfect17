@@ -1,5 +1,4 @@
-﻿
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -193,6 +192,7 @@ public class LevelGenerator : NetworkBehaviour {
 
     private void SpawnLevelPrefab(int currentLevel)
     {
+        GameStateManager.SetCourseJumpLimit(gameManager.GetComponent<LevelManager>().getLevel(ApplicationManager.currentLevel).Count);
         Instantiate(levelList[currentLevel - 1]);
     }
 
