@@ -13,7 +13,7 @@ public class RaceStarter : NetworkBehaviour {
     public AudioClip GoSound;
 
     [SyncVar]
-    private float Timer = 30;
+    private float Timer = 10;
     [SyncVar]
     private bool IsTriggered = false;
     [SyncVar]
