@@ -96,8 +96,15 @@ public class FirstPersonDrifter : NetworkBehaviour
             return;
 
         var currentPosition = gameObject.transform.position;
+        var remoteController = GetComponent<CharacterController>();
+        var remoteGrounded = Physics.Raycast(currentPosition, -gameObject.transform.up, 1.5f);
 
-        if (currentPosition != lastPosition && animTimer <= 0)
+        if (!remoteGrounded && animTimer <= 0)
+        {
+            playerModel.GetComponent<Animation>().Play(fallAnimation.name, PlayMode.StopAll);
+            animTimer = 0.1f;
+        }
+        else if (currentPosition != lastPosition && animTimer <= 0)
         {
             playerModel.GetComponent<Animation>().Play(walkAnimation.name, PlayMode.StopAll);
             lastPosition = currentPosition;
