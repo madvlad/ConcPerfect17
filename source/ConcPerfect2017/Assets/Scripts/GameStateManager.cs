@@ -86,7 +86,15 @@ public class GameStateManager : NetworkBehaviour {
         {
             var bestTimeText = BestTimeHudElement.GetComponent<Text>();
             TimeSpan timeSpan = TimeSpan.FromSeconds(bestTimeForCourse);
-            var timeString = timeSpan.Minutes.ToString("00") + ":" + timeSpan.Seconds.ToString("00") + ":" + timeSpan.Milliseconds.ToString("000");
+            string timeString = "";
+            if (timeSpan.Hours > 0)
+            {
+                timeString = "H" + timeSpan.Hours.ToString("00") + ":" + timeSpan.Minutes.ToString("00") + ":" + timeSpan.Seconds.ToString("00");
+            }
+            else
+            {
+                timeString = timeSpan.Minutes.ToString("00") + ":" + timeSpan.Seconds.ToString("00") + ":" + timeSpan.Milliseconds.ToString("000");
+            }
             bestTimeText.text = "Best time: " + timeString;
         }
     }
