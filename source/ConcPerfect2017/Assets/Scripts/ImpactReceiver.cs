@@ -26,4 +26,9 @@ public class ImpactReceiver : MonoBehaviour
             impact = Vector3.Lerp(impact, Vector3.zero, 4 * Time.deltaTime);
         }
     }
+
+    public void ZeroImpact()
+    {
+        impact = Vector3.zero;
+    }
 }
