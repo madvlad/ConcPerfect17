@@ -47,9 +47,6 @@ public class LevelGenerator : NetworkBehaviour {
 
         GameStateManager.SetCourseJumpLimit(courseJumpListSize);
 
-        if (!isServer)
-            return;
-
         // Casual Mode
         if (ApplicationManager.GameType == 0 || ApplicationManager.GameType == 2)
         {
@@ -61,6 +58,8 @@ public class LevelGenerator : NetworkBehaviour {
             }
             else
             {
+                if (!isServer)
+                    return;
                 BuildRandomCourse();
             }
         }
