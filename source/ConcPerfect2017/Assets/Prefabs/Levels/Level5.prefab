@@ -766,6 +766,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1057196848914718
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4979280378890480}
+  - component: {fileID: 108988914817729270}
+  m_Layer: 0
+  m_Name: Sun
+  m_TagString: Sun
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1057594471501652
 GameObject:
   m_ObjectHideFlags: 1
@@ -17106,6 +17122,7 @@ Transform:
   - {fileID: 4491648116051770}
   - {fileID: 4082768494126922}
   - {fileID: 4470136230859940}
+  - {fileID: 4979280378890480}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -23154,6 +23171,19 @@ Transform:
   m_Father: {fileID: 4962178607980504}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4979280378890480
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1057196848914718}
+  m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
+  m_LocalPosition: {x: 0, y: 27.600002, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4429090716100682}
+  m_RootOrder: 21
+  m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!4 &4980829314176120
 Transform:
   m_ObjectHideFlags: 1
@@ -46462,6 +46492,40 @@ Light:
   m_BounceIntensity: 6.75
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!108 &108988914817729270
+Light:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1057196848914718}
+  m_Enabled: 1
+  serializedVersion: 7
+  m_Type: 1
+  m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
+  m_Intensity: 1.5
+  m_Range: 10
+  m_SpotAngle: 30
+  m_CookieSize: 10
+  m_Shadows:
+    m_Type: 2
+    m_Resolution: -1
+    m_CustomResolution: -1
+    m_Strength: 1
+    m_Bias: 0.05
+    m_NormalBias: 0.4
+    m_NearPlane: 0.2
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_Flare: {fileID: 12100000, guid: 09ebe82dbd1113c3d000dc0b8d76c639, type: 2}
+  m_RenderMode: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_Lightmapping: 4
+  m_AreaSize: {x: 1, y: 1}
+  m_BounceIntensity: 1
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0
 --- !u!114 &114011012250407980
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -46474,6 +46538,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destination: {fileID: 1000712819425020}
+  StopMomentum: 1
 --- !u!114 &114013291858502934
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -46506,6 +46571,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destination: {fileID: 1084034224921424}
+  StopMomentum: 1
 --- !u!114 &114025131377960100
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -46580,6 +46646,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destination: {fileID: 1084034224921424}
+  StopMomentum: 1
 --- !u!114 &114088393716417422
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -46693,6 +46760,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destination: {fileID: 1847501006866554}
+  StopMomentum: 1
 --- !u!114 &114112259505631028
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -46752,6 +46820,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destination: {fileID: 1117638822091912}
+  StopMomentum: 1
 --- !u!114 &114126665596632688
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -46813,6 +46882,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destination: {fileID: 1847501006866554}
+  StopMomentum: 1
 --- !u!114 &114162849026123588
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -46857,6 +46927,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destination: {fileID: 1800083189523812}
+  StopMomentum: 1
 --- !u!114 &114181203041695338
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -46899,6 +46970,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destination: {fileID: 1117638822091912}
+  StopMomentum: 1
 --- !u!114 &114204150255805410
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -46911,6 +46983,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destination: {fileID: 1847501006866554}
+  StopMomentum: 1
 --- !u!114 &114208321286195734
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -46923,6 +46996,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destination: {fileID: 1000712819425020}
+  StopMomentum: 1
 --- !u!114 &114211855430522458
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -47009,6 +47083,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destination: {fileID: 1800083189523812}
+  StopMomentum: 1
 --- !u!114 &114270666108814982
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -47051,6 +47126,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destination: {fileID: 1959655714050556}
+  StopMomentum: 1
 --- !u!114 &114298299506738832
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -47063,6 +47139,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destination: {fileID: 1957630505352926}
+  StopMomentum: 1
 --- !u!114 &114298812344388488
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -47075,6 +47152,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destination: {fileID: 1926947559687984}
+  StopMomentum: 1
 --- !u!114 &114311182328966642
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -47087,6 +47165,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destination: {fileID: 1675065277140284}
+  StopMomentum: 1
 --- !u!114 &114315873810066970
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -47099,6 +47178,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destination: {fileID: 1800083189523812}
+  StopMomentum: 1
 --- !u!114 &114317411960156894
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -47143,6 +47223,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destination: {fileID: 1957630505352926}
+  StopMomentum: 1
 --- !u!114 &114345127887303776
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -47219,6 +47300,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destination: {fileID: 1800083189523812}
+  StopMomentum: 1
 --- !u!114 &114361058344749280
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -47244,6 +47326,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destination: {fileID: 1847501006866554}
+  StopMomentum: 1
 --- !u!114 &114364426914244464
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -47256,6 +47339,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destination: {fileID: 1800083189523812}
+  StopMomentum: 1
 --- !u!114 &114375514508693380
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -47360,6 +47444,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destination: {fileID: 1000712819425020}
+  StopMomentum: 1
 --- !u!114 &114411913209781510
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -47424,6 +47509,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destination: {fileID: 1847501006866554}
+  StopMomentum: 1
 --- !u!114 &114423733439843844
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -47468,6 +47554,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destination: {fileID: 1800083189523812}
+  StopMomentum: 1
 --- !u!114 &114431818300233362
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -47480,6 +47567,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destination: {fileID: 1847501006866554}
+  StopMomentum: 1
 --- !u!114 &114432992198995076
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -47492,6 +47580,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destination: {fileID: 1000712819425020}
+  StopMomentum: 1
 --- !u!114 &114437222971466826
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -47504,6 +47593,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destination: {fileID: 1000712819425020}
+  StopMomentum: 1
 --- !u!114 &114439867820032502
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -47529,6 +47619,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destination: {fileID: 1084034224921424}
+  StopMomentum: 1
 --- !u!114 &114474538755775600
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -47668,6 +47759,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destination: {fileID: 1117638822091912}
+  StopMomentum: 1
 --- !u!114 &114515195037651876
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -47713,6 +47805,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destination: {fileID: 1000712819425020}
+  StopMomentum: 1
 --- !u!114 &114528025458037716
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -47886,6 +47979,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destination: {fileID: 1957630505352926}
+  StopMomentum: 1
 --- !u!114 &114596175984377488
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -47950,6 +48044,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destination: {fileID: 1847501006866554}
+  StopMomentum: 1
 --- !u!114 &114641395358221948
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -48010,6 +48105,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destination: {fileID: 1117638822091912}
+  StopMomentum: 1
 --- !u!114 &114660247597687434
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -48087,6 +48183,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destination: {fileID: 1000712819425020}
+  StopMomentum: 1
 --- !u!114 &114708559771286920
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -48197,6 +48294,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destination: {fileID: 1847501006866554}
+  StopMomentum: 1
 --- !u!114 &114770145713549536
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -48209,6 +48307,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destination: {fileID: 1000712819425020}
+  StopMomentum: 1
 --- !u!114 &114773675425218008
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -48300,6 +48399,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destination: {fileID: 1584978907908088}
+  StopMomentum: 1
 --- !u!114 &114816301351633548
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -48458,6 +48558,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destination: {fileID: 1967276473026744}
+  StopMomentum: 1
 --- !u!114 &114840379450423208
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -48553,6 +48654,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destination: {fileID: 1681791790443394}
+  StopMomentum: 1
 --- !u!114 &114878100659089710
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -48630,6 +48732,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destination: {fileID: 1957630505352926}
+  StopMomentum: 1
 --- !u!114 &114919004466751414
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -48655,6 +48758,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destination: {fileID: 1847501006866554}
+  StopMomentum: 1
 --- !u!114 &114933343920925222
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -48699,6 +48803,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destination: {fileID: 1957630505352926}
+  StopMomentum: 1
 --- !u!114 &114959138524175600
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -48724,6 +48829,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destination: {fileID: 1978620405839054}
+  StopMomentum: 1
 --- !u!114 &114973115405801906
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -48736,6 +48842,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destination: {fileID: 1675065277140284}
+  StopMomentum: 1
 --- !u!114 &114975951346635394
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -75,7 +75,7 @@ public class MultiplayerChatScript : NetworkBehaviour {
 
         var currentMessage = myMessage.GetComponent<Text>().text;
 
-		if (Input.GetButton("Submit"))
+		if (Input.GetButton("Submit") || Input.GetButton("Cancel"))
         {
             if (!string.IsNullOrEmpty(currentMessage))
             {

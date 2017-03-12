@@ -34,8 +34,11 @@ public class WeatherManager : MonoBehaviour {
 
     public void TurnTheDangSunOff()
     {
-        var sun = GameObject.FindGameObjectWithTag("Sun").GetComponent<Light>();
-        sun.flare = null;
+        if (GameObject.FindGameObjectWithTag("Sun") != null)
+        {
+            var sun = GameObject.FindGameObjectWithTag("Sun").GetComponent<Light>();
+            sun.flare = null;
+        }
     }
 
 	void Start () {
