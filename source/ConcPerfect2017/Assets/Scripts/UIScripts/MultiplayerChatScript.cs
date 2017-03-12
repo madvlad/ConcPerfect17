@@ -11,6 +11,7 @@ public class MultiplayerChatScript : NetworkBehaviour {
     public GameObject myInputField;
 
     private Text chatMessagesText;
+    private string nickname;
     private bool FirstMessage = true;
 
 	void Start () {
@@ -23,12 +24,13 @@ public class MultiplayerChatScript : NetworkBehaviour {
         myMessage = GameObject.FindGameObjectWithTag("ChatInputMessage");
         chatMessages = GameObject.FindGameObjectWithTag("ChatInputIncomingMessages");
         chatMessagesText = chatMessages.GetComponent<Text>();
+        nickname = ApplicationManager.Nickname;
         CmdChatMessage("\n" + ApplicationManager.Nickname + " has joined the game.");
     }
 
     public override void OnNetworkDestroy()
     {
-        CmdChatMessage("\n" + ApplicationManager.Nickname + " has left the game.");
+        CmdChatMessage("\n" + nickname + " has left the game.");
     }
 
     void Update () {
@@ -54,7 +56,7 @@ public class MultiplayerChatScript : NetworkBehaviour {
 
             myInputField.GetComponent<InputField>().text = string.Empty;
             myInputField.GetComponent<InputField>().DeactivateInputField();
-            GameObject.FindGameObjectWithTag("Player").GetComponent<FirstPersonDrifter>().SetEscaped(false);
+            GetLocalPlayerObject().GetComponent<FirstPersonDrifter>().SetEscaped(false);
         }
 	}
 
