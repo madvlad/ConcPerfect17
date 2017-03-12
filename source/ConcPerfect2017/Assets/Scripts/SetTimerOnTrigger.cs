@@ -39,6 +39,8 @@ public class SetTimerOnTrigger : MonoBehaviour {
 					gameStateManager.GetLocalPlayerObject ().gameObject.GetComponent<LocalPlayerStats> ().UpdateStatus ("Started");
                     gameStateManager.GetLocalPlayerObject ().gameObject.GetComponent<LocalPlayerStats> ().RequestCourseJumpLimit ();
                 }
+
+                other.GetComponent<MultiplayerChatScript>().SendStartMessage();
             }
             else if (gameStateManager.TimerIsRunning && !SwitchToOn)
             {
@@ -56,20 +58,28 @@ public class SetTimerOnTrigger : MonoBehaviour {
                 ShootConfetti(other.gameObject);
                 SaveLevelCompletion();
                 gameStateManager.SetIsCourseComplete(true);
+
+                TimeSpan timeSpan = TimeSpan.FromSeconds(gameStateManager.GetRawTime());
+                string timeString = "";
+                if (timeSpan.Hours > 0)
+                {
+                    timeString += "H" + timeSpan.Hours.ToString("00") + ":" + timeSpan.Minutes.ToString("00") + ":" + timeSpan.Seconds.ToString("00");
+                }
+                else
+                {
+                    timeString += timeSpan.Minutes.ToString("00") + ":" + timeSpan.Seconds.ToString("00") + ":" + timeSpan.Milliseconds.ToString("000");
+                }
+
                 if (courseHistoryManager.StoreNewRecord(gameStateManager.GetCourseSeed(), gameStateManager.GetRawTime(), gameStateManager.GetIsCourseFavorited(), ApplicationManager.GetDifficultyLevel()))
                 {
-                    TimeSpan timeSpan = TimeSpan.FromSeconds(gameStateManager.GetRawTime());
-                    string timeString = "Best time: ";
-                    if (timeSpan.Hours > 0)
-                    {
-                        timeString += "H" + timeSpan.Hours.ToString("00") + ":" + timeSpan.Minutes.ToString("00") + ":" + timeSpan.Seconds.ToString("00");
-                    }
-                    else
-                    {
-                        timeString += timeSpan.Minutes.ToString("00") + ":" + timeSpan.Seconds.ToString("00") + ":" + timeSpan.Milliseconds.ToString("000");
-                    }
-                    GameObject.FindGameObjectWithTag("BestTime").GetComponent<Text>().text = timeString;
+                    GameObject.FindGameObjectWithTag("BestTime").GetComponent<Text>().text = "Best time: " + timeString;
+                    other.GetComponent<MultiplayerChatScript>().SendRecordFinishMessage(timeString);
                 }
+                else
+                {
+                    other.GetComponent<MultiplayerChatScript>().SendFinishMessage(timeString);
+                }
+
                 courseHistoryManager.AddRecentlyPlayed(gameStateManager.GetCourseSeed(), gameStateManager.GetRawTime(), ApplicationManager.GetDifficultyLevel());
                 Invoke("EndGame", 7.0f);
             }

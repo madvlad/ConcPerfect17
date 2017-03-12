@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -25,12 +26,40 @@ public class MultiplayerChatScript : NetworkBehaviour {
         chatMessages = GameObject.FindGameObjectWithTag("ChatInputIncomingMessages");
         chatMessagesText = chatMessages.GetComponent<Text>();
         nickname = ApplicationManager.Nickname;
-        CmdChatMessage("\n" + ApplicationManager.Nickname + " has joined the game.");
+        CmdChatMessage("\n<color=\"#ffff00ff\">" + ApplicationManager.Nickname + " has joined the game.</color>");
     }
 
     public override void OnNetworkDestroy()
     {
-        CmdChatMessage("\n" + nickname + " has left the game.");
+        if (!isLocalPlayer)
+            return;
+
+        CmdChatMessage("\n<color=\"#ffff00ff\">" + ApplicationManager.Nickname + " has left the game.</color>");
+    }
+
+    internal void SendStartMessage()
+    {
+        if (!isLocalPlayer)
+            return;
+
+        CmdChatMessage("\n<color=\"#ff0000ff\">" + ApplicationManager.Nickname + " started the course!</color>");
+    }
+
+
+    internal void SendFinishMessage(string timeString)
+    {
+        if (!isLocalPlayer)
+            return;
+
+        CmdChatMessage("\n<color=\"#ff0000ff\">" + ApplicationManager.Nickname + " finished the course in " + timeString + "!</color>");
+    }
+
+    internal void SendRecordFinishMessage(string timeString)
+    {
+        if (!isLocalPlayer)
+            return;
+
+        CmdChatMessage("\n<color=\"#ff00ffff\">" + ApplicationManager.Nickname + " got a new personal record on this course with " + timeString + "!!</color>");
     }
 
     void Update () {
@@ -50,7 +79,7 @@ public class MultiplayerChatScript : NetworkBehaviour {
         {
             if (!string.IsNullOrEmpty(currentMessage))
             {
-                var message = "\n" + ApplicationManager.Nickname + " says, \"" + currentMessage + "\"";
+                var message = "\n" + ApplicationManager.Nickname + " says, \"<color=\"#00ffffff\">" + currentMessage + "</color>\"";
                 CmdChatMessage(message);
             }
 
@@ -84,7 +113,7 @@ public class MultiplayerChatScript : NetworkBehaviour {
 
         if (FirstMessage)
         {
-            chatMessagesText.text = "\nWelcome to ConcPerfect 2017.";
+            chatMessagesText.text = "\n<color=\"#ffff00ff\">Welcome to ConcPerfect 2017.</color>";
             FirstMessage = false;
         }
         else
