@@ -10,12 +10,15 @@ public class MultiplayerChatScript : NetworkBehaviour {
     public GameObject chatMessages;
     public GameObject myMessage;
     public GameObject myInputField;
+    public GameObject chatPanel;
 
     private Text chatMessagesText;
     private string nickname;
     private bool FirstMessage = true;
+    private float chatFadeTimer = 5.0f;
 
-	void Start () {
+
+    void Start () {
         
 	}
 
@@ -24,6 +27,7 @@ public class MultiplayerChatScript : NetworkBehaviour {
         myInputField = GameObject.FindGameObjectWithTag("ChatInputField");
         myMessage = GameObject.FindGameObjectWithTag("ChatInputMessage");
         chatMessages = GameObject.FindGameObjectWithTag("ChatInputIncomingMessages");
+        chatPanel = GameObject.FindGameObjectWithTag("Chat");
         chatMessagesText = chatMessages.GetComponent<Text>();
         nickname = ApplicationManager.Nickname;
         CmdChatMessage("\n<color=\"#ffff00ff\">" + ApplicationManager.Nickname + " has joined the game.</color>");
@@ -62,12 +66,32 @@ public class MultiplayerChatScript : NetworkBehaviour {
         CmdChatMessage("\n<color=\"#ff00ffff\">" + ApplicationManager.Nickname + " got a new personal record on this course with " + timeString + "!!</color>");
     }
 
+    void FixedUpdate()
+    {
+        if (!isLocalPlayer)
+            return;
+
+        chatFadeTimer -= Time.deltaTime;
+
+        if (chatFadeTimer <= 0 && !myInputField.GetComponent<InputField>().isFocused)
+        {
+            chatPanel.GetComponent<Canvas>().enabled = false;
+        }
+    }
+
+    void ChatBoxUpdated()
+    {
+        chatFadeTimer = 5.0f;
+        chatPanel.GetComponent<Canvas>().enabled = true;
+    }
+
     void Update () {
         if (!isLocalPlayer)
             return;
 
         if (Input.GetButton("ChatButton"))
         {
+            ChatBoxUpdated();
             GetLocalPlayerObject().GetComponent<FirstPersonDrifter>().SetEscaped(true);
             myInputField.GetComponent<InputField>().Select();
             myInputField.GetComponent<InputField>().ActivateInputField();
@@ -120,6 +144,8 @@ public class MultiplayerChatScript : NetworkBehaviour {
         {
             chatMessagesText.text += message;
         }
+
+        ChatBoxUpdated();
     }
 
     private GameObject GetLocalPlayerObject()
