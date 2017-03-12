@@ -6,10 +6,13 @@ using UnityEngine.Networking;
 public class LocalPlayerStats : NetworkBehaviour {
     // Server Objects
     public GameServerManager gameServerManager;
+    public GameObject ChatObject;
 
     void Start() {
         if (isServer)
             gameServerManager = GameObject.FindGameObjectWithTag("GameServerManager").GetComponent<GameServerManager>();
+
+        ChatObject = GameObject.FindGameObjectWithTag("Chat");
 
         if (this.gameObject.GetComponent<LocalPlayerStats>() != null) {
             this.gameObject.GetComponent<LocalPlayerStats>().UpdateNickname();

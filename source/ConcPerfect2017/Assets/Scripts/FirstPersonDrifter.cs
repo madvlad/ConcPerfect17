@@ -243,4 +243,9 @@ public class FirstPersonDrifter : NetworkBehaviour
 		if (!isLocalPlayer)
 			return; 
     }
+
+    public void SetEscaped(bool isEscaped)
+    {
+        escaped = isEscaped;
+    }
 }

@@ -320,6 +320,7 @@ GameObject:
   - component: {fileID: 114187345358977680}
   - component: {fileID: 148081963049842702}
   - component: {fileID: 114361093510597340}
+  - component: {fileID: 114273865066288770}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1592,6 +1593,20 @@ MonoBehaviour:
   antiBunnyHopFactor: 1
   moveDirection: {x: 0, y: 0, z: 0}
   grounded: 0
+--- !u!114 &114273865066288770
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1392250199329400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f95dd773ac7a10743887372b23d607bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chatMessages: {fileID: 0}
+  myMessage: {fileID: 0}
+  myInputField: {fileID: 0}
 --- !u!114 &114331473555456676
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1633,6 +1648,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameServerManager: {fileID: 0}
+  ChatObject: {fileID: 0}
 --- !u!114 &114386290485679376
 MonoBehaviour:
   m_ObjectHideFlags: 1
