@@ -250,4 +250,9 @@ public class FirstPersonDrifter : NetworkBehaviour
     {
         escaped = isEscaped;
     }
+
+    public bool IsEscaped()
+    {
+        return escaped;
+    }
 }

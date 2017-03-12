@@ -142,10 +142,12 @@ public class GameStateManager : NetworkBehaviour {
         if (Input.GetButtonDown("Cancel") && !IsPaused && !IsDisplayStats) {
             SetPlayerEnabled(false);
             ShowEscapeMenu(true);
+            GetLocalPlayerObject().GetComponent<FirstPersonDrifter>().SetEscaped(true);
             IsPaused = true;
         } else if (Input.GetButtonDown("Cancel") && IsPaused && !IsCourseComplete && !IsDisplayStats) {
             SetPlayerEnabled(true);
             ShowEscapeMenu(false);
+            GetLocalPlayerObject().GetComponent<FirstPersonDrifter>().SetEscaped(false);
             IsPaused = false;
         }
         return IsPaused;
