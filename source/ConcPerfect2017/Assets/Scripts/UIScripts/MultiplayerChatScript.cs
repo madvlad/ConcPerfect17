@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
@@ -103,6 +104,8 @@ public class MultiplayerChatScript : NetworkBehaviour {
         {
             if (!string.IsNullOrEmpty(currentMessage))
             {
+                var step1 = Regex.Replace(currentMessage, @"<[^>]+>|&nbsp;", "").Trim();
+                currentMessage = Regex.Replace(step1, @"\s{2,}", " ");
                 var message = "\n" + ApplicationManager.Nickname + " says, \"<color=\"#00ffffff\">" + currentMessage + "</color>\"";
                 CmdChatMessage(message);
             }
