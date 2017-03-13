@@ -98,7 +98,7 @@ public class MultiplayerChatScript : NetworkBehaviour {
             myInputField.GetComponent<InputField>().ActivateInputField();
         }
 
-        var currentMessage = myMessage.GetComponent<Text>().text;
+        var currentMessage = myInputField.GetComponent<InputField>().text;
 
 		if (Input.GetButton("Submit") || Input.GetButton("Cancel"))
         {
