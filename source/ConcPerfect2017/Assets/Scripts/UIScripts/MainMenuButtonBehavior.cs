@@ -264,6 +264,7 @@ public class MainMenuButtonBehavior : MonoBehaviour {
     
     public void StartLevel(int levelNum)
     {
+        ApplicationManager.IsSingleplayer = true;
         ApplicationManager.currentLevel = levelNum;
         ApplicationManager.numberOfJumps = 9;
         EnableStartHostGameButtons(false);
