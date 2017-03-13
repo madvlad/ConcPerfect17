@@ -116,6 +116,15 @@ public class MultiplayerChatScript : NetworkBehaviour {
         }
 	}
 
+    public void WriteLocalMessage(string message)
+    {
+        if (!isLocalPlayer)
+            return;
+
+        chatMessagesText.text = "\n<color=\"#0000ffff\">" + message + "</color>";
+        ChatBoxUpdated();
+    }
+
     [Command]
     void CmdChatMessage(string message)
     {

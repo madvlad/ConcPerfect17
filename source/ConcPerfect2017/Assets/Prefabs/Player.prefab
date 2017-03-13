@@ -321,6 +321,7 @@ GameObject:
   - component: {fileID: 148081963049842702}
   - component: {fileID: 114361093510597340}
   - component: {fileID: 114273865066288770}
+  - component: {fileID: 114896892213262280}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1607,6 +1608,7 @@ MonoBehaviour:
   chatMessages: {fileID: 0}
   myMessage: {fileID: 0}
   myInputField: {fileID: 0}
+  chatPanel: {fileID: 0}
 --- !u!114 &114331473555456676
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1783,6 +1785,42 @@ MonoBehaviour:
     i15: 39
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 1
+--- !u!114 &114896892213262280
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1392250199329400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6712f7df5548ff54b9ce553a86c7ccd4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Level1Times:
+  - 600
+  - 300
+  - 60
+  - 30
+  Level2Times:
+  - 0
+  - 0
+  - 0
+  - 0
+  Level3Times:
+  - 0
+  - 0
+  - 0
+  - 0
+  Level4Times:
+  - 0
+  - 0
+  - 0
+  - 0
+  Level5Times:
+  - 0
+  - 0
+  - 0
+  - 0
 --- !u!124 &124871678398703502
 Behaviour:
   m_ObjectHideFlags: 1
