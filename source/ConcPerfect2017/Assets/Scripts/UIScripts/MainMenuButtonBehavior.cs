@@ -136,6 +136,7 @@ public class MainMenuButtonBehavior : MonoBehaviour {
     public void ShowMatchmakerServers() {
         ApplicationManager.IsLAN = false;
         multiplayerMenuUIElement.SetActive(false);
+        matchMakerLobbyMenuUIElement.SetActive(false);
         matchMakerLobbyMenuUIElement.SetActive(true);
         GameObject.FindGameObjectWithTag("NetworkIssuer").GetComponent<ConcPerfectNetworkManager>().StartNetworkManager();
     }

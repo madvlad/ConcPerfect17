@@ -11,14 +11,14 @@ public class ServerButton : MonoBehaviour {
 
     public GameObject ConcPerfectNetworkManager;
 
-    public void SetServerName(string servername) {
-        this.serverName = servername;
-        gameObject.GetComponentInChildren<Text>().text = serverName;
+    public void SetServerButtonText() {
+		this.serverName = snapshot.name;
+		gameObject.GetComponentInChildren<Text>().text = "[" + serverName + "] " + snapshot.currentSize + "/" + snapshot.maxSize;
     }
 
     public void SetMatchSnapshot(MatchInfoSnapshot snapshot) {
-        SetServerName(snapshot.name);
         this.snapshot = snapshot;
+        SetServerButtonText();
     }
 
     public string GetServerName() {
