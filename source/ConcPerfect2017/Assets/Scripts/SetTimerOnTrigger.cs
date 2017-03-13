@@ -28,7 +28,7 @@ public class SetTimerOnTrigger : MonoBehaviour {
     {
         if (other.CompareTag("Player"))
         {
-            if (!gameStateManager.TimerIsRunning && SwitchToOn)
+            if (!gameStateManager.TimerIsRunning && SwitchToOn && !gameStateManager.GetIsCourseComplete())
             {
                 gameStateManager.SetTimerIsRunning(SwitchToOn);
                 gameObject.GetComponent<MeshRenderer>().enabled = false;

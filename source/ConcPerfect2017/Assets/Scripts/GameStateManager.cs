@@ -144,7 +144,7 @@ public class GameStateManager : NetworkBehaviour {
             ShowEscapeMenu(true);
             GetLocalPlayerObject().GetComponent<FirstPersonDrifter>().SetEscaped(true);
             IsPaused = true;
-        } else if (Input.GetButtonDown("Cancel") && IsPaused && !IsCourseComplete && !IsDisplayStats) {
+        } else if (Input.GetButtonDown("Cancel") && IsPaused && !IsDisplayStats) {
             SetPlayerEnabled(true);
             ShowEscapeMenu(false);
             GetLocalPlayerObject().GetComponent<FirstPersonDrifter>().SetEscaped(false);
@@ -321,6 +321,11 @@ public class GameStateManager : NetworkBehaviour {
 
     public void SetIsCourseComplete(bool isComplete) {
         IsCourseComplete = isComplete;
+    }
+
+    public bool GetIsCourseComplete()
+    {
+        return IsCourseComplete;
     }
 
     public void SetJumpSeed(int seed) {

@@ -370,6 +370,7 @@ public class MainMenuButtonBehavior : MonoBehaviour {
         else
         {
             gameStateManager = GameObject.FindGameObjectWithTag("GameManager");
+            gameStateManager.GetComponent<GameStateManager>().SetIsCourseComplete(false);
             HideEscapeMenu();
             var player = GetLocalPlayerObject();
 			player.GetComponent<LocalPlayerStats> ().UpdateStatus ("Not Started");
