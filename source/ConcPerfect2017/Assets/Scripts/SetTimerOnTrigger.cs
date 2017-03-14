@@ -87,9 +87,22 @@ public class SetTimerOnTrigger : MonoBehaviour {
                 }
 
                 courseHistoryManager.AddRecentlyPlayed(gameStateManager.GetCourseSeed(), gameStateManager.GetRawTime(), ApplicationManager.GetDifficultyLevel());
+
+                if (ApplicationManager.GameType == GameTypes.RaceGameType)
+                {
+                    other.GetComponent<FirstPersonDrifter>().CmdFreezeAll(true);
+                    Invoke("Unfreeze", 10.0f);
+                }
+
                 Invoke("EndGame", 7.0f);
             }
         }
+    }
+
+    void Unfreeze()
+    {
+        var oneLuckyGuy = GameObject.FindGameObjectWithTag("Player");
+        oneLuckyGuy.GetComponent<FirstPersonDrifter>().CmdFreezeAll(false);
     }
 
     private string DisplayRewardMessage(int reward)

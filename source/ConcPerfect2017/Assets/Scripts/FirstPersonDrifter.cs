@@ -5,6 +5,7 @@
 using UnityEngine;
 using UnityEngine.Networking;
 using System.Collections;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(CharacterController))]
 public class FirstPersonDrifter : NetworkBehaviour
@@ -254,5 +255,84 @@ public class FirstPersonDrifter : NetworkBehaviour
     public bool IsEscaped()
     {
         return escaped;
+    }
+
+    [Command]
+    public void CmdFreezeAll(bool freeze)
+    {
+        var recipients = GameObject.FindGameObjectsWithTag("Player");
+
+        foreach (var recipient in recipients)
+        {
+            recipient.GetComponent<FirstPersonDrifter>().RpcFreezeMe(freeze);
+        }
+    }
+
+    [ClientRpc]
+    public void RpcFreezeMe(bool isFrozen)
+    {
+        Unfreeze(isFrozen);
+    }
+
+    private void Unfreeze(bool freeze)
+    {
+        if (!isLocalPlayer)
+            return;
+
+        escaped = freeze;
+
+        if (!freeze)
+            RestartRun();
+    }
+
+    public void RestartRun()
+    {
+        if (ApplicationManager.GameType != GameTypes.CasualGameType)
+        {
+            // Display "Can't restart during a race" or just disable button
+        }
+        else
+        {
+            var gameStateManager = GameObject.FindGameObjectWithTag("GameManager");
+            gameStateManager.GetComponent<GameStateManager>().SetIsCourseComplete(false);
+            var player = GetLocalPlayerObject();
+            player.GetComponent<LocalPlayerStats>().UpdateStatus("Not Started");
+            player.transform.position = new Vector3(0, 2, 0);
+            player.GetComponent<Concer>().SetConcCount(0);
+            var gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameStateManager>();
+            gameManager.SetTimerIsRunning(false);
+            gameManager.ResetTimer();
+            gameManager.SetJumpNumber(0);
+            gameManager.TimerHUDElement.GetComponent<Text>().text = "00:00:00";
+            gameManager.JumpHUDElement.GetComponent<Text>().text = "...";
+            gameManager.JumpNameHUDElement.GetComponent<Text>().text = "";
+
+            var jumpSeparators = GameObject.FindGameObjectsWithTag("JumpSeparator");
+            var startTrigger = GameObject.FindGameObjectWithTag("TimerTriggerOn");
+            var startTriggerLabel = GameObject.FindGameObjectWithTag("TimerTriggerOn").GetComponent<SetTimerOnTrigger>().startLabel;
+
+            startTrigger.GetComponent<MeshRenderer>().enabled = true;
+            startTriggerLabel.GetComponent<MeshRenderer>().enabled = true;
+
+            foreach (var jumpSeparator in jumpSeparators)
+            {
+                jumpSeparator.GetComponent<JumpTrigger>().UnsetTrigger();
+            }
+        }
+    }
+
+    private GameObject GetLocalPlayerObject()
+    {
+        var playerObjects = GameObject.FindGameObjectsWithTag("Player");
+        GameObject playerObject = null;
+        foreach (GameObject obj in playerObjects)
+        {
+            if (obj.GetComponent<NetworkIdentity>().isLocalPlayer)
+            {
+                playerObject = obj;
+            }
+        }
+
+        return playerObject;
     }
 }
