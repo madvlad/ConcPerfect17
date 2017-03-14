@@ -28,6 +28,7 @@ public class MainMenuButtonBehavior : MonoBehaviour {
     public GameObject nickNameInputField;
     public GameObject loadingScreenUIElement;
     public GameObject failedMessage;
+    public GameObject resetCourseButton;
 
     void Start()
     {
@@ -62,6 +63,11 @@ public class MainMenuButtonBehavior : MonoBehaviour {
         if (sfxVolumeSliderMenuUIElement != null)
         {
             sfxVolumeSliderMenuUIElement.GetComponent<Slider>().value = ApplicationManager.sfxVolume;
+        }
+
+        if (resetCourseButton != null && (ApplicationManager.GameType == GameTypes.TutorialGameType || ApplicationManager.GameType == GameTypes.RaceGameType))
+        {
+            resetCourseButton.SetActive(false);
         }
     }
 
