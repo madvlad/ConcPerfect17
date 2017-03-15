@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityStandardAssets.ImageEffects;
 
 public class WeatherManager : MonoBehaviour {
@@ -88,10 +89,26 @@ public class WeatherManager : MonoBehaviour {
         
         if (!parentSet && isRaining)
         {
-            if (GameObject.FindGameObjectWithTag("Player") != null) {
-                weatherEventInstance.transform.parent = GameObject.FindGameObjectWithTag("Player").transform;
+            var localPlayer = GetLocalPlayerObject();
+            if (localPlayer != null) {
+                weatherEventInstance.transform.parent = localPlayer.transform;
                 parentSet = true;
             }
         }
+    }
+
+    private GameObject GetLocalPlayerObject()
+    {
+        var playerObjects = GameObject.FindGameObjectsWithTag("Player");
+        GameObject playerObject = null;
+        foreach (GameObject obj in playerObjects)
+        {
+            if (obj.GetComponent<NetworkIdentity>().isLocalPlayer)
+            {
+                playerObject = obj;
+            }
+        }
+
+        return playerObject;
     }
 }
