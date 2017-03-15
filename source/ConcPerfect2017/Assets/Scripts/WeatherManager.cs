@@ -46,7 +46,7 @@ public class WeatherManager : MonoBehaviour {
     {
         var petesRainDance = Random.value;
 
-        if (petesRainDance < 0.9f)
+        if (petesRainDance < 0.15f)
         {
             MakeItRain();
         }
