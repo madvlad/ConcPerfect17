@@ -5,6 +5,7 @@ using UnityEngine.Networking;
 public class LevelGenerator : NetworkBehaviour {
     public GameObject jumpSeparator;
     public GameObject raceStartPrefab;
+    public GameObject premadeRaceStartPrefab;
     public GameObject startPrefab;
     public GameObject endPrefab;
     public GameObject gameManager;
@@ -193,6 +194,12 @@ public class LevelGenerator : NetworkBehaviour {
     {
         GameStateManager.SetCourseJumpLimit(gameManager.GetComponent<LevelManager>().getLevel(ApplicationManager.currentLevel).Count);
         Instantiate(levelList[currentLevel - 1]);
+
+        if (isServer && ApplicationManager.GameType == GameTypes.RaceGameType)
+        {
+            var raceStart = Instantiate(premadeRaceStartPrefab);
+            NetworkServer.Spawn(raceStart);
+        }
     }
 
     private void BuildRandomCourse()
