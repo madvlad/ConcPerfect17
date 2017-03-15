@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using System.Collections;
 using UnityEngine.UI;
+using System;
 
 [RequireComponent(typeof(CharacterController))]
 public class FirstPersonDrifter : NetworkBehaviour
@@ -54,8 +55,10 @@ public class FirstPersonDrifter : NetworkBehaviour
     public Vector3 moveDirection = Vector3.zero;
     public bool grounded = false;
     private bool escaped = false;
+    private bool frozen = false;
     private CharacterController controller;
     private Transform myTransform;
+
     private float speed;
     private RaycastHit hit;
     private float fallStartLevel;
@@ -127,7 +130,7 @@ public class FirstPersonDrifter : NetworkBehaviour
         float inputX = Input.GetAxis("Horizontal");
         float inputY = Input.GetAxis("Vertical");
 
-        if (escaped)
+        if (escaped || frozen)
         {
             inputX = 0;
             inputY = 0;
@@ -199,7 +202,7 @@ public class FirstPersonDrifter : NetworkBehaviour
             {
                 jumpTimer++;
             }
-            else if (jumpTimer >= antiBunnyHopFactor && !escaped)
+            else if (jumpTimer >= antiBunnyHopFactor && !frozen)
             {
                 gameObject.GetComponent<AudioSource>().PlayOneShot(jumpSoundClip, ApplicationManager.sfxVolume);
                 moveDirection.y = jumpSpeed;
@@ -279,7 +282,7 @@ public class FirstPersonDrifter : NetworkBehaviour
         if (!isLocalPlayer)
             return;
 
-        escaped = freeze;
+        frozen = freeze;
 
         if (!freeze)
             RestartRun();
@@ -312,6 +315,14 @@ public class FirstPersonDrifter : NetworkBehaviour
         {
             jumpSeparator.GetComponent<JumpTrigger>().UnsetTrigger();
         }
+
+        var RaceStarter = GameObject.FindGameObjectWithTag("RaceStart").GetComponent<RaceStarter>();
+        RaceStarter.RestartGate();
+    }
+
+    internal bool IsFrozen()
+    {
+        return frozen;
     }
 
     private GameObject GetLocalPlayerObject()
