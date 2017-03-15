@@ -91,7 +91,7 @@ public class SetTimerOnTrigger : MonoBehaviour {
                 if (ApplicationManager.GameType == GameTypes.RaceGameType)
                 {
                     other.GetComponent<FirstPersonDrifter>().CmdFreezeAll(true);
-                    Invoke("Unfreeze", 10.0f);
+                    Invoke("Unfreeze", 5.0f);
                 }
 
                 Invoke("EndGame", 7.0f);
