@@ -110,12 +110,10 @@ public class RaceStarter : NetworkBehaviour {
         IsTriggered = false;
         GetComponent<AudioSource>().PlayOneShot(GoSound);
         Barrier.SetActive(false);
-        Debug.Log("Gate open");
     }
 
     void ShutGate()
     {
         Barrier.SetActive(true);
-        Debug.Log("Gate closed");
     }
 }
