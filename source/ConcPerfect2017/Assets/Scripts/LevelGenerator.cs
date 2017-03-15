@@ -166,6 +166,12 @@ public class LevelGenerator : NetworkBehaviour {
         //SetJumpTextures();
     }
 
+    private void SetPossibleRain()
+    {
+        var weatherManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<WeatherManager>();
+        weatherManager.MakePeteDoHisRainDance();
+    }
+
     private void SetPossibleWeatherEvents(int currentLevel)
     {
         var weatherManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<WeatherManager>();
@@ -236,6 +242,7 @@ public class LevelGenerator : NetworkBehaviour {
         }
 
         InstantiateEndPoint(previousSnapPoint);
+        SetPossibleRain();
     }
 
     void BuildCourseIteratively()

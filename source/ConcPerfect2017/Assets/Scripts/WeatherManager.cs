@@ -42,17 +42,15 @@ public class WeatherManager : MonoBehaviour {
         }
     }
 
-	void Start () {
-        if (ApplicationManager.currentLevel == 0)
-        {
-            var petesRainDance = Random.value;
+    public void MakePeteDoHisRainDance()
+    {
+        var petesRainDance = Random.value;
 
-            if (petesRainDance < 0.15f)
-            {
-                MakeItRain();
-            }
+        if (petesRainDance < 0.9f)
+        {
+            MakeItRain();
         }
-	}
+    }
 
     private bool lightningOn = false;
     private float timer = 30.0f;
