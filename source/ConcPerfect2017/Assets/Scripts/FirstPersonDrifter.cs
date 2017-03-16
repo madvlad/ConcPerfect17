@@ -94,6 +94,14 @@ public class FirstPersonDrifter : NetworkBehaviour
         jumpTimer = antiBunnyHopFactor;
     }
 
+    void Start()
+    {
+        if (isLocalPlayer)
+            return;
+
+        GetComponent<CharacterController>().enabled = false;
+    }
+
     void Update()
     {
         if (gameObject.GetComponent<NetworkIdentity>().isLocalPlayer)
