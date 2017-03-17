@@ -55,6 +55,7 @@ public class ApplicationManager : MonoBehaviour {
             ApplicationManager.Nickname = defaultNicknames[Random.Range(0, 4)];
         }
         ApplicationManager.ServerName = ApplicationManager.Nickname;
+
     }
 
     void CheckCompletedLevels()
