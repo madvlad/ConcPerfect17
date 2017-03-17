@@ -270,6 +270,7 @@ public class MainMenuButtonBehavior : MonoBehaviour {
     
     public void StartLevel(int levelNum)
     {
+        ApplicationManager.IsLAN = !UnetMatchMakerToggle.GetComponent<Toggle>().isOn;
         ApplicationManager.IsSingleplayer = true;
         ApplicationManager.currentLevel = levelNum;
         ApplicationManager.numberOfJumps = 9;
