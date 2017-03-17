@@ -1217,10 +1217,10 @@ RectTransform:
   m_Father: {fileID: 123548937}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0.000015258789, y: 18.7}
+  m_SizeDelta: {x: 0, y: -37.4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &110726161
 MonoBehaviour:
@@ -1242,8 +1242,8 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 10917, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
-  m_PreserveAspect: 0
+  m_Type: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -1707,6 +1707,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MedalImage: {fileID: 110726159}
+  Qualifier: {fileID: 974042806}
   goldMedal: {fileID: 21300000, guid: 674adcd97a9d3a340a556548da1cc6eb, type: 3}
   silverMedal: {fileID: 21300000, guid: 1383a5dbab09626409013d50dad3cdc6, type: 3}
   bronzeMedal: {fileID: 21300000, guid: bcfe5cfdf1df9e94a93622479abb3a11, type: 3}
@@ -2185,6 +2186,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MedalImage: {fileID: 2077992611}
+  Qualifier: {fileID: 974042806}
   goldMedal: {fileID: 21300000, guid: 674adcd97a9d3a340a556548da1cc6eb, type: 3}
   silverMedal: {fileID: 21300000, guid: 1383a5dbab09626409013d50dad3cdc6, type: 3}
   bronzeMedal: {fileID: 21300000, guid: bcfe5cfdf1df9e94a93622479abb3a11, type: 3}
@@ -4908,6 +4910,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MedalImage: {fileID: 1274773949}
+  Qualifier: {fileID: 974042806}
   goldMedal: {fileID: 21300000, guid: 674adcd97a9d3a340a556548da1cc6eb, type: 3}
   silverMedal: {fileID: 21300000, guid: 1383a5dbab09626409013d50dad3cdc6, type: 3}
   bronzeMedal: {fileID: 21300000, guid: bcfe5cfdf1df9e94a93622479abb3a11, type: 3}
@@ -5084,7 +5087,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &297508685
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8797,7 +8800,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &587293192
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12964,6 +12967,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MedalImage: {fileID: 1922421384}
+  Qualifier: {fileID: 974042806}
   goldMedal: {fileID: 21300000, guid: 674adcd97a9d3a340a556548da1cc6eb, type: 3}
   silverMedal: {fileID: 21300000, guid: 1383a5dbab09626409013d50dad3cdc6, type: 3}
   bronzeMedal: {fileID: 21300000, guid: bcfe5cfdf1df9e94a93622479abb3a11, type: 3}
@@ -14424,6 +14428,7 @@ GameObject:
   - component: {fileID: 974042807}
   - component: {fileID: 974042809}
   - component: {fileID: 974042808}
+  - component: {fileID: 974042810}
   m_Layer: 5
   m_Name: MenuPanel
   m_TagString: Untagged
@@ -14490,6 +14495,42 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 974042806}
+--- !u!114 &974042810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 974042806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6712f7df5548ff54b9ce553a86c7ccd4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Level1Times:
+  - 600
+  - 300
+  - 60
+  - 30
+  Level2Times:
+  - 600
+  - 150
+  - 90
+  - 75
+  Level3Times:
+  - 624
+  - 312
+  - 195
+  - 135
+  Level4Times:
+  - 660
+  - 330
+  - 210
+  - 150
+  Level5Times:
+  - 7680
+  - 3840
+  - 1920
+  - 960
 --- !u!1 &975906502
 GameObject:
   m_ObjectHideFlags: 0
@@ -20923,6 +20964,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MedalImage: {fileID: 301466084}
+  Qualifier: {fileID: 974042806}
   goldMedal: {fileID: 21300000, guid: 674adcd97a9d3a340a556548da1cc6eb, type: 3}
   silverMedal: {fileID: 21300000, guid: 1383a5dbab09626409013d50dad3cdc6, type: 3}
   bronzeMedal: {fileID: 21300000, guid: bcfe5cfdf1df9e94a93622479abb3a11, type: 3}
