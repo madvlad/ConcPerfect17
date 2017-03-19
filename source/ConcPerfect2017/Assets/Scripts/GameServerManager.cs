@@ -5,6 +5,7 @@ using System.Runtime.Serialization;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
+using System;
 
 public class GameServerManager : NetworkBehaviour {
 	private GameStateManager gameManager;
@@ -30,6 +31,7 @@ public class GameServerManager : NetworkBehaviour {
 		public int CurrentJump;
 		public string BestTime;
 		public int TimesCompleted;
+        public int PlayerModel;
 
 		public int CompareTo(PlayerInfo that) {
 			int timeCompare = this.BestTime.CompareTo (that.BestTime);
@@ -65,6 +67,7 @@ public class GameServerManager : NetworkBehaviour {
 	public ListPlayerScores playerScoresList = new ListPlayerScores();
 	public Dictionary<NetworkInstanceId, PlayerInfo> currentPlayers = new Dictionary<NetworkInstanceId, PlayerInfo> ();
 	public Dictionary<NetworkInstanceId, string> playerNicknames = new Dictionary<NetworkInstanceId, string> ();
+    public Dictionary<NetworkInstanceId, int> playerSkins = new Dictionary<NetworkInstanceId, int>();
 
 	void Start () {
 		gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameStateManager>();
@@ -86,7 +89,8 @@ public class GameServerManager : NetworkBehaviour {
 		gameManager.RpcUpdatePlayerInfo (playerInfo);
 	}
 
-	public void CleanupDisconnectedPlayers() {
+    
+    public void CleanupDisconnectedPlayers() {
 		List<NetworkInstanceId> idsToRemove = new List<NetworkInstanceId> ();
 		foreach (NetworkInstanceId id in currentPlayers.Keys) {
 			if (ClientScene.FindLocalObject(id) == null) {
@@ -99,8 +103,8 @@ public class GameServerManager : NetworkBehaviour {
 		}
 	}
 
-    public void UpdatePlayerNickname(NetworkInstanceId netId, string nickname) {
-		RegisterPlayer (netId, nickname);
+    public void UpdatePlayerNickname(NetworkInstanceId netId, string nickname, int playerModel) {
+		RegisterPlayer (netId, nickname, playerModel);
 		foreach (KeyValuePair<NetworkInstanceId, string> entry in playerNicknames) {
 			gameManager.RpcUpdatePlayerNickname(entry.Key, entry.Value);
         }
@@ -145,7 +149,7 @@ public class GameServerManager : NetworkBehaviour {
 		} 
 	}
 		
-	public void RegisterPlayer(NetworkInstanceId netId, string nickname) {
+	public void RegisterPlayer(NetworkInstanceId netId, string nickname, int playerModel) {
 		if (playerNicknames.ContainsKey (netId)) {
 			playerNicknames.Remove (netId);
 		}
@@ -160,6 +164,7 @@ public class GameServerManager : NetworkBehaviour {
 			newNick = nickname + (i++);
 		}
 		playerNicknames [netId] = newNick;
+        playerSkins[netId] = playerModel;
 		PlayerInfo pInfo = new PlayerInfo();
 		pInfo.PlayerId = netId;
 		pInfo.Nickname = playerNicknames [netId];
@@ -167,6 +172,7 @@ public class GameServerManager : NetworkBehaviour {
 		pInfo.CurrentJump = 0;
 		pInfo.BestTime = "- -";
 		pInfo.TimesCompleted = 0;
+        pInfo.PlayerModel = playerModel;
 		currentPlayers [netId] = pInfo;
 	}
 
@@ -179,4 +185,14 @@ public class GameServerManager : NetworkBehaviour {
 			gameManager.RpcUpdatePlayerNickname(entry.Key, entry.Value);
         }
     }
+
+    public void RequestPlayerSkins()
+    {
+        foreach (KeyValuePair<NetworkInstanceId, int> entry in playerSkins)
+        {
+            gameManager.RpcUpdatePlayerSkins(entry.Key, entry.Value);
+        }
+
+    }
+
 }

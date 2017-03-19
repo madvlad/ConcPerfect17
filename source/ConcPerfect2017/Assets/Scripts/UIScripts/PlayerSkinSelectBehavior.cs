@@ -17,13 +17,20 @@ public class PlayerSkinSelectBehavior : MonoBehaviour {
 
     void FixedUpdate()
     {
-        rotationModel.transform.Rotate(0, 75 * Time.deltaTime, 0);
+        if (rotationModel != null)
+        {
+            rotationModel.transform.Rotate(0, 75 * Time.deltaTime, 0);
+        }
     }
 
     void SetPlayerSkin()
     {
-        playerModel.GetComponent<SkinnedMeshRenderer>().material = playerSkins[currentSkinIndex];
-        PlayerPrefs.SetInt("PlayerModel", currentSkinIndex);
+        if (playerModel != null)
+        {
+            playerModel.GetComponent<SkinnedMeshRenderer>().material = playerSkins[currentSkinIndex];
+            PlayerPrefs.SetInt("PlayerModel", currentSkinIndex);
+            ApplicationManager.PlayerModel = currentSkinIndex;
+        }
     }
 
     public void NextSkin()

@@ -188,6 +188,7 @@ public class GameStateManager : NetworkBehaviour {
         Cursor.lockState = CursorLockMode.None;
     }
 
+
     public void ShowEscapeMenu(bool show) {
         if (!show) {
             SettingsMenuHUDElement.SetActive(show);
@@ -398,5 +399,18 @@ public class GameStateManager : NetworkBehaviour {
 			nicknamedGO.GetComponent<Nickname> ().SetNickname (nickname);
 			nicknamedGO.GetComponent<Nickname> ().SetDisplayNickname (IsDisplayNicknames);
 		}
+    }
+
+    [ClientRpc]
+    public void RpcUpdatePlayerSkins(NetworkInstanceId key, int value)
+    {
+        if (netId == GetLocalPlayerObject().GetComponent<NetworkIdentity>().netId)
+            return;
+        GameObject networkedPlayer = ClientScene.FindLocalObject(netId);
+        if (networkedPlayer != null)
+        {
+            var networkedModel = networkedPlayer.GetComponent<FirstPersonDrifter>().playerModelRenderer.GetComponent<SkinnedMeshRenderer>();
+            networkedModel.material = GameObject.FindGameObjectWithTag("PlayerSkins").GetComponent<PlayerSkinSelectBehavior>().playerSkins[value];
+        }
     }
 }

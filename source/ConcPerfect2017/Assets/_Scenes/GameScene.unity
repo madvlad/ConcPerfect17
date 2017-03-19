@@ -1429,6 +1429,54 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e5092510a068df429aea2d6998c92a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &457636911
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 457636913}
+  - component: {fileID: 457636912}
+  m_Layer: 0
+  m_Name: PlayerSkinList
+  m_TagString: PlayerSkins
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &457636912
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 457636911}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b4bba1ead8058b44a6e8a3740863dca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerSkins:
+  - {fileID: 2100000, guid: d6ad4982282664342a24e8beb599d41e, type: 2}
+  - {fileID: 2100000, guid: 25d79b0f203e41e44ae228919358cfca, type: 2}
+  - {fileID: 2100000, guid: de345917c12282441bbea62f71611530, type: 2}
+  - {fileID: 2100000, guid: cb5ec3fdde835c74ba664ea238c6ffd3, type: 2}
+  - {fileID: 2100000, guid: 130626d0b7cbb2345959e4389decdd61, type: 2}
+  playerModel: {fileID: 0}
+  rotationModel: {fileID: 0}
+--- !u!4 &457636913
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 457636911}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &505858548
 GameObject:
   m_ObjectHideFlags: 0

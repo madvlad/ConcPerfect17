@@ -29,6 +29,7 @@ public class FirstPersonDrifter : NetworkBehaviour
 
     // Player Model
     public GameObject playerModel;
+    public GameObject playerModelRenderer;
 
     public AudioClip jumpSoundClip;
 
@@ -76,11 +77,6 @@ public class FirstPersonDrifter : NetworkBehaviour
     void Awake() {
 		playerCam = GetComponentInChildren<Camera>();
 		playerCam.gameObject.SetActive(false);
-
-        //if (!(Network.isServer || Network.isClient))
-        //{
-        //    Network.InitializeServer(1, 25000, false);
-        //}
     }
 
     public override void OnStartLocalPlayer()
@@ -92,6 +88,8 @@ public class FirstPersonDrifter : NetworkBehaviour
         rayDistance = controller.height * .5f + controller.radius;
         slideLimit = controller.slopeLimit - .1f;
         jumpTimer = antiBunnyHopFactor;
+        playerModelRenderer.GetComponent<SkinnedMeshRenderer>().material = GameObject.FindGameObjectWithTag("PlayerSkins").GetComponent<PlayerSkinSelectBehavior>().playerSkins[ApplicationManager.PlayerModel];
+        //GetLocalPlayerObject().GetComponent<LocalPlayerStats>().RequestPlayerSkins();
     }
 
     void Start()
@@ -100,6 +98,7 @@ public class FirstPersonDrifter : NetworkBehaviour
             return;
 
         GetComponent<CharacterController>().enabled = false;
+        //GetLocalPlayerObject().GetComponent<LocalPlayerStats>().RequestPlayerSkins();
     }
 
     void Update()
@@ -144,7 +143,6 @@ public class FirstPersonDrifter : NetworkBehaviour
             inputY = 0;
         }
 
-        // If both horizontal and vertical are used simultaneously, limit speed (if allowed), so the total doesn't exceed normal move speed
         float inputModifyFactor = (inputX != 0.0f && inputY != 0.0f && limitDiagonalSpeed) ? .7071f : 1.0f;
 
         if (grounded)
