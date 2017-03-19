@@ -97,6 +97,7 @@ ModelImporter:
     7400004: Armature|Walk_Polish
     7400006: Armature|WalkBlocking
     7400008: Armature|WalkFinal
+    7400010: Armature|Idle0
     9500000: //RootNode
     11100000: //RootNode
     13700000: Cube
@@ -120,7 +121,577 @@ ModelImporter:
     animationScaleError: 0.5
     animationWrapMode: 0
     extraExposedTransformPaths: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Armature|Fall
+      takeName: Armature|Fall
+      firstFrame: 0
+      lastFrame: 20
+      wrapMode: 2
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/Root
+        weight: 1
+      - path: Armature/Root/Abdomen
+        weight: 1
+      - path: Armature/Root/Abdomen/Sternum
+        weight: 1
+      - path: Armature/Root/Abdomen/Sternum/Neck
+        weight: 1
+      - path: Armature/Root/Abdomen/Sternum/Neck/Head
+        weight: 1
+      - path: Armature/Root/Abdomen/Sternum/Neck/Head/Head_end
+        weight: 1
+      - path: Armature/Root/Abdomen/Sternum/Shoulder.L
+        weight: 1
+      - path: Armature/Root/Abdomen/Sternum/Shoulder.L/Arm.L
+        weight: 1
+      - path: Armature/Root/Abdomen/Sternum/Shoulder.L/Arm.L/TopHand.L
+        weight: 1
+      - path: Armature/Root/Abdomen/Sternum/Shoulder.L/Arm.L/TopHand.L/MidHand.L
+        weight: 1
+      - path: Armature/Root/Abdomen/Sternum/Shoulder.L/Arm.L/TopHand.L/MidHand.L/BotHand.L
+        weight: 1
+      - path: Armature/Root/Abdomen/Sternum/Shoulder.L/Arm.L/TopHand.L/MidHand.L/BotHand.L/BotHand.L_end
+        weight: 1
+      - path: Armature/Root/Abdomen/Sternum/Shoulder.R
+        weight: 1
+      - path: Armature/Root/Abdomen/Sternum/Shoulder.R/Arm.R
+        weight: 1
+      - path: Armature/Root/Abdomen/Sternum/Shoulder.R/Arm.R/TopHand.R
+        weight: 1
+      - path: Armature/Root/Abdomen/Sternum/Shoulder.R/Arm.R/TopHand.R/MidHand.R
+        weight: 1
+      - path: Armature/Root/Abdomen/Sternum/Shoulder.R/Arm.R/TopHand.R/MidHand.R/BotHand.R
+        weight: 1
+      - path: Armature/Root/Abdomen/Sternum/Shoulder.R/Arm.R/TopHand.R/MidHand.R/BotHand.R/BotHand.R_end
+        weight: 1
+      - path: Armature/Root/Abdomen/Thigh.L
+        weight: 1
+      - path: Armature/Root/Abdomen/Thigh.L/Shin.L
+        weight: 1
+      - path: Armature/Root/Abdomen/Thigh.L/Shin.L/Anklet.L
+        weight: 1
+      - path: Armature/Root/Abdomen/Thigh.L/Shin.L/Anklet.L/Anklet.L_end
+        weight: 1
+      - path: Armature/Root/Abdomen/Thigh.R
+        weight: 1
+      - path: Armature/Root/Abdomen/Thigh.R/Shin.R
+        weight: 1
+      - path: Armature/Root/Abdomen/Thigh.R/Shin.R/Anklet.R
+        weight: 1
+      - path: Armature/Root/Abdomen/Thigh.R/Shin.R/Anklet.R/Anklet.R_end
+        weight: 1
+      - path: Armature/Root/LegControl.L
+        weight: 1
+      - path: Armature/Root/LegControl.L/Foot.L
+        weight: 1
+      - path: Armature/Root/LegControl.L/Foot.L/Foot.L_end
+        weight: 1
+      - path: Armature/Root/LegControl.L/Shin_ik.L
+        weight: 1
+      - path: Armature/Root/LegControl.L/Shin_ik.L/Shin_ik.L_end
+        weight: 1
+      - path: Armature/Root/LegControl.R
+        weight: 1
+      - path: Armature/Root/LegControl.R/Foot.R
+        weight: 1
+      - path: Armature/Root/LegControl.R/Foot.R/Foot.R_end
+        weight: 1
+      - path: Armature/Root/LegControl.R/Shin_ik.R
+        weight: 1
+      - path: Armature/Root/LegControl.R/Shin_ik.R/Shin_ik.R_end
+        weight: 1
+      - path: Armature/Root/LegPoleTarget.L
+        weight: 1
+      - path: Armature/Root/LegPoleTarget.L/LegPoleTarget.L_end
+        weight: 1
+      - path: Armature/Root/LegPoleTarget.R
+        weight: 1
+      - path: Armature/Root/LegPoleTarget.R/LegPoleTarget.R_end
+        weight: 1
+      - path: Cube
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Armature|Idle
+      takeName: Armature|Idle
+      firstFrame: 0
+      lastFrame: 40
+      wrapMode: 2
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/Root
+        weight: 1
+      - path: Armature/Root/Abdomen
+        weight: 1
+      - path: Armature/Root/Abdomen/Sternum
+        weight: 1
+      - path: Armature/Root/Abdomen/Sternum/Neck
+        weight: 1
+      - path: Armature/Root/Abdomen/Sternum/Neck/Head
+        weight: 1
+      - path: Armature/Root/Abdomen/Sternum/Neck/Head/Head_end
+        weight: 1
+      - path: Armature/Root/Abdomen/Sternum/Shoulder.L
+        weight: 1
+      - path: Armature/Root/Abdomen/Sternum/Shoulder.L/Arm.L
+        weight: 1
+      - path: Armature/Root/Abdomen/Sternum/Shoulder.L/Arm.L/TopHand.L
+        weight: 1
+      - path: Armature/Root/Abdomen/Sternum/Shoulder.L/Arm.L/TopHand.L/MidHand.L
+        weight: 1
+      - path: Armature/Root/Abdomen/Sternum/Shoulder.L/Arm.L/TopHand.L/MidHand.L/BotHand.L
+        weight: 1
+      - path: Armature/Root/Abdomen/Sternum/Shoulder.L/Arm.L/TopHand.L/MidHand.L/BotHand.L/BotHand.L_end
+        weight: 1
+      - path: Armature/Root/Abdomen/Sternum/Shoulder.R
+        weight: 1
+      - path: Armature/Root/Abdomen/Sternum/Shoulder.R/Arm.R
+        weight: 1
+      - path: Armature/Root/Abdomen/Sternum/Shoulder.R/Arm.R/TopHand.R
+        weight: 1
+      - path: Armature/Root/Abdomen/Sternum/Shoulder.R/Arm.R/TopHand.R/MidHand.R
+        weight: 1
+      - path: Armature/Root/Abdomen/Sternum/Shoulder.R/Arm.R/TopHand.R/MidHand.R/BotHand.R
+        weight: 1
+      - path: Armature/Root/Abdomen/Sternum/Shoulder.R/Arm.R/TopHand.R/MidHand.R/BotHand.R/BotHand.R_end
+        weight: 1
+      - path: Armature/Root/Abdomen/Thigh.L
+        weight: 1
+      - path: Armature/Root/Abdomen/Thigh.L/Shin.L
+        weight: 1
+      - path: Armature/Root/Abdomen/Thigh.L/Shin.L/Anklet.L
+        weight: 1
+      - path: Armature/Root/Abdomen/Thigh.L/Shin.L/Anklet.L/Anklet.L_end
+        weight: 1
+      - path: Armature/Root/Abdomen/Thigh.R
+        weight: 1
+      - path: Armature/Root/Abdomen/Thigh.R/Shin.R
+        weight: 1
+      - path: Armature/Root/Abdomen/Thigh.R/Shin.R/Anklet.R
+        weight: 1
+      - path: Armature/Root/Abdomen/Thigh.R/Shin.R/Anklet.R/Anklet.R_end
+        weight: 1
+      - path: Armature/Root/LegControl.L
+        weight: 1
+      - path: Armature/Root/LegControl.L/Foot.L
+        weight: 1
+      - path: Armature/Root/LegControl.L/Foot.L/Foot.L_end
+        weight: 1
+      - path: Armature/Root/LegControl.L/Shin_ik.L
+        weight: 1
+      - path: Armature/Root/LegControl.L/Shin_ik.L/Shin_ik.L_end
+        weight: 1
+      - path: Armature/Root/LegControl.R
+        weight: 1
+      - path: Armature/Root/LegControl.R/Foot.R
+        weight: 1
+      - path: Armature/Root/LegControl.R/Foot.R/Foot.R_end
+        weight: 1
+      - path: Armature/Root/LegControl.R/Shin_ik.R
+        weight: 1
+      - path: Armature/Root/LegControl.R/Shin_ik.R/Shin_ik.R_end
+        weight: 1
+      - path: Armature/Root/LegPoleTarget.L
+        weight: 1
+      - path: Armature/Root/LegPoleTarget.L/LegPoleTarget.L_end
+        weight: 1
+      - path: Armature/Root/LegPoleTarget.R
+        weight: 1
+      - path: Armature/Root/LegPoleTarget.R/LegPoleTarget.R_end
+        weight: 1
+      - path: Cube
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Armature|Walk_Polish
+      takeName: Armature|Walk_Polish
+      firstFrame: 0
+      lastFrame: 32
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/Root
+        weight: 1
+      - path: Armature/Root/Abdomen
+        weight: 1
+      - path: Armature/Root/Abdomen/Sternum
+        weight: 1
+      - path: Armature/Root/Abdomen/Sternum/Neck
+        weight: 1
+      - path: Armature/Root/Abdomen/Sternum/Neck/Head
+        weight: 1
+      - path: Armature/Root/Abdomen/Sternum/Neck/Head/Head_end
+        weight: 1
+      - path: Armature/Root/Abdomen/Sternum/Shoulder.L
+        weight: 1
+      - path: Armature/Root/Abdomen/Sternum/Shoulder.L/Arm.L
+        weight: 1
+      - path: Armature/Root/Abdomen/Sternum/Shoulder.L/Arm.L/TopHand.L
+        weight: 1
+      - path: Armature/Root/Abdomen/Sternum/Shoulder.L/Arm.L/TopHand.L/MidHand.L
+        weight: 1
+      - path: Armature/Root/Abdomen/Sternum/Shoulder.L/Arm.L/TopHand.L/MidHand.L/BotHand.L
+        weight: 1
+      - path: Armature/Root/Abdomen/Sternum/Shoulder.L/Arm.L/TopHand.L/MidHand.L/BotHand.L/BotHand.L_end
+        weight: 1
+      - path: Armature/Root/Abdomen/Sternum/Shoulder.R
+        weight: 1
+      - path: Armature/Root/Abdomen/Sternum/Shoulder.R/Arm.R
+        weight: 1
+      - path: Armature/Root/Abdomen/Sternum/Shoulder.R/Arm.R/TopHand.R
+        weight: 1
+      - path: Armature/Root/Abdomen/Sternum/Shoulder.R/Arm.R/TopHand.R/MidHand.R
+        weight: 1
+      - path: Armature/Root/Abdomen/Sternum/Shoulder.R/Arm.R/TopHand.R/MidHand.R/BotHand.R
+        weight: 1
+      - path: Armature/Root/Abdomen/Sternum/Shoulder.R/Arm.R/TopHand.R/MidHand.R/BotHand.R/BotHand.R_end
+        weight: 1
+      - path: Armature/Root/Abdomen/Thigh.L
+        weight: 1
+      - path: Armature/Root/Abdomen/Thigh.L/Shin.L
+        weight: 1
+      - path: Armature/Root/Abdomen/Thigh.L/Shin.L/Anklet.L
+        weight: 1
+      - path: Armature/Root/Abdomen/Thigh.L/Shin.L/Anklet.L/Anklet.L_end
+        weight: 1
+      - path: Armature/Root/Abdomen/Thigh.R
+        weight: 1
+      - path: Armature/Root/Abdomen/Thigh.R/Shin.R
+        weight: 1
+      - path: Armature/Root/Abdomen/Thigh.R/Shin.R/Anklet.R
+        weight: 1
+      - path: Armature/Root/Abdomen/Thigh.R/Shin.R/Anklet.R/Anklet.R_end
+        weight: 1
+      - path: Armature/Root/LegControl.L
+        weight: 1
+      - path: Armature/Root/LegControl.L/Foot.L
+        weight: 1
+      - path: Armature/Root/LegControl.L/Foot.L/Foot.L_end
+        weight: 1
+      - path: Armature/Root/LegControl.L/Shin_ik.L
+        weight: 1
+      - path: Armature/Root/LegControl.L/Shin_ik.L/Shin_ik.L_end
+        weight: 1
+      - path: Armature/Root/LegControl.R
+        weight: 1
+      - path: Armature/Root/LegControl.R/Foot.R
+        weight: 1
+      - path: Armature/Root/LegControl.R/Foot.R/Foot.R_end
+        weight: 1
+      - path: Armature/Root/LegControl.R/Shin_ik.R
+        weight: 1
+      - path: Armature/Root/LegControl.R/Shin_ik.R/Shin_ik.R_end
+        weight: 1
+      - path: Armature/Root/LegPoleTarget.L
+        weight: 1
+      - path: Armature/Root/LegPoleTarget.L/LegPoleTarget.L_end
+        weight: 1
+      - path: Armature/Root/LegPoleTarget.R
+        weight: 1
+      - path: Armature/Root/LegPoleTarget.R/LegPoleTarget.R_end
+        weight: 1
+      - path: Cube
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Armature|WalkBlocking
+      takeName: Armature|WalkBlocking
+      firstFrame: 0
+      lastFrame: 32
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/Root
+        weight: 1
+      - path: Armature/Root/Abdomen
+        weight: 1
+      - path: Armature/Root/Abdomen/Sternum
+        weight: 1
+      - path: Armature/Root/Abdomen/Sternum/Neck
+        weight: 1
+      - path: Armature/Root/Abdomen/Sternum/Neck/Head
+        weight: 1
+      - path: Armature/Root/Abdomen/Sternum/Neck/Head/Head_end
+        weight: 1
+      - path: Armature/Root/Abdomen/Sternum/Shoulder.L
+        weight: 1
+      - path: Armature/Root/Abdomen/Sternum/Shoulder.L/Arm.L
+        weight: 1
+      - path: Armature/Root/Abdomen/Sternum/Shoulder.L/Arm.L/TopHand.L
+        weight: 1
+      - path: Armature/Root/Abdomen/Sternum/Shoulder.L/Arm.L/TopHand.L/MidHand.L
+        weight: 1
+      - path: Armature/Root/Abdomen/Sternum/Shoulder.L/Arm.L/TopHand.L/MidHand.L/BotHand.L
+        weight: 1
+      - path: Armature/Root/Abdomen/Sternum/Shoulder.L/Arm.L/TopHand.L/MidHand.L/BotHand.L/BotHand.L_end
+        weight: 1
+      - path: Armature/Root/Abdomen/Sternum/Shoulder.R
+        weight: 1
+      - path: Armature/Root/Abdomen/Sternum/Shoulder.R/Arm.R
+        weight: 1
+      - path: Armature/Root/Abdomen/Sternum/Shoulder.R/Arm.R/TopHand.R
+        weight: 1
+      - path: Armature/Root/Abdomen/Sternum/Shoulder.R/Arm.R/TopHand.R/MidHand.R
+        weight: 1
+      - path: Armature/Root/Abdomen/Sternum/Shoulder.R/Arm.R/TopHand.R/MidHand.R/BotHand.R
+        weight: 1
+      - path: Armature/Root/Abdomen/Sternum/Shoulder.R/Arm.R/TopHand.R/MidHand.R/BotHand.R/BotHand.R_end
+        weight: 1
+      - path: Armature/Root/Abdomen/Thigh.L
+        weight: 1
+      - path: Armature/Root/Abdomen/Thigh.L/Shin.L
+        weight: 1
+      - path: Armature/Root/Abdomen/Thigh.L/Shin.L/Anklet.L
+        weight: 1
+      - path: Armature/Root/Abdomen/Thigh.L/Shin.L/Anklet.L/Anklet.L_end
+        weight: 1
+      - path: Armature/Root/Abdomen/Thigh.R
+        weight: 1
+      - path: Armature/Root/Abdomen/Thigh.R/Shin.R
+        weight: 1
+      - path: Armature/Root/Abdomen/Thigh.R/Shin.R/Anklet.R
+        weight: 1
+      - path: Armature/Root/Abdomen/Thigh.R/Shin.R/Anklet.R/Anklet.R_end
+        weight: 1
+      - path: Armature/Root/LegControl.L
+        weight: 1
+      - path: Armature/Root/LegControl.L/Foot.L
+        weight: 1
+      - path: Armature/Root/LegControl.L/Foot.L/Foot.L_end
+        weight: 1
+      - path: Armature/Root/LegControl.L/Shin_ik.L
+        weight: 1
+      - path: Armature/Root/LegControl.L/Shin_ik.L/Shin_ik.L_end
+        weight: 1
+      - path: Armature/Root/LegControl.R
+        weight: 1
+      - path: Armature/Root/LegControl.R/Foot.R
+        weight: 1
+      - path: Armature/Root/LegControl.R/Foot.R/Foot.R_end
+        weight: 1
+      - path: Armature/Root/LegControl.R/Shin_ik.R
+        weight: 1
+      - path: Armature/Root/LegControl.R/Shin_ik.R/Shin_ik.R_end
+        weight: 1
+      - path: Armature/Root/LegPoleTarget.L
+        weight: 1
+      - path: Armature/Root/LegPoleTarget.L/LegPoleTarget.L_end
+        weight: 1
+      - path: Armature/Root/LegPoleTarget.R
+        weight: 1
+      - path: Armature/Root/LegPoleTarget.R/LegPoleTarget.R_end
+        weight: 1
+      - path: Cube
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Armature|WalkFinal
+      takeName: Armature|WalkFinal
+      firstFrame: 0
+      lastFrame: 32
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/Root
+        weight: 1
+      - path: Armature/Root/Abdomen
+        weight: 1
+      - path: Armature/Root/Abdomen/Sternum
+        weight: 1
+      - path: Armature/Root/Abdomen/Sternum/Neck
+        weight: 1
+      - path: Armature/Root/Abdomen/Sternum/Neck/Head
+        weight: 1
+      - path: Armature/Root/Abdomen/Sternum/Neck/Head/Head_end
+        weight: 1
+      - path: Armature/Root/Abdomen/Sternum/Shoulder.L
+        weight: 1
+      - path: Armature/Root/Abdomen/Sternum/Shoulder.L/Arm.L
+        weight: 1
+      - path: Armature/Root/Abdomen/Sternum/Shoulder.L/Arm.L/TopHand.L
+        weight: 1
+      - path: Armature/Root/Abdomen/Sternum/Shoulder.L/Arm.L/TopHand.L/MidHand.L
+        weight: 1
+      - path: Armature/Root/Abdomen/Sternum/Shoulder.L/Arm.L/TopHand.L/MidHand.L/BotHand.L
+        weight: 1
+      - path: Armature/Root/Abdomen/Sternum/Shoulder.L/Arm.L/TopHand.L/MidHand.L/BotHand.L/BotHand.L_end
+        weight: 1
+      - path: Armature/Root/Abdomen/Sternum/Shoulder.R
+        weight: 1
+      - path: Armature/Root/Abdomen/Sternum/Shoulder.R/Arm.R
+        weight: 1
+      - path: Armature/Root/Abdomen/Sternum/Shoulder.R/Arm.R/TopHand.R
+        weight: 1
+      - path: Armature/Root/Abdomen/Sternum/Shoulder.R/Arm.R/TopHand.R/MidHand.R
+        weight: 1
+      - path: Armature/Root/Abdomen/Sternum/Shoulder.R/Arm.R/TopHand.R/MidHand.R/BotHand.R
+        weight: 1
+      - path: Armature/Root/Abdomen/Sternum/Shoulder.R/Arm.R/TopHand.R/MidHand.R/BotHand.R/BotHand.R_end
+        weight: 1
+      - path: Armature/Root/Abdomen/Thigh.L
+        weight: 1
+      - path: Armature/Root/Abdomen/Thigh.L/Shin.L
+        weight: 1
+      - path: Armature/Root/Abdomen/Thigh.L/Shin.L/Anklet.L
+        weight: 1
+      - path: Armature/Root/Abdomen/Thigh.L/Shin.L/Anklet.L/Anklet.L_end
+        weight: 1
+      - path: Armature/Root/Abdomen/Thigh.R
+        weight: 1
+      - path: Armature/Root/Abdomen/Thigh.R/Shin.R
+        weight: 1
+      - path: Armature/Root/Abdomen/Thigh.R/Shin.R/Anklet.R
+        weight: 1
+      - path: Armature/Root/Abdomen/Thigh.R/Shin.R/Anklet.R/Anklet.R_end
+        weight: 1
+      - path: Armature/Root/LegControl.L
+        weight: 1
+      - path: Armature/Root/LegControl.L/Foot.L
+        weight: 1
+      - path: Armature/Root/LegControl.L/Foot.L/Foot.L_end
+        weight: 1
+      - path: Armature/Root/LegControl.L/Shin_ik.L
+        weight: 1
+      - path: Armature/Root/LegControl.L/Shin_ik.L/Shin_ik.L_end
+        weight: 1
+      - path: Armature/Root/LegControl.R
+        weight: 1
+      - path: Armature/Root/LegControl.R/Foot.R
+        weight: 1
+      - path: Armature/Root/LegControl.R/Foot.R/Foot.R_end
+        weight: 1
+      - path: Armature/Root/LegControl.R/Shin_ik.R
+        weight: 1
+      - path: Armature/Root/LegControl.R/Shin_ik.R/Shin_ik.R_end
+        weight: 1
+      - path: Armature/Root/LegPoleTarget.L
+        weight: 1
+      - path: Armature/Root/LegPoleTarget.L/LegPoleTarget.L_end
+        weight: 1
+      - path: Armature/Root/LegPoleTarget.R
+        weight: 1
+      - path: Armature/Root/LegPoleTarget.R/LegPoleTarget.R_end
+        weight: 1
+      - path: Cube
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
     isReadable: 1
   meshes:
     lODScreenPercentages: []
