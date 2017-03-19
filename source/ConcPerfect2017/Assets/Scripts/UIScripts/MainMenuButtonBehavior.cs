@@ -284,6 +284,7 @@ public class MainMenuButtonBehavior : MonoBehaviour {
         PlayerPrefs.SetInt("LevelsCompleted", 0);
         PlayerPrefs.DeleteKey("CourseRecords");
         PlayerPrefs.DeleteKey("RecentPlayed");
+        PlayerPrefs.DeleteKey("PlayerModel");
         ApplicationManager.LevelsCompleted = 0;
         ShowMainMenu();
     }
