@@ -207,7 +207,7 @@ public class FirstPersonDrifter : NetworkBehaviour
             {
                 jumpTimer++;
             }
-            else if (jumpTimer >= antiBunnyHopFactor && !frozen)
+            else if (jumpTimer >= antiBunnyHopFactor && !frozen && !escaped)
             {
                 gameObject.GetComponent<AudioSource>().PlayOneShot(jumpSoundClip, ApplicationManager.sfxVolume);
                 moveDirection.y = jumpSpeed;
