@@ -403,6 +403,13 @@ public class MainMenuButtonBehavior : MonoBehaviour {
             {
                 jumpSeparator.GetComponent<JumpTrigger>().UnsetTrigger();
             }
+
+            var music = GameObject.FindGameObjectWithTag("Music").GetComponent<AudioSource>();
+
+            if (!music.isPlaying)
+            {
+                music.Play();
+            }
         }
     }
 

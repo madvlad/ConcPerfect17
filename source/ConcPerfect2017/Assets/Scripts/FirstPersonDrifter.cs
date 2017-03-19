@@ -326,6 +326,13 @@ public class FirstPersonDrifter : NetworkBehaviour
 
         var RaceStarter = GameObject.FindGameObjectWithTag("RaceStart").GetComponent<RaceStarter>();
         RaceStarter.RestartGate();
+
+        var music = GameObject.FindGameObjectWithTag("Music").GetComponent<AudioSource>();
+
+        if (!music.isPlaying)
+        {
+            music.Play();
+        }
     }
 
     internal bool IsFrozen()
