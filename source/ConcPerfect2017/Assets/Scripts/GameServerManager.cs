@@ -108,6 +108,11 @@ public class GameServerManager : NetworkBehaviour {
 		foreach (KeyValuePair<NetworkInstanceId, string> entry in playerNicknames) {
 			gameManager.RpcUpdatePlayerNickname(entry.Key, entry.Value);
         }
+
+        foreach (KeyValuePair<NetworkInstanceId, int> entry in playerSkins)
+        {
+            gameManager.RpcUpdatePlayerSkins(entry.Key, entry.Value);
+        }
     }
 
 	public void UpdatePlayerTime(NetworkInstanceId netId, string playerTime)
