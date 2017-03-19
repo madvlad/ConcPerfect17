@@ -6,13 +6,19 @@ public class PlayerSkinSelectBehavior : MonoBehaviour {
 
     public List<Material> playerSkins;
     public GameObject playerModel;
+    public GameObject rotationModel;
 
     private int currentSkinIndex;
 	
 	void Start () {
 		
 	}
-	
+
+    void FixedUpdate()
+    {
+        rotationModel.transform.Rotate(0, 75 * Time.deltaTime, 0);
+    }
+
     void SetPlayerSkin(Material newSkin)
     {
         playerModel.GetComponent<SkinnedMeshRenderer>().material = newSkin;
