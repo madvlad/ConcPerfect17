@@ -100,7 +100,12 @@ public class MultiplayerChatScript : NetworkBehaviour {
 
         var currentMessage = myInputField.GetComponent<InputField>().text;
 
-		if (Input.GetButton("Submit") || Input.GetButton("Cancel"))
+        if (Input.GetButton("Cancel"))
+        {
+            chatPanel.GetComponent<Canvas>().enabled = false;
+        }
+
+        if (Input.GetButton("Submit") || Input.GetButton("Cancel"))
         {
             if (!string.IsNullOrEmpty(currentMessage))
             {
