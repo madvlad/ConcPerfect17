@@ -90,6 +90,7 @@ public class LocalPlayerStats : NetworkBehaviour {
 
     [Command]
     public void CmdUpdateNickname(NetworkInstanceId netId, string nickname, int playerModel) {
+        Debug.Log("Update nickname command sent");
         gameServerManager.UpdatePlayerNickname(netId, nickname, playerModel);
     }
 

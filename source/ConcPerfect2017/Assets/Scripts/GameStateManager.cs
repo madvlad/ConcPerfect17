@@ -390,6 +390,7 @@ public class GameStateManager : NetworkBehaviour {
 
     [ClientRpc]
     public void RpcUpdatePlayerNickname(NetworkInstanceId netId, string nickname) {
+        Debug.Log("RPC Called on PlayerNickname Update");
 		if (netId == GetLocalPlayerObject().GetComponent<NetworkIdentity>().netId)
             return;
         GameObject networkedPlayer = ClientScene.FindLocalObject(netId);
