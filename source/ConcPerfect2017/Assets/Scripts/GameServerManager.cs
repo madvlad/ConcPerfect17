@@ -9,8 +9,8 @@ using System;
 
 public class GameServerManager : NetworkBehaviour {
 	private GameStateManager gameManager;
-    
 
+    private bool wait = false;
 	public struct PlayerScore
 	{
 		public PlayerInfo pInfo;
@@ -79,15 +79,25 @@ public class GameServerManager : NetworkBehaviour {
 
 		CleanupDisconnectedPlayers ();
 
-		string playerInfo = ""; 
-		List<PlayerInfo> players = currentPlayers.Select (kvp => kvp.Value).ToList ();
-		players.Sort ((s1, s2) => s1.CompareTo (s2));
-		foreach (PlayerInfo pInfo in players) {
-			playerInfo += pInfo.PlayerId.ToString() + " ; " + pInfo.Nickname + " ; " + pInfo.Status + " ; " + pInfo.CurrentJump + "/" + gameManager.GetCourseJumpLimit () + " ; " + pInfo.BestTime + " ; " + pInfo.TimesCompleted  + " % " ;
-		}
-			
-		gameManager.RpcUpdatePlayerInfo (playerInfo);
-	}
+        if (!wait)
+        {
+            wait = true;
+            string playerInfo = "";
+            List<PlayerInfo> players = currentPlayers.Select(kvp => kvp.Value).ToList();
+            players.Sort((s1, s2) => s1.CompareTo(s2));
+            foreach (PlayerInfo pInfo in players)
+            {
+                playerInfo += pInfo.PlayerId.ToString() + " ; " + pInfo.Nickname + " ; " + pInfo.Status + " ; " + pInfo.CurrentJump + "/" + gameManager.GetCourseJumpLimit() + " ; " + pInfo.BestTime + " ; " + pInfo.TimesCompleted + " % ";
+            }
+            gameManager.RpcUpdatePlayerInfo(playerInfo);
+            Invoke("StopWaiting", 1.0f);
+        }
+    }
+
+    void StopWaiting()
+    {
+        wait = false;
+    }
 
     
     public void CleanupDisconnectedPlayers() {
