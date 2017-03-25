@@ -4,7 +4,7 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class ApplicationManager : MonoBehaviour {
-    public const string APPLICATION_VERSION = "1.0.1";
+    public const string APPLICATION_VERSION = "1.1.0";
 
     static public float musicVolume = 0.5f;
     static public float sfxVolume = 0.5f;
@@ -23,6 +23,7 @@ public class ApplicationManager : MonoBehaviour {
     static public string ServerName = "0xDEADBEAF";
     static public int GameType = GameTypes.CasualGameType;
     static public int LevelsCompleted = 0;
+    static public int PlayerModel = 0;
     static public List<int> JumpsDifficultiesAllowed = new List<int> { 0, 1, 2, 3, 4 };
 
     private string[] defaultNicknames = { "BAADF00D", "D15EA5E", "1CEB00DA", "DEADBEAF" };
@@ -55,6 +56,11 @@ public class ApplicationManager : MonoBehaviour {
             ApplicationManager.Nickname = defaultNicknames[Random.Range(0, 4)];
         }
         ApplicationManager.ServerName = ApplicationManager.Nickname;
+
+        if (PlayerPrefs.HasKey("PlayerModel"))
+        {
+            ApplicationManager.PlayerModel = PlayerPrefs.GetInt("PlayerModel");
+        }
     }
 
     void CheckCompletedLevels()

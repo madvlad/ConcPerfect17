@@ -28,6 +28,7 @@ public class MainMenuButtonBehavior : MonoBehaviour {
     public GameObject nickNameInputField;
     public GameObject loadingScreenUIElement;
     public GameObject failedMessage;
+    public GameObject resetCourseButton;
 
     void Start()
     {
@@ -62,6 +63,11 @@ public class MainMenuButtonBehavior : MonoBehaviour {
         if (sfxVolumeSliderMenuUIElement != null)
         {
             sfxVolumeSliderMenuUIElement.GetComponent<Slider>().value = ApplicationManager.sfxVolume;
+        }
+
+        if (resetCourseButton != null && (ApplicationManager.GameType == GameTypes.TutorialGameType || ApplicationManager.GameType == GameTypes.RaceGameType))
+        {
+            resetCourseButton.SetActive(false);
         }
     }
 
@@ -98,6 +104,7 @@ public class MainMenuButtonBehavior : MonoBehaviour {
         ApplicationManager.IsLAN = true;
         ApplicationManager.GameType = GameTypes.TutorialGameType;
         EnableStartHostGameButtons(false);
+        loadingScreenUIElement.GetComponent<Canvas>().enabled = true;
         GameObject.FindGameObjectWithTag("NetworkIssuer").GetComponent<ConcPerfectNetworkManager>().StartNetworkManager();
     }
 
@@ -135,6 +142,7 @@ public class MainMenuButtonBehavior : MonoBehaviour {
     public void ShowMatchmakerServers() {
         ApplicationManager.IsLAN = false;
         multiplayerMenuUIElement.SetActive(false);
+        matchMakerLobbyMenuUIElement.SetActive(false);
         matchMakerLobbyMenuUIElement.SetActive(true);
         GameObject.FindGameObjectWithTag("NetworkIssuer").GetComponent<ConcPerfectNetworkManager>().StartNetworkManager();
     }
@@ -262,6 +270,8 @@ public class MainMenuButtonBehavior : MonoBehaviour {
     
     public void StartLevel(int levelNum)
     {
+        ApplicationManager.IsLAN = !UnetMatchMakerToggle.GetComponent<Toggle>().isOn;
+        ApplicationManager.IsSingleplayer = true;
         ApplicationManager.currentLevel = levelNum;
         ApplicationManager.numberOfJumps = 9;
         EnableStartHostGameButtons(false);
@@ -274,6 +284,7 @@ public class MainMenuButtonBehavior : MonoBehaviour {
         PlayerPrefs.SetInt("LevelsCompleted", 0);
         PlayerPrefs.DeleteKey("CourseRecords");
         PlayerPrefs.DeleteKey("RecentPlayed");
+        PlayerPrefs.DeleteKey("PlayerModel");
         ApplicationManager.LevelsCompleted = 0;
         ShowMainMenu();
     }
@@ -339,6 +350,11 @@ public class MainMenuButtonBehavior : MonoBehaviour {
     {
         ApplicationManager.sfxVolume = volume;
         PlayerPrefs.SetFloat("SfxVolume", volume);
+        var sfxObjects = GameObject.FindGameObjectsWithTag("SFX");
+        foreach (var sfx in sfxObjects)
+        {
+            sfx.GetComponent<AudioSource>().volume = volume;
+        }
     }
 
     public void AdjustJumpComponentInclusion(bool include) {
@@ -363,6 +379,7 @@ public class MainMenuButtonBehavior : MonoBehaviour {
         else
         {
             gameStateManager = GameObject.FindGameObjectWithTag("GameManager");
+            gameStateManager.GetComponent<GameStateManager>().SetIsCourseComplete(false);
             HideEscapeMenu();
             var player = GetLocalPlayerObject();
 			player.GetComponent<LocalPlayerStats> ().UpdateStatus ("Not Started");
@@ -386,6 +403,13 @@ public class MainMenuButtonBehavior : MonoBehaviour {
             foreach(var jumpSeparator in jumpSeparators)
             {
                 jumpSeparator.GetComponent<JumpTrigger>().UnsetTrigger();
+            }
+
+            var music = GameObject.FindGameObjectWithTag("Music").GetComponent<AudioSource>();
+
+            if (!music.isPlaying)
+            {
+                music.Play();
             }
         }
     }

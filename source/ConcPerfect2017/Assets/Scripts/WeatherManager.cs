@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityStandardAssets.ImageEffects;
 
 public class WeatherManager : MonoBehaviour {
@@ -34,21 +35,22 @@ public class WeatherManager : MonoBehaviour {
 
     public void TurnTheDangSunOff()
     {
-        var sun = GameObject.FindGameObjectWithTag("Sun").GetComponent<Light>();
-        sun.flare = null;
+        if (GameObject.FindGameObjectWithTag("Sun") != null)
+        {
+            var sun = GameObject.FindGameObjectWithTag("Sun").GetComponent<Light>();
+            sun.flare = null;
+        }
     }
 
-	void Start () {
-        if (ApplicationManager.currentLevel == 0)
-        {
-            var petesRainDance = Random.value;
+    public void MakePeteDoHisRainDance()
+    {
+        var petesRainDance = Random.value;
 
-            if (petesRainDance < 0.15f)
-            {
-                MakeItRain();
-            }
+        if (petesRainDance < 0.15f)
+        {
+            MakeItRain();
         }
-	}
+    }
 
     private bool lightningOn = false;
     private float timer = 30.0f;
@@ -85,10 +87,26 @@ public class WeatherManager : MonoBehaviour {
         
         if (!parentSet && isRaining)
         {
-            if (GameObject.FindGameObjectWithTag("Player") != null) {
-                weatherEventInstance.transform.parent = GameObject.FindGameObjectWithTag("Player").transform;
+            var localPlayer = GetLocalPlayerObject();
+            if (localPlayer != null) {
+                weatherEventInstance.transform.parent = localPlayer.transform;
                 parentSet = true;
             }
         }
+    }
+
+    private GameObject GetLocalPlayerObject()
+    {
+        var playerObjects = GameObject.FindGameObjectsWithTag("Player");
+        GameObject playerObject = null;
+        foreach (GameObject obj in playerObjects)
+        {
+            if (obj.GetComponent<NetworkIdentity>().isLocalPlayer)
+            {
+                playerObject = obj;
+            }
+        }
+
+        return playerObject;
     }
 }

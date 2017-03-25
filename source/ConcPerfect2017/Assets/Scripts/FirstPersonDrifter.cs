@@ -5,6 +5,8 @@
 using UnityEngine;
 using UnityEngine.Networking;
 using System.Collections;
+using UnityEngine.UI;
+using System;
 
 [RequireComponent(typeof(CharacterController))]
 public class FirstPersonDrifter : NetworkBehaviour
@@ -27,6 +29,7 @@ public class FirstPersonDrifter : NetworkBehaviour
 
     // Player Model
     public GameObject playerModel;
+    public GameObject playerModelRenderer;
 
     public AudioClip jumpSoundClip;
 
@@ -53,8 +56,10 @@ public class FirstPersonDrifter : NetworkBehaviour
     public Vector3 moveDirection = Vector3.zero;
     public bool grounded = false;
     private bool escaped = false;
+    private bool frozen = false;
     private CharacterController controller;
     private Transform myTransform;
+
     private float speed;
     private RaycastHit hit;
     private float fallStartLevel;
@@ -72,11 +77,6 @@ public class FirstPersonDrifter : NetworkBehaviour
     void Awake() {
 		playerCam = GetComponentInChildren<Camera>();
 		playerCam.gameObject.SetActive(false);
-
-        //if (!(Network.isServer || Network.isClient))
-        //{
-        //    Network.InitializeServer(1, 25000, false);
-        //}
     }
 
     public override void OnStartLocalPlayer()
@@ -88,6 +88,16 @@ public class FirstPersonDrifter : NetworkBehaviour
         rayDistance = controller.height * .5f + controller.radius;
         slideLimit = controller.slopeLimit - .1f;
         jumpTimer = antiBunnyHopFactor;
+        playerModelRenderer.GetComponent<SkinnedMeshRenderer>().material = GameObject.FindGameObjectWithTag("PlayerSkins").GetComponent<PlayerSkinSelectBehavior>().playerSkins[ApplicationManager.PlayerModel];
+        GetLocalPlayerObject().GetComponent<LocalPlayerStats>().RequestPlayerSkins();
+    }
+
+    void Start()
+    {
+        if (isLocalPlayer)
+            return;
+
+        GetComponent<CharacterController>().enabled = false;
     }
 
     void Update()
@@ -96,8 +106,15 @@ public class FirstPersonDrifter : NetworkBehaviour
             return;
 
         var currentPosition = gameObject.transform.position;
+        var remoteController = GetComponent<CharacterController>();
+        var remoteGrounded = Physics.Raycast(currentPosition, -gameObject.transform.up, 1.5f);
 
-        if (currentPosition != lastPosition && animTimer <= 0)
+        if (!remoteGrounded && animTimer <= 0)
+        {
+            playerModel.GetComponent<Animation>().Play(fallAnimation.name, PlayMode.StopAll);
+            animTimer = 0.1f;
+        }
+        else if (currentPosition != lastPosition && animTimer <= 0)
         {
             playerModel.GetComponent<Animation>().Play(walkAnimation.name, PlayMode.StopAll);
             lastPosition = currentPosition;
@@ -116,14 +133,15 @@ public class FirstPersonDrifter : NetworkBehaviour
         if (!isLocalPlayer)
             return;
 
-        if (escaped)
-        {
-            return;
-        }
-
         float inputX = Input.GetAxis("Horizontal");
         float inputY = Input.GetAxis("Vertical");
-        // If both horizontal and vertical are used simultaneously, limit speed (if allowed), so the total doesn't exceed normal move speed
+
+        if (escaped || frozen)
+        {
+            inputX = 0;
+            inputY = 0;
+        }
+
         float inputModifyFactor = (inputX != 0.0f && inputY != 0.0f && limitDiagonalSpeed) ? .7071f : 1.0f;
 
         if (grounded)
@@ -189,7 +207,7 @@ public class FirstPersonDrifter : NetworkBehaviour
             {
                 jumpTimer++;
             }
-            else if (jumpTimer >= antiBunnyHopFactor)
+            else if (jumpTimer >= antiBunnyHopFactor && !frozen && !escaped)
             {
                 gameObject.GetComponent<AudioSource>().PlayOneShot(jumpSoundClip, ApplicationManager.sfxVolume);
                 moveDirection.y = jumpSpeed;
@@ -235,5 +253,102 @@ public class FirstPersonDrifter : NetworkBehaviour
     {
 		if (!isLocalPlayer)
 			return; 
+    }
+
+    public void SetEscaped(bool isEscaped)
+    {
+        escaped = isEscaped;
+    }
+
+    public bool IsEscaped()
+    {
+        return escaped;
+    }
+
+    [Command]
+    public void CmdFreezeAll(bool freeze)
+    {
+        var recipients = GameObject.FindGameObjectsWithTag("Player");
+
+        foreach (var recipient in recipients)
+        {
+            recipient.GetComponent<FirstPersonDrifter>().RpcFreezeMe(freeze);
+        }
+    }
+
+    [ClientRpc]
+    public void RpcFreezeMe(bool isFrozen)
+    {
+        Unfreeze(isFrozen);
+    }
+
+    private void Unfreeze(bool freeze)
+    {
+        if (!isLocalPlayer)
+            return;
+
+        frozen = freeze;
+
+        if (!freeze)
+            RestartRun();
+    }
+
+    public void RestartRun()
+    {
+        var gameStateManager = GameObject.FindGameObjectWithTag("GameManager");
+        gameStateManager.GetComponent<GameStateManager>().SetIsCourseComplete(false);
+        var player = GetLocalPlayerObject();
+        player.GetComponent<LocalPlayerStats>().UpdateStatus("Not Started");
+        player.transform.position = new Vector3(0, 2, 0);
+        player.GetComponent<Concer>().SetConcCount(0);
+        var gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameStateManager>();
+        gameManager.SetTimerIsRunning(false);
+        gameManager.ResetTimer();
+        gameManager.SetJumpNumber(0);
+        gameManager.TimerHUDElement.GetComponent<Text>().text = "00:00:00";
+        gameManager.JumpHUDElement.GetComponent<Text>().text = "...";
+        gameManager.JumpNameHUDElement.GetComponent<Text>().text = "";
+
+        var jumpSeparators = GameObject.FindGameObjectsWithTag("JumpSeparator");
+        var startTrigger = GameObject.FindGameObjectWithTag("TimerTriggerOn");
+        var startTriggerLabel = GameObject.FindGameObjectWithTag("TimerTriggerOn").GetComponent<SetTimerOnTrigger>().startLabel;
+
+        startTrigger.GetComponent<MeshRenderer>().enabled = true;
+        startTriggerLabel.GetComponent<MeshRenderer>().enabled = true;
+
+        foreach (var jumpSeparator in jumpSeparators)
+        {
+            jumpSeparator.GetComponent<JumpTrigger>().UnsetTrigger();
+        }
+
+        var RaceStarter = GameObject.FindGameObjectWithTag("RaceStart").GetComponent<RaceStarter>();
+        RaceStarter.RestartGate();
+
+        var music = GameObject.FindGameObjectWithTag("Music").GetComponent<AudioSource>();
+
+        if (!music.isPlaying)
+        {
+            music.Play();
+        }
+    }
+
+    internal bool IsFrozen()
+    {
+        return frozen;
+    }
+
+    private GameObject GetLocalPlayerObject()
+    {
+        var playerObjects = GameObject.FindGameObjectsWithTag("Player");
+        GameObject playerObject = null;
+        foreach (GameObject obj in playerObjects)
+        {
+            if (obj.GetComponent<NetworkIdentity>().isLocalPlayer)
+            {
+                playerObject = obj;
+            }
+        }
+
+        return playerObject;
     }
 }

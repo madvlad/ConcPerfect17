@@ -86,7 +86,15 @@ public class GameStateManager : NetworkBehaviour {
         {
             var bestTimeText = BestTimeHudElement.GetComponent<Text>();
             TimeSpan timeSpan = TimeSpan.FromSeconds(bestTimeForCourse);
-            var timeString = timeSpan.Minutes.ToString("00") + ":" + timeSpan.Seconds.ToString("00") + ":" + timeSpan.Milliseconds.ToString("000");
+            string timeString = "";
+            if (timeSpan.Hours > 0)
+            {
+                timeString = "H" + timeSpan.Hours.ToString("00") + ":" + timeSpan.Minutes.ToString("00") + ":" + timeSpan.Seconds.ToString("00");
+            }
+            else
+            {
+                timeString = timeSpan.Minutes.ToString("00") + ":" + timeSpan.Seconds.ToString("00") + ":" + timeSpan.Milliseconds.ToString("000");
+            }
             bestTimeText.text = "Best time: " + timeString;
         }
     }
@@ -134,10 +142,12 @@ public class GameStateManager : NetworkBehaviour {
         if (Input.GetButtonDown("Cancel") && !IsPaused && !IsDisplayStats) {
             SetPlayerEnabled(false);
             ShowEscapeMenu(true);
+            GetLocalPlayerObject().GetComponent<FirstPersonDrifter>().SetEscaped(true);
             IsPaused = true;
-        } else if (Input.GetButtonDown("Cancel") && IsPaused && !IsCourseComplete && !IsDisplayStats) {
+        } else if (Input.GetButtonDown("Cancel") && IsPaused && !IsDisplayStats) {
             SetPlayerEnabled(true);
             ShowEscapeMenu(false);
+            GetLocalPlayerObject().GetComponent<FirstPersonDrifter>().SetEscaped(false);
             IsPaused = false;
         }
         return IsPaused;
@@ -177,6 +187,7 @@ public class GameStateManager : NetworkBehaviour {
 
         Cursor.lockState = CursorLockMode.None;
     }
+
 
     public void ShowEscapeMenu(bool show) {
         if (!show) {
@@ -313,6 +324,11 @@ public class GameStateManager : NetworkBehaviour {
         IsCourseComplete = isComplete;
     }
 
+    public bool GetIsCourseComplete()
+    {
+        return IsCourseComplete;
+    }
+
     public void SetJumpSeed(int seed) {
         this.CourseSeed = seed;
         EscapeMenuSeedElement.GetComponent<Text>().text = "Seed: " + seed;
@@ -374,6 +390,7 @@ public class GameStateManager : NetworkBehaviour {
 
     [ClientRpc]
     public void RpcUpdatePlayerNickname(NetworkInstanceId netId, string nickname) {
+        Debug.Log("RPC Called on PlayerNickname Update");
 		if (netId == GetLocalPlayerObject().GetComponent<NetworkIdentity>().netId)
             return;
         GameObject networkedPlayer = ClientScene.FindLocalObject(netId);
@@ -383,5 +400,19 @@ public class GameStateManager : NetworkBehaviour {
 			nicknamedGO.GetComponent<Nickname> ().SetNickname (nickname);
 			nicknamedGO.GetComponent<Nickname> ().SetDisplayNickname (IsDisplayNicknames);
 		}
+    }
+
+    [ClientRpc]
+    public void RpcUpdatePlayerSkins(NetworkInstanceId netId, int value)
+    {
+        if (netId == GetLocalPlayerObject().GetComponent<NetworkIdentity>().netId)
+            return;
+        GameObject networkedPlayer = ClientScene.FindLocalObject(netId);
+        if (networkedPlayer != null)
+        {
+            var networkedDrifter = networkedPlayer.GetComponent<FirstPersonDrifter>();
+            var networkedModel = networkedDrifter.playerModelRenderer.GetComponent<SkinnedMeshRenderer>();
+            networkedModel.material = GameObject.FindGameObjectWithTag("PlayerSkins").GetComponent<PlayerSkinSelectBehavior>().playerSkins[value];
+        }
     }
 }

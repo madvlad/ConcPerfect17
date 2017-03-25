@@ -13,7 +13,7 @@ public class RaceStarter : NetworkBehaviour {
     public AudioClip GoSound;
 
     [SyncVar]
-    private float Timer = 30;
+    private float Timer = 10;
     [SyncVar]
     private bool IsTriggered = false;
     [SyncVar]
@@ -21,9 +21,9 @@ public class RaceStarter : NetworkBehaviour {
 
     void OnStart()
     {
-            Trigger.GetComponent<Renderer>().enabled = true;
-            GetComponent<CapsuleCollider>().enabled = true;
-            TriggerPlatform.GetComponent<Renderer>().enabled = true;
+        Trigger.GetComponent<Renderer>().enabled = true;
+        GetComponent<CapsuleCollider>().enabled = true;
+        TriggerPlatform.GetComponent<Renderer>().enabled = true;
     }
 
     void OnTriggerEnter(Collider other)
@@ -108,14 +108,20 @@ public class RaceStarter : NetworkBehaviour {
     {
         GateOpened = true;
         IsTriggered = false;
-        GetComponent<AudioSource>().PlayOneShot(GoSound);
+        GetComponent<AudioSource>().PlayOneShot(GoSound, ApplicationManager.sfxVolume);
         Barrier.SetActive(false);
-        Debug.Log("Gate open");
     }
 
     void ShutGate()
     {
         Barrier.SetActive(true);
-        Debug.Log("Gate closed");
+        GateOpened = false;
+    }
+
+    public void RestartGate()
+    {
+        Timer = 10;
+        Trigger.SetActive(true);
+        TriggerPlatform.SetActive(true);
     }
 }

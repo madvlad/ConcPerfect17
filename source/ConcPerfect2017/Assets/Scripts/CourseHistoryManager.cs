@@ -188,7 +188,7 @@ public class CourseHistoryManager : MonoBehaviour {
             case 5:
                 return "Pete's Perilous Park";
             default:
-                return "Tutor's Gourge";
+                return "Tutor's Gorge";
         }
     }
 

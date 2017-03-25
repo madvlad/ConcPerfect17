@@ -6,10 +6,13 @@ using UnityEngine.Networking;
 public class LocalPlayerStats : NetworkBehaviour {
     // Server Objects
     public GameServerManager gameServerManager;
+    public GameObject ChatObject;
 
     void Start() {
         if (isServer)
             gameServerManager = GameObject.FindGameObjectWithTag("GameServerManager").GetComponent<GameServerManager>();
+
+        ChatObject = GameObject.FindGameObjectWithTag("Chat");
 
         if (this.gameObject.GetComponent<LocalPlayerStats>() != null) {
             this.gameObject.GetComponent<LocalPlayerStats>().UpdateNickname();
@@ -23,7 +26,7 @@ public class LocalPlayerStats : NetworkBehaviour {
     public void UpdateNickname() {
         if (!isLocalPlayer)
             return;
-        CmdUpdateNickname(netId, ApplicationManager.Nickname);
+        CmdUpdateNickname(netId, ApplicationManager.Nickname, ApplicationManager.PlayerModel);
     }
 
     public void UpdateTime(string currentTimerTime) {
@@ -56,6 +59,13 @@ public class LocalPlayerStats : NetworkBehaviour {
         CmdRequestPlayerNicknames();
     }
 
+    public void RequestPlayerSkins()
+    {
+        if (!isLocalPlayer)
+            return;
+        CmdRequestPlayerSkins();
+    }
+
     [Command]
     public void CmdRequestCourseJumpLimt() {
         gameServerManager.GetCourseJumpLimit();
@@ -79,12 +89,19 @@ public class LocalPlayerStats : NetworkBehaviour {
 	}
 
     [Command]
-    public void CmdUpdateNickname(NetworkInstanceId netId, string nickname) {
-        gameServerManager.UpdatePlayerNickname(netId, nickname);
+    public void CmdUpdateNickname(NetworkInstanceId netId, string nickname, int playerModel) {
+        Debug.Log("Update nickname command sent");
+        gameServerManager.UpdatePlayerNickname(netId, nickname, playerModel);
     }
 
     [Command]
     public void CmdRequestPlayerNicknames() {
         gameServerManager.RequestPlayerNicknames();
+    }
+
+    [Command]
+    public void CmdRequestPlayerSkins()
+    {
+        GameObject.FindGameObjectWithTag("GameServerManager").GetComponent<GameServerManager>().RequestPlayerSkins();
     }
 }

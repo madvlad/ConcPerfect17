@@ -5,10 +5,12 @@ using UnityEngine.Networking;
 public class LevelGenerator : NetworkBehaviour {
     public GameObject jumpSeparator;
     public GameObject raceStartPrefab;
+    public GameObject premadeRaceStartPrefab;
     public GameObject startPrefab;
     public GameObject endPrefab;
     public GameObject gameManager;
     public GameObject tutorialLevel;
+    public List<GameObject> levelList;
     public List<GameObject> jumpList;
     public int courseJumpListSize;
     public int RandomSeed;
@@ -46,19 +48,19 @@ public class LevelGenerator : NetworkBehaviour {
 
         GameStateManager.SetCourseJumpLimit(courseJumpListSize);
 
-        if (!isServer)
-            return;
-
         // Casual Mode
         if (ApplicationManager.GameType == 0 || ApplicationManager.GameType == 2)
         {
             if (ApplicationManager.currentLevel > 0)
             {
-                BuildCourseIteratively();
-                SetJumpTextures();
+                //BuildCourseIteratively();
+                //SetJumpTextures();
+                SpawnLevelPrefab(ApplicationManager.currentLevel);
             }
             else
             {
+                if (!isServer)
+                    return;
                 BuildRandomCourse();
             }
         }
@@ -66,6 +68,16 @@ public class LevelGenerator : NetworkBehaviour {
         else if (ApplicationManager.GameType == 1)
         {
             BuildTutorialLevel();
+        }
+        SetSFXVolume();
+    }
+
+    private void SetSFXVolume()
+    {
+        var sfxObjects = GameObject.FindGameObjectsWithTag("SFX");
+        foreach (var sfx in sfxObjects)
+        {
+            sfx.GetComponent<AudioSource>().volume = ApplicationManager.sfxVolume;
         }
     }
 
@@ -151,7 +163,13 @@ public class LevelGenerator : NetworkBehaviour {
         GameObject.FindGameObjectWithTag("Music").GetComponent<AudioSource>().clip = levelMusicList[assetIndex];
         GameObject.FindGameObjectWithTag("Music").GetComponent<AudioSource>().Play();
         RenderSettings.skybox = levelSkyboxList[assetIndex];
-        SetJumpTextures();
+        //SetJumpTextures();
+    }
+
+    private void SetPossibleRain()
+    {
+        var weatherManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<WeatherManager>();
+        weatherManager.MakePeteDoHisRainDance();
     }
 
     private void SetPossibleWeatherEvents(int currentLevel)
@@ -176,6 +194,18 @@ public class LevelGenerator : NetworkBehaviour {
         Instantiate(tutorialLevel);
         GameObject.FindGameObjectWithTag("Music").GetComponent<AudioSource>().clip = tutorialMusic;
         GameObject.FindGameObjectWithTag("Music").GetComponent<AudioSource>().Play();
+    }
+
+    private void SpawnLevelPrefab(int currentLevel)
+    {
+        GameStateManager.SetCourseJumpLimit(gameManager.GetComponent<LevelManager>().getLevel(ApplicationManager.currentLevel).Count);
+        Instantiate(levelList[currentLevel - 1]);
+
+        if (isServer && ApplicationManager.GameType == GameTypes.RaceGameType)
+        {
+            var raceStart = Instantiate(premadeRaceStartPrefab);
+            NetworkServer.Spawn(raceStart);
+        }
     }
 
     private void BuildRandomCourse()
@@ -212,6 +242,7 @@ public class LevelGenerator : NetworkBehaviour {
         }
 
         InstantiateEndPoint(previousSnapPoint);
+        SetPossibleRain();
     }
 
     void BuildCourseIteratively()

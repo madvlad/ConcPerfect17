@@ -27,7 +27,16 @@ public class LevelHistoryTable : MonoBehaviour {
                 var entryManager = entryInstance.GetComponent<HistoryEntryManager>();
 
                 TimeSpan timeSpan = TimeSpan.FromSeconds(entry.TimeCompleted);
-                var timeString = timeSpan.Minutes.ToString("00") + ":" + timeSpan.Seconds.ToString("00") + ":" + timeSpan.Milliseconds.ToString("000");
+                string timeString = "";
+
+                if (timeSpan.Hours > 0)
+                {
+                    timeString = "H" + timeSpan.Hours.ToString("00") + ":" + timeSpan.Minutes.ToString("00") + ":" + timeSpan.Seconds.ToString("00");
+                }
+                else
+                {
+                    timeString = timeSpan.Minutes.ToString("00") + ":" + timeSpan.Seconds.ToString("00") + ":" + timeSpan.Milliseconds.ToString("000");
+                }
 
                 if (entry.CourseSeed == 0)
                 {

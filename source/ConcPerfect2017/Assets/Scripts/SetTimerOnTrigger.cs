@@ -28,7 +28,7 @@ public class SetTimerOnTrigger : MonoBehaviour {
     {
         if (other.CompareTag("Player"))
         {
-            if (!gameStateManager.TimerIsRunning && SwitchToOn)
+            if (!gameStateManager.TimerIsRunning && SwitchToOn && !gameStateManager.GetIsCourseComplete())
             {
                 gameStateManager.SetTimerIsRunning(SwitchToOn);
                 gameObject.GetComponent<MeshRenderer>().enabled = false;
@@ -39,6 +39,8 @@ public class SetTimerOnTrigger : MonoBehaviour {
 					gameStateManager.GetLocalPlayerObject ().gameObject.GetComponent<LocalPlayerStats> ().UpdateStatus ("Started");
                     gameStateManager.GetLocalPlayerObject ().gameObject.GetComponent<LocalPlayerStats> ().RequestCourseJumpLimit ();
                 }
+
+                other.GetComponent<MultiplayerChatScript>().SendStartMessage();
             }
             else if (gameStateManager.TimerIsRunning && !SwitchToOn)
             {
@@ -48,23 +50,75 @@ public class SetTimerOnTrigger : MonoBehaviour {
                 courseCompleteMessage.enabled = true;
                 courseCompleteMessage.text = "Course Complete!!\n\nYour time: " + gameStateManager.GetCurrentTime() + "\n\nPress ESC To Quit";
 
+                var reward = other.GetComponent<TimeQualifier>().CheckTime(gameStateManager.GetRawTime(), ApplicationManager.currentLevel);
+                other.GetComponent<MultiplayerChatScript>().WriteLocalMessage(DisplayRewardMessage(reward));
+
                 if (gameStateManager.GetLocalPlayerObject () != null)
                 {
                     gameStateManager.GetLocalPlayerObject ().gameObject.GetComponent<LocalPlayerStats> ().UpdateTime (gameStateManager.GetCurrentTime());
                 }
 
                 ShootConfetti(other.gameObject);
-                SaveLevelCompletion();
+                if (reward != -1)
+                {
+                    SaveLevelCompletion();
+                }
                 gameStateManager.SetIsCourseComplete(true);
+
+                TimeSpan timeSpan = TimeSpan.FromSeconds(gameStateManager.GetRawTime());
+                string timeString = "";
+                if (timeSpan.Hours > 0)
+                {
+                    timeString += "H" + timeSpan.Hours.ToString("00") + ":" + timeSpan.Minutes.ToString("00") + ":" + timeSpan.Seconds.ToString("00");
+                }
+                else
+                {
+                    timeString += timeSpan.Minutes.ToString("00") + ":" + timeSpan.Seconds.ToString("00") + ":" + timeSpan.Milliseconds.ToString("000");
+                }
+
                 if (courseHistoryManager.StoreNewRecord(gameStateManager.GetCourseSeed(), gameStateManager.GetRawTime(), gameStateManager.GetIsCourseFavorited(), ApplicationManager.GetDifficultyLevel()))
                 {
-                    TimeSpan timeSpan = TimeSpan.FromSeconds(gameStateManager.GetRawTime());
-                    var timeString = "Best time: " + timeSpan.Minutes.ToString("00") + ":" + timeSpan.Seconds.ToString("00") + ":" + timeSpan.Milliseconds.ToString("000");
-                    GameObject.FindGameObjectWithTag("BestTime").GetComponent<Text>().text = timeString;
+                    GameObject.FindGameObjectWithTag("BestTime").GetComponent<Text>().text = "Best time: " + timeString;
+                    other.GetComponent<MultiplayerChatScript>().SendRecordFinishMessage(timeString);
                 }
+                else
+                {
+                    other.GetComponent<MultiplayerChatScript>().SendFinishMessage(timeString);
+                }
+
                 courseHistoryManager.AddRecentlyPlayed(gameStateManager.GetCourseSeed(), gameStateManager.GetRawTime(), ApplicationManager.GetDifficultyLevel());
+
+                if (ApplicationManager.GameType == GameTypes.RaceGameType)
+                {
+                    other.GetComponent<FirstPersonDrifter>().CmdFreezeAll(true);
+                    Invoke("Unfreeze", 5.0f);
+                }
+
                 Invoke("EndGame", 7.0f);
             }
+        }
+    }
+
+    void Unfreeze()
+    {
+        var oneLuckyGuy = GameObject.FindGameObjectWithTag("Player");
+        oneLuckyGuy.GetComponent<FirstPersonDrifter>().CmdFreezeAll(false);
+    }
+
+    private string DisplayRewardMessage(int reward)
+    {
+        switch(reward)
+        {
+            case 0:
+                return "Nice, you qualified for the next course!";
+            case 1:
+                return "Sweet! You earned a bronze medal!";
+            case 2:
+                return "Great work! You earned a silver medal!";
+            case 3:
+                return "Awesome Concin! You earned a gold medal!";
+            default:
+                return "Sorry, you did not qualify for the next course.";
         }
     }
 
