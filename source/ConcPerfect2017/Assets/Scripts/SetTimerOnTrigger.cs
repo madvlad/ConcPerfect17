@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.UI;
 
 public class SetTimerOnTrigger : MonoBehaviour {
@@ -101,7 +102,7 @@ public class SetTimerOnTrigger : MonoBehaviour {
 
     void Unfreeze()
     {
-        var oneLuckyGuy = GameObject.FindGameObjectWithTag("Player");
+        var oneLuckyGuy = GetLocalPlayerObject();
         oneLuckyGuy.GetComponent<FirstPersonDrifter>().CmdFreezeAll(false);
     }
 
@@ -145,5 +146,20 @@ public class SetTimerOnTrigger : MonoBehaviour {
     private void EndGame()
     {
         courseCompleteMessage.enabled = false;
+    }
+
+    private GameObject GetLocalPlayerObject()
+    {
+        var playerObjects = GameObject.FindGameObjectsWithTag("Player");
+        GameObject playerObject = null;
+        foreach (GameObject obj in playerObjects)
+        {
+            if (obj.GetComponent<NetworkIdentity>().isLocalPlayer)
+            {
+                playerObject = obj;
+            }
+        }
+
+        return playerObject;
     }
 }
