@@ -16,6 +16,7 @@ public class GameStateManager : NetworkBehaviour {
 	public GameObject PlayerStatsHUDElement;
 	public GameObject PlayerInfoHUDElement;
     public GameObject BestTimeHudElement;
+    public GameObject BestTimeCrown;
     public GameObject localPlayer;
     public GameObject nicknamePrefab;
 
@@ -89,6 +90,7 @@ public class GameStateManager : NetworkBehaviour {
             string timeString = "";
             if (timeSpan.Hours > 0)
             {
+                BestTimeCrown.SetActive(true);
                 timeString = "H" + timeSpan.Hours.ToString("00") + ":" + timeSpan.Minutes.ToString("00") + ":" + timeSpan.Seconds.ToString("00");
             }
             else
