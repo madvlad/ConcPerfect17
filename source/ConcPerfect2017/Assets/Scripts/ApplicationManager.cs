@@ -4,7 +4,7 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class ApplicationManager : MonoBehaviour {
-    public const string APPLICATION_VERSION = "1.1.2";
+    public const string APPLICATION_VERSION = "2.0.0";
 
     static public float musicVolume = 0.5f;
     static public float sfxVolume = 0.5f;
