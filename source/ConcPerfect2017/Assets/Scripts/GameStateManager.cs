@@ -290,7 +290,7 @@ public class GameStateManager : NetworkBehaviour {
 
     public void SetJumpNumber(int num) {
         this.CurrentJumpNumber = num;
-        JumpHUDElement.GetComponent<Text>().text = "Jump: " + num + " / " + (CourseJumpLimit);
+        JumpHUDElement.GetComponent<Text>().text = num + " / " + (CourseJumpLimit);
 
         if (GetLocalPlayerObject() != null) {
             GetLocalPlayerObject().gameObject.GetComponent<LocalPlayerStats>().UpdateJump(CurrentJumpNumber);
