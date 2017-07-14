@@ -6,6 +6,9 @@ public class Teleporter : MonoBehaviour
     public GameObject destination;
     public bool StopMomentum = true;
 
+    public bool IsSecret = false;
+    public AudioClip SecretMusic;
+
     void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
@@ -16,6 +19,12 @@ public class Teleporter : MonoBehaviour
             if (StopMomentum)
             {
                 other.gameObject.GetComponent<ImpactReceiver>().ZeroImpact();
+            }
+
+            if (IsSecret)
+            {
+                GameObject.FindGameObjectWithTag("Music").GetComponent<AudioSource>().clip = SecretMusic;
+                GameObject.FindGameObjectWithTag("Music").GetComponent<AudioSource>().Play();
             }
         }
     }

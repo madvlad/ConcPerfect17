@@ -61,9 +61,6 @@ public class WeatherManager : MonoBehaviour {
         {
             if (lightningOn)
             {
-                Camera.main.GetComponent<Bloom>().bloomThreshold = 0.5f;
-                Camera.main.GetComponent<Bloom>().bloomIntensity = 0.2f;
-
                 var thunderSoundIdx = Random.Range(0, 3);
                 GetComponent<AudioSource>().PlayOneShot(thunderSounds[thunderSoundIdx], ApplicationManager.sfxVolume);
 
@@ -74,9 +71,7 @@ public class WeatherManager : MonoBehaviour {
             timer -= Time.deltaTime;
             if (lightning < 0.5f && timer < 0.0f)
             {
-                Camera.main.GetComponent<Bloom>().bloomThreshold = 0.0f;
-                Camera.main.GetComponent<Bloom>().bloomIntensity = 50.0f;
-                lightningOn = true;
+				lightningOn = true;
                 timer = 30.0f;
             }
             else if (timer < 0.0f)

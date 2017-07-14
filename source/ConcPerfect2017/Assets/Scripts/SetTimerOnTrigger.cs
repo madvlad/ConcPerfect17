@@ -79,7 +79,8 @@ public class SetTimerOnTrigger : MonoBehaviour {
 
                 if (courseHistoryManager.StoreNewRecord(gameStateManager.GetCourseSeed(), gameStateManager.GetRawTime(), gameStateManager.GetIsCourseFavorited(), ApplicationManager.GetDifficultyLevel()))
                 {
-                    GameObject.FindGameObjectWithTag("BestTime").GetComponent<Text>().text = "Best time: " + timeString;
+                    GameObject.FindGameObjectWithTag("TheCrown").SetActive(true);
+                    GameObject.FindGameObjectWithTag("BestTime").GetComponent<Text>().text = timeString;
                     other.GetComponent<MultiplayerChatScript>().SendRecordFinishMessage(timeString);
                 }
                 else

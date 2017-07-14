@@ -9,6 +9,7 @@ public class SingleplayerLevelEnabler : MonoBehaviour {
     public GameObject Level3UIElement;
     public GameObject Level4UIElement;
     public GameObject Level5UIElement;
+	public GameObject Level6UIElement;
 
 	void Start () {
         for (int i = 0; i <= ApplicationManager.LevelsCompleted; i++)
@@ -23,7 +24,8 @@ public class SingleplayerLevelEnabler : MonoBehaviour {
         Level3UIElement.GetComponent<Button>().interactable = false;
         Level4UIElement.GetComponent<Button>().interactable = false;
         Level5UIElement.GetComponent<Button>().interactable = false;
-        Start();
+		Level6UIElement.GetComponent<Button>().interactable = false;
+		Start();
     }
 
     void EnableLevel(int i)
@@ -42,7 +44,10 @@ public class SingleplayerLevelEnabler : MonoBehaviour {
             case 4:
                 Level5UIElement.GetComponent<Button>().interactable = true;
                 break;
-            default:
+			case 5:
+				Level6UIElement.GetComponent<Button>().interactable = true;
+				break;
+			default:
                 Level1UIElement.GetComponent<Button>().interactable = true;
                 break;
         }

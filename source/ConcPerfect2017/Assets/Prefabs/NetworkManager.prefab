@@ -88,7 +88,7 @@ MonoBehaviour:
   - {fileID: 1695706665660246, guid: 3237f36cc5ccd98479a508f94d59498b, type: 2}
   - {fileID: 1272825773273088, guid: b6dbbd1c71e374847b51ed7db1673f7d, type: 2}
   - {fileID: 1885427148529334, guid: 73f7ce689cc09a5409528661c3543001, type: 2}
-  - {fileID: 0}
+  - {fileID: 1344104364816794, guid: 055f19e95ce30df43b9872d0dda200a8, type: 2}
   - {fileID: 1267158114162988, guid: aba48692c5c4aa74fa3aebfb2c0b43cd, type: 2}
   - {fileID: 1052178243248684, guid: 78495bb5a9e54f84c86eaff7ccc94ea0, type: 2}
   - {fileID: 1879019545586378, guid: f515cfd423901f24a8bd9add201dd83f, type: 2}
@@ -125,6 +125,29 @@ MonoBehaviour:
   - {fileID: 1393703386405746, guid: 7fb1eaf859da8cc4eaf7069f0cb1db01, type: 2}
   - {fileID: 1769248624480488, guid: 4c69ca2e2c930b64cbef1d7fe8b6b58a, type: 2}
   - {fileID: 1595250110710422, guid: a04cced4b9ebcdb429bcc1723cebc6b7, type: 2}
+  - {fileID: 1042141497438400, guid: e5fa9c82052cf434daa9cd776fe0d322, type: 2}
+  - {fileID: 1293334389695378, guid: e26225fc2a0930b42b9488698bec5b2e, type: 2}
+  - {fileID: 1060424979787720, guid: ad96efc4d897bee4983b3ed61fef0d45, type: 2}
+  - {fileID: 1143440160287454, guid: a06621124fd73b748a08fe828f53a4bc, type: 2}
+  - {fileID: 1088485177178452, guid: 4314e67a240d31f4d8ab9fb8844d2def, type: 2}
+  - {fileID: 1729789286325180, guid: 7dbde98d3a3f41446bd63ab9875fe891, type: 2}
+  - {fileID: 1513116710031932, guid: cc104bdd57064ac4fb59a0f0d3f3aab3, type: 2}
+  - {fileID: 1146281680476490, guid: 72913b91bba16e748b528bd23581418f, type: 2}
+  - {fileID: 1392250199329400, guid: 5217234324ef8614e857fc90ebd49f27, type: 2}
+  - {fileID: 1251253248238714, guid: fe1c1e8b41e829b45bb9885c80f87fe6, type: 2}
+  - {fileID: 1768158124590608, guid: 5df9c13d57d56e444982c7196b45eed3, type: 2}
+  - {fileID: 1376194756015278, guid: 1ca583b45f6508b47b5938a0fab8c864, type: 2}
+  - {fileID: 1741336143405846, guid: 460e6acdd3e4a894c810a56f7950500c, type: 2}
+  - {fileID: 1146281680476490, guid: 37ba46ab6a4dc65469b9fc03c5224711, type: 2}
+  - {fileID: 1724717535568866, guid: b13b5446bf9228742bee5c15e38a56e3, type: 2}
+  - {fileID: 1043750665462880, guid: 04d2ed5d4e81c244b8294aeaa477ac1f, type: 2}
+  - {fileID: 1001790201940280, guid: c16f3c1b74d6a4d4db0c8489ebc94153, type: 2}
+  - {fileID: 1976761619345394, guid: 42f4c6af66873ac46b1d5ecd03d11123, type: 2}
+  - {fileID: 1481952887472722, guid: 9b4d2f4df70f68145982e538a32b7c53, type: 2}
+  - {fileID: 1108786696754520, guid: 941920395f608af429f9470e91f61468, type: 2}
+  - {fileID: 1705285136141188, guid: 33c040c6e53ca974f8c1ba899d803394, type: 2}
+  - {fileID: 1409365163373154, guid: bdfab5ab0c8434c439c57c242602fb7b, type: 2}
+  - {fileID: 1697459755059710, guid: 00408b01e5f56104284e2c483036fb08, type: 2}
   m_CustomConfig: 1
   m_MaxConnections: 4
   m_ConnectionConfig:
@@ -137,16 +160,23 @@ MonoBehaviour:
     m_PingTimeout: 500
     m_ReducedPingTimeout: 100
     m_AllCostTimeout: 20
-    m_NetworkDropThreshold: 5
+    m_NetworkDropThreshold: 30
     m_OverflowDropThreshold: 5
     m_MaxConnectionAttempt: 10
     m_AckDelay: 33
+    m_SendDelay: 10
     m_MaxCombinedReliableMessageSize: 100
     m_MaxCombinedReliableMessageCount: 10
     m_MaxSentMessageQueueSize: 128
-    m_IsAcksLong: 0
+    m_AcksType: 1
     m_UsePlatformSpecificProtocols: 0
+    m_InitialBandwidth: 0
+    m_BandwidthPeakFactor: 2
     m_WebSocketReceiveBufferMaxSize: 0
+    m_UdpSocketReceiveBufferMaxSize: 0
+    m_SSLCertFilePath: 
+    m_SSLPrivateKeyFilePath: 
+    m_SSLCAFilePath: 
     m_Channels: []
   m_GlobalConfig:
     m_ThreadAwakeTimeout: 1
@@ -154,7 +184,13 @@ MonoBehaviour:
     m_ReactorMaximumReceivedMessages: 1024
     m_ReactorMaximumSentMessages: 1024
     m_MaxPacketSize: 2000
-  m_Channels: 0500000000000000
+    m_MaxHosts: 16
+    m_ThreadPoolSize: 1
+    m_MinTimerTimeout: 1
+    m_MaxTimerTimeout: 12000
+    m_MinNetSimulatorTimeout: 1
+    m_MaxNetSimulatorTimeout: 12000
+  m_Channels: 0500000004000000
   m_UseWebSockets: 0
   m_UseSimulator: 0
   m_SimulatedLatency: 1

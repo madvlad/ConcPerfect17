@@ -16,6 +16,7 @@ public class GameStateManager : NetworkBehaviour {
 	public GameObject PlayerStatsHUDElement;
 	public GameObject PlayerInfoHUDElement;
     public GameObject BestTimeHudElement;
+    public GameObject BestTimeCrown;
     public GameObject localPlayer;
     public GameObject nicknamePrefab;
 
@@ -89,13 +90,14 @@ public class GameStateManager : NetworkBehaviour {
             string timeString = "";
             if (timeSpan.Hours > 0)
             {
+                BestTimeCrown.SetActive(true);
                 timeString = "H" + timeSpan.Hours.ToString("00") + ":" + timeSpan.Minutes.ToString("00") + ":" + timeSpan.Seconds.ToString("00");
             }
             else
             {
                 timeString = timeSpan.Minutes.ToString("00") + ":" + timeSpan.Seconds.ToString("00") + ":" + timeSpan.Milliseconds.ToString("000");
             }
-            bestTimeText.text = "Best time: " + timeString;
+            bestTimeText.text = timeString;
         }
     }
 
@@ -288,7 +290,7 @@ public class GameStateManager : NetworkBehaviour {
 
     public void SetJumpNumber(int num) {
         this.CurrentJumpNumber = num;
-        JumpHUDElement.GetComponent<Text>().text = "Jump: " + num + " / " + (CourseJumpLimit);
+        JumpHUDElement.GetComponent<Text>().text = num + " / " + (CourseJumpLimit);
 
         if (GetLocalPlayerObject() != null) {
             GetLocalPlayerObject().gameObject.GetComponent<LocalPlayerStats>().UpdateJump(CurrentJumpNumber);
