@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
+using Steamworks;
 
 public class SetTimerOnTrigger : MonoBehaviour {
     public GameObject gameManager;
@@ -54,6 +55,8 @@ public class SetTimerOnTrigger : MonoBehaviour {
                 var reward = other.GetComponent<TimeQualifier>().CheckTime(gameStateManager.GetRawTime(), ApplicationManager.currentLevel);
                 other.GetComponent<MultiplayerChatScript>().WriteLocalMessage(DisplayRewardMessage(reward));
 
+                SetAchievement(reward, ApplicationManager.currentLevel);
+
                 if (gameStateManager.GetLocalPlayerObject () != null)
                 {
                     gameStateManager.GetLocalPlayerObject ().gameObject.GetComponent<LocalPlayerStats> ().UpdateTime (gameStateManager.GetCurrentTime());
@@ -97,6 +100,18 @@ public class SetTimerOnTrigger : MonoBehaviour {
                 }
 
                 Invoke("EndGame", 7.0f);
+            }
+        }
+    }
+    
+    void SetAchievement(int reward, int levelNumber)
+    {
+        if (SteamManager.Initialized)
+        {
+            if (levelNumber == 1 && reward == 3)
+            {
+                SteamUserStats.SetAchievement("ACHIEVEMENT_LVL1_GOLD");
+                Debug.Log("Set achievement ACHIEVEMENT_LVL1_GOLD");
             }
         }
     }
