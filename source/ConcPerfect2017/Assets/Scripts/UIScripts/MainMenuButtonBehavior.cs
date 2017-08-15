@@ -179,8 +179,8 @@ public class MainMenuButtonBehavior : MonoBehaviour {
     void LoadMainMenu()
     {
         GameObject.FindGameObjectWithTag("NetManager").GetComponent<NetworkManager>().StopHost();
-        SceneManager.LoadScene(mainMenuScene);
         SceneManager.UnloadSceneAsync(mainGameScene);
+        SceneManager.LoadScene(mainMenuScene);
     }
 
     void QuitApplication()
