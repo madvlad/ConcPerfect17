@@ -7,6 +7,7 @@ public class ApplicationManager : MonoBehaviour {
     public const string APPLICATION_VERSION = "2.0.2";
 
     static public int respawnCount = 0;
+    static public int grandGalleryRespawnCount = 0;
     static public float musicVolume = 0.5f;
     static public float sfxVolume = 0.5f;
     static public int numberOfJumps = 9;

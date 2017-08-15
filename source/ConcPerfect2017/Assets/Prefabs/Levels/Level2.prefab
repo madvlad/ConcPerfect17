@@ -9505,6 +9505,7 @@ GameObject:
   - component: {fileID: 65572012038100800}
   - component: {fileID: 23022221506898224}
   - component: {fileID: 114207787554240340}
+  - component: {fileID: 114954490039555562}
   m_Layer: 1
   m_Name: DangerIn
   m_TagString: Untagged
@@ -51940,6 +51941,17 @@ MonoBehaviour:
   StopMomentum: 1
   IsSecret: 0
   SecretMusic: {fileID: 0}
+--- !u!114 &114954490039555562
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1774306289450620}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc4bd0ad6fad3bd4c844d47c0465abe2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114956713059190010
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -21,6 +21,15 @@ public class Teleporter : MonoBehaviour
                 {
                     SteamUserStats.SetAchievement("ACHIEVEMENT_ZOMBIES");
                 }
+
+                if (ApplicationManager.currentLevel == 4)
+                {
+                    ApplicationManager.grandGalleryRespawnCount++;
+                    if (ApplicationManager.grandGalleryRespawnCount >= 20)
+                    {
+                        SteamUserStats.SetAchievement("ACHIEVEMENT_YELLOW_SNOW");
+                    }
+                }
             }
 
             other.transform.position = destination.transform.position;
