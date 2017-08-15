@@ -55,7 +55,7 @@ public class SetTimerOnTrigger : MonoBehaviour {
                 var reward = other.GetComponent<TimeQualifier>().CheckTime(gameStateManager.GetRawTime(), ApplicationManager.currentLevel);
                 other.GetComponent<MultiplayerChatScript>().WriteLocalMessage(DisplayRewardMessage(reward));
 
-                SetAchievement(reward, ApplicationManager.currentLevel);
+                SetCompletionAchievement(reward, ApplicationManager.currentLevel);
 
                 if (gameStateManager.GetLocalPlayerObject () != null)
                 {
@@ -93,6 +93,10 @@ public class SetTimerOnTrigger : MonoBehaviour {
 
                 courseHistoryManager.AddRecentlyPlayed(gameStateManager.GetCourseSeed(), gameStateManager.GetRawTime(), ApplicationManager.GetDifficultyLevel());
 
+                var totalCoursesCompleted = courseHistoryManager.GetSavedRecords("RecentPlayed");
+                SetTotalCompletedAchievement(totalCoursesCompleted.Count);
+
+
                 if (ApplicationManager.GameType == GameTypes.RaceGameType)
                 {
                     other.GetComponent<FirstPersonDrifter>().CmdFreezeAll(true);
@@ -103,8 +107,35 @@ public class SetTimerOnTrigger : MonoBehaviour {
             }
         }
     }
-    
-    void SetAchievement(int reward, int levelNumber)
+
+    void SetTotalCompletedAchievement(int count)
+    {
+        if (SteamManager.Initialized)
+        {
+            if (count >= 10)
+            {
+                SteamUserStats.SetAchievement("ACHIEVEMENT_10_JUMPS");
+            }
+            if (count >= 25)
+            {
+                SteamUserStats.SetAchievement("ACHIEVEMENT_25_JUMPS");
+            }
+            if (count >= 50)
+            {
+                SteamUserStats.SetAchievement("ACHIEVEMENT_50_JUMPS");
+            }
+            if (count >= 100)
+            {
+                SteamUserStats.SetAchievement("ACHIEVEMENT_100_JUMPS");
+            }
+            if (count >= 500)
+            {
+                SteamUserStats.SetAchievement("ACHIEVEMENT_500_JUMPS");
+            }
+        }
+    }
+
+    void SetCompletionAchievement(int reward, int levelNumber)
     {
         if (SteamManager.Initialized)
         {
@@ -138,6 +169,12 @@ public class SetTimerOnTrigger : MonoBehaviour {
                 SteamUserStats.SetAchievement("ACHIEVEMENT_LVL6_GOLD");
                 Debug.Log("Set achievement ACHIEVEMENT_LVL6_GOLD");
             }
+            if (levelNumber == 5)
+            {
+                SteamUserStats.SetAchievement("ACHIEVEMENT_CAMPAIGN_CLEARED");
+                Debug.Log("Set achievement ACHIEVEMENT_CAMPAIGN_CLEARED");
+            }
+
         }
     }
 

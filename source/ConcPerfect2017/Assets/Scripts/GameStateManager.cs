@@ -66,7 +66,7 @@ public class GameStateManager : NetworkBehaviour {
             ApplicationManager.currentLevel = CurrentServerLevel;
             ApplicationManager.GameType = CurrentGameType;
         }
-
+        ApplicationManager.respawnCount = 0;
         SetBestTime();
     }
 

@@ -6,6 +6,7 @@ using Random = UnityEngine.Random;
 public class ApplicationManager : MonoBehaviour {
     public const string APPLICATION_VERSION = "2.0.1";
 
+    static public int respawnCount = 0;
     static public float musicVolume = 0.5f;
     static public float sfxVolume = 0.5f;
     static public int numberOfJumps = 9;

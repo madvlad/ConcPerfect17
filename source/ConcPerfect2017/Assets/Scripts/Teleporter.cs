@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Steamworks;
 
 public class Teleporter : MonoBehaviour
 {
@@ -13,6 +14,15 @@ public class Teleporter : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
+            if (SteamManager.Initialized)
+            {
+                ApplicationManager.respawnCount++;
+                if (ApplicationManager.respawnCount >= 50)
+                {
+                    SteamUserStats.SetAchievement("ACHIEVEMENT_10_JUMPS");
+                }
+            }
+
             other.transform.position = destination.transform.position;
             other.transform.rotation = Quaternion.Euler(destination.transform.rotation.x, destination.transform.rotation.y, destination.transform.rotation.z);
 
