@@ -19,7 +19,7 @@ public class Teleporter : MonoBehaviour
                 ApplicationManager.respawnCount++;
                 if (ApplicationManager.respawnCount >= 50)
                 {
-                    SteamUserStats.SetAchievement("ACHIEVEMENT_10_JUMPS");
+                    SteamUserStats.SetAchievement("ACHIEVEMENT_ZOMBIES");
                 }
             }
 
