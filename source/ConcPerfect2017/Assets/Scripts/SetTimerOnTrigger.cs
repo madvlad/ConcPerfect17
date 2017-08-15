@@ -99,6 +99,10 @@ public class SetTimerOnTrigger : MonoBehaviour {
 
                 if (ApplicationManager.GameType == GameTypes.RaceGameType)
                 {
+                    if (SteamManager.Initialized)
+                    {
+                        SteamUserStats.SetAchievement("ACHIEVMENT_WIN_RACE");
+                    }
                     other.GetComponent<FirstPersonDrifter>().CmdFreezeAll(true);
                     Invoke("Unfreeze", 5.0f);
                 }
