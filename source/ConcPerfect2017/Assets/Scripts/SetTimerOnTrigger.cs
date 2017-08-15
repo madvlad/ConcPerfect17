@@ -175,6 +175,23 @@ public class SetTimerOnTrigger : MonoBehaviour {
                 Debug.Log("Set achievement ACHIEVEMENT_CAMPAIGN_CLEARED");
             }
 
+            bool completed1 = false;
+            bool completed2 = false;
+            bool completed3 = false;
+            bool completed4 = false;
+            bool completed5 = false;
+
+            SteamUserStats.GetAchievement("ACHIEVEMENT_LVL1_GOLD", out completed1);
+            SteamUserStats.GetAchievement("ACHIEVEMENT_LVL2_GOLD", out completed2);
+            SteamUserStats.GetAchievement("ACHIEVEMENT_LVL3_GOLD", out completed3);
+            SteamUserStats.GetAchievement("ACHIEVEMENT_LVL4_GOLD", out completed4);
+            SteamUserStats.GetAchievement("ACHIEVEMENT_LVL5_GOLD", out completed5);
+
+            if (completed1 && completed2 && completed3 && completed4 && completed5)
+            {
+                SteamUserStats.SetAchievement("ACHIEVEMENT_PRO");
+                Debug.Log("Set achievement ACHIEVEMENT_PRO");
+            }
         }
     }
 
