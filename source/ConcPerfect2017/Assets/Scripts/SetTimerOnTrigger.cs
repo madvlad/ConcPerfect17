@@ -113,6 +113,31 @@ public class SetTimerOnTrigger : MonoBehaviour {
                 SteamUserStats.SetAchievement("ACHIEVEMENT_LVL1_GOLD");
                 Debug.Log("Set achievement ACHIEVEMENT_LVL1_GOLD");
             }
+            if (levelNumber == 2 && reward == 3)
+            {
+                SteamUserStats.SetAchievement("ACHIEVEMENT_LVL2_GOLD");
+                Debug.Log("Set achievement ACHIEVEMENT_LVL2_GOLD");
+            }
+            if (levelNumber == 3 && reward == 3)
+            {
+                SteamUserStats.SetAchievement("ACHIEVEMENT_LVL3_GOLD");
+                Debug.Log("Set achievement ACHIEVEMENT_LVL3_GOLD");
+            }
+            if (levelNumber == 4 && reward == 3)
+            {
+                SteamUserStats.SetAchievement("ACHIEVEMENT_LVL4_GOLD");
+                Debug.Log("Set achievement ACHIEVEMENT_LVL4_GOLD");
+            }
+            if (levelNumber == 5 && reward == 3)
+            {
+                SteamUserStats.SetAchievement("ACHIEVEMENT_LVL5_GOLD");
+                Debug.Log("Set achievement ACHIEVEMENT_LVL5_GOLD");
+            }
+            if (levelNumber == 6 && reward == 3)
+            {
+                SteamUserStats.SetAchievement("ACHIEVEMENT_LVL6_GOLD");
+                Debug.Log("Set achievement ACHIEVEMENT_LVL6_GOLD");
+            }
         }
     }
 
