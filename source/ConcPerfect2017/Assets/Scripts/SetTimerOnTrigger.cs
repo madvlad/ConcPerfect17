@@ -98,6 +98,25 @@ public class SetTimerOnTrigger : MonoBehaviour {
                 var totalCoursesCompleted = courseHistoryManager.GetSavedRecords("RecentPlayed");
                 SetTotalCompletedAchievement(totalCoursesCompleted.Count);
 
+                if (!ApplicationManager.IsLAN)
+                {
+                    if (SteamManager.Initialized)
+                    {
+                        if (PlayerPrefs.HasKey("OnlineModeRecord"))
+                        {
+                            var winRecord = PlayerPrefs.GetInt("OnlineModeRecord");
+                            if (winRecord >= 10)
+                            {
+                                SteamUserStats.SetAchievement("ACHIEVEMENT_SOCIAL_CONCER");
+                            }
+                            PlayerPrefs.SetInt("OnlineModeRecord", winRecord);
+                        }
+                        else
+                        {
+                            PlayerPrefs.SetInt("OnlineModeRecord", 1);
+                        }
+                    }
+                }
 
                 if (ApplicationManager.GameType == GameTypes.RaceGameType)
                 {
