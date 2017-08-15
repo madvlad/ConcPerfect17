@@ -80,6 +80,8 @@ public class SetTimerOnTrigger : MonoBehaviour {
                     timeString += timeSpan.Minutes.ToString("00") + ":" + timeSpan.Seconds.ToString("00") + ":" + timeSpan.Milliseconds.ToString("000");
                 }
 
+                SetSpecialLevelTimeAchievements(timeSpan);
+
                 if (courseHistoryManager.StoreNewRecord(gameStateManager.GetCourseSeed(), gameStateManager.GetRawTime(), gameStateManager.GetIsCourseFavorited(), ApplicationManager.GetDifficultyLevel()))
                 {
                     GameObject.FindGameObjectWithTag("TheCrown").SetActive(true);
@@ -101,7 +103,20 @@ public class SetTimerOnTrigger : MonoBehaviour {
                 {
                     if (SteamManager.Initialized)
                     {
-                        SteamUserStats.SetAchievement("ACHIEVMENT_WIN_RACE");
+                        if (PlayerPrefs.HasKey("RaceModeWinRecord"))
+                        {
+                            var winRecord = PlayerPrefs.GetInt("RaceModeWinRecord");
+                            if (winRecord >= 10)
+                            {
+                                SteamUserStats.SetAchievement("ACHIEVEMENT_STREET_CONCER");
+                            }
+                            PlayerPrefs.SetInt("RaceModeWinRecord", winRecord);
+                        }
+                        else
+                        {
+                            PlayerPrefs.SetInt("RaceModeWinRecord", 1);
+                        }
+                        SteamUserStats.SetAchievement("ACHIEVEMENT_WIN_RACE");
                     }
                     other.GetComponent<FirstPersonDrifter>().CmdFreezeAll(true);
                     Invoke("Unfreeze", 5.0f);
@@ -109,6 +124,22 @@ public class SetTimerOnTrigger : MonoBehaviour {
 
                 Invoke("EndGame", 7.0f);
             }
+        }
+    }
+
+    private void SetSpecialLevelTimeAchievements(TimeSpan timeSpan)
+    {
+        if (ApplicationManager.GameType == GameTypes.TutorialGameType && timeSpan.TotalSeconds <= 8)
+        {
+            SteamUserStats.SetAchievement("ACHIEVEMENT_COOKIE_BOY");
+        }
+        if (ApplicationManager.currentLevel == 1 && timeSpan.TotalSeconds <= 12)
+        {
+            SteamUserStats.SetAchievement("ACHIEVEMENT_RESET_CONC");
+        }
+        if (ApplicationManager.currentLevel == 5 && timeSpan.TotalMinutes <= 5)
+        {
+            SteamUserStats.SetAchievement("ACHIEVEMENT_DEVS");
         }
     }
 
