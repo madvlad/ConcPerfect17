@@ -4,7 +4,7 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class ApplicationManager : MonoBehaviour {
-    public const string APPLICATION_VERSION = "2.0.1";
+    public const string APPLICATION_VERSION = "2.0.2";
 
     static public int respawnCount = 0;
     static public float musicVolume = 0.5f;
