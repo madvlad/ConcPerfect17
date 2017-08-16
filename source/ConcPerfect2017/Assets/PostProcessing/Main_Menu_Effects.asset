@@ -109,7 +109,7 @@ MonoBehaviour:
         texture: {fileID: 0}
         intensity: 3
   colorGrading:
-    m_Enabled: 0
+    m_Enabled: 1
     m_Settings:
       tonemapping:
         tonemapper: 0
@@ -121,10 +121,10 @@ MonoBehaviour:
         neutralWhiteClip: 10
       basic:
         postExposure: 0
-        temperature: 0
-        tint: 0
+        temperature: 5
+        tint: 12
         hueShift: 0
-        saturation: 1
+        saturation: 1.1
         contrast: 1
       channelMixer:
         red: {x: 1, y: 0, z: 0}
@@ -284,7 +284,7 @@ MonoBehaviour:
     m_Enabled: 1
     m_Settings:
       spectralTexture: {fileID: 0}
-      intensity: 0.05
+      intensity: 0.075
   grain:
     m_Enabled: 1
     m_Settings:

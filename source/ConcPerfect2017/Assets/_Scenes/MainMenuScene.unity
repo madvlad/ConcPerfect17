@@ -188,6 +188,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destination: {fileID: 1520509601}
   StopMomentum: 1
+  IsSecret: 0
+  SecretMusic: {fileID: 0}
 --- !u!23 &14507663
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -801,6 +803,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destination: {fileID: 36455002}
   StopMomentum: 1
+  IsSecret: 0
+  SecretMusic: {fileID: 0}
 --- !u!23 &42845909
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -3073,6 +3077,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destination: {fileID: 1631389711}
   StopMomentum: 1
+  IsSecret: 0
+  SecretMusic: {fileID: 0}
 --- !u!23 &176838428
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -3336,7 +3342,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 0
-  m_Text: '   Join Game
+  m_Text: '  Join Game
 
 '
 --- !u!222 &204508497
@@ -4066,6 +4072,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destination: {fileID: 36455002}
   StopMomentum: 1
+  IsSecret: 0
+  SecretMusic: {fileID: 0}
 --- !u!23 &219578703
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -4529,6 +4537,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destination: {fileID: 36455002}
   StopMomentum: 1
+  IsSecret: 0
+  SecretMusic: {fileID: 0}
 --- !u!23 &230642061
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -4946,7 +4956,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 0
-  m_Text: '   Tutorial'
+  m_Text: '  Tutorial'
 --- !u!222 &264951332
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5475,6 +5485,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destination: {fileID: 36455002}
   StopMomentum: 1
+  IsSecret: 0
+  SecretMusic: {fileID: 0}
 --- !u!23 &282608053
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -6160,7 +6172,7 @@ MonoBehaviour:
   m_Script: {fileID: 1980459831, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
@@ -6742,6 +6754,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destination: {fileID: 36455002}
   StopMomentum: 1
+  IsSecret: 0
+  SecretMusic: {fileID: 0}
 --- !u!23 &342623152
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -6913,6 +6927,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destination: {fileID: 1520509601}
   StopMomentum: 1
+  IsSecret: 0
+  SecretMusic: {fileID: 0}
 --- !u!23 &346078560
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -7388,10 +7404,10 @@ RectTransform:
   m_Father: {fileID: 691662644}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.14, y: 0.39928266}
-  m_AnchorMax: {x: 0.38000003, y: 0.46357605}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -47}
+  m_SizeDelta: {x: 192, y: 25}
   m_Pivot: {x: 1.5, y: 0.5}
 --- !u!114 &405212640
 MonoBehaviour:
@@ -7588,6 +7604,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destination: {fileID: 1520509601}
   StopMomentum: 1
+  IsSecret: 0
+  SecretMusic: {fileID: 0}
 --- !u!23 &411242810
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -8176,7 +8194,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 0
-  m_Text: '   Credits
+  m_Text: '  Credits
 
 '
 --- !u!222 &467024877
@@ -9188,6 +9206,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destination: {fileID: 1520509601}
   StopMomentum: 1
+  IsSecret: 0
+  SecretMusic: {fileID: 0}
 --- !u!23 &506867785
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -10161,6 +10181,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destination: {fileID: 1520509601}
   StopMomentum: 1
+  IsSecret: 0
+  SecretMusic: {fileID: 0}
 --- !u!23 &548512652
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -11074,6 +11096,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destination: {fileID: 1520509601}
   StopMomentum: 1
+  IsSecret: 0
+  SecretMusic: {fileID: 0}
 --- !u!23 &592991690
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -11342,6 +11366,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destination: {fileID: 1631389711}
   StopMomentum: 1
+  IsSecret: 0
+  SecretMusic: {fileID: 0}
 --- !u!23 &610782780
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -12157,6 +12183,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destination: {fileID: 1520509601}
   StopMomentum: 1
+  IsSecret: 0
+  SecretMusic: {fileID: 0}
 --- !u!23 &676076865
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -12826,7 +12854,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -95, y: 0}
+  m_AnchoredPosition: {x: 0, y: -74}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &722505767
@@ -13605,6 +13633,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destination: {fileID: 1085961869}
   StopMomentum: 1
+  IsSecret: 0
+  SecretMusic: {fileID: 0}
 --- !u!23 &747381999
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -13962,6 +13992,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destination: {fileID: 1520509601}
   StopMomentum: 1
+  IsSecret: 0
+  SecretMusic: {fileID: 0}
 --- !u!23 &753505014
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -14050,10 +14082,10 @@ RectTransform:
   m_Father: {fileID: 691662644}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.14, y: 0.125}
-  m_AnchorMax: {x: 0.38000003, y: 0.18929337}
-  m_AnchoredPosition: {x: 0.004670024, y: 0}
-  m_SizeDelta: {x: 0.009370089, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -155}
+  m_SizeDelta: {x: 192, y: 25}
   m_Pivot: {x: 1.5, y: 0.5}
 --- !u!114 &756490902
 MonoBehaviour:
@@ -17150,10 +17182,10 @@ RectTransform:
   m_Father: {fileID: 691662644}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.14, y: 0.33071736}
-  m_AnchorMax: {x: 0.38000003, y: 0.395}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -74}
+  m_SizeDelta: {x: 192, y: 25}
   m_Pivot: {x: 1.5, y: 0.5}
 --- !u!95 &941592465
 Animator:
@@ -17723,31 +17755,35 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Level1Times:
+  - 8000
   - 600
-  - 300
-  - 60
-  - 30
-  Level2Times:
-  - 600
-  - 150
-  - 90
   - 75
+  - 16
+  Level2Times:
+  - 8000
+  - 160
+  - 90
+  - 60
   Level3Times:
-  - 624
+  - 8000
   - 312
   - 195
-  - 135
+  - 117
   Level4Times:
-  - 660
+  - 8000
   - 330
   - 210
-  - 150
+  - 98
   Level5Times:
-  - 7680
+  - 9000
   - 3840
   - 1920
   - 960
-  Level6Times: []
+  Level6Times:
+  - 9000
+  - 4100
+  - 3600
+  - 2100
 --- !u!1 &975906502
 GameObject:
   m_ObjectHideFlags: 0
@@ -17994,6 +18030,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destination: {fileID: 1520509601}
   StopMomentum: 1
+  IsSecret: 0
+  SecretMusic: {fileID: 0}
 --- !u!23 &997586066
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -19124,6 +19162,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destination: {fileID: 1520509601}
   StopMomentum: 1
+  IsSecret: 0
+  SecretMusic: {fileID: 0}
 --- !u!23 &1035115088
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -20980,6 +21020,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destination: {fileID: 1520509601}
   StopMomentum: 1
+  IsSecret: 0
+  SecretMusic: {fileID: 0}
 --- !u!23 &1127291249
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -21810,6 +21852,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destination: {fileID: 1520509601}
   StopMomentum: 1
+  IsSecret: 0
+  SecretMusic: {fileID: 0}
 --- !u!23 &1172928292
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -21898,10 +21942,10 @@ RectTransform:
   m_Father: {fileID: 691662644}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.14, y: 0.26214135}
-  m_AnchorMax: {x: 0.38000003, y: 0.3264347}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -101}
+  m_SizeDelta: {x: 192, y: 25}
   m_Pivot: {x: 1.5, y: 0.5}
 --- !u!114 &1176274602
 MonoBehaviour:
@@ -22482,7 +22526,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 78, y: 35}
+  m_AnchoredPosition: {x: 0, y: 35}
   m_SizeDelta: {x: 280, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1221316553
@@ -22572,6 +22616,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destination: {fileID: 1520509601}
   StopMomentum: 1
+  IsSecret: 0
+  SecretMusic: {fileID: 0}
 --- !u!23 &1221751008
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -23472,6 +23518,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destination: {fileID: 1085961869}
   StopMomentum: 1
+  IsSecret: 0
+  SecretMusic: {fileID: 0}
 --- !u!23 &1268025069
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -23745,6 +23793,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destination: {fileID: 1520509601}
   StopMomentum: 1
+  IsSecret: 0
+  SecretMusic: {fileID: 0}
 --- !u!23 &1292748160
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -25046,7 +25096,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 0
-  m_Text: '   Exit'
+  m_Text: '  Exit'
 --- !u!222 &1348897166
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -25702,6 +25752,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destination: {fileID: 36455002}
   StopMomentum: 1
+  IsSecret: 0
+  SecretMusic: {fileID: 0}
 --- !u!23 &1380755119
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -29419,6 +29471,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destination: {fileID: 36455002}
   StopMomentum: 1
+  IsSecret: 0
+  SecretMusic: {fileID: 0}
 --- !u!23 &1400750310
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -30909,6 +30963,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destination: {fileID: 1520509601}
   StopMomentum: 1
+  IsSecret: 0
+  SecretMusic: {fileID: 0}
 --- !u!23 &1506313034
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -31806,6 +31862,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destination: {fileID: 1513642243}
   StopMomentum: 1
+  IsSecret: 0
+  SecretMusic: {fileID: 0}
 --- !u!23 &1533571375
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -32235,6 +32293,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destination: {fileID: 1520509601}
   StopMomentum: 1
+  IsSecret: 0
+  SecretMusic: {fileID: 0}
 --- !u!23 &1545429021
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -32575,6 +32635,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destination: {fileID: 1520509601}
   StopMomentum: 1
+  IsSecret: 0
+  SecretMusic: {fileID: 0}
 --- !u!23 &1587279379
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -33539,6 +33601,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destination: {fileID: 1520509601}
   StopMomentum: 1
+  IsSecret: 0
+  SecretMusic: {fileID: 0}
 --- !u!23 &1613868852
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -33826,6 +33890,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destination: {fileID: 1520509601}
   StopMomentum: 1
+  IsSecret: 0
+  SecretMusic: {fileID: 0}
 --- !u!23 &1637613140
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -34107,6 +34173,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destination: {fileID: 1520509601}
   StopMomentum: 1
+  IsSecret: 0
+  SecretMusic: {fileID: 0}
 --- !u!23 &1654024349
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -34899,7 +34967,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: -5, y: 35}
+  m_AnchoredPosition: {x: -205, y: 35}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &1692091938
@@ -35097,6 +35165,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destination: {fileID: 1520509601}
   StopMomentum: 1
+  IsSecret: 0
+  SecretMusic: {fileID: 0}
 --- !u!23 &1692786139
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -35904,6 +35974,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destination: {fileID: 1520509601}
   StopMomentum: 1
+  IsSecret: 0
+  SecretMusic: {fileID: 0}
 --- !u!23 &1719848220
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -36526,6 +36598,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destination: {fileID: 1520509601}
   StopMomentum: 1
+  IsSecret: 0
+  SecretMusic: {fileID: 0}
 --- !u!23 &1750925135
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -36848,10 +36922,10 @@ RectTransform:
   m_Father: {fileID: 691662644}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.14, y: 0.19357602}
-  m_AnchorMax: {x: 0.38000003, y: 0.2578587}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -128}
+  m_SizeDelta: {x: 192, y: 25}
   m_Pivot: {x: 1.5, y: 0.5}
 --- !u!114 &1761504013
 MonoBehaviour:
@@ -37621,6 +37695,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destination: {fileID: 36455002}
   StopMomentum: 1
+  IsSecret: 0
+  SecretMusic: {fileID: 0}
 --- !u!23 &1800540459
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -37709,10 +37785,10 @@ RectTransform:
   m_Father: {fileID: 691662644}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.14, y: 0.4678587}
-  m_AnchorMax: {x: 0.38000003, y: 0.5321414}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -20}
+  m_SizeDelta: {x: 192, y: 25}
   m_Pivot: {x: 1.5, y: 0.5}
 --- !u!114 &1806839407
 MonoBehaviour:
@@ -38632,6 +38708,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destination: {fileID: 1520509601}
   StopMomentum: 1
+  IsSecret: 0
+  SecretMusic: {fileID: 0}
 --- !u!23 &1851925284
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -38734,6 +38812,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destination: {fileID: 1520509601}
   StopMomentum: 1
+  IsSecret: 0
+  SecretMusic: {fileID: 0}
 --- !u!23 &1857114845
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -39532,10 +39612,10 @@ RectTransform:
   m_Father: {fileID: 691662644}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.12920482, y: 0.5321414}
-  m_AnchorMax: {x: 0.40038556, y: 0.65000004}
-  m_AnchoredPosition: {x: 0.5999756, y: 0}
-  m_SizeDelta: {x: -1, y: -0.40000153}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -302, y: -7.2}
+  m_SizeDelta: {x: 231, y: 56.600006}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &1910924123
 MonoBehaviour:
@@ -39556,7 +39636,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 69d43cecbbaa05749a6d3ae2ae154bc3, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 4853b500aeaa4dc4bb7540179b3bb246, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -40110,6 +40190,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destination: {fileID: 1520509601}
   StopMomentum: 1
+  IsSecret: 0
+  SecretMusic: {fileID: 0}
 --- !u!23 &1926966161
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -40497,6 +40579,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destination: {fileID: 1085961869}
   StopMomentum: 1
+  IsSecret: 0
+  SecretMusic: {fileID: 0}
 --- !u!23 &1945615985
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -40959,6 +41043,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destination: {fileID: 1520509601}
   StopMomentum: 1
+  IsSecret: 0
+  SecretMusic: {fileID: 0}
 --- !u!23 &1966548070
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -41167,7 +41253,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 0
-  m_Text: '   Host Game
+  m_Text: '  Host Game
 
 '
 --- !u!222 &1975398987
@@ -41962,7 +42048,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 0
-  m_Text: '   Settings'
+  m_Text: '  Settings'
 --- !u!222 &2012367392
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -43117,6 +43203,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destination: {fileID: 1520509601}
   StopMomentum: 1
+  IsSecret: 0
+  SecretMusic: {fileID: 0}
 --- !u!23 &2076078270
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -43348,7 +43436,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 78, y: -37}
+  m_AnchoredPosition: {x: 0, y: -37}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2082231445
@@ -44094,7 +44182,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 78, y: -2}
+  m_AnchoredPosition: {x: 0, y: -2}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2109636149
@@ -44557,6 +44645,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destination: {fileID: 1520509601}
   StopMomentum: 1
+  IsSecret: 0
+  SecretMusic: {fileID: 0}
 --- !u!23 &2120463654
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -44823,6 +44913,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destination: {fileID: 36455002}
   StopMomentum: 1
+  IsSecret: 0
+  SecretMusic: {fileID: 0}
 --- !u!23 &2126407155
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -44887,7 +44979,7 @@ Prefab:
     - target: {fileID: 114677583468574098, guid: 2c5ef4727ed14894e911cccb3a11e1bc,
         type: 2}
       propertyPath: m_SpawnPrefabs.Array.size
-      value: 54
+      value: 63
       objectReference: {fileID: 0}
     - target: {fileID: 4581438769464498, guid: 2c5ef4727ed14894e911cccb3a11e1bc, type: 2}
       propertyPath: m_LocalPosition.x
@@ -45029,6 +45121,65 @@ Prefab:
       propertyPath: m_ConnectionConfig.m_NetworkDropThreshold
       value: 30
       objectReference: {fileID: 0}
+    - target: {fileID: 114677583468574098, guid: 2c5ef4727ed14894e911cccb3a11e1bc,
+        type: 2}
+      propertyPath: m_SpawnPrefabs.Array.data[54]
+      value: 
+      objectReference: {fileID: 1724717535568866, guid: b13b5446bf9228742bee5c15e38a56e3,
+        type: 2}
+    - target: {fileID: 114677583468574098, guid: 2c5ef4727ed14894e911cccb3a11e1bc,
+        type: 2}
+      propertyPath: m_SpawnPrefabs.Array.data[55]
+      value: 
+      objectReference: {fileID: 1043750665462880, guid: 04d2ed5d4e81c244b8294aeaa477ac1f,
+        type: 2}
+    - target: {fileID: 114677583468574098, guid: 2c5ef4727ed14894e911cccb3a11e1bc,
+        type: 2}
+      propertyPath: m_SpawnPrefabs.Array.data[56]
+      value: 
+      objectReference: {fileID: 1001790201940280, guid: c16f3c1b74d6a4d4db0c8489ebc94153,
+        type: 2}
+    - target: {fileID: 114677583468574098, guid: 2c5ef4727ed14894e911cccb3a11e1bc,
+        type: 2}
+      propertyPath: m_SpawnPrefabs.Array.data[57]
+      value: 
+      objectReference: {fileID: 1976761619345394, guid: 42f4c6af66873ac46b1d5ecd03d11123,
+        type: 2}
+    - target: {fileID: 114677583468574098, guid: 2c5ef4727ed14894e911cccb3a11e1bc,
+        type: 2}
+      propertyPath: m_SpawnPrefabs.Array.data[58]
+      value: 
+      objectReference: {fileID: 1481952887472722, guid: 9b4d2f4df70f68145982e538a32b7c53,
+        type: 2}
+    - target: {fileID: 114677583468574098, guid: 2c5ef4727ed14894e911cccb3a11e1bc,
+        type: 2}
+      propertyPath: m_SpawnPrefabs.Array.data[59]
+      value: 
+      objectReference: {fileID: 1108786696754520, guid: 941920395f608af429f9470e91f61468,
+        type: 2}
+    - target: {fileID: 114677583468574098, guid: 2c5ef4727ed14894e911cccb3a11e1bc,
+        type: 2}
+      propertyPath: m_SpawnPrefabs.Array.data[60]
+      value: 
+      objectReference: {fileID: 1705285136141188, guid: 33c040c6e53ca974f8c1ba899d803394,
+        type: 2}
+    - target: {fileID: 114677583468574098, guid: 2c5ef4727ed14894e911cccb3a11e1bc,
+        type: 2}
+      propertyPath: m_SpawnPrefabs.Array.data[61]
+      value: 
+      objectReference: {fileID: 1409365163373154, guid: bdfab5ab0c8434c439c57c242602fb7b,
+        type: 2}
+    - target: {fileID: 114677583468574098, guid: 2c5ef4727ed14894e911cccb3a11e1bc,
+        type: 2}
+      propertyPath: m_CustomConfig
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114677583468574098, guid: 2c5ef4727ed14894e911cccb3a11e1bc,
+        type: 2}
+      propertyPath: m_SpawnPrefabs.Array.data[62]
+      value: 
+      objectReference: {fileID: 1697459755059710, guid: 00408b01e5f56104284e2c483036fb08,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2c5ef4727ed14894e911cccb3a11e1bc, type: 2}
   m_IsPrefabParent: 0

@@ -434,6 +434,46 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!1 &115559232
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 115559234}
+  - component: {fileID: 115559233}
+  m_Layer: 0
+  m_Name: SteamManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &115559233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 115559232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 038403af9dbba0d49b9a62588939bfb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &115559234
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 115559232}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &116610316
 GameObject:
   m_ObjectHideFlags: 0
@@ -2486,7 +2526,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 24.600006, y: 0}
+  m_AnchoredPosition: {x: 24.600014, y: 0}
   m_SizeDelta: {x: 158, y: 20}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &811821733
@@ -3156,7 +3196,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4159801511464662, guid: a1ac963d1c036674b9f6c5900c81e12a, type: 2}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a1ac963d1c036674b9f6c5900c81e12a, type: 2}
@@ -6657,7 +6697,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1946431500
 MonoBehaviour:
@@ -6768,6 +6808,7 @@ MonoBehaviour:
   - {fileID: 1378346770303924, guid: b8d4d2d0703d9044a8fddadfe85d4c45, type: 2}
   - {fileID: 1276327035662760, guid: acdd2d3514910394e924c8da0090a0f2, type: 2}
   - {fileID: 1170415029158404, guid: a7a7052c73575d54197f62569999cd66, type: 2}
+  - {fileID: 1165208515853384, guid: a0df8bac88627174ba8d3e5017006f33, type: 2}
   jumpList:
   - {fileID: 1004310208602452, guid: 3db336575edce4f46b088d8f46cde61f, type: 2}
   - {fileID: 1695706665660246, guid: 3237f36cc5ccd98479a508f94d59498b, type: 2}
@@ -6853,7 +6894,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: e5d0f7526a33abc4cbb40a4f442e8167, type: 3}
   - {fileID: 8300000, guid: 2ff01abb446abc14ba7e7d6a2f3b70b2, type: 3}
   - {fileID: 8300000, guid: d98aa70964b6322419c56fcd4cce1812, type: 3}
-  - {fileID: 8300000, guid: 93d29e2fe08a5c241864e58dfeebe0f6, type: 3}
+  - {fileID: 8300000, guid: 992df6f3caf7d7144a7b1d6a097de9b9, type: 3}
   lavaTexture: {fileID: 2800000, guid: 355a0ae176c69cd49911a381c5b33bd3, type: 3}
   tutorialMusic: {fileID: 8300000, guid: ada9b1c6daa751046966184f579d4ce7, type: 3}
   IsSetting: 0
