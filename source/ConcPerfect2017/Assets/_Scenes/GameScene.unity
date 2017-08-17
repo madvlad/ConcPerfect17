@@ -42,7 +42,7 @@ RenderSettings:
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 9
+  serializedVersion: 11
   m_GIWorkflowMode: 1
   m_GISettings:
     serializedVersion: 2
@@ -54,7 +54,7 @@ LightmapSettings:
     m_EnableBakedLightmaps: 1
     m_EnableRealtimeLightmaps: 1
   m_LightmapEditorSettings:
-    serializedVersion: 8
+    serializedVersion: 9
     m_Resolution: 2
     m_BakeResolution: 40
     m_TextureWidth: 1024
@@ -88,7 +88,7 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigma: 1
   m_LightingDataAsset: {fileID: 112000001, guid: 834030aecae921a49b2cfae88daff20f,
     type: 2}
-  m_ShadowMaskMode: 2
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -6778,6 +6778,16 @@ MonoBehaviour:
   - {fileID: 1705285136141188, guid: 33c040c6e53ca974f8c1ba899d803394, type: 2}
   - {fileID: 1409365163373154, guid: bdfab5ab0c8434c439c57c242602fb7b, type: 2}
   - {fileID: 1697459755059710, guid: 00408b01e5f56104284e2c483036fb08, type: 2}
+  level7:
+  - {fileID: 1724717535568866, guid: b13b5446bf9228742bee5c15e38a56e3, type: 2}
+  - {fileID: 1724717535568866, guid: b13b5446bf9228742bee5c15e38a56e3, type: 2}
+  - {fileID: 1724717535568866, guid: b13b5446bf9228742bee5c15e38a56e3, type: 2}
+  - {fileID: 1724717535568866, guid: b13b5446bf9228742bee5c15e38a56e3, type: 2}
+  - {fileID: 1724717535568866, guid: b13b5446bf9228742bee5c15e38a56e3, type: 2}
+  - {fileID: 1724717535568866, guid: b13b5446bf9228742bee5c15e38a56e3, type: 2}
+  - {fileID: 1724717535568866, guid: b13b5446bf9228742bee5c15e38a56e3, type: 2}
+  - {fileID: 1724717535568866, guid: b13b5446bf9228742bee5c15e38a56e3, type: 2}
+  - {fileID: 1724717535568866, guid: b13b5446bf9228742bee5c15e38a56e3, type: 2}
 --- !u!114 &1946431502
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6876,6 +6886,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: a64e5a40c00040446a9231518d4e8103, type: 2}
   - {fileID: 2100000, guid: 6110221602ce3944fad57b81b8c9a838, type: 2}
   - {fileID: 2100000, guid: 319c83a9c08dcd34391db1d9476cb80e, type: 2}
+  - {fileID: 2100000, guid: 8dff712e94293f240b8503ff063f19d8, type: 2}
   levelFloorTexture:
   - {fileID: 0}
   - {fileID: 0}
@@ -6895,6 +6906,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 2ff01abb446abc14ba7e7d6a2f3b70b2, type: 3}
   - {fileID: 8300000, guid: d98aa70964b6322419c56fcd4cce1812, type: 3}
   - {fileID: 8300000, guid: 992df6f3caf7d7144a7b1d6a097de9b9, type: 3}
+  - {fileID: 8300000, guid: c8edd014f62b9a141a2380f6d80c4c90, type: 3}
   lavaTexture: {fileID: 2800000, guid: 355a0ae176c69cd49911a381c5b33bd3, type: 3}
   tutorialMusic: {fileID: 8300000, guid: ada9b1c6daa751046966184f579d4ce7, type: 3}
   IsSetting: 0
@@ -7778,6 +7790,7 @@ MonoBehaviour:
   m_PreferredHeight: -1
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
+  m_LayoutPriority: 1
 --- !u!1 &2107757658
 GameObject:
   m_ObjectHideFlags: 0
