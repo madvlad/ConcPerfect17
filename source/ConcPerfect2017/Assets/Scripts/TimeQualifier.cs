@@ -9,8 +9,9 @@ public class TimeQualifier : MonoBehaviour {
     public float[] Level4Times;
     public float[] Level5Times;
 	public float[] Level6Times;
+    public float[] Level7Times;
 
-	public int CheckTime(float time, int level)
+    public int CheckTime(float time, int level)
     {
         switch(level)
         {
@@ -26,6 +27,8 @@ public class TimeQualifier : MonoBehaviour {
                 return Place(time, Level5Times);
 			case 6:
 				return Place(time, Level6Times);
+            case 7:
+                return Place(time, Level7Times);
             default:
                 return Place(time, Level1Times);
         }
