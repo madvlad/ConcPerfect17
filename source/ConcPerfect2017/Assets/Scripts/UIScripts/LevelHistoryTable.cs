@@ -47,7 +47,8 @@ public class LevelHistoryTable : MonoBehaviour {
                     entryManager.SetFields(idx.ToString(), entry.CourseSeed.ToString(), timeString, entry.IsFavorited, entry.DifficultyLevel.ToString());
                 }
 
-                entryInstance.transform.parent = GridElement.transform;
+                entryInstance.transform.SetParent(GridElement.transform);
+                entryInstance.transform.localScale = new Vector3(1,1,1);
                 idx++;
             }
         }
