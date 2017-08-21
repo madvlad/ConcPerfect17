@@ -53,7 +53,11 @@ public class SetTimerOnTrigger : MonoBehaviour {
                 courseCompleteMessage.text = "Course Complete!!\n\nYour time: " + gameStateManager.GetCurrentTime() + "\n\nPress ESC To Quit";
 
                 var reward = other.GetComponent<TimeQualifier>().CheckTime(gameStateManager.GetRawTime(), ApplicationManager.currentLevel);
-                other.GetComponent<MultiplayerChatScript>().WriteLocalMessage(DisplayRewardMessage(reward));
+
+                if (ApplicationManager.currentLevel != 0)
+                {
+                    other.GetComponent<MultiplayerChatScript>().WriteLocalMessage(DisplayRewardMessage(reward));
+                }
 
                 SetCompletionAchievement(reward, ApplicationManager.currentLevel);
 
