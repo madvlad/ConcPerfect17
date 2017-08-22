@@ -55,6 +55,7 @@ public class FirstPersonDrifter : NetworkBehaviour
 
     public Vector3 moveDirection = Vector3.zero;
     public bool grounded = false;
+    public bool underwater = false;
     private bool escaped = false;
     private bool frozen = false;
     private CharacterController controller;
@@ -233,8 +234,18 @@ public class FirstPersonDrifter : NetworkBehaviour
             }
         }
 
-        // Apply gravity
-        moveDirection.y -= (gravity / 2) * Time.deltaTime;
+        if (underwater)
+        {
+            moveDirection.x = inputX * speed * inputModifyFactor;
+            moveDirection.z = inputY * speed * inputModifyFactor * Math.Abs(playerCam.transform.forward.z);
+            moveDirection.y = ((inputY * playerCam.transform.forward.y) * speed / 4) - 0.16f;
+            moveDirection = myTransform.TransformDirection(moveDirection);
+        }
+        else
+        {
+            // Apply gravity
+            moveDirection.y -= (gravity / 2) * Time.deltaTime;
+        }
         // Move the controller, and set grounded true or false depending on whether we're standing on something
         grounded = (controller.Move(moveDirection * Time.deltaTime) & CollisionFlags.Below) != 0;
     }
