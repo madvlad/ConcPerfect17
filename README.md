@@ -4,7 +4,7 @@ This is the source code for Conc Perfect 2017.
 
 Build with Unity 2017.1.03f
 
-Current Release: *2.0.2*
+Current Release: *2.1.0*
 
 Important documents are as follows:
 
