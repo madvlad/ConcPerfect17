@@ -109,7 +109,15 @@ public class GameStateManager : NetworkBehaviour {
         if (TimerIsRunning) {
             CurrentTimerTime += Time.deltaTime;
             TimeSpan timeSpan = TimeSpan.FromSeconds(CurrentTimerTime);
-            TimerHUDElement.GetComponent<Text>().text = timeSpan.Minutes.ToString("00") + ":" + timeSpan.Seconds.ToString("00") + ":" + timeSpan.Milliseconds.ToString("000");
+
+            if (timeSpan.Hours < 0)
+            {
+                TimerHUDElement.GetComponent<Text>().text = timeSpan.Minutes.ToString("00") + ":" + timeSpan.Seconds.ToString("00") + ":" + timeSpan.Milliseconds.ToString("000");
+            }
+            else
+            {
+                TimerHUDElement.GetComponent<Text>().text = timeSpan.Hours.ToString("00") + ":" + timeSpan.Minutes.ToString("00") + ":" + timeSpan.Seconds.ToString("000");
+            }
         }
     }
 
