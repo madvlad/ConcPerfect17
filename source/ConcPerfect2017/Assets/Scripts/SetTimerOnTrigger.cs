@@ -227,6 +227,11 @@ public class SetTimerOnTrigger : MonoBehaviour {
                 SteamUserStats.SetAchievement("ACHIEVEMENT_LVL6_GOLD");
                 Debug.Log("Set achievement ACHIEVEMENT_LVL6_GOLD");
             }
+            if (levelNumber == 7 && reward == 3)
+            {
+                SteamUserStats.SetAchievement("ACHIEVEMENT_LVL7_GOLD");
+                Debug.Log("Set achievement ACHIEVEMENT_LVL7_GOLD");
+            }
             if (levelNumber == 5)
             {
                 SteamUserStats.SetAchievement("ACHIEVEMENT_CAMPAIGN_CLEARED");
