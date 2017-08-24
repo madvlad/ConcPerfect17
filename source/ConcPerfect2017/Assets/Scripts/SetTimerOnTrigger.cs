@@ -109,6 +109,7 @@ public class SetTimerOnTrigger : MonoBehaviour {
                         if (PlayerPrefs.HasKey("OnlineModeRecord"))
                         {
                             var winRecord = PlayerPrefs.GetInt("OnlineModeRecord");
+                            winRecord++;
                             if (winRecord >= 10)
                             {
                                 SteamUserStats.SetAchievement("ACHIEVEMENT_SOCIAL_CONCER");
@@ -129,6 +130,7 @@ public class SetTimerOnTrigger : MonoBehaviour {
                         if (PlayerPrefs.HasKey("RaceModeWinRecord"))
                         {
                             var winRecord = PlayerPrefs.GetInt("RaceModeWinRecord");
+                            winRecord++;
                             if (winRecord >= 10)
                             {
                                 SteamUserStats.SetAchievement("ACHIEVEMENT_STREET_CONCER");
