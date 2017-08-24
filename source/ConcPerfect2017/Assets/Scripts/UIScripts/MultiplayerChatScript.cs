@@ -159,6 +159,13 @@ public class MultiplayerChatScript : NetworkBehaviour {
         }
         else
         {
+            if (chatMessagesText.text.Length > 5000)
+            {
+                var start = chatMessagesText.text.Substring(1000);
+                var end = start.IndexOf("</color>") + 8;
+                chatMessagesText.text = start.Substring(end);
+            }
+
             chatMessagesText.text += message;
         }
 
