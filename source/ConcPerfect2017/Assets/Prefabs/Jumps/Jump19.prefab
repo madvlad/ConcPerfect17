@@ -70,7 +70,7 @@ GameObject:
   - component: {fileID: 65581293438015946}
   - component: {fileID: 23077960248742376}
   m_Layer: 0
-  m_Name: Floor (7)
+  m_Name: Floor (8)
   m_TagString: Floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1114,11 +1114,11 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1042966048167880}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -40, y: -6.49, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 20}
+  m_LocalPosition: {x: -40, y: -6.99, z: -0.000000059605}
+  m_LocalScale: {x: 1, y: 2, z: 20}
   m_Children: []
   m_Father: {fileID: 4925905376999692}
-  m_RootOrder: 3
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4360106968341042
 Transform:
@@ -1197,7 +1197,7 @@ Transform:
   m_LocalScale: {x: 5, y: 7, z: 20}
   m_Children: []
   m_Father: {fileID: 4925905376999692}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4381354446099858
 Transform:
@@ -1346,7 +1346,7 @@ Transform:
   m_LocalScale: {x: 1, y: 80, z: 20}
   m_Children: []
   m_Father: {fileID: 4925905376999692}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4674999807152726
 Transform:
@@ -1523,9 +1523,9 @@ Transform:
   - {fileID: 4371556970807820}
   - {fileID: 4381354446099858}
   - {fileID: 4168208301071994}
-  - {fileID: 4309968784004562}
   - {fileID: 4624634945274532}
   - {fileID: 4378564072144548}
+  - {fileID: 4309968784004562}
   m_Father: {fileID: 4960534193628936}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3543,6 +3543,20 @@ Light:
   m_Lightmapping: 2
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
+  m_FalloffTable:
+    m_Table[0]: 0
+    m_Table[1]: 0
+    m_Table[2]: 0
+    m_Table[3]: 0
+    m_Table[4]: 0
+    m_Table[5]: 0
+    m_Table[6]: 0
+    m_Table[7]: 0
+    m_Table[8]: 0
+    m_Table[9]: 0
+    m_Table[10]: 0
+    m_Table[11]: 0
+    m_Table[12]: 0
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
@@ -3681,3 +3695,5 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
