@@ -18,7 +18,7 @@ public class Water : MonoBehaviour {
         previousFogEnabled = RenderSettings.fog;
     }
 
-	void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Player"))
         {

@@ -238,7 +238,14 @@ public class FirstPersonDrifter : NetworkBehaviour
         {
             moveDirection.x = inputX * speed * inputModifyFactor;
             moveDirection.z = inputY * speed * inputModifyFactor * Math.Abs(playerCam.transform.forward.z);
-            moveDirection.y = ((inputY * playerCam.transform.forward.y) * speed / 4) - 0.16f;
+            if (Input.GetButton("Jump"))
+            {
+                moveDirection.y = jumpSpeed;
+            }
+            else
+            {
+                moveDirection.y = ((inputY * playerCam.transform.forward.y) * speed / 4) - 0.16f;
+            }
             moveDirection = myTransform.TransformDirection(moveDirection);
         }
         else
