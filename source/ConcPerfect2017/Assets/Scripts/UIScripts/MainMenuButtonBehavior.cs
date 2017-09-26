@@ -29,6 +29,7 @@ public class MainMenuButtonBehavior : MonoBehaviour {
     public GameObject loadingScreenUIElement;
     public GameObject failedMessage;
     public GameObject resetCourseButton;
+    public GameObject levelPageManager;
 
     void Start()
     {
@@ -319,16 +320,10 @@ public class MainMenuButtonBehavior : MonoBehaviour {
         PlayerPrefs.SetInt("UseLAN", ApplicationManager.IsLAN ? 1 : 0);
     }
 
-    public void SetRaceMode(bool on)
+    public void SetGameType(Dropdown mode)
     {
-        if (on)
-        {
-            ApplicationManager.GameType = GameTypes.RaceGameType;
-        }
-        else
-        {
-            ApplicationManager.GameType = GameTypes.CasualGameType;
-        }
+        ApplicationManager.GameType = mode.value;
+        levelPageManager.GetComponent<PackSelectorScript>().ChangeGameTypeLevels(mode.value);
     }
 
     public void SetMusicVolume(float volume)
