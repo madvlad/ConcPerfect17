@@ -12,7 +12,6 @@ public class LevelManager : MonoBehaviour {
 	public List<GameObject> level6;
     public List<GameObject> level7;
     public List<GameObject> level8;
-    public List<GameObject> level9;
 
     internal List<GameObject> getLevel(int currentLevel)
     {
@@ -34,8 +33,6 @@ public class LevelManager : MonoBehaviour {
                 return level7;
             case 8:
                 return level8;
-            case 9:
-                return level9;
             default:
                 return null;
         }
