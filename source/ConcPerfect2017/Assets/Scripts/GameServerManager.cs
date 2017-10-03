@@ -11,54 +11,27 @@ public class GameServerManager : NetworkBehaviour {
 	private GameStateManager gameManager;
 
     private bool wait = false;
-	public struct PlayerScore
-	{
-		public PlayerInfo pInfo;
-		public string CurrentTimerTime;
 
-		public int CompareTo(PlayerScore that)
-		{
-			int timeCompare = this.CurrentTimerTime.CompareTo (that.CurrentTimerTime);
-			return (timeCompare == 0) ? this.pInfo.Nickname.CompareTo (that.pInfo.Nickname) : timeCompare;
-		}
-	}
-
-	public struct PlayerInfo
-	{
-		public NetworkInstanceId PlayerId;
-		public string Nickname;
-		public string Status;
-		public int CurrentJump;
-		public string BestTime;
-		public int TimesCompleted;
-        public int PlayerModel;
-
-		public int CompareTo(PlayerInfo that) {
-			int timeCompare = this.BestTime.CompareTo (that.BestTime);
-			return (timeCompare == 0) ? this.Nickname.CompareTo (that.Nickname) : timeCompare;
-		}
-	}
-
-	public class ListPlayerScores : List<PlayerScore>
+	public class ListPlayerScores : List<PlayerScoreRaceMode>
 	{
 		public void RemoveStatByPlayerId(NetworkInstanceId netId)
 		{
-			PlayerScore s = GetStatByPlayerId (netId);
-			if (s.pInfo.PlayerId != null)
+			PlayerScoreRaceMode s = GetStatByPlayerId (netId);
+			if (s.PInfo.PlayerId != null)
 				this.Remove (s);
 		}
 
-		public PlayerScore GetStatByPlayerId(NetworkInstanceId netId)
+		public PlayerScoreRaceMode GetStatByPlayerId(NetworkInstanceId netId)
 		{
-			foreach (PlayerScore s in this)
-				if (s.pInfo.PlayerId == netId) 
+			foreach (PlayerScoreRaceMode s in this)
+				if (s.PInfo.PlayerId == netId) 
 					return s;
-			return new PlayerScore ();
+			return null;
 		}
 
         public bool HasStatWithPlayerId(NetworkInstanceId netId) {
-            foreach (PlayerScore s in this)
-                if (s.pInfo.PlayerId == netId)
+            foreach (PlayerScoreRaceMode s in this)
+                if (s.PInfo.PlayerId == netId)
                     return true;
             return false; 
         }
@@ -71,7 +44,7 @@ public class GameServerManager : NetworkBehaviour {
 
 	void Start () {
 		gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameStateManager>();
-	}
+    }
 
 	void Update () {
 		if (!isServer)
@@ -127,10 +100,11 @@ public class GameServerManager : NetworkBehaviour {
 
 	public void UpdatePlayerTime(NetworkInstanceId netId, string playerTime)
 	{
-		PlayerScore stat = new PlayerScore ();
-		stat.pInfo = currentPlayers [netId];
-		stat.CurrentTimerTime = playerTime;
-		playerScoresList.Add(stat);
+        PlayerScoreRaceMode stat = new PlayerScoreRaceMode {
+            PInfo = currentPlayers[netId],
+            CurrentTimerTime = playerTime
+        };
+        playerScoresList.Add(stat);
 		playerScoresList.Sort ((s1, s2) => s1.CompareTo (s2));
 
 		if (currentPlayers.ContainsKey(netId)) {
