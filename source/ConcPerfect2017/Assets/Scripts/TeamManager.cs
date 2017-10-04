@@ -24,6 +24,10 @@ public class TeamManager : NetworkBehaviour {
     }
 
     void Start() {
+        // TODO - Initialize values based on host params
+        teams = new Dictionary<string, Team>();
+        numberOfTeams = 4;
+        SetUpTeams(numberOfTeams);
     }
 
     public void SetUpTeams(int numberOfTeams) {
@@ -37,9 +41,7 @@ public class TeamManager : NetworkBehaviour {
     }
 
     public void AddPlayerToTeam(string teamName, PlayerInfo pInfo) {
-        if (!isServer)
-            return;
-
         teams[teamName].addPlayerToTeam(pInfo);
+        // TODO - Change the player skinz
     }
 }

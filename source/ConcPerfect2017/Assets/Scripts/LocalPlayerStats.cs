@@ -104,4 +104,9 @@ public class LocalPlayerStats : NetworkBehaviour {
     {
         GameObject.FindGameObjectWithTag("GameServerManager").GetComponent<GameServerManager>().RequestPlayerSkins();
     }
+
+    [Command]
+    public void CmdAddPlayerToTeam(string teamName, PlayerInfo pInfo) {
+        GameObject.FindGameObjectWithTag("TeamManager").GetComponent<TeamManager>().AddPlayerToTeam(teamName, pInfo);
+    }
 }
