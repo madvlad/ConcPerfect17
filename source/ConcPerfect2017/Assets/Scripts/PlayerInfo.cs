@@ -13,6 +13,7 @@ public class PlayerInfo {
     public int TimesCompleted;
     public int PlayerModel;
     public int BeaconsCaptured;
+    public string CurrentTeam = "";
 
     public int CompareTo(PlayerInfo that) {
         int timeCompare = this.BestTime.CompareTo(that.BestTime);

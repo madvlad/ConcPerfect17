@@ -42,6 +42,7 @@ public class TeamManager : NetworkBehaviour {
 
     public void AddPlayerToTeam(string teamName, PlayerInfo pInfo) {
         teams[teamName].addPlayerToTeam(pInfo);
+        pInfo.CurrentTeam = teamName;
         // TODO - Change the player skinz
     }
 }

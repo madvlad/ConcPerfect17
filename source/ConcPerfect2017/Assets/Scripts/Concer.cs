@@ -11,6 +11,7 @@ public class Concer : NetworkBehaviour
     public int ConcPushForce = 8;
     public int ConcCount = 3;
     public int MaxConcCount = 3;
+    public string CurrentTeam = "Red Rangers";
     private GameObject[] ConcTimers;
 
     private GameObject concCountHUDElement;

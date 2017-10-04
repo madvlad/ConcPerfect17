@@ -26,6 +26,7 @@ public class TeamDoor : NetworkBehaviour {
             pInfo.PlayerId = other.GetComponent<NetworkIdentity>().netId;
             pInfo.Nickname = ApplicationManager.Nickname;
             GetLocalPlayerObject().GetComponent<LocalPlayerStats>().CmdAddPlayerToTeam(TeamName, pInfo);
+            other.gameObject.GetComponent<Concer>().CurrentTeam = TeamName;
         }
     }
 
