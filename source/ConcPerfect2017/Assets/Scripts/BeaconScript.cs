@@ -12,6 +12,8 @@ public class BeaconScript : NetworkBehaviour {
     public string OwnedByTeam = "";
     [SyncVar]
     private float currentTimer;
+    [SyncVar]
+    private bool guarded = false;
 
     // Use this for initialization
     void Start () {
@@ -26,15 +28,31 @@ public class BeaconScript : NetworkBehaviour {
         }
 	}
 
+    private void OnTriggerExit(Collider other)
+    {
+        var colliderTeam = other.gameObject.GetComponent<Concer>().CurrentTeam;
+
+        if (colliderTeam.Equals(OwnedByTeam))
+            guarded = false;
+    }
+
+    void OnTriggerStay(Collider collider)
+    {
+        var colliderTeam = collider.gameObject.GetComponent<Concer>().CurrentTeam;
+        
+        if (colliderTeam.Equals(OwnedByTeam))
+            guarded = true;
+    }
+
     void OnTriggerEnter(Collider collider)
     {
         if (collider.gameObject.CompareTag("Player"))
         {
-            // get player team
-            // set owned by team to the current player's team
-            if (currentTimer <= 0.0f)
+            var colliderTeam = collider.gameObject.GetComponent<Concer>().CurrentTeam;
+
+            if (currentTimer <= 0.0f && !guarded)
             {
-                if (collider.gameObject.GetComponent<Concer>().CurrentTeam != OwnedByTeam)
+                if (!colliderTeam.Equals(OwnedByTeam))
                 {
                     OwnedByTeam = collider.gameObject.GetComponent<Concer>().CurrentTeam;
                     currentTimer = SafeTimerSeconds;
