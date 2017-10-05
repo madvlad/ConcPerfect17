@@ -189,6 +189,10 @@ public class CourseHistoryManager : MonoBehaviour {
                 return "Pete's Perilous Park";
             case 6:
                 return "Nanob1te's Mainframe";
+            case 7:
+                return "Sgt. Franco's Fort";
+            case 8:
+                return "Jammy's Tropical Island";
             default:
                 return "Tutor's Gorge";
         }

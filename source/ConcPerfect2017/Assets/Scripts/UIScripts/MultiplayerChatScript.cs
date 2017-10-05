@@ -80,6 +80,14 @@ public class MultiplayerChatScript : NetworkBehaviour {
         }
     }
 
+    internal void SendBeaconCaptureMessage(string beaconName)
+    {
+        if (!isLocalPlayer)
+            return;
+
+        CmdChatMessage("\n<color=\"#ff00ffff\">" + ApplicationManager.Nickname + " captured " + beaconName + "!!</color>");
+    }
+
     void ChatBoxUpdated()
     {
         chatFadeTimer = 5.0f;
@@ -159,6 +167,13 @@ public class MultiplayerChatScript : NetworkBehaviour {
         }
         else
         {
+            if (chatMessagesText.text.Length > 5000)
+            {
+                var start = chatMessagesText.text.Substring(1000);
+                var end = start.IndexOf("</color>") + 8;
+                chatMessagesText.text = start.Substring(end);
+            }
+
             chatMessagesText.text += message;
         }
 

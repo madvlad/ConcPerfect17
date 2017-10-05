@@ -2,9 +2,9 @@
 
 This is the source code for Conc Perfect 2017.
 
-Build with Unity 5.6.1f1
+Build with Unity 2017.1.1f
 
-Current Release: *2.0.2*
+Current Release: *2.2.0*
 
 Important documents are as follows:
 

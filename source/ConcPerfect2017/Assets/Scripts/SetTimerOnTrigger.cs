@@ -53,7 +53,11 @@ public class SetTimerOnTrigger : MonoBehaviour {
                 courseCompleteMessage.text = "Course Complete!!\n\nYour time: " + gameStateManager.GetCurrentTime() + "\n\nPress ESC To Quit";
 
                 var reward = other.GetComponent<TimeQualifier>().CheckTime(gameStateManager.GetRawTime(), ApplicationManager.currentLevel);
-                other.GetComponent<MultiplayerChatScript>().WriteLocalMessage(DisplayRewardMessage(reward));
+
+                if (ApplicationManager.currentLevel != 0)
+                {
+                    other.GetComponent<MultiplayerChatScript>().WriteLocalMessage(DisplayRewardMessage(reward));
+                }
 
                 SetCompletionAchievement(reward, ApplicationManager.currentLevel);
 
@@ -105,6 +109,7 @@ public class SetTimerOnTrigger : MonoBehaviour {
                         if (PlayerPrefs.HasKey("OnlineModeRecord"))
                         {
                             var winRecord = PlayerPrefs.GetInt("OnlineModeRecord");
+                            winRecord++;
                             if (winRecord >= 10)
                             {
                                 SteamUserStats.SetAchievement("ACHIEVEMENT_SOCIAL_CONCER");
@@ -125,6 +130,7 @@ public class SetTimerOnTrigger : MonoBehaviour {
                         if (PlayerPrefs.HasKey("RaceModeWinRecord"))
                         {
                             var winRecord = PlayerPrefs.GetInt("RaceModeWinRecord");
+                            winRecord++;
                             if (winRecord >= 10)
                             {
                                 SteamUserStats.SetAchievement("ACHIEVEMENT_STREET_CONCER");
@@ -222,6 +228,16 @@ public class SetTimerOnTrigger : MonoBehaviour {
             {
                 SteamUserStats.SetAchievement("ACHIEVEMENT_LVL6_GOLD");
                 Debug.Log("Set achievement ACHIEVEMENT_LVL6_GOLD");
+            }
+            if (levelNumber == 7 && reward == 3)
+            {
+                SteamUserStats.SetAchievement("ACHIEVEMENT_LVL7_GOLD");
+                Debug.Log("Set achievement ACHIEVEMENT_LVL7_GOLD");
+            }
+            if (levelNumber == 8 && reward == 3)
+            {
+                SteamUserStats.SetAchievement("ACHIEVEMENT_LVL8_GOLD");
+                Debug.Log("Set achievement ACHIEVEMENT_LVL8_GOLD");
             }
             if (levelNumber == 5)
             {

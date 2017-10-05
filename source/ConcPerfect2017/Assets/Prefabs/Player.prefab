@@ -1359,7 +1359,7 @@ Camera:
     height: 1
   near clip plane: 0.1
   far clip plane: 1000
-  field of view: 75
+  field of view: 90
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -1610,6 +1610,7 @@ MonoBehaviour:
   antiBunnyHopFactor: 1
   moveDirection: {x: 0, y: 0, z: 0}
   grounded: 0
+  underwater: 0
 --- !u!114 &114273865066288770
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1732,6 +1733,7 @@ MonoBehaviour:
   ConcPushForce: 8
   ConcCount: 0
   MaxConcCount: 3
+  CurrentTeam: Default Team
 --- !u!114 &114894374651427744
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1805,6 +1807,16 @@ MonoBehaviour:
   - 4100
   - 3600
   - 2100
+  Level7Times:
+  - 9000
+  - 340
+  - 220
+  - 120
+  level8Times:
+  - 9000
+  - 400
+  - 200
+  - 110
 --- !u!124 &124871678398703502
 Behaviour:
   m_ObjectHideFlags: 1

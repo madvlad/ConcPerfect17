@@ -49,7 +49,7 @@ public class LevelGenerator : NetworkBehaviour {
         GameStateManager.SetCourseJumpLimit(courseJumpListSize);
 
         // Casual Mode
-        if (ApplicationManager.GameType == 0 || ApplicationManager.GameType == 2)
+        if (ApplicationManager.GameType == GameTypes.CasualGameType || ApplicationManager.GameType == GameTypes.RaceGameType || ApplicationManager.GameType == GameTypes.ConcminationGameType)
         {
             if (ApplicationManager.currentLevel > 0)
             {
@@ -65,7 +65,7 @@ public class LevelGenerator : NetworkBehaviour {
             }
         }
         // Tutorial
-        else if (ApplicationManager.GameType == 1)
+        else if (ApplicationManager.GameType == GameTypes.TutorialGameType)
         {
             BuildTutorialLevel();
         }
@@ -279,7 +279,7 @@ public class LevelGenerator : NetworkBehaviour {
     private GameObject InstantiateStartPoint()
     {
         GameObject newStartPrefab;
-        if (ApplicationManager.GameType == 0)
+        if (ApplicationManager.GameType == GameTypes.CasualGameType || ApplicationManager.GameType == GameTypes.ConcminationGameType)
         {
             newStartPrefab = Instantiate(startPrefab);
         }
