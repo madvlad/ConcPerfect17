@@ -14,6 +14,8 @@ public class BeaconScript : NetworkBehaviour {
     private float currentTimer;
     [SyncVar]
     private bool guarded = false;
+    [SyncVar]
+    public string LastCapturer = "None";
 
     // Use this for initialization
     void Start () {
@@ -77,6 +79,10 @@ public class BeaconScript : NetworkBehaviour {
                             break;
 
                     }
+
+                    if (isLocalPlayer)
+                        LastCapturer = ApplicationManager.Nickname;
+
                     collider.gameObject.GetComponent<MultiplayerChatScript>().SendBeaconCaptureMessage(BeaconName);
                 }
             }
