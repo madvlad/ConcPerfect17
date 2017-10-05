@@ -45,11 +45,21 @@ public class BeaconScript : NetworkBehaviour {
                         case "Red Rangers":
                             gameObject.GetComponent<MeshRenderer>().material = TeamMaterials[1];
                             break;
+                        case "Green Gorillas":
+                            gameObject.GetComponent<MeshRenderer>().material = TeamMaterials[2];
+                            break;
+                        case "Blue Bandits":
+                            gameObject.GetComponent<MeshRenderer>().material = TeamMaterials[3];
+                            break;
+                        case "Yellow Yahoos":
+                            gameObject.GetComponent<MeshRenderer>().material = TeamMaterials[4];
+                            break;
                         default:
                             gameObject.GetComponent<MeshRenderer>().material = TeamMaterials[0];
                             break;
 
                     }
+                    collider.gameObject.GetComponent<MultiplayerChatScript>().SendBeaconCaptureMessage(BeaconName);
                 }
             }
         }

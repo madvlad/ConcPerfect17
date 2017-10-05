@@ -80,6 +80,14 @@ public class MultiplayerChatScript : NetworkBehaviour {
         }
     }
 
+    internal void SendBeaconCaptureMessage(string beaconName)
+    {
+        if (!isLocalPlayer)
+            return;
+
+        CmdChatMessage("\n<color=\"#ff00ffff\">" + ApplicationManager.Nickname + " captured " + beaconName + "!!</color>");
+    }
+
     void ChatBoxUpdated()
     {
         chatFadeTimer = 5.0f;
