@@ -14,7 +14,7 @@ public class Conc : NetworkBehaviour
     public AudioClip primeSFX;
     public AudioClip warningSFX;
     public float timer = 5f;
-    public float timeLeft = 5f;
+    public float timeLeft = 4f;
     public bool exploded = false;
 
     public GameObject owner;
