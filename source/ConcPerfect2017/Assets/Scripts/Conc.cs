@@ -74,7 +74,7 @@ public class Conc : NetworkBehaviour
         exploded = true;
         Invoke("Destroy", 0.5f);
         gameObject.GetComponent<MeshRenderer>().enabled = false;
-        PlayExplosionSound();
+        PlayRemoteExplosionSound();
     }
 
     void EnactPush()
@@ -114,6 +114,14 @@ public class Conc : NetworkBehaviour
         if (explodeSFX && explodeSFX != null && playerObject != null)
         {
             AudioSource.PlayClipAtPoint(explodeSFX, playerObject.transform.position, ApplicationManager.sfxVolume);
+        }
+    }
+
+    void PlayRemoteExplosionSound()
+    {
+        if (explodeSFX)
+        {
+            AudioSource.PlayClipAtPoint(explodeSFX, gameObject.transform.position, ApplicationManager.sfxVolume);
         }
     }
 

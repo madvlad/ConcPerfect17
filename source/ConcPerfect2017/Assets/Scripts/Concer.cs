@@ -182,7 +182,7 @@ public class Concer : NetworkBehaviour
         if (!concInstance.GetComponent<Rigidbody>()) { concInstance.AddComponent<Rigidbody>(); }
         concInstance.GetComponent<Rigidbody>().useGravity = true;
         concInstance.GetComponent<Rigidbody>().AddForce(push * ConcPushForce, ForceMode.Impulse);
-        yield return new WaitForSeconds(timeLeft);
+        yield return new WaitForSeconds(timeLeft - 0.5f);
         concInstance.GetComponent<Conc>().HarmlesslyExplode();
     }
 }
