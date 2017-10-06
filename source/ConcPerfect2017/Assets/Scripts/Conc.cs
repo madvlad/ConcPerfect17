@@ -14,14 +14,19 @@ public class Conc : NetworkBehaviour
     public AudioClip primeSFX;
     public AudioClip warningSFX;
     public float timer = 5f;
+    public float timeLeft = 5f;
     public bool exploded = false;
 
-    private GameObject owner;
+    public GameObject owner;
+    public bool remote = false;
     private GameObject playerObject;
     private int BeepCount = 1;
 
     void Start()
     {
+        if (remote)
+            return;
+
         var playerObjects = GameObject.FindGameObjectsWithTag("Player");
 
         foreach(GameObject obj in playerObjects)
@@ -44,6 +49,11 @@ public class Conc : NetworkBehaviour
         }
     }
 
+    void FixedUpdate()
+    {
+        timeLeft -= Time.deltaTime;
+    }
+
     void Explode()
     {
         explosionParticleSystem.Emit(1);
@@ -53,6 +63,17 @@ public class Conc : NetworkBehaviour
         Invoke("Destroy", timer);
         gameObject.GetComponent<MeshRenderer>().enabled = false;
         EnactPush();
+        PlayExplosionSound();
+    }
+
+    public void HarmlesslyExplode()
+    {
+        explosionParticleSystem.Emit(1);
+        explosionFlashParticleSystem.Emit(1);
+        explosionEmbersParticleSystem.Emit(100);
+        exploded = true;
+        Invoke("Destroy", 0.5f);
+        gameObject.GetComponent<MeshRenderer>().enabled = false;
         PlayExplosionSound();
     }
 
@@ -90,7 +111,7 @@ public class Conc : NetworkBehaviour
 
     void PlayExplosionSound()
     {
-        if (explodeSFX)
+        if (explodeSFX && explodeSFX != null && playerObject != null)
         {
             AudioSource.PlayClipAtPoint(explodeSFX, playerObject.transform.position, ApplicationManager.sfxVolume);
         }
@@ -126,5 +147,20 @@ public class Conc : NetworkBehaviour
     public void SetOwner(GameObject owner)
     {
         this.owner = owner;
+    }
+
+    private GameObject GetLocalPlayerObject()
+    {
+        var playerObjects = GameObject.FindGameObjectsWithTag("Player");
+        GameObject playerObject = null;
+        foreach (GameObject obj in playerObjects)
+        {
+            if (obj.GetComponent<NetworkIdentity>().isLocalPlayer)
+            {
+                playerObject = obj;
+            }
+        }
+
+        return playerObject;
     }
 }
