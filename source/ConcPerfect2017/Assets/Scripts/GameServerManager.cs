@@ -9,41 +9,16 @@ using System;
 
 public class GameServerManager : NetworkBehaviour {
 	private GameStateManager gameManager;
-
+    private BeaconManager beaconManager;
     private bool wait = false;
 
-	public class ListPlayerScores : List<PlayerScoreRaceMode>
-	{
-		public void RemoveStatByPlayerId(NetworkInstanceId netId)
-		{
-			PlayerScoreRaceMode s = GetStatByPlayerId (netId);
-			if (s.PInfo.PlayerId != null)
-				this.Remove (s);
-		}
-
-		public PlayerScoreRaceMode GetStatByPlayerId(NetworkInstanceId netId)
-		{
-			foreach (PlayerScoreRaceMode s in this)
-				if (s.PInfo.PlayerId == netId) 
-					return s;
-			return null;
-		}
-
-        public bool HasStatWithPlayerId(NetworkInstanceId netId) {
-            foreach (PlayerScoreRaceMode s in this)
-                if (s.PInfo.PlayerId == netId)
-                    return true;
-            return false; 
-        }
-	}
-
-	public ListPlayerScores playerScoresList = new ListPlayerScores();
 	public Dictionary<NetworkInstanceId, PlayerInfo> currentPlayers = new Dictionary<NetworkInstanceId, PlayerInfo> ();
 	public Dictionary<NetworkInstanceId, string> playerNicknames = new Dictionary<NetworkInstanceId, string> ();
     public Dictionary<NetworkInstanceId, int> playerSkins = new Dictionary<NetworkInstanceId, int>();
 
 	void Start () {
 		gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameStateManager>();
+        beaconManager = GameObject.FindGameObjectWithTag("BeaconManager").GetComponent<BeaconManager>();
     }
 
 	void Update () {
@@ -60,7 +35,10 @@ public class GameServerManager : NetworkBehaviour {
             players.Sort((s1, s2) => s1.CompareTo(s2));
             foreach (PlayerInfo pInfo in players)
             {
-                playerInfo += pInfo.PlayerId.ToString() + " ; " + pInfo.Nickname + " ; " + pInfo.Status + " ; " + pInfo.CurrentJump + "/" + gameManager.GetCourseJumpLimit() + " ; " + pInfo.BestTime + " ; " + pInfo.TimesCompleted + " % ";
+                if (ApplicationManager.GameType == GameTypes.ConcminationGameType)
+                    playerInfo += pInfo.PrintPlayerInfoConcminationMode();
+                else
+                    playerInfo += pInfo.PrintPlayerInfoRaceMode();
             }
             gameManager.RpcUpdatePlayerInfo(playerInfo);
             Invoke("StopWaiting", 1.0f);
@@ -98,15 +76,18 @@ public class GameServerManager : NetworkBehaviour {
         }
     }
 
+    public void UpdatePlayerBeaconsOwned(NetworkInstanceId netId) {
+        int beaconCount = beaconManager.GetUserBeaconCount(netId);
+        if (currentPlayers.ContainsKey(netId)) {
+            PlayerInfo pInfo = currentPlayers[netId];
+            pInfo.BeaconsCaptured = beaconCount;
+            currentPlayers.Remove(netId);
+            currentPlayers[netId] = pInfo;
+        }
+    }
+
 	public void UpdatePlayerTime(NetworkInstanceId netId, string playerTime)
 	{
-        PlayerScoreRaceMode stat = new PlayerScoreRaceMode {
-            PInfo = currentPlayers[netId],
-            CurrentTimerTime = playerTime
-        };
-        playerScoresList.Add(stat);
-		playerScoresList.Sort ((s1, s2) => s1.CompareTo (s2));
-
 		if (currentPlayers.ContainsKey(netId)) {
 			PlayerInfo pInfo = currentPlayers [netId];
 			if (pInfo.BestTime == "- -") {
@@ -159,8 +140,10 @@ public class GameServerManager : NetworkBehaviour {
 		pInfo.Nickname = playerNicknames [netId];
 		pInfo.Status = "Not Started";
 		pInfo.CurrentJump = 0;
+        pInfo.CourseJumpLimit = gameManager.GetCourseJumpLimit();
 		pInfo.BestTime = "- -";
 		pInfo.TimesCompleted = 0;
+        pInfo.BeaconsCaptured = 0;
         pInfo.PlayerModel = playerModel;
 		currentPlayers [netId] = pInfo;
 	}

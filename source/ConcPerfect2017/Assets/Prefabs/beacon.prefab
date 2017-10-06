@@ -9,9 +9,9 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1123358622211186}
+  m_RootGameObject: {fileID: 1612879414165880}
   m_IsPrefabParent: 1
---- !u!1 &1123358622211186
+--- !u!1 &1612879414165880
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
@@ -27,17 +27,17 @@ GameObject:
   - component: {fileID: 82792498864978382}
   m_Layer: 0
   m_Name: beacon
-  m_TagString: Untagged
+  m_TagString: Beacon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4546877758806810
+--- !u!4 &4697458631423596
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1123358622211186}
+  m_GameObject: {fileID: 1612879414165880}
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071067}
   m_LocalPosition: {x: 0, y: -0.85, z: -0}
   m_LocalScale: {x: 50, y: 99.99994, z: 49.99997}
@@ -45,12 +45,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!23 &23830618781950598
+--- !u!23 &23064591904561648
 MeshRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1123358622211186}
+  m_GameObject: {fileID: 1612879414165880}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -77,19 +77,19 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!33 &33726967733013488
+--- !u!33 &33518220252147416
 MeshFilter:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1123358622211186}
+  m_GameObject: {fileID: 1612879414165880}
   m_Mesh: {fileID: 4300000, guid: 1ee3a325df5c10840b1f6c5ee73318cf, type: 3}
---- !u!65 &65246884043597176
+--- !u!65 &65512437540159202
 BoxCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1123358622211186}
+  m_GameObject: {fileID: 1612879414165880}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
@@ -181,7 +181,28 @@ MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1123358622211186}
+  m_GameObject: {fileID: 1612879414165880}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba0cec5b1b679c247b6a924044dfe377, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TeamMaterials:
+  - {fileID: 2100000, guid: f2b65e97c1078104f8b767a22ff00b45, type: 2}
+  - {fileID: 2100000, guid: a72997c0be65f3b4ca3edd1c362ec37b, type: 2}
+  - {fileID: 2100000, guid: c4a44ab0f15448841839267d41d2bc0b, type: 2}
+  - {fileID: 2100000, guid: b0081c7ba291272499df6502cd45d625, type: 2}
+  - {fileID: 2100000, guid: e2ca36e1b918d444b9e0853c110630cf, type: 2}
+  BeaconName: Conc Beacon
+  SafeTimerSeconds: 15
+  OwnedByTeam: 
+  LastCapturer: None
+--- !u!114 &114713104615892238
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1612879414165880}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
@@ -208,24 +229,3 @@ MonoBehaviour:
     i15: 249
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 0
---- !u!114 &114910421066041232
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1123358622211186}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba0cec5b1b679c247b6a924044dfe377, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  TeamMaterials:
-  - {fileID: 2100000, guid: f2b65e97c1078104f8b767a22ff00b45, type: 2}
-  - {fileID: 2100000, guid: a72997c0be65f3b4ca3edd1c362ec37b, type: 2}
-  - {fileID: 2100000, guid: c4a44ab0f15448841839267d41d2bc0b, type: 2}
-  - {fileID: 2100000, guid: b0081c7ba291272499df6502cd45d625, type: 2}
-  - {fileID: 2100000, guid: e2ca36e1b918d444b9e0853c110630cf, type: 2}
-  BeaconName: Conc Beacon
-  SafeTimerSeconds: 15
-  OwnedByTeam: 
-  LastCapturer: None

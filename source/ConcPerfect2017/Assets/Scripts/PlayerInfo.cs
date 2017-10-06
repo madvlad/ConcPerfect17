@@ -9,6 +9,7 @@ public class PlayerInfo {
     public string Nickname;
     public string Status;
     public int CurrentJump;
+    public int CourseJumpLimit;
     public string BestTime;
     public int TimesCompleted;
     public int PlayerModel;
@@ -20,5 +21,13 @@ public class PlayerInfo {
         int beaconsCompare = this.BeaconsCaptured.CompareTo(that.BeaconsCaptured);
 
         return ((timeCompare|beaconsCompare) == 0 ) ? this.Nickname.CompareTo(that.Nickname) : (timeCompare|beaconsCompare);
+    }
+
+    public string PrintPlayerInfoRaceMode() {
+        return this.PlayerId.ToString() + " ; " + this.Nickname + " ; " + this.Status + " ; " + this.CurrentJump + "/" + this.CourseJumpLimit + " ; " + this.BestTime + " ; " + this.TimesCompleted + " % ";
+    }
+
+    public string PrintPlayerInfoConcminationMode() {
+        return this.PlayerId.ToString() + " ; " + this.Nickname + " ; " + this.Status + " ; " + this.BeaconsCaptured+ " % ";
     }
 }

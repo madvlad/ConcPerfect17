@@ -41,6 +41,12 @@ public class LocalPlayerStats : NetworkBehaviour {
 		CmdUpdateStatus (netId, status);
 	}
 
+    public void UpdateCapturedBeacons() {
+        if (!isLocalPlayer)
+            return;
+        CmdUpdateCapturedBeacons(netId);
+    }
+
     public void UpdateJump(int jump) {
         if (!isLocalPlayer)
             return;
@@ -87,6 +93,11 @@ public class LocalPlayerStats : NetworkBehaviour {
 	{
 		gameServerManager.UpdatePlayerJump (netId, jump);
 	}
+
+    [Command]
+    public void CmdUpdateCapturedBeacons(NetworkInstanceId netId) {
+        gameServerManager.UpdatePlayerBeaconsOwned(netId);
+    }
 
     [Command]
     public void CmdUpdateNickname(NetworkInstanceId netId, string nickname, int playerModel) {

@@ -16,6 +16,8 @@ public class BeaconScript : NetworkBehaviour {
     private bool guarded = false;
     [SyncVar]
     public string LastCapturer = "None";
+    [SyncVar]
+    public NetworkInstanceId LastCapturerNetId;
 
     // Use this for initialization
     void Start () {
@@ -80,8 +82,10 @@ public class BeaconScript : NetworkBehaviour {
 
                     }
 
-                    if (isLocalPlayer)
-                        LastCapturer = ApplicationManager.Nickname;
+                    LastCapturer = ApplicationManager.Nickname;
+                    GameObject localPlayer = ApplicationManager.GetLocalPlayerObject();
+                    LastCapturerNetId = localPlayer.GetComponent<NetworkIdentity>().netId;
+                    localPlayer.GetComponent<LocalPlayerStats>().UpdateCapturedBeacons();
 
                     collider.gameObject.GetComponent<MultiplayerChatScript>().SendBeaconCaptureMessage(BeaconName);
                     gameObject.GetComponent<AudioSource>().volume = ApplicationManager.sfxVolume;

@@ -242,41 +242,82 @@ public class GameStateManager : NetworkBehaviour {
     }
 
     public void UpdatePlayerStats() {
-		foreach (Text row in PlayerInfoHUDElement.GetComponentsInChildren<Text>()) {
+        var i = 0;
+
+        foreach (Text row in PlayerInfoHUDElement.GetComponentsInChildren<Text>()) {
 			Destroy(row.gameObject);
 		}
-
-		var i = 0;
-		AddHeaderTextToPanel (PlayerInfoHUDElement, "InfoRow" + i, "In Game", 1);
-		AddHeaderTextToPanel (PlayerInfoHUDElement, "InfoRow" + i, "", 1);
-		AddHeaderTextToPanel (PlayerInfoHUDElement, "InfoRow" + i, "", 1);
-		AddHeaderTextToPanel (PlayerInfoHUDElement, "InfoRow" + i, "", 1);
-		AddHeaderTextToPanel (PlayerInfoHUDElement, "InfoRow" + i++, "", 1);
-		AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i, "Player", 2);
-		AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i, "Status", 2);
-		AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i, "Current Jump", 2);
-		AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i, "Best Time", 2);
-		AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i++, "Times Completed", 2);
+        if (ApplicationManager.GameType == GameTypes.ConcminationGameType) {
+            AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i, "In Game", 1);
+            AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i, "", 1);
+            AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i, "", 1);
+            AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i, "", 1);
+            AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i++, "", 1);
+            AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i, "Player", 2);
+            AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i, "Status", 2);
+            AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i, "Beacons Captured", 2);
+            AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i, "", 2);
+            AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i++, "", 2);
+        } else {
+            AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i, "In Game", 1);
+            AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i, "", 1);
+            AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i, "", 1);
+            AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i, "", 1);
+            AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i++, "", 1);
+            AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i, "Player", 2);
+            AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i, "Status", 2);
+            AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i, "Current Jump", 2);
+            AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i, "Best Time", 2);
+            AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i++, "Times Completed", 2);
+        }
 
 		foreach (string info in playerInfo) {
-			if (info.Split(';').Length > 5) {
-				string pId = info.Split(';')[0];
-				string nickname = info.Split(';')[1];
-				string status = info.Split(';')[2];
-				string jumpNumber = info.Split(';')[3];
-				string bestScore = info.Split (';') [4];
-				string timesCompleted = info.Split (';') [5];
-				Color rowColor = Color.white;
-				if (pId.Trim().Equals(GetLocalPlayerObject().GetComponent<NetworkIdentity>().netId.ToString().Trim())) {
-					nickname = "*" + nickname; 
-				}
-				AddTextToPanel(PlayerInfoHUDElement, "InfoRow" + i + "nickname", nickname, rowColor);
-				AddTextToPanel(PlayerInfoHUDElement, "InfoRow" + i + "status", status, rowColor);
-				AddTextToPanel(PlayerInfoHUDElement, "InfoRow" + i++ + "jumpNumber", jumpNumber, rowColor);
-				AddTextToPanel(PlayerInfoHUDElement, "InfoRow" + i++ + "bestScore", bestScore, rowColor);
-				AddTextToPanel(PlayerInfoHUDElement, "InfoRow" + i++ + "timesCompleted", timesCompleted, rowColor);
-			}
+            if (ApplicationManager.GameType == GameTypes.ConcminationGameType) {
+                i = parseConcminiationModeScores(info, i);
+            } else {
+                i = parseRaceModeScores(info, i);
+            }
 		}
+    }
+
+    private int parseRaceModeScores(string info, int i) {
+        if (info.Split(';').Length > 5) {
+            string pId = info.Split(';')[0];
+            string nickname = info.Split(';')[1];
+            string status = info.Split(';')[2];
+            string jumpNumber = info.Split(';')[3];
+            string bestScore = info.Split(';')[4];
+            string timesCompleted = info.Split(';')[5];
+            Color rowColor = Color.white;
+            if (pId.Trim().Equals(GetLocalPlayerObject().GetComponent<NetworkIdentity>().netId.ToString().Trim())) {
+                nickname = "*" + nickname;
+            }
+            AddTextToPanel(PlayerInfoHUDElement, "InfoRow" + i + "nickname", nickname, rowColor);
+            AddTextToPanel(PlayerInfoHUDElement, "InfoRow" + i + "status", status, rowColor);
+            AddTextToPanel(PlayerInfoHUDElement, "InfoRow" + i++ + "jumpNumber", jumpNumber, rowColor);
+            AddTextToPanel(PlayerInfoHUDElement, "InfoRow" + i++ + "bestScore", bestScore, rowColor);
+            AddTextToPanel(PlayerInfoHUDElement, "InfoRow" + i++ + "timesCompleted", timesCompleted, rowColor);
+        }
+        return i;
+    }
+
+    private int parseConcminiationModeScores(string info, int i) {
+        if (info.Split(';').Length > 3) {
+            string pId = info.Split(';')[0];
+            string nickname = info.Split(';')[1];
+            string status = info.Split(';')[2];
+            string beaconsCaptured = info.Split(';')[3];
+            Color rowColor = Color.white;
+            if (pId.Trim().Equals(GetLocalPlayerObject().GetComponent<NetworkIdentity>().netId.ToString().Trim())) {
+                nickname = "*" + nickname;
+            }
+            AddTextToPanel(PlayerInfoHUDElement, "InfoRow" + i + "nickname", nickname, rowColor);
+            AddTextToPanel(PlayerInfoHUDElement, "InfoRow" + i + "status", status, rowColor);
+            AddTextToPanel(PlayerInfoHUDElement, "InfoRow" + i++ + "beaconsCaptured", beaconsCaptured, rowColor);
+            AddTextToPanel(PlayerInfoHUDElement, "InfoRow" + i++ + "emptycell", "", rowColor);
+            AddTextToPanel(PlayerInfoHUDElement, "InfoRow" + i++ + "emptycell", "", rowColor);
+        }
+        return i;
     }
 
     public void ShowPlayerStats(bool show) {

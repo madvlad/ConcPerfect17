@@ -36,7 +36,7 @@ public class MainMenuButtonBehavior : MonoBehaviour {
         if (Camera.main.GetComponent<AudioSource>() != null)
         {
             ApplicationManager.JumpsDifficultiesAllowed = new List<int> { 0, 1, 2, 3, 4 };
-            ApplicationManager.GameType = GameTypes.CasualGameType;
+            //ApplicationManager.GameType = GameTypes.CasualGameType;
             Camera.main.GetComponent<AudioSource>().volume = ApplicationManager.musicVolume;
         }
 

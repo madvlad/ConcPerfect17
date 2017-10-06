@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 using Random = UnityEngine.Random;
 
 public class ApplicationManager : MonoBehaviour {
@@ -101,5 +102,17 @@ public class ApplicationManager : MonoBehaviour {
         }
 
         return 0;
+    }
+
+    public static GameObject GetLocalPlayerObject() {
+        var playerObjects = GameObject.FindGameObjectsWithTag("Player");
+        GameObject playerObject = null;
+        foreach (GameObject obj in playerObjects) {
+            if (obj.GetComponent<NetworkIdentity>().isLocalPlayer) {
+                playerObject = obj;
+            }
+        }
+
+        return playerObject;
     }
 }
