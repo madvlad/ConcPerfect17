@@ -84,6 +84,8 @@ public class BeaconScript : NetworkBehaviour {
                         LastCapturer = ApplicationManager.Nickname;
 
                     collider.gameObject.GetComponent<MultiplayerChatScript>().SendBeaconCaptureMessage(BeaconName);
+                    gameObject.GetComponent<AudioSource>().volume = ApplicationManager.sfxVolume;
+                    gameObject.GetComponent<AudioSource>().Play();
                 }
             }
         }
