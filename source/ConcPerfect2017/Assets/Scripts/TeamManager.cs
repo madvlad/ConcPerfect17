@@ -6,7 +6,7 @@ using UnityEngine.Networking;
 using UnityEngine.UI;
 
 public class TeamManager : NetworkBehaviour {
-    private string[] TEAM_NAMES = { "Team1", "Team2", "Team3", "Team4" };
+    private string[] TEAM_NAMES = { "Red Rangers", "Blue Bandits", "Green Gorillas", "Yellow Yahoos" };
     private Color[] TEAM_COLORS = { Color.red, Color.blue, Color.green, Color.yellow };
     
     private Dictionary<string, Team> teams;
