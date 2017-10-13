@@ -40,6 +40,8 @@ public class ConcminationStarter : NetworkBehaviour {
         grabId.AssignClientAuthority(player.connectionToClient);
         IsTriggered = true;
         RenderedCylinder.GetComponent<MeshRenderer>().enabled = false;
+        Barrier.GetComponent<MeshRenderer>().enabled = false;
+        Barrier.GetComponent<BoxCollider>().enabled = false;
         GetComponent<CapsuleCollider>().enabled = false;
         GetComponent<AudioSource>().PlayOneShot(TriggeredSound, ApplicationManager.sfxVolume);
         Debug.Log("Countdown started");
