@@ -14,13 +14,26 @@ public class PlayerInfo {
     public int TimesCompleted;
     public int PlayerModel;
     public int BeaconsCaptured;
-    public string CurrentTeam = "";
+    public string CurrentTeam = null;
 
     public int CompareTo(PlayerInfo that) {
-        int timeCompare = this.BestTime.CompareTo(that.BestTime);
-        int beaconsCompare = this.BeaconsCaptured.CompareTo(that.BeaconsCaptured);
+        if (ApplicationManager.GameType == GameTypes.ConcminationGameType) {
+            // Sort By Team First
 
-        return ((timeCompare|beaconsCompare) == 0 ) ? this.Nickname.CompareTo(that.Nickname) : (timeCompare|beaconsCompare);
+            int teamCompare =  this.CurrentTeam.CompareTo(that.CurrentTeam);
+            if (teamCompare == 0) {
+                // Sort by capture count second
+                int beaconsCompare = this.BeaconsCaptured.CompareTo(that.BeaconsCaptured);
+
+                return (beaconsCompare == 0) ? this.Nickname.CompareTo(that.Nickname) : (beaconsCompare);
+            } else {
+                return teamCompare;
+            }
+        } else {
+            int timeCompare = this.BestTime.CompareTo(that.BestTime);
+
+            return (timeCompare == 0) ? this.Nickname.CompareTo(that.Nickname) : (timeCompare);
+        }
     }
 
     public string PrintPlayerInfoRaceMode() {

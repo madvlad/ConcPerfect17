@@ -253,11 +253,9 @@ public class GameStateManager : NetworkBehaviour {
             AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i, "", 1);
             AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i, "", 1);
             AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i++, "", 1);
-            AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i, "Player", 2);
-            AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i, "Status", 2);
-            AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i, "Beacons Captured", 2);
-            AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i, "", 2);
-            AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i++, "", 2);
+            foreach (string info in playerInfo) {
+                i = parseConcminiationModeScores(info, i);
+            }
         } else {
             AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i, "In Game", 1);
             AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i, "", 1);
@@ -269,15 +267,28 @@ public class GameStateManager : NetworkBehaviour {
             AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i, "Current Jump", 2);
             AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i, "Best Time", 2);
             AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i++, "Times Completed", 2);
-        }
-
-		foreach (string info in playerInfo) {
-            if (ApplicationManager.GameType == GameTypes.ConcminationGameType) {
-                i = parseConcminiationModeScores(info, i);
-            } else {
-                i = parseRaceModeScores(info, i);
+            foreach (string info in playerInfo) {
+                    i = parseRaceModeScores(info, i);
             }
 		}
+    }
+
+    private int addConcminationPlayerScoreHeaders(int i) {
+        AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i, "Player", 2);
+        AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i, "Status", 2);
+        AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i, "Beacons Captured", 2);
+        AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i, "", 2);
+        AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i++, "", 2);
+        return i;
+    }
+
+    private int addConcminationTeamScoreHeaders(int i) {
+        AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i, "Team", 2);
+        AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i, "Score", 2);
+        AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i, "", 2);
+        AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i, "", 2);
+        AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i++, "", 2);
+        return i;
     }
 
     private int parseRaceModeScores(string info, int i) {
@@ -316,6 +327,17 @@ public class GameStateManager : NetworkBehaviour {
             AddTextToPanel(PlayerInfoHUDElement, "InfoRow" + i++ + "beaconsCaptured", beaconsCaptured, rowColor);
             AddTextToPanel(PlayerInfoHUDElement, "InfoRow" + i++ + "emptycell", "", rowColor);
             AddTextToPanel(PlayerInfoHUDElement, "InfoRow" + i++ + "emptycell", "", rowColor);
+        } else if (info.Split(';').Length > 1) {
+            i = addConcminationTeamScoreHeaders(i);
+            Color rowColor = Color.white;
+            string teamName = info.Split(';')[0];
+            string beaconsCaptured = info.Split(';')[1];
+            AddTextToPanel(PlayerInfoHUDElement, "InfoRow" + i + "teamName", teamName, rowColor);
+            AddTextToPanel(PlayerInfoHUDElement, "InfoRow" + i + "beaconsCaptured", beaconsCaptured, rowColor);
+            AddTextToPanel(PlayerInfoHUDElement, "InfoRow" + i++ + "emptycell", "", rowColor);
+            AddTextToPanel(PlayerInfoHUDElement, "InfoRow" + i++ + "emptycell", "", rowColor);
+            AddTextToPanel(PlayerInfoHUDElement, "InfoRow" + i++ + "emptycell", "", rowColor);
+            i = addConcminationPlayerScoreHeaders(i);
         }
         return i;
     }

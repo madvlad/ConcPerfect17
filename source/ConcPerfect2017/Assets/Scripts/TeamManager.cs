@@ -6,9 +6,13 @@ using UnityEngine.Networking;
 using UnityEngine.UI;
 
 public class TeamManager : NetworkBehaviour {
-    private string[] TEAM_NAMES = { "Red Rangers", "Blue Bandits", "Green Gorillas", "Yellow Yahoos" };
-    private Color[] TEAM_COLORS = { Color.red, Color.blue, Color.green, Color.yellow };
-    
+    private Dictionary<string, Color> TEAM_VALUES = new Dictionary<string, Color>() {
+        {"Red Rangers", Color.red },
+        {"Blue Bandits", Color.blue },
+        {"Green Gorillas", Color.green },
+        {"Yellow Yahoos", Color.yellow }
+    };
+
     private Dictionary<string, Team> teams;
 
     private int numberOfTeams;
@@ -26,23 +30,26 @@ public class TeamManager : NetworkBehaviour {
     void Start() {
         // TODO - Initialize values based on host params
         teams = new Dictionary<string, Team>();
-        numberOfTeams = 4;
-        SetUpTeams(numberOfTeams);
-    }
-
-    public void SetUpTeams(int numberOfTeams) {
-        if (!isServer)
-            return;
-
-        this.numberOfTeams = numberOfTeams;
-        for (int i=0; i<numberOfTeams; i++) {
-            teams.Add(TEAM_NAMES[i], new Team(TEAM_COLORS[i], TEAM_NAMES[i]));
-        }
     }
 
     public void AddPlayerToTeam(string teamName, PlayerInfo pInfo) {
+        if (!teams.ContainsKey(teamName)) {
+            teams.Add(teamName, new Team(TEAM_VALUES[teamName], teamName));
+            this.numberOfTeams = teams.Count;
+        }
         teams[teamName].addPlayerToTeam(pInfo);
         pInfo.CurrentTeam = teamName;
-        // TODO - Change the player skinz
+        GameServerManager gSM = GameObject.FindGameObjectWithTag("GameServerManager").GetComponent<GameServerManager>();
+        gSM.UpdatePlayerTeam(teamName, pInfo);
+        // TODO player skins
+    }
+
+    public Team GetTeamByName(String name) {
+        return teams[name];
+    }
+
+
+    public Dictionary<string, Team> GetTeams() {
+        return teams;
     }
 }

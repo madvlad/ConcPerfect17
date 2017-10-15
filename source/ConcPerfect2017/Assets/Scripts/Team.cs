@@ -43,4 +43,8 @@ public class Team {
     public List<PlayerInfo> getTeamPlayers() {
         return players;
     } 
+
+    public int CompareTo(Team that) {
+        return this.TeamName.CompareTo(that.TeamName);
+    }
 }

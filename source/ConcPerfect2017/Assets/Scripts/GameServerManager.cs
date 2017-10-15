@@ -15,6 +15,7 @@ public class GameServerManager : NetworkBehaviour {
 	public Dictionary<NetworkInstanceId, PlayerInfo> currentPlayers = new Dictionary<NetworkInstanceId, PlayerInfo> ();
 	public Dictionary<NetworkInstanceId, string> playerNicknames = new Dictionary<NetworkInstanceId, string> ();
     public Dictionary<NetworkInstanceId, int> playerSkins = new Dictionary<NetworkInstanceId, int>();
+    public Dictionary<Team, int> teamBeaconScores = new Dictionary<Team, int>();
 
 	void Start () {
 		gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameStateManager>();
@@ -33,16 +34,34 @@ public class GameServerManager : NetworkBehaviour {
             string playerInfo = "";
             List<PlayerInfo> players = currentPlayers.Select(kvp => kvp.Value).ToList();
             players.Sort((s1, s2) => s1.CompareTo(s2));
+            Team currentDisplayTeam = null;
+            TeamManager tm = GameObject.FindGameObjectWithTag("TeamManager").GetComponent<TeamManager>();
             foreach (PlayerInfo pInfo in players)
             {
-                if (ApplicationManager.GameType == GameTypes.ConcminationGameType)
+                if (ApplicationManager.GameType == GameTypes.ConcminationGameType) {
+                    if (pInfo.CurrentTeam != null && (currentDisplayTeam == null || !currentDisplayTeam.TeamName.Equals(pInfo.CurrentTeam))) {
+                        currentDisplayTeam = tm.GetTeamByName(pInfo.CurrentTeam);
+                        playerInfo += currentDisplayTeam.TeamName + " ; " + teamBeaconScores[currentDisplayTeam] + " % ";
+                    }
                     playerInfo += pInfo.PrintPlayerInfoConcminationMode();
-                else
+                }  else
                     playerInfo += pInfo.PrintPlayerInfoRaceMode();
             }
             gameManager.RpcUpdatePlayerInfo(playerInfo);
             Invoke("StopWaiting", 1.0f);
         }
+    }
+
+    public void UpdatePlayerTeam(string teamName, PlayerInfo player) {
+        if (currentPlayers.ContainsKey(player.PlayerId)) {
+            PlayerInfo pInfo = currentPlayers[player.PlayerId];
+            pInfo.CurrentTeam = teamName;
+            currentPlayers.Remove(player.PlayerId);
+            currentPlayers[player.PlayerId] = pInfo;
+        }
+
+        // Re-Initialize the teamscores when someone joins a Team
+        teamBeaconScores = beaconManager.GetTeamBeaconCount();
     }
 
     void StopWaiting()
@@ -84,6 +103,7 @@ public class GameServerManager : NetworkBehaviour {
             currentPlayers.Remove(netId);
             currentPlayers[netId] = pInfo;
         }
+        teamBeaconScores = beaconManager.GetTeamBeaconCount();
     }
 
 	public void UpdatePlayerTime(NetworkInstanceId netId, string playerTime)
@@ -146,7 +166,8 @@ public class GameServerManager : NetworkBehaviour {
         pInfo.BeaconsCaptured = 0;
         pInfo.PlayerModel = playerModel;
 		currentPlayers [netId] = pInfo;
-	}
+
+    }
 
     public void GetCourseJumpLimit() {
         gameManager.RpcUpdateCourseJumpLimit(gameManager.GetCourseJumpLimit());

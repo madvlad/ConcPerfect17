@@ -23,4 +23,20 @@ public class BeaconManager : MonoBehaviour {
         }
         return capturedBeacons;
     }
+
+    public Dictionary<Team, int> GetTeamBeaconCount() {
+        TeamManager tm = GameObject.FindGameObjectWithTag("TeamManager").GetComponent<TeamManager>();
+        Dictionary<Team, int> teamScores = new Dictionary<Team, int>();
+        foreach (Team t in tm.GetTeams().Values) {
+            teamScores[t] = 0;
+        }
+        foreach (GameObject beacon in GameObject.FindGameObjectsWithTag("Beacon")) {
+            BeaconScript bc = beacon.GetComponent<BeaconScript>();
+            if (bc.LastCapturer != "None" && bc.OwnedByTeam != null) {
+                Team BeaconTeam = tm.GetTeamByName(beacon.GetComponent<BeaconScript>().OwnedByTeam);
+                teamScores[BeaconTeam] += 1;
+            }
+        }
+        return teamScores;
+    }
 }
