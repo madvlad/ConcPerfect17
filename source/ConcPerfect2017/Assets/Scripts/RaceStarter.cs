@@ -105,12 +105,18 @@ public class RaceStarter : NetworkBehaviour {
         IsTriggered = false;
         GetComponent<AudioSource>().PlayOneShot(GoSound, ApplicationManager.sfxVolume);
         Barrier.SetActive(false);
+        if (ApplicationManager.GameType == GameTypes.ConcminationGameType) {
+            GetComponent<SetTimerOnTrigger>().StartTimer();
+        }
     }
 
     void ShutGate()
     {
         Barrier.SetActive(true);
         GateOpened = false;
+        if (ApplicationManager.GameType == GameTypes.ConcminationGameType) {
+            GetComponent<SetTimerOnTrigger>().StopTimer();
+        }
     }
 
     public void RestartGate()
@@ -118,5 +124,8 @@ public class RaceStarter : NetworkBehaviour {
         Timer = CountdownDuration;
         Trigger.SetActive(true);
         TriggerPlatform.SetActive(true);
+        if (ApplicationManager.GameType == GameTypes.ConcminationGameType) {
+            GetComponent<SetTimerOnTrigger>().StopTimer();
+        }
     }
 }

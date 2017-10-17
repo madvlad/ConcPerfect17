@@ -14,6 +14,7 @@ public class SetTimerOnTrigger : MonoBehaviour {
     public ParticleSystem confetti1;
     public ParticleSystem confetti2;
     public ParticleSystem confetti3;
+    public bool EnableTrigger = true;
 
     private GameStateManager gameStateManager;
     private CourseHistoryManager courseHistoryManager;
@@ -131,15 +132,13 @@ public class SetTimerOnTrigger : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
-        {
-            if (!gameStateManager.TimerIsRunning && SwitchToOn && !gameStateManager.GetIsCourseComplete())
-            {
-                StartTimer(); 
-            }
-            else if (gameStateManager.TimerIsRunning && !SwitchToOn)
-            {
-                StopTimer(); 
+        if (EnableTrigger) {
+            if (other.CompareTag("Player")) {
+                if (!gameStateManager.TimerIsRunning && SwitchToOn && !gameStateManager.GetIsCourseComplete()) {
+                    StartTimer();
+                } else if (gameStateManager.TimerIsRunning && !SwitchToOn) {
+                    StopTimer();
+                }
             }
         }
     }
