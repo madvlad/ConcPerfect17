@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.Networking;
 
 public class ConcminationStarter : NetworkBehaviour {
-    public GameObject Barrier;
     public GameObject RenderedCylinder;
     public AudioClip TriggeredSound;
 
@@ -38,17 +37,7 @@ public class ConcminationStarter : NetworkBehaviour {
         grabId.AssignClientAuthority(player.connectionToClient);
         IsTriggered = true;
         RenderedCylinder.GetComponent<MeshRenderer>().enabled = false;
-        GameObject CountDownPanel = GameObject.FindGameObjectWithTag("CountdownPanel");
-        CountDownPanel.GetComponent<StartCountdown>().StartCountDown();
-        Invoke("CmdOpenTheGates", 15);
         GetComponent<CapsuleCollider>().enabled = false;
         GetComponent<AudioSource>().PlayOneShot(TriggeredSound, ApplicationManager.sfxVolume);
-        Debug.Log("Countdown started");
-    }
-
-    [Command]
-    void CmdOpenTheGates() {
-        Barrier.GetComponent<MeshRenderer>().enabled = false;
-        Barrier.GetComponent<BoxCollider>().enabled = false;
     }
 }

@@ -37,9 +37,10 @@ GameObject:
   - component: {fileID: 33032919020166572}
   - component: {fileID: 136761889844248814}
   - component: {fileID: 23974469884301190}
-  - component: {fileID: 114866151404095812}
   - component: {fileID: 114280471871052064}
   - component: {fileID: 82810013126931322}
+  - component: {fileID: 114615546596984006}
+  - component: {fileID: 114165597937397414}
   m_Layer: 0
   m_Name: StartRaceTrigger
   m_TagString: Untagged
@@ -472,6 +473,20 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114165597937397414
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1300000595800758}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d4dfc1f0fc362d47b2400d8c1ead4d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Barrier: {fileID: 1853610577892138, guid: 40d96dc140a546a478af84eb925c0965, type: 2}
+  RenderedCylinder: {fileID: 1485595115832302}
+  TriggeredSound: {fileID: 8300000, guid: a7c404d2ee631434090e900fa531236d, type: 3}
 --- !u!114 &114280471871052064
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -504,7 +519,7 @@ MonoBehaviour:
     i15: 208
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 1
---- !u!114 &114866151404095812
+--- !u!114 &114615546596984006
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -512,12 +527,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1300000595800758}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d4dfc1f0fc362d47b2400d8c1ead4d0, type: 3}
+  m_Script: {fileID: 11500000, guid: 22d60ed4ab57df94a992f71540dae7a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Barrier: {fileID: 1573739552946300}
-  RenderedCylinder: {fileID: 1485595115832302}
-  TriggeredSound: {fileID: 8300000, guid: a7c404d2ee631434090e900fa531236d, type: 3}
+  Trigger: {fileID: 1485595115832302}
+  TriggerPlatform: {fileID: 1485595115832302}
+  Barrier: {fileID: 1853610577892138, guid: 40d96dc140a546a478af84eb925c0965, type: 2}
+  GoSound: {fileID: 8300000, guid: a7c404d2ee631434090e900fa531236d, type: 3}
+  CountdownDuration: 15
 --- !u!136 &136028190946201450
 CapsuleCollider:
   m_ObjectHideFlags: 1
