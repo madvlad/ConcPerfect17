@@ -109,9 +109,9 @@ public class GameStateManager : NetworkBehaviour {
         CheckIfDisplayNicknames();
 
         if (TimerIsRunning) {
-            if (ApplicationManager.GameType == GameTypes.RaceGameType) {
+            if (ApplicationManager.GameType != GameTypes.ConcminationGameType) {
                 CurrentTimerTime += Time.deltaTime;
-            } else if (ApplicationManager.GameType == GameTypes.ConcminationGameType) {
+            } else {
                 CurrentTimerTime -= Time.deltaTime;
             }
             TimeSpan timeSpan = TimeSpan.FromSeconds(CurrentTimerTime);
