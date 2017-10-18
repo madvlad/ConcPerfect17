@@ -41,9 +41,10 @@ GameObject:
   - component: {fileID: 82810013126931322}
   - component: {fileID: 114615546596984006}
   - component: {fileID: 114165597937397414}
+  - component: {fileID: 114320115306157338}
   m_Layer: 0
   m_Name: StartRaceTrigger
-  m_TagString: Untagged
+  m_TagString: RaceStart
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -484,7 +485,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d4dfc1f0fc362d47b2400d8c1ead4d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Barrier: {fileID: 1853610577892138, guid: 40d96dc140a546a478af84eb925c0965, type: 2}
   RenderedCylinder: {fileID: 1485595115832302}
   TriggeredSound: {fileID: 8300000, guid: a7c404d2ee631434090e900fa531236d, type: 3}
 --- !u!114 &114280471871052064
@@ -519,6 +519,25 @@ MonoBehaviour:
     i15: 208
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 1
+--- !u!114 &114320115306157338
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1300000595800758}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ae253e724ad5324ba24b696ad313f4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameManager: {fileID: 0}
+  startLabel: {fileID: 0}
+  SwitchToOn: 1
+  GameEndSound: {fileID: 0}
+  confetti1: {fileID: 0}
+  confetti2: {fileID: 0}
+  confetti3: {fileID: 0}
+  EnableTrigger: 0
 --- !u!114 &114615546596984006
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -532,7 +551,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Trigger: {fileID: 1485595115832302}
   TriggerPlatform: {fileID: 1485595115832302}
-  Barrier: {fileID: 1853610577892138, guid: 40d96dc140a546a478af84eb925c0965, type: 2}
+  Barrier: {fileID: 1516231777282026}
   GoSound: {fileID: 8300000, guid: a7c404d2ee631434090e900fa531236d, type: 3}
   CountdownDuration: 15
 --- !u!136 &136028190946201450

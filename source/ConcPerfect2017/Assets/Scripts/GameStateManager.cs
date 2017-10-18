@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class GameStateManager : NetworkBehaviour {
     public bool TimerIsRunning;
+    public float ConcminationCountdownDuration;
     public GameObject TimerHUDElement;
     public GameObject JumpHUDElement;
     public GameObject JumpNameHUDElement;
@@ -67,6 +68,7 @@ public class GameStateManager : NetworkBehaviour {
             ApplicationManager.GameType = CurrentGameType;
         }
         ApplicationManager.respawnCount = 0;
+        ResetTimer();
         SetBestTime();
     }
 
@@ -107,7 +109,11 @@ public class GameStateManager : NetworkBehaviour {
         CheckIfDisplayNicknames();
 
         if (TimerIsRunning) {
-            CurrentTimerTime += Time.deltaTime;
+            if (ApplicationManager.GameType == GameTypes.RaceGameType) {
+                CurrentTimerTime += Time.deltaTime;
+            } else if (ApplicationManager.GameType == GameTypes.ConcminationGameType) {
+                CurrentTimerTime -= Time.deltaTime;
+            }
             TimeSpan timeSpan = TimeSpan.FromSeconds(CurrentTimerTime);
 
             if (timeSpan.Hours < 1)
@@ -117,6 +123,14 @@ public class GameStateManager : NetworkBehaviour {
             else
             {
                 TimerHUDElement.GetComponent<Text>().text = timeSpan.Hours.ToString("00") + ":" + timeSpan.Minutes.ToString("00") + ":" + timeSpan.Seconds.ToString("000");
+            }
+
+
+            if (CurrentTimerTime <= 0 && ApplicationManager.GameType == GameTypes.ConcminationGameType) {
+                var RaceStarter = GameObject.FindGameObjectWithTag("RaceStart").GetComponent<SetTimerOnTrigger>();
+                RaceStarter.SwitchToOn = false;
+                RaceStarter.StopTimer();
+                // TODO  - GAME WIN STUFF
             }
         }
     }
@@ -414,7 +428,11 @@ public class GameStateManager : NetworkBehaviour {
 
     public void ResetTimer()
     {
-        this.CurrentTimerTime = 0.0f;
+        if (ApplicationManager.GameType == GameTypes.RaceGameType) {
+            this.CurrentTimerTime = 0.0f;
+        } else if (ApplicationManager.GameType == GameTypes.ConcminationGameType) {
+            this.CurrentTimerTime = ConcminationCountdownDuration;
+        }
     }
 
     public float GetRawTime()
