@@ -6,6 +6,7 @@ using UnityEngine.Networking;
 public class TeamDoor : NetworkBehaviour {
     TeamManager teamManager;
     public string TeamName;
+    public Material TeamSkin;
 
 	// Use this for initialization
 	void Start () {
@@ -27,6 +28,7 @@ public class TeamDoor : NetworkBehaviour {
             pInfo.Nickname = ApplicationManager.Nickname;
             GetLocalPlayerObject().GetComponent<LocalPlayerStats>().CmdAddPlayerToTeam(TeamName, pInfo);
             other.gameObject.GetComponent<Concer>().CurrentTeam = TeamName;
+            other.gameObject.GetComponent<FirstPersonDrifter>().playerModelRenderer.GetComponent<SkinnedMeshRenderer>().material = TeamSkin;
         }
     }
 
