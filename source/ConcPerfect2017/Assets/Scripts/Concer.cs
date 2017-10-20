@@ -80,6 +80,7 @@ public class Concer : NetworkBehaviour
                 concInstance.GetComponent<Rigidbody>().useGravity = false;
                 concInstance.GetComponent<BoxCollider>().enabled = false;
                 concInstance.GetComponent<MeshRenderer>().enabled = false;
+                concInstance.GetComponent<ParticleSystem>().Stop();
             }
         }
         if (primed && !Input.GetButton("Conc"))
@@ -90,6 +91,8 @@ public class Concer : NetworkBehaviour
                 concInstance.GetComponent<BoxCollider>().enabled = true;
                 concInstance.GetComponent<MeshRenderer>().enabled = true;
                 concInstance.GetComponent<Rigidbody>().useGravity = true;
+                concInstance.GetComponent<ParticleSystem>().Clear();
+                concInstance.GetComponent<ParticleSystem>().Play();
                 concInstance.GetComponent<Rigidbody>().AddForce(playerCamera.transform.forward * ConcPushForce, ForceMode.Impulse);
                 CmdSpawnNetworkedConc(concInstance.GetComponent<Conc>().timeLeft, concInstance.transform.position, playerCamera.transform.forward, concInstance.transform.rotation, concInstance.GetComponent<Conc>().owner, GetLocalPlayerObject().GetComponent<NetworkIdentity>());
                 primed = false;
