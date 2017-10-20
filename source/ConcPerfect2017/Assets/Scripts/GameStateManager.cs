@@ -34,6 +34,7 @@ public class GameStateManager : NetworkBehaviour {
     private bool IsDisplayNicknames = true;
     private bool IsCourseComplete = false;
     private bool IsCourseFavorited = false;
+    private List<string> ConcminationWinners = new List<string>();
 
     [SyncVar]
     private int CourseSeed;
@@ -289,8 +290,8 @@ public class GameStateManager : NetworkBehaviour {
 
     private int addConcminationPlayerScoreHeaders(int i) {
         AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i, "Player", 2);
-        AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i, "Status", 2);
         AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i, "Beacons Captured", 2);
+        AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i, "", 2);
         AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i, "", 2);
         AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i++, "", 2);
         return i;
@@ -337,8 +338,8 @@ public class GameStateManager : NetworkBehaviour {
                 nickname = "*" + nickname;
             }
             AddTextToPanel(PlayerInfoHUDElement, "InfoRow" + i + "nickname", nickname, rowColor);
-            AddTextToPanel(PlayerInfoHUDElement, "InfoRow" + i + "status", status, rowColor);
             AddTextToPanel(PlayerInfoHUDElement, "InfoRow" + i++ + "beaconsCaptured", beaconsCaptured, rowColor);
+            AddTextToPanel(PlayerInfoHUDElement, "InfoRow" + i++ + "emptycell", "", rowColor);
             AddTextToPanel(PlayerInfoHUDElement, "InfoRow" + i++ + "emptycell", "", rowColor);
             AddTextToPanel(PlayerInfoHUDElement, "InfoRow" + i++ + "emptycell", "", rowColor);
         } else if (info.Split(';').Length > 1) {
@@ -450,6 +451,18 @@ public class GameStateManager : NetworkBehaviour {
         return IsCourseFavorited;
     }
 
+    public string GetConcminationEndGameMsg() {
+        if (ConcminationWinners.Count == 1) {
+            if (ConcminationWinners.Contains(ApplicationManager.GetLocalPlayerObject().GetComponent<Concer>().CurrentTeam)) {
+                return "Victory!";
+            } else {
+                return "Defeat!";
+            }
+        } else {
+            return "Tie Game!";
+        }
+    }
+
     public GameObject GetLocalPlayerObject() {
         var playerObjects = GameObject.FindGameObjectsWithTag("Player");
         GameObject playerObject = null;
@@ -471,6 +484,15 @@ public class GameStateManager : NetworkBehaviour {
 	public void RpcUpdatePlayerInfo(string stats) {
 		playerInfo = new List<string> (stats.Split ('%'));
 	}
+
+    [ClientRpc]
+    public void RpcUpdateConcminationWinners(string WinnerMSg) {
+        ConcminationWinners.Clear();
+        string[] winners = WinnerMSg.Split(',');
+        foreach (string w in winners) {
+            ConcminationWinners.Add(w);
+        }
+    }
 
     [ClientRpc]
     public void RpcUpdateCourseJumpLimit(int CourseJumpLimit) {

@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 
 public class BeaconManager : MonoBehaviour {
+    private List<Team> winners;
 
 	// Use this for initialization
 	void Start () {
@@ -25,6 +26,7 @@ public class BeaconManager : MonoBehaviour {
     }
 
     public Dictionary<Team, int> GetTeamBeaconCount() {
+        winners = new List<Team>();
         TeamManager tm = GameObject.FindGameObjectWithTag("TeamManager").GetComponent<TeamManager>();
         Dictionary<Team, int> teamScores = new Dictionary<Team, int>();
         foreach (Team t in tm.GetTeams().Values) {
@@ -37,6 +39,21 @@ public class BeaconManager : MonoBehaviour {
                 teamScores[BeaconTeam] += 1;
             }
         }
+
+        int highscore = -1;
+        foreach (KeyValuePair<Team, int> kvp in teamScores) {
+            if (kvp.Value > highscore) {
+                highscore = kvp.Value;
+                winners.Clear();
+                winners.Add(kvp.Key);
+            } else if (kvp.Value == highscore) {
+                winners.Add(kvp.Key);
+            }
+        }
         return teamScores;
+    }
+
+    public List<Team> GetWinners() {
+        return winners;
     }
 }

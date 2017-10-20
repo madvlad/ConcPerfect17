@@ -44,6 +44,15 @@ public class GameServerManager : NetworkBehaviour {
                         playerInfo += currentDisplayTeam.TeamName + " ; " + teamBeaconScores[currentDisplayTeam] + " % ";
                     }
                     playerInfo += pInfo.PrintPlayerInfoConcminationMode();
+
+                    List<Team> winners = beaconManager.GetWinners();
+                    if (winners != null && winners.Count > 0) {
+                        string winnerstr = "";
+                        foreach (Team t in winners) {
+                            winnerstr += t.TeamName + ",";
+                        }
+                        gameManager.RpcUpdateConcminationWinners(winnerstr.TrimEnd(','));
+                    }
                 }  else
                     playerInfo += pInfo.PrintPlayerInfoRaceMode();
             }
