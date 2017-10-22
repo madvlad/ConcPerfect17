@@ -92,11 +92,4 @@ public class BeaconMarker : NetworkBehaviour
     {
 
     }
-
-    [ClientRpc]
-    public void RpcUpdateBeaconMaterial()
-    {
-        Debug.Log("Called RPCUPdateBeaconMat");
-        GetComponentInChildren<BeaconScript>().ChangeBeaconMaterial();
-    }
 }

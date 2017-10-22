@@ -24,6 +24,8 @@ public class BeaconScript : MonoBehaviour
         {
             GetComponentInParent<BeaconMarker>().CurrentTimer -= Time.deltaTime;
         }
+
+        ChangeBeaconMaterial();
     }
 
     private void OnTriggerExit(Collider other)
@@ -74,7 +76,6 @@ public class BeaconScript : MonoBehaviour
 
     public void ChangeBeaconMaterial()
     {
-        Debug.Log("Called ChangeBeaconMaterial");
         switch (GetComponentInParent<BeaconMarker>().OwnedByTeam)
         {
             case "Red Rangers":

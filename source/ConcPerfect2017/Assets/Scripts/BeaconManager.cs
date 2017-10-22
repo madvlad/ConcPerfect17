@@ -98,7 +98,6 @@ public class BeaconManager : NetworkBehaviour
                 beacon.GetComponentInParent<BeaconMarker>().LastCapturerNetId = playerId;
                 beacon.GetComponentInParent<BeaconMarker>().CurrentTimer = time;
                 beacon.GetComponentInParent<BeaconMarker>().OwnedByTeam = capturingTeam;
-                beacon.GetComponentInParent<BeaconMarker>().RpcUpdateBeaconMaterial();
             }
         }
 
