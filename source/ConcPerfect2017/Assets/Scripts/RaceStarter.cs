@@ -119,8 +119,9 @@ public class RaceStarter : NetworkBehaviour {
         else
         {
             Barrier.SetActive(true);
-            GateOpened = false;
         }
+
+        GateOpened = false;
     }
 
     public void RestartGate()
