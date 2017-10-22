@@ -47,6 +47,7 @@ public class RaceStarter : NetworkBehaviour {
             var GatePanel = GameObject.FindGameObjectWithTag("GatePanel").GetComponent<Text>();
             Trigger.SetActive(false);
             TriggerPlatform.SetActive(false);
+            GetComponent<CapsuleCollider>().enabled = false;
 
             if (Timer > 0)
             {
