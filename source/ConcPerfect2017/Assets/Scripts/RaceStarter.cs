@@ -112,10 +112,14 @@ public class RaceStarter : NetworkBehaviour {
 
     void ShutGate()
     {
-        Barrier.SetActive(true);
-        GateOpened = false;
-        if (ApplicationManager.GameType == GameTypes.ConcminationGameType) {
+        if (ApplicationManager.GameType == GameTypes.ConcminationGameType)
+        {
             GetComponent<SetTimerOnTrigger>().StopTimer();
+        }
+        else
+        {
+            Barrier.SetActive(true);
+            GateOpened = false;
         }
     }
 
