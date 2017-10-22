@@ -47,6 +47,7 @@ public class RaceStarter : NetworkBehaviour {
             var GatePanel = GameObject.FindGameObjectWithTag("GatePanel").GetComponent<Text>();
             Trigger.SetActive(false);
             TriggerPlatform.SetActive(false);
+            GetComponent<CapsuleCollider>().enabled = false;
 
             if (Timer > 0)
             {
@@ -112,11 +113,16 @@ public class RaceStarter : NetworkBehaviour {
 
     void ShutGate()
     {
-        Barrier.SetActive(true);
-        GateOpened = false;
-        if (ApplicationManager.GameType == GameTypes.ConcminationGameType) {
+        if (ApplicationManager.GameType == GameTypes.ConcminationGameType)
+        {
             GetComponent<SetTimerOnTrigger>().StopTimer();
         }
+        else
+        {
+            Barrier.SetActive(true);
+        }
+
+        GateOpened = false;
     }
 
     public void RestartGate()
