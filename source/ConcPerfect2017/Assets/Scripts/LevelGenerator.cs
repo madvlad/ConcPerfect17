@@ -54,11 +54,9 @@ public class LevelGenerator : NetworkBehaviour {
         {
             if (ApplicationManager.currentLevel > 0)
             {
-                //BuildCourseIteratively();
-                //SetJumpTextures();
                 var parentLevel = SpawnLevelPrefab(ApplicationManager.currentLevel);
 
-                if (ApplicationManager.GameType == GameTypes.ConcminationGameType)
+                if (isServer && ApplicationManager.GameType == GameTypes.ConcminationGameType)
                 {
                     SpawnConcminationStartPrefab(ApplicationManager.currentLevel, parentLevel.transform);
                 }
