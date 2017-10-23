@@ -49,7 +49,6 @@ public class LevelGenerator : NetworkBehaviour {
 
         GameStateManager.SetCourseJumpLimit(courseJumpListSize);
 
-        // Casual Mode
         if (ApplicationManager.GameType == GameTypes.CasualGameType || ApplicationManager.GameType == GameTypes.RaceGameType || ApplicationManager.GameType == GameTypes.ConcminationGameType)
         {
             if (ApplicationManager.currentLevel > 0)
@@ -68,12 +67,12 @@ public class LevelGenerator : NetworkBehaviour {
                 BuildRandomCourse();
             }
         }
-        // Tutorial
         else if (ApplicationManager.GameType == GameTypes.TutorialGameType)
         {
             BuildTutorialLevel();
         }
         SetSFXVolume();
+        SetMusicVolume();
     }
 
     private void SetSFXVolume()
@@ -82,6 +81,15 @@ public class LevelGenerator : NetworkBehaviour {
         foreach (var sfx in sfxObjects)
         {
             sfx.GetComponent<AudioSource>().volume = ApplicationManager.sfxVolume;
+        }
+    }
+
+    private void SetMusicVolume()
+    {
+        var musicObjects = GameObject.FindGameObjectsWithTag("Music");
+        foreach (var music in musicObjects)
+        {
+            music.GetComponent<AudioSource>().volume = ApplicationManager.musicVolume;
         }
     }
 

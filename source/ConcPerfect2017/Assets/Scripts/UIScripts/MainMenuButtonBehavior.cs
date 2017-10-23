@@ -332,14 +332,17 @@ public class MainMenuButtonBehavior : MonoBehaviour {
     {
         ApplicationManager.musicVolume = volume;
         PlayerPrefs.SetFloat("MusicVolume", volume);
-        var music = GameObject.FindGameObjectWithTag("Music");
-        if (music == null)
+        var musics = GameObject.FindGameObjectsWithTag("Music");
+        if (musics.Length == 0)
         {
             Camera.main.GetComponent<AudioSource>().volume = ApplicationManager.musicVolume;
         }
         else
         {
-            music.GetComponent<AudioSource>().volume = ApplicationManager.musicVolume;
+            foreach(var music in musics)
+            {
+                music.GetComponent<AudioSource>().volume = ApplicationManager.musicVolume;
+            }
         }
     }
 
