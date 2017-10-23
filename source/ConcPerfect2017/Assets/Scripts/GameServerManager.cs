@@ -66,7 +66,7 @@ public class GameServerManager : NetworkBehaviour {
         if (currentPlayers.ContainsKey(player.PlayerId)) {
             PlayerInfo pInfo = currentPlayers[player.PlayerId];
             pInfo.CurrentTeam = teamName;
-            teamSkins[netId] = skinNumber;
+            teamSkins[pInfo.PlayerId] = skinNumber;
             currentPlayers.Remove(player.PlayerId);
             currentPlayers[player.PlayerId] = pInfo;
         }
