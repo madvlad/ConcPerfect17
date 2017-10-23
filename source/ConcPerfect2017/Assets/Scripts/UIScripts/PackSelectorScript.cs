@@ -6,6 +6,7 @@ public class PackSelectorScript : MonoBehaviour {
 	private List<GameObject> levelPacks;
     public List<GameObject> racePacks;
     public List<GameObject> concPacks;
+    public GameObject customPack;
 
 	private int index = 0;
 
@@ -45,8 +46,10 @@ public class PackSelectorScript : MonoBehaviour {
         index = 0;
         if (gameType == GameTypes.CasualGameType || gameType == GameTypes.RaceGameType) {
             levelPacks = racePacks;
+            customPack.SetActive(true);
         } else if (gameType == GameTypes.ConcminationGameType) {
             levelPacks = concPacks;
+            customPack.SetActive(false);
         }
         levelPacks[index].SetActive(true);
     }
