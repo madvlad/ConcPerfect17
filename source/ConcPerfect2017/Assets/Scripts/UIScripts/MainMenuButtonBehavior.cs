@@ -66,7 +66,7 @@ public class MainMenuButtonBehavior : MonoBehaviour {
             sfxVolumeSliderMenuUIElement.GetComponent<Slider>().value = ApplicationManager.sfxVolume;
         }
 
-        if (resetCourseButton != null && (ApplicationManager.GameType == GameTypes.TutorialGameType || ApplicationManager.GameType == GameTypes.RaceGameType))
+        if (resetCourseButton != null && (ApplicationManager.GameType == GameTypes.TutorialGameType || ApplicationManager.GameType == GameTypes.RaceGameType || ApplicationManager.GameType == GameTypes.ConcminationGameType))
         {
             resetCourseButton.SetActive(false);
         }
