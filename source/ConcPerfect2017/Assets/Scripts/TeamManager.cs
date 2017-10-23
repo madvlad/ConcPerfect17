@@ -32,7 +32,7 @@ public class TeamManager : NetworkBehaviour {
         teams = new Dictionary<string, Team>();
     }
 
-    public void AddPlayerToTeam(string teamName, PlayerInfo pInfo) {
+    public void AddPlayerToTeam(string teamName, PlayerInfo pInfo, int skinNumber) {
         if (!teams.ContainsKey(teamName)) {
             teams.Add(teamName, new Team(TEAM_VALUES[teamName], teamName));
             this.numberOfTeams = teams.Count;
@@ -40,8 +40,7 @@ public class TeamManager : NetworkBehaviour {
         teams[teamName].addPlayerToTeam(pInfo);
         pInfo.CurrentTeam = teamName;
         GameServerManager gSM = GameObject.FindGameObjectWithTag("GameServerManager").GetComponent<GameServerManager>();
-        gSM.UpdatePlayerTeam(teamName, pInfo);
-        // TODO player skins
+        gSM.UpdatePlayerTeam(teamName, pInfo, skinNumber);
     }
 
     public Team GetTeamByName(String name) {

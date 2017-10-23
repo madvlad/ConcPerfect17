@@ -524,8 +524,11 @@ public class GameStateManager : NetworkBehaviour {
         if (networkedPlayer != null)
         {
             var networkedDrifter = networkedPlayer.GetComponent<FirstPersonDrifter>();
-            var networkedModel = networkedDrifter.playerModelRenderer.GetComponent<SkinnedMeshRenderer>();
-            networkedModel.material = GameObject.FindGameObjectWithTag("PlayerSkins").GetComponent<PlayerSkinSelectBehavior>().TeamSkins[value];
+            if (networkedDrifter != null)
+            {
+                var networkedModel = networkedDrifter.playerModelRenderer.GetComponent<SkinnedMeshRenderer>();
+                networkedModel.material = GameObject.FindGameObjectWithTag("PlayerSkins").GetComponent<PlayerSkinSelectBehavior>().TeamSkins[value];
+            }
         }
     }
 

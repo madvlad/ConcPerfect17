@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -27,9 +28,19 @@ public class TeamDoor : NetworkBehaviour {
             PlayerInfo pInfo = new PlayerInfo();
             pInfo.PlayerId = other.GetComponent<NetworkIdentity>().netId;
             pInfo.Nickname = ApplicationManager.Nickname;
-            GetLocalPlayerObject().GetComponent<LocalPlayerStats>().CmdAddPlayerToTeam(TeamName, pInfo);
+            GetLocalPlayerObject().GetComponent<LocalPlayerStats>().CmdAddPlayerToTeam(TeamName, pInfo, TeamSkinNumber);
             other.gameObject.GetComponent<Concer>().CurrentTeam = TeamName;
             other.gameObject.GetComponent<FirstPersonDrifter>().playerModelRenderer.GetComponent<SkinnedMeshRenderer>().material = TeamSkin;
+            UpdateAllPlayerSkins();
+        }
+    }
+
+    private void UpdateAllPlayerSkins()
+    {
+        var playerObjects = GameObject.FindGameObjectsWithTag("Player");
+        foreach (GameObject obj in playerObjects)
+        {
+            obj.GetComponent<LocalPlayerStats>().RequestPlayerTeamSkins();
         }
     }
 

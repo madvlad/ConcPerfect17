@@ -15,6 +15,7 @@ public class GameServerManager : NetworkBehaviour {
 	public Dictionary<NetworkInstanceId, PlayerInfo> currentPlayers = new Dictionary<NetworkInstanceId, PlayerInfo> ();
 	public Dictionary<NetworkInstanceId, string> playerNicknames = new Dictionary<NetworkInstanceId, string> ();
     public Dictionary<NetworkInstanceId, int> playerSkins = new Dictionary<NetworkInstanceId, int>();
+    public Dictionary<NetworkInstanceId, int> teamSkins = new Dictionary<NetworkInstanceId, int>();
     public Dictionary<Team, int> teamBeaconScores = new Dictionary<Team, int>();
 
 	void Start () {
@@ -61,10 +62,11 @@ public class GameServerManager : NetworkBehaviour {
         }
     }
 
-    public void UpdatePlayerTeam(string teamName, PlayerInfo player) {
+    public void UpdatePlayerTeam(string teamName, PlayerInfo player, int skinNumber) {
         if (currentPlayers.ContainsKey(player.PlayerId)) {
             PlayerInfo pInfo = currentPlayers[player.PlayerId];
             pInfo.CurrentTeam = teamName;
+            teamSkins[netId] = skinNumber;
             currentPlayers.Remove(player.PlayerId);
             currentPlayers[player.PlayerId] = pInfo;
         }
@@ -199,9 +201,9 @@ public class GameServerManager : NetworkBehaviour {
 
     public void RequestTeamSkins()
     {
-        foreach (KeyValuePair<NetworkInstanceId, int> entry in playerSkins)
+        foreach (KeyValuePair<NetworkInstanceId, int> entry in teamSkins)
         {
-            gameManager.RpcUpdatePlayerSkins(entry.Key, entry.Value);
+            gameManager.RpcUpdateTeamSkins(entry.Key, entry.Value);
         }
     }
 }

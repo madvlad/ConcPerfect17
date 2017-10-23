@@ -20,14 +20,24 @@ public class PlayerInfo {
         if (ApplicationManager.GameType == GameTypes.ConcminationGameType) {
             // Sort By Team First
 
-            int teamCompare =  this.CurrentTeam.CompareTo(that.CurrentTeam);
-            if (teamCompare == 0) {
-                // Sort by capture count second
-                int beaconsCompare = this.BeaconsCaptured.CompareTo(that.BeaconsCaptured);
+            if (this.CurrentTeam != null && that.CurrentTeam != null)
+            {
+                int teamCompare = this.CurrentTeam.CompareTo(that.CurrentTeam);
+                if (teamCompare == 0)
+                {
+                    // Sort by capture count second
+                    int beaconsCompare = this.BeaconsCaptured.CompareTo(that.BeaconsCaptured);
 
-                return (beaconsCompare == 0) ? this.Nickname.CompareTo(that.Nickname) : (beaconsCompare);
-            } else {
-                return teamCompare;
+                    return (beaconsCompare == 0) ? this.Nickname.CompareTo(that.Nickname) : (beaconsCompare);
+                }
+                else
+                {
+                    return teamCompare;
+                }
+            }
+            else
+            {
+                return 0;
             }
         } else {
             int timeCompare = this.BestTime.CompareTo(that.BestTime);

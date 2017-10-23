@@ -148,8 +148,8 @@ public class LocalPlayerStats : NetworkBehaviour
     }
 
     [Command]
-    public void CmdAddPlayerToTeam(string teamName, PlayerInfo pInfo)
+    public void CmdAddPlayerToTeam(string teamName, PlayerInfo pInfo, int skinNumber)
     {
-        GameObject.FindGameObjectWithTag("TeamManager").GetComponent<TeamManager>().AddPlayerToTeam(teamName, pInfo);
+        GameObject.FindGameObjectWithTag("TeamManager").GetComponent<TeamManager>().AddPlayerToTeam(teamName, pInfo, skinNumber);
     }
 }
