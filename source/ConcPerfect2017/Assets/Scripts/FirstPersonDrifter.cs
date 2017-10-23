@@ -89,8 +89,12 @@ public class FirstPersonDrifter : NetworkBehaviour
         rayDistance = controller.height * .5f + controller.radius;
         slideLimit = controller.slopeLimit - .1f;
         jumpTimer = antiBunnyHopFactor;
-        playerModelRenderer.GetComponent<SkinnedMeshRenderer>().material = GameObject.FindGameObjectWithTag("PlayerSkins").GetComponent<PlayerSkinSelectBehavior>().playerSkins[ApplicationManager.PlayerModel];
-        GetLocalPlayerObject().GetComponent<LocalPlayerStats>().RequestPlayerSkins();
+
+        if (ApplicationManager.GameType != GameTypes.ConcminationGameType)
+        {
+            playerModelRenderer.GetComponent<SkinnedMeshRenderer>().material = GameObject.FindGameObjectWithTag("PlayerSkins").GetComponent<PlayerSkinSelectBehavior>().playerSkins[ApplicationManager.PlayerModel];
+            GetLocalPlayerObject().GetComponent<LocalPlayerStats>().RequestPlayerSkins();
+        }
     }
 
     void Start()

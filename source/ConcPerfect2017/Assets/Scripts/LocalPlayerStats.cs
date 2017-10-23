@@ -84,6 +84,13 @@ public class LocalPlayerStats : NetworkBehaviour
         CmdRequestPlayerSkins();
     }
 
+    public void RequestPlayerTeamSkins()
+    {
+        if (!isLocalPlayer)
+            return;
+        CmdRequestTeamPlayerSkins();
+    }
+
     [Command]
     public void CmdRequestCourseJumpLimt()
     {
@@ -132,6 +139,12 @@ public class LocalPlayerStats : NetworkBehaviour
     public void CmdRequestPlayerSkins()
     {
         GameObject.FindGameObjectWithTag("GameServerManager").GetComponent<GameServerManager>().RequestPlayerSkins();
+    }
+
+    [Command]
+    public void CmdRequestTeamPlayerSkins()
+    {
+        GameObject.FindGameObjectWithTag("GameServerManager").GetComponent<GameServerManager>().RequestTeamSkins();
     }
 
     [Command]

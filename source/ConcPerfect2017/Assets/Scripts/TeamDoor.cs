@@ -7,6 +7,7 @@ public class TeamDoor : NetworkBehaviour {
     TeamManager teamManager;
     public string TeamName;
     public Material TeamSkin;
+    public int TeamSkinNumber;
 
 	// Use this for initialization
 	void Start () {
@@ -40,7 +41,6 @@ public class TeamDoor : NetworkBehaviour {
                 playerObject = obj;
             }
         }
-
         return playerObject;
     }
 }

@@ -197,4 +197,11 @@ public class GameServerManager : NetworkBehaviour {
 
     }
 
+    public void RequestTeamSkins()
+    {
+        foreach (KeyValuePair<NetworkInstanceId, int> entry in playerSkins)
+        {
+            gameManager.RpcUpdatePlayerSkins(entry.Key, entry.Value);
+        }
+    }
 }

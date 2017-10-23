@@ -516,6 +516,20 @@ public class GameStateManager : NetworkBehaviour {
     }
 
     [ClientRpc]
+    public void RpcUpdateTeamSkins(NetworkInstanceId netId, int value)
+    {
+        if (netId == GetLocalPlayerObject().GetComponent<NetworkIdentity>().netId)
+            return;
+        GameObject networkedPlayer = ClientScene.FindLocalObject(netId);
+        if (networkedPlayer != null)
+        {
+            var networkedDrifter = networkedPlayer.GetComponent<FirstPersonDrifter>();
+            var networkedModel = networkedDrifter.playerModelRenderer.GetComponent<SkinnedMeshRenderer>();
+            networkedModel.material = GameObject.FindGameObjectWithTag("PlayerSkins").GetComponent<PlayerSkinSelectBehavior>().TeamSkins[value];
+        }
+    }
+
+    [ClientRpc]
     public void RpcUpdatePlayerSkins(NetworkInstanceId netId, int value)
     {
         if (netId == GetLocalPlayerObject().GetComponent<NetworkIdentity>().netId)
