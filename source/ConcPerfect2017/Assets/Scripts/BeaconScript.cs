@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -6,15 +7,24 @@ using UnityEngine.Networking;
 public class BeaconScript : MonoBehaviour
 {
     public List<Material> TeamMaterials;
+    public List<GameObject> LockedBeacons;
     public string BeaconName = "Conc Beacon";
     public float SafeTimerSeconds = 15.0f;
 
-
+    private bool BeaconOn = false;
 
     // Use this for initialization
     void Start()
     {
         GetComponentInParent<BeaconMarker>().CurrentTimer = 0.0f;
+        LockedBeacons[0] = Instantiate(LockedBeacons[0], gameObject.transform);
+        LockedBeacons[1] = Instantiate(LockedBeacons[1], gameObject.transform);
+        LockedBeacons[2] = Instantiate(LockedBeacons[2], gameObject.transform);
+        LockedBeacons[3] = Instantiate(LockedBeacons[3], gameObject.transform);
+        LockedBeacons[0].SetActive(false);
+        LockedBeacons[1].SetActive(false);
+        LockedBeacons[2].SetActive(false);
+        LockedBeacons[3].SetActive(false);
     }
 
     // Update is called once per frame
@@ -26,6 +36,7 @@ public class BeaconScript : MonoBehaviour
         }
 
         ChangeBeaconMaterial();
+        ChangeBeaconLockedParticle();
     }
 
     private void OnTriggerExit(Collider other)
@@ -94,6 +105,39 @@ public class BeaconScript : MonoBehaviour
                 gameObject.GetComponent<MeshRenderer>().material = TeamMaterials[0];
                 break;
 
+        }
+    }
+
+    public void ChangeBeaconLockedParticle()
+    {
+        if (GetComponentInParent<BeaconMarker>().Guarded || GetComponentInParent<BeaconMarker>().CurrentTimer > 0)
+        {
+            BeaconOn = true;
+            switch (GetComponentInParent<BeaconMarker>().OwnedByTeam)
+            {
+                case "Red Rangers":
+                    LockedBeacons[1].SetActive(true);
+                    break;
+                case "Green Gorillas":
+                    LockedBeacons[2].SetActive(true);
+                    break;
+                case "Blue Bandits":
+                    LockedBeacons[0].SetActive(true);
+                    break;
+                case "Yellow Yahoos":
+                    LockedBeacons[3].SetActive(true);
+                    break;
+                default:
+                    break;
+            }
+        }
+        else if (BeaconOn)
+        {
+            LockedBeacons[0].SetActive(false);
+            LockedBeacons[1].SetActive(false);
+            LockedBeacons[2].SetActive(false);
+            LockedBeacons[3].SetActive(false);
+            BeaconOn = false;
         }
     }
 }

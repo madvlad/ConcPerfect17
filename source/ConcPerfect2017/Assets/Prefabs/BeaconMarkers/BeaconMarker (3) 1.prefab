@@ -222,22 +222,22 @@ MonoBehaviour:
   m_SceneId:
     m_Value: 0
   m_AssetId:
-    i0: 0
-    i1: 0
-    i2: 0
-    i3: 0
-    i4: 0
-    i5: 0
-    i6: 0
-    i7: 0
-    i8: 0
-    i9: 0
-    i10: 0
-    i11: 0
-    i12: 0
-    i13: 0
-    i14: 0
-    i15: 0
+    i0: 109
+    i1: 147
+    i2: 5
+    i3: 6
+    i4: 84
+    i5: 227
+    i6: 127
+    i7: 20
+    i8: 216
+    i9: 168
+    i10: 166
+    i11: 237
+    i12: 166
+    i13: 67
+    i14: 82
+    i15: 58
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 0
 --- !u!114 &114490808850965922
@@ -251,6 +251,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fce605274e00e94398a3271475cf971, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ownedByTeam: 
+  currentTimer: 0
+  guarded: 0
+  lastCapturer: None
 --- !u!114 &114719898545840358
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -268,5 +272,10 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 21002a3603a95e548bfa722c7acb1765, type: 2}
   - {fileID: 2100000, guid: 98806145636e87847a5c241fffb8ebfc, type: 2}
   - {fileID: 2100000, guid: 5d5e0da6976a5754aa8eb5e916dbf10c, type: 2}
+  LockedBeacons:
+  - {fileID: 1155041022781372, guid: 0657e9b3ebc641a4295689be967c5028, type: 2}
+  - {fileID: 1808710323852504, guid: d18d7254fcbea024c884a6ce27bbfffc, type: 2}
+  - {fileID: 1949169136338768, guid: ff9922073cf57414a9123f27931d1530, type: 2}
+  - {fileID: 1928381402308448, guid: 71ae9d24d14541e42a3bf8a0f129c470, type: 2}
   BeaconName: The Balcony
   SafeTimerSeconds: 15

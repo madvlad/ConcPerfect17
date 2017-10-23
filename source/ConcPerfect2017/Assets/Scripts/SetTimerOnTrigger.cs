@@ -32,7 +32,9 @@ public class SetTimerOnTrigger : MonoBehaviour {
         if (!gameStateManager.TimerIsRunning && SwitchToOn && !gameStateManager.GetIsCourseComplete()) {
             gameStateManager.SetTimerIsRunning(SwitchToOn);
             gameObject.GetComponent<MeshRenderer>().enabled = false;
-            startLabel.GetComponent<MeshRenderer>().enabled = false;
+
+            if (startLabel != null)
+                    startLabel.GetComponent<MeshRenderer>().enabled = false;
 
             if (gameStateManager.GetLocalPlayerObject() != null) {
                 gameStateManager.GetLocalPlayerObject().gameObject.GetComponent<LocalPlayerStats>().UpdateStatus("Started");
