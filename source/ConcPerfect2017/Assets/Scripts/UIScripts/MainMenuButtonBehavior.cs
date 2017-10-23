@@ -180,7 +180,7 @@ public class MainMenuButtonBehavior : MonoBehaviour {
     void LoadMainMenu()
     {
         // Reset single player menu panel to show casual
-        ApplicationManager.GameType = GameTypes.CasualGameType;
+        //ApplicationManager.GameType = GameTypes.CasualGameType;
         GameObject.FindGameObjectWithTag("NetManager").GetComponent<NetworkManager>().StopHost();
         SceneManager.UnloadSceneAsync(mainGameScene);
         SceneManager.LoadScene(mainMenuScene);
