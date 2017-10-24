@@ -30,7 +30,18 @@ public class BeaconManager : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
+    }
 
+    public void CheckForConcmination()
+    {
+        foreach (KeyValuePair<Team, int> kvp in GetTeamBeaconCount())
+        {
+            if (kvp.Value >= beacons.Count)
+            {
+                GameObject.FindGameObjectWithTag("RaceStart").GetComponent<RaceStarter>().GetComponent<SetTimerOnTrigger>().SwitchToOn = false;
+                GameObject.FindGameObjectWithTag("RaceStart").GetComponent<RaceStarter>().GetComponent<SetTimerOnTrigger>().StopTimer();
+            }
+        }
     }
 
     public int GetUserBeaconCount(NetworkInstanceId netId)
@@ -100,6 +111,6 @@ public class BeaconManager : NetworkBehaviour
                 beacon.GetComponentInParent<BeaconMarker>().OwnedByTeam = capturingTeam;
             }
         }
-
+        CheckForConcmination();
     }
 }
