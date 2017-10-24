@@ -14,9 +14,9 @@ public class ConcminationStarter : NetworkBehaviour {
     [SyncVar]
     private bool GateOpened = false;
 
-    void OnStart()
-    {
-    }
+    private bool HasPlayed = false;
+
+    void OnStart() { }
 
     void OnTriggerEnter(Collider other)
     {
@@ -26,10 +26,14 @@ public class ConcminationStarter : NetworkBehaviour {
         }
     }
 
-    // Update is called once per frame
-    void FixedUpdate () {
-		
-	}
+    void FixedUpdate ()
+    {
+        if (!HasPlayed && IsTriggered)
+        {
+            GetComponent<AudioSource>().PlayOneShot(TriggeredSound, ApplicationManager.sfxVolume);
+            HasPlayed = true;
+        }
+    }
     
     [Command]
     void CmdStartTimeCountdown(NetworkIdentity grabId, NetworkIdentity player)
@@ -38,6 +42,5 @@ public class ConcminationStarter : NetworkBehaviour {
         IsTriggered = true;
         RenderedCylinder.GetComponent<MeshRenderer>().enabled = false;
         GetComponent<CapsuleCollider>().enabled = false;
-        GetComponent<AudioSource>().PlayOneShot(TriggeredSound, ApplicationManager.sfxVolume);
     }
 }
