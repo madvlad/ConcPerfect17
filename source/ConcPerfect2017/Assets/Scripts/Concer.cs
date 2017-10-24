@@ -80,7 +80,12 @@ public class Concer : NetworkBehaviour
                 concInstance.GetComponent<Rigidbody>().useGravity = false;
                 concInstance.GetComponent<BoxCollider>().enabled = false;
                 concInstance.GetComponent<MeshRenderer>().enabled = false;
-                concInstance.GetComponent<ParticleSystem>().Stop();
+                concInstance.GetComponent<ParticleSystem>().Play();
+                concInstance.GetComponent<Conc>().trailGameObject.SetActive(false);
+                concInstance.GetComponent<Conc>().beaconParticleSystem.Play();
+                concInstance.GetComponent<Conc>().explosionParticleSystem.Stop();
+                concInstance.GetComponent<Conc>().explosionFlashParticleSystem.Stop();
+                concInstance.GetComponent<Conc>().explosionEmbersParticleSystem.Stop();
             }
         }
         if (primed && !Input.GetButton("Conc"))
@@ -91,8 +96,11 @@ public class Concer : NetworkBehaviour
                 concInstance.GetComponent<BoxCollider>().enabled = true;
                 concInstance.GetComponent<MeshRenderer>().enabled = true;
                 concInstance.GetComponent<Rigidbody>().useGravity = true;
-                concInstance.GetComponent<ParticleSystem>().Clear();
-                concInstance.GetComponent<ParticleSystem>().Play();
+                concInstance.GetComponent<Conc>().trailGameObject.SetActive(true);
+                concInstance.GetComponent<Conc>().trailParticleSystem.Play();
+                concInstance.GetComponent<Conc>().explosionParticleSystem.Stop();
+                concInstance.GetComponent<Conc>().explosionFlashParticleSystem.Stop();
+                concInstance.GetComponent<Conc>().explosionEmbersParticleSystem.Stop();
                 concInstance.GetComponent<Rigidbody>().AddForce(playerCamera.transform.forward * ConcPushForce, ForceMode.Impulse);
                 CmdSpawnNetworkedConc(concInstance.GetComponent<Conc>().timeLeft, concInstance.transform.position, playerCamera.transform.forward, concInstance.transform.rotation, concInstance.GetComponent<Conc>().owner, GetLocalPlayerObject().GetComponent<NetworkIdentity>());
                 primed = false;

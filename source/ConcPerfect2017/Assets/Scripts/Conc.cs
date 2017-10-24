@@ -7,6 +7,12 @@ public class Conc : NetworkBehaviour
     public ParticleSystem explosionParticleSystem;
     public ParticleSystem explosionFlashParticleSystem;
     public ParticleSystem explosionEmbersParticleSystem;
+    public ParticleSystem trailParticleSystem;
+    public ParticleSystem beaconParticleSystem;
+    public GameObject explosionGameObject;
+    public GameObject explosionFlashGameObject;
+    public GameObject explosionEmbersGameObject;
+    public GameObject trailGameObject;
     public GameObject devBubble;
     public bool ShowSphereCollider = false;
     public AudioClip timerSFX;
@@ -59,6 +65,10 @@ public class Conc : NetworkBehaviour
         explosionParticleSystem.Emit(1);
         explosionFlashParticleSystem.Emit(1);
         explosionEmbersParticleSystem.Emit(100);
+        explosionParticleSystem.Play();
+        explosionFlashParticleSystem.Play();
+        explosionEmbersParticleSystem.Play();
+        trailParticleSystem.Stop();
         exploded = true;
         Invoke("Destroy", timer);
         gameObject.GetComponent<MeshRenderer>().enabled = false;
@@ -71,6 +81,10 @@ public class Conc : NetworkBehaviour
         explosionParticleSystem.Emit(1);
         explosionFlashParticleSystem.Emit(1);
         explosionEmbersParticleSystem.Emit(100);
+        explosionParticleSystem.Play();
+        explosionFlashParticleSystem.Play();
+        explosionEmbersParticleSystem.Play();
+        trailParticleSystem.Stop();
         exploded = true;
         Invoke("Destroy", 0.5f);
         gameObject.GetComponent<MeshRenderer>().enabled = false;
