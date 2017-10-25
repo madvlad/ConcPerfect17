@@ -55,6 +55,7 @@ public class SetTimerOnTrigger : MonoBehaviour {
             if (ApplicationManager.GameType == GameTypes.ConcminationGameType) {
                 courseCompleteMessage.enabled = true;
                 courseCompleteMessage.text = gameStateManager.GetConcminationEndGameMsg() + "\n\nPress ESC To Quit";
+                Invoke("ResetConcmination", 10.0f);
             }  else {
                 courseCompleteMessage.enabled = true;
                 courseCompleteMessage.text = "Course Complete!!\n\nYour time: " + gameStateManager.GetCurrentTime() + "\n\nPress ESC To Quit";
@@ -309,6 +310,12 @@ public class SetTimerOnTrigger : MonoBehaviour {
     private void EndGame()
     {
         courseCompleteMessage.enabled = false;
+    }
+
+    private void ResetConcmination()
+    {
+        var player = ApplicationManager.GetLocalPlayerObject();
+        player.GetComponent<FirstPersonDrifter>().TeleportToConcminationOrigin();
     }
 
     private GameObject GetLocalPlayerObject()

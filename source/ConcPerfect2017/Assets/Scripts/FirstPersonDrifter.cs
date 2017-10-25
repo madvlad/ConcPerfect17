@@ -354,6 +354,13 @@ public class FirstPersonDrifter : NetworkBehaviour
         }
     }
 
+    public void TeleportToConcminationOrigin()
+    {
+        var player = GetLocalPlayerObject();
+        var restartPoint = GameObject.FindGameObjectWithTag("ConcminationRespawn");
+        player.transform.position = restartPoint.transform.position;
+    }
+
     internal bool IsFrozen()
     {
         return frozen;
