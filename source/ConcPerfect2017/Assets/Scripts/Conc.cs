@@ -84,7 +84,8 @@ public class Conc : NetworkBehaviour
         explosionParticleSystem.Play();
         explosionFlashParticleSystem.Play();
         explosionEmbersParticleSystem.Play();
-        trailParticleSystem.Stop();
+        if (trailParticleSystem != null)
+            trailParticleSystem.Stop();
         exploded = true;
         Invoke("Destroy", 0.5f);
         gameObject.GetComponent<MeshRenderer>().enabled = false;
