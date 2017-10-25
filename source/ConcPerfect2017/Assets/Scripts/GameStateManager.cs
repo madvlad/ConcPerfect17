@@ -131,7 +131,7 @@ public class GameStateManager : NetworkBehaviour {
                 var RaceStarter = GameObject.FindGameObjectWithTag("RaceStart").GetComponent<SetTimerOnTrigger>();
                 RaceStarter.SwitchToOn = false;
                 RaceStarter.StopTimer();
-                // TODO  - GAME WIN STUFF
+                TimerHUDElement.GetComponent<Text>().text = "TIMES UP!";    
             }
         }
     }

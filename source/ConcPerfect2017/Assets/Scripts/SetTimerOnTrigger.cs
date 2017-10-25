@@ -316,6 +316,8 @@ public class SetTimerOnTrigger : MonoBehaviour {
     {
         var player = ApplicationManager.GetLocalPlayerObject();
         player.GetComponent<FirstPersonDrifter>().TeleportToConcminationOrigin();
+        var beaconManager = GameObject.FindGameObjectWithTag("BeaconManager").GetComponent<BeaconManager>();
+        beaconManager.ResetBeacons();
     }
 
     private GameObject GetLocalPlayerObject()

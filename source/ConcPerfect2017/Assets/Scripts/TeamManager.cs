@@ -44,7 +44,14 @@ public class TeamManager : NetworkBehaviour {
     }
 
     public Team GetTeamByName(String name) {
-        return teams[name];
+        if (!String.IsNullOrEmpty(name))
+        {
+            return teams[name];
+        }
+        else
+        {
+            return null;
+        }
     }
 
 

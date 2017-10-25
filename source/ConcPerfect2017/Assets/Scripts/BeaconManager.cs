@@ -73,7 +73,10 @@ public class BeaconManager : NetworkBehaviour
             if (bc.LastCapturer != "None" && (bc.OwnedByTeam != "" || bc.OwnedByTeam != null))
             {
                 Team BeaconTeam = tm.GetTeamByName(beacon.GetComponentInParent<BeaconMarker>().OwnedByTeam);
-                teamScores[BeaconTeam] += 1;
+                if (BeaconTeam != null)
+                {
+                    teamScores[BeaconTeam] += 1;
+                }
             }
         }
 
@@ -97,6 +100,19 @@ public class BeaconManager : NetworkBehaviour
     public List<Team> GetWinners()
     {
         return winners;
+    }
+
+    public void ResetBeacons()
+    {
+        foreach (GameObject beacon in beacons)
+        {
+            beacon.GetComponentInParent<BeaconMarker>().LastCapturer = "";
+            beacon.GetComponentInParent<BeaconMarker>().LastCapturerNetId = NetworkInstanceId.Invalid;
+            beacon.GetComponentInParent<BeaconMarker>().CurrentTimer = 0.0f;
+            beacon.GetComponentInParent<BeaconMarker>().OwnedByTeam = "";
+        }
+
+        CheckForConcmination();
     }
 
     internal void UpdateBeaconCapturer(string capturingTeam, string nickname, NetworkInstanceId playerId, NetworkInstanceId beaconId, float time)

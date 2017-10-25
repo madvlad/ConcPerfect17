@@ -42,7 +42,10 @@ public class GameServerManager : NetworkBehaviour {
                 if (ApplicationManager.GameType == GameTypes.ConcminationGameType) {
                     if (pInfo.CurrentTeam != null && (currentDisplayTeam == null || !currentDisplayTeam.TeamName.Equals(pInfo.CurrentTeam))) {
                         currentDisplayTeam = tm.GetTeamByName(pInfo.CurrentTeam);
-                        playerInfo += currentDisplayTeam.TeamName + " ; " + teamBeaconScores[currentDisplayTeam] + " % ";
+                        if (currentDisplayTeam != null)
+                        {
+                            playerInfo += currentDisplayTeam.TeamName + " ; " + teamBeaconScores[currentDisplayTeam] + " % ";
+                        }
                     }
                     playerInfo += pInfo.PrintPlayerInfoConcminationMode();
 

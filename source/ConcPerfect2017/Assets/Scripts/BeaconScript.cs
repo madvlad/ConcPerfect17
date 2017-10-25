@@ -41,18 +41,26 @@ public class BeaconScript : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        var colliderTeam = other.gameObject.GetComponent<Concer>().CurrentTeam;
+        var concer = other.gameObject.GetComponent<Concer>();
+        if (concer != null)
+        {
+            var colliderTeam = concer.CurrentTeam;
 
-        if (colliderTeam.Equals(GetComponentInParent<BeaconMarker>().OwnedByTeam))
-            GetComponentInParent<BeaconMarker>().Guarded = false;
+            if (colliderTeam.Equals(GetComponentInParent<BeaconMarker>().OwnedByTeam))
+                GetComponentInParent<BeaconMarker>().Guarded = false;
+        }
     }
 
     void OnTriggerStay(Collider collider)
     {
-        var colliderTeam = collider.gameObject.GetComponent<Concer>().CurrentTeam;
+        var concer = collider.gameObject.GetComponent<Concer>();
+        if (concer != null)
+        {
+            var colliderTeam = concer.CurrentTeam;
 
-        if (colliderTeam.Equals(GetComponentInParent<BeaconMarker>().OwnedByTeam))
-            GetComponentInParent<BeaconMarker>().Guarded = true;
+            if (colliderTeam.Equals(GetComponentInParent<BeaconMarker>().OwnedByTeam))
+                GetComponentInParent<BeaconMarker>().Guarded = true;
+        }
     }
 
     void OnTriggerEnter(Collider collider)
