@@ -475,10 +475,10 @@ public class GameStateManager : NetworkBehaviour {
                     audioSource.PlayOneShot(TeamWinSounds[0], ApplicationManager.sfxVolume);
                     break;
                 case "Blue Bandits":
-                    audioSource.PlayOneShot(TeamWinSounds[1], ApplicationManager.sfxVolume);
+                    audioSource.PlayOneShot(TeamWinSounds[2], ApplicationManager.sfxVolume);
                     break;
                 case "Green Gorillas":
-                    audioSource.PlayOneShot(TeamWinSounds[2], ApplicationManager.sfxVolume);
+                    audioSource.PlayOneShot(TeamWinSounds[1], ApplicationManager.sfxVolume);
                     break;
                 case "Yellow Yahoos":
                     audioSource.PlayOneShot(TeamWinSounds[3], ApplicationManager.sfxVolume);
