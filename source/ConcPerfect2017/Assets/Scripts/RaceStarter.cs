@@ -134,8 +134,15 @@ public class RaceStarter : NetworkBehaviour {
         Timer = CountdownDuration;
         Trigger.SetActive(true);
         TriggerPlatform.SetActive(true);
-        if (ApplicationManager.GameType == GameTypes.ConcminationGameType) {
+        if (ApplicationManager.GameType == GameTypes.ConcminationGameType)
+        {
             GetComponent<SetTimerOnTrigger>().StopTimer();
         }
+    }
+
+    [ClientRpc]
+    public void RpcRestartGate()
+    {
+        RestartGate();
     }
 }

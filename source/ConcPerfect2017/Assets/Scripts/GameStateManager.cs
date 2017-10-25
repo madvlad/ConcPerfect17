@@ -570,4 +570,10 @@ public class GameStateManager : NetworkBehaviour {
             networkedModel.material = GameObject.FindGameObjectWithTag("PlayerSkins").GetComponent<PlayerSkinSelectBehavior>().playerSkins[value];
         }
     }
+
+    [ClientRpc]
+    public void RpcResetConcminationAssets()
+    {
+        ResetTimer();
+    }
 }

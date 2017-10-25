@@ -295,17 +295,6 @@ public class FirstPersonDrifter : NetworkBehaviour
     [Command]
     public void CmdResetConcminationAssets()
     {
-        var recipients = GameObject.FindGameObjectsWithTag("Player");
-
-        foreach (var recipient in recipients)
-        {
-            recipient.GetComponent<FirstPersonDrifter>().RpcResetConcminationAssets();
-        }
-    }
-
-    [ClientRpc]
-    public void RpcResetConcminationAssets()
-    {
         var beaconManager = GameObject.FindGameObjectWithTag("BeaconManager");
         if (beaconManager != null)
             beaconManager.GetComponent<BeaconManager>().ResetBeacons();
@@ -314,10 +303,9 @@ public class FirstPersonDrifter : NetworkBehaviour
             concminationStarter.GetComponent<ConcminationStarter>().ResetStarter();
         var raceStarter = GameObject.FindGameObjectWithTag("RaceStart");
         if (raceStarter != null)
-            raceStarter.GetComponent<RaceStarter>().RestartGate();
-        var gameStateManager = GameObject.FindGameObjectWithTag("GameManager");
-        if (gameStateManager != null)
-            gameStateManager.GetComponent<GameStateManager>().ResetTimer();
+            raceStarter.GetComponent<RaceStarter>().RpcRestartGate();
+
+        GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameStateManager>().RpcResetConcminationAssets();
     }
 
     [Command]
