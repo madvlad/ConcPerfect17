@@ -287,6 +287,35 @@ public class FirstPersonDrifter : NetworkBehaviour
         return escaped;
     }
 
+    public void ResetConcminationAssets()
+    {
+        CmdResetConcminationAssets();
+    }
+
+    [Command]
+    public void CmdResetConcminationAssets()
+    {
+        var recipients = GameObject.FindGameObjectsWithTag("Player");
+
+        foreach (var recipient in recipients)
+        {
+            recipient.GetComponent<FirstPersonDrifter>().RpcResetConcminationAssets();
+        }
+    }
+
+    [ClientRpc]
+    public void RpcResetConcminationAssets()
+    {
+        var beaconManager = GameObject.FindGameObjectWithTag("BeaconManager").GetComponent<BeaconManager>();
+        beaconManager.ResetBeacons();
+        var concminationStarter = GameObject.FindGameObjectWithTag("RaceStart").GetComponent<ConcminationStarter>();
+        concminationStarter.ResetStarter();
+        var raceStarter = GameObject.FindGameObjectWithTag("RaceStart").GetComponent<RaceStarter>();
+        raceStarter.RestartGate();
+        var gameStateManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameStateManager>();
+        gameStateManager.ResetTimer();
+    }
+
     [Command]
     public void CmdFreezeAll(bool freeze)
     {

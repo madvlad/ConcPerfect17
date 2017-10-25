@@ -317,14 +317,7 @@ public class SetTimerOnTrigger : MonoBehaviour {
         var player = ApplicationManager.GetLocalPlayerObject();
         player.GetComponent<Concer>().SetConcCount(0);
         player.GetComponent<FirstPersonDrifter>().TeleportToConcminationOrigin();
-        var beaconManager = GameObject.FindGameObjectWithTag("BeaconManager").GetComponent<BeaconManager>();
-        beaconManager.ResetBeacons();
-        var concminationStarter = GameObject.FindGameObjectWithTag("RaceStart").GetComponent<ConcminationStarter>();
-        concminationStarter.ResetStarter();
-        var raceStarter = GameObject.FindGameObjectWithTag("RaceStart").GetComponent<RaceStarter>();
-        raceStarter.RestartGate();
-        var gameStateManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameStateManager>();
-        gameStateManager.ResetTimer();
+        player.GetComponent<FirstPersonDrifter>().ResetConcminationAssets();
         SwitchToOn = true;
     }
 
