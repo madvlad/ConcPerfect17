@@ -20,6 +20,7 @@ public class GameStateManager : NetworkBehaviour {
     public GameObject BestTimeCrown;
     public GameObject localPlayer;
     public GameObject nicknamePrefab;
+    public List<AudioClip> TeamWinSounds;
 
     // Server Objects
     public GameServerManager gameServerManager;
@@ -460,6 +461,29 @@ public class GameStateManager : NetworkBehaviour {
             }
         } else {
             return "Tie Game!";
+        }
+    }
+
+    public void PlayVictorySong()
+    {
+        if (ConcminationWinners.Count == 1)
+        {
+            var audioSource = GameObject.FindGameObjectWithTag("TeamWinSound").GetComponent<AudioSource>();
+            switch (ConcminationWinners[0])
+            {
+                case "Red Rangers":
+                    audioSource.PlayOneShot(TeamWinSounds[0], ApplicationManager.sfxVolume);
+                    break;
+                case "Blue Bandits":
+                    audioSource.PlayOneShot(TeamWinSounds[1], ApplicationManager.sfxVolume);
+                    break;
+                case "Green Gorillas":
+                    audioSource.PlayOneShot(TeamWinSounds[2], ApplicationManager.sfxVolume);
+                    break;
+                case "Yellow Yahoos":
+                    audioSource.PlayOneShot(TeamWinSounds[3], ApplicationManager.sfxVolume);
+                    break;
+            }
         }
     }
 
