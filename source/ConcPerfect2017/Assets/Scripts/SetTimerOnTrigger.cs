@@ -315,6 +315,7 @@ public class SetTimerOnTrigger : MonoBehaviour {
     private void ResetConcmination()
     {
         var player = ApplicationManager.GetLocalPlayerObject();
+        player.GetComponent<Concer>().SetConcCount(0);
         player.GetComponent<FirstPersonDrifter>().TeleportToConcminationOrigin();
         var beaconManager = GameObject.FindGameObjectWithTag("BeaconManager").GetComponent<BeaconManager>();
         beaconManager.ResetBeacons();
