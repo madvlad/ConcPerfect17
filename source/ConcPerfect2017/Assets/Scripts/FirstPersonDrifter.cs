@@ -306,14 +306,18 @@ public class FirstPersonDrifter : NetworkBehaviour
     [ClientRpc]
     public void RpcResetConcminationAssets()
     {
-        var beaconManager = GameObject.FindGameObjectWithTag("BeaconManager").GetComponent<BeaconManager>();
-        beaconManager.ResetBeacons();
-        var concminationStarter = GameObject.FindGameObjectWithTag("RaceStart").GetComponent<ConcminationStarter>();
-        concminationStarter.ResetStarter();
-        var raceStarter = GameObject.FindGameObjectWithTag("RaceStart").GetComponent<RaceStarter>();
-        raceStarter.RestartGate();
-        var gameStateManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameStateManager>();
-        gameStateManager.ResetTimer();
+        var beaconManager = GameObject.FindGameObjectWithTag("BeaconManager");
+        if (beaconManager != null)
+            beaconManager.GetComponent<BeaconManager>().ResetBeacons();
+        var concminationStarter = GameObject.FindGameObjectWithTag("RaceStart");
+        if (concminationStarter != null)
+            concminationStarter.GetComponent<ConcminationStarter>().ResetStarter();
+        var raceStarter = GameObject.FindGameObjectWithTag("RaceStart");
+        if (raceStarter != null)
+            raceStarter.GetComponent<RaceStarter>().RestartGate();
+        var gameStateManager = GameObject.FindGameObjectWithTag("GameManager");
+        if (gameStateManager != null)
+            gameStateManager.GetComponent<GameStateManager>().ResetTimer();
     }
 
     [Command]
