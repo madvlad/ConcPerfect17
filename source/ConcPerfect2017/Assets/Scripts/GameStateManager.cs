@@ -353,7 +353,8 @@ public class GameStateManager : NetworkBehaviour {
             AddTextToPanel(PlayerInfoHUDElement, "InfoRow" + i++ + "emptycell", "", rowColor);
             AddTextToPanel(PlayerInfoHUDElement, "InfoRow" + i++ + "emptycell", "", rowColor);
             AddTextToPanel(PlayerInfoHUDElement, "InfoRow" + i++ + "emptycell", "", rowColor);
-            i = addConcminationPlayerScoreHeaders(i);
+            //Don't print player scors
+            //i = addConcminationPlayerScoreHeaders(i);
         }
         return i;
     }

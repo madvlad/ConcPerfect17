@@ -47,7 +47,8 @@ public class GameServerManager : NetworkBehaviour {
                             playerInfo += currentDisplayTeam.TeamName + " ; " + teamBeaconScores[currentDisplayTeam] + " % ";
                         }
                     }
-                    playerInfo += pInfo.PrintPlayerInfoConcminationMode();
+                    // Dont do player scores
+                    //playerInfo += pInfo.PrintPlayerInfoConcminationMode();
 
                     List<Team> winners = beaconManager.GetWinners();
                     if (winners != null && winners.Count > 0) {
