@@ -34,6 +34,14 @@ public class ConcminationStarter : NetworkBehaviour {
             HasPlayed = true;
         }
     }
+
+    public void ResetStarter()
+    {
+        IsTriggered = false;
+        HasPlayed = false;
+        RenderedCylinder.GetComponent<MeshRenderer>().enabled = true;
+        GetComponent<CapsuleCollider>().enabled = true;
+    }
     
     [Command]
     void CmdStartTimeCountdown(NetworkIdentity grabId, NetworkIdentity player)

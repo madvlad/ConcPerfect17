@@ -127,6 +127,10 @@ public class RaceStarter : NetworkBehaviour {
 
     public void RestartGate()
     {
+        if (Barrier != null)
+        {
+            Barrier.SetActive(true);
+        }
         Timer = CountdownDuration;
         Trigger.SetActive(true);
         TriggerPlatform.SetActive(true);
