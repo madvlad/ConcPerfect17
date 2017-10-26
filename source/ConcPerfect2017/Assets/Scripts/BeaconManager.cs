@@ -38,8 +38,8 @@ public class BeaconManager : NetworkBehaviour
         {
             if (kvp.Value >= beacons.Count)
             {
-                GameObject.FindGameObjectWithTag("RaceStart").GetComponent<RaceStarter>().GetComponent<SetTimerOnTrigger>().SwitchToOn = false;
-                GameObject.FindGameObjectWithTag("RaceStart").GetComponent<RaceStarter>().GetComponent<SetTimerOnTrigger>().StopTimer();
+                //GameObject.FindGameObjectWithTag("RaceStart").GetComponent<RaceStarter>().GetComponent<SetTimerOnTrigger>().SwitchToOn = false;
+                //GameObject.FindGameObjectWithTag("RaceStart").GetComponent<RaceStarter>().GetComponent<SetTimerOnTrigger>().StopTimer();
             }
         }
     }
