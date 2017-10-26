@@ -55,6 +55,10 @@ public class SetTimerOnTrigger : MonoBehaviour {
             if (ApplicationManager.GameType == GameTypes.ConcminationGameType) {
                 courseCompleteMessage.enabled = true;
                 courseCompleteMessage.text = gameStateManager.GetConcminationEndGameMsg() + "\n\nPress ESC To Quit";
+
+                if (gameStateManager.GetConcminationEndGameMsg().Equals("Victory!"))
+                    SteamUserStats.SetAchievement("ACHIEVEMENT_WIN_RACE");
+
                 gameStateManager.PlayVictorySong();
                 Invoke("ResetConcmination", 10.0f);
             }  else {
