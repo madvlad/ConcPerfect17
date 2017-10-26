@@ -56,7 +56,7 @@ public class SetTimerOnTrigger : MonoBehaviour {
                 courseCompleteMessage.enabled = true;
                 courseCompleteMessage.text = gameStateManager.GetConcminationEndGameMsg() + "\n\nPress ESC To Quit";
 
-                if (gameStateManager.GetConcminationEndGameMsg().Equals("Victory!"))
+                if (SteamManager.Initialized && gameStateManager.GetConcminationEndGameMsg().Equals("Victory!"))
                     SteamUserStats.SetAchievement("ACHIEVEMENT_WIN_RACE");
 
                 gameStateManager.PlayVictorySong();
