@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerSkinSelectBehavior : MonoBehaviour {
 
     public List<Material> playerSkins;
+    public List<Material> TeamSkins;
     public GameObject playerModel;
     public GameObject rotationModel;
 

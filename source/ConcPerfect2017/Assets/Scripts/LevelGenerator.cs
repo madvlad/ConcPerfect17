@@ -12,6 +12,7 @@ public class LevelGenerator : NetworkBehaviour {
     public GameObject tutorialLevel;
     public List<GameObject> levelList;
     public List<GameObject> jumpList;
+    public List<GameObject> concminationLevelList;
     public int courseJumpListSize;
     public int RandomSeed;
     public List<Material> levelSkyboxList;
@@ -48,14 +49,16 @@ public class LevelGenerator : NetworkBehaviour {
 
         GameStateManager.SetCourseJumpLimit(courseJumpListSize);
 
-        // Casual Mode
         if (ApplicationManager.GameType == GameTypes.CasualGameType || ApplicationManager.GameType == GameTypes.RaceGameType || ApplicationManager.GameType == GameTypes.ConcminationGameType)
         {
             if (ApplicationManager.currentLevel > 0)
             {
-                //BuildCourseIteratively();
-                //SetJumpTextures();
-                SpawnLevelPrefab(ApplicationManager.currentLevel);
+                var parentLevel = SpawnLevelPrefab(ApplicationManager.currentLevel);
+
+                if (isServer && ApplicationManager.GameType == GameTypes.ConcminationGameType)
+                {
+                    SpawnConcminationStartPrefab(ApplicationManager.currentLevel, parentLevel.transform);
+                }
             }
             else
             {
@@ -64,12 +67,12 @@ public class LevelGenerator : NetworkBehaviour {
                 BuildRandomCourse();
             }
         }
-        // Tutorial
         else if (ApplicationManager.GameType == GameTypes.TutorialGameType)
         {
             BuildTutorialLevel();
         }
         SetSFXVolume();
+        SetMusicVolume();
     }
 
     private void SetSFXVolume()
@@ -78,6 +81,15 @@ public class LevelGenerator : NetworkBehaviour {
         foreach (var sfx in sfxObjects)
         {
             sfx.GetComponent<AudioSource>().volume = ApplicationManager.sfxVolume;
+        }
+    }
+
+    private void SetMusicVolume()
+    {
+        var musicObjects = GameObject.FindGameObjectsWithTag("Music");
+        foreach (var music in musicObjects)
+        {
+            music.GetComponent<AudioSource>().volume = ApplicationManager.musicVolume;
         }
     }
 
@@ -196,16 +208,24 @@ public class LevelGenerator : NetworkBehaviour {
         GameObject.FindGameObjectWithTag("Music").GetComponent<AudioSource>().Play();
     }
 
-    private void SpawnLevelPrefab(int currentLevel)
+    private GameObject SpawnLevelPrefab(int currentLevel)
     {
         GameStateManager.SetCourseJumpLimit(gameManager.GetComponent<LevelManager>().getLevel(ApplicationManager.currentLevel).Count);
-        Instantiate(levelList[currentLevel - 1]);
+        var level = Instantiate(levelList[currentLevel - 1]);
 
         if (isServer && ApplicationManager.GameType == GameTypes.RaceGameType)
         {
             var raceStart = Instantiate(premadeRaceStartPrefab);
             NetworkServer.Spawn(raceStart);
         }
+
+        return level;
+    }
+
+    private void SpawnConcminationStartPrefab(int currentLevel, Transform parent)
+    {
+        var concminationStart = Instantiate(concminationLevelList[currentLevel - 1], parent);
+        NetworkServer.Spawn(concminationStart);
     }
 
     private void BuildRandomCourse()

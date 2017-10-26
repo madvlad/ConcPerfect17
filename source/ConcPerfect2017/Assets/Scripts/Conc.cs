@@ -7,6 +7,12 @@ public class Conc : NetworkBehaviour
     public ParticleSystem explosionParticleSystem;
     public ParticleSystem explosionFlashParticleSystem;
     public ParticleSystem explosionEmbersParticleSystem;
+    public ParticleSystem trailParticleSystem;
+    public ParticleSystem beaconParticleSystem;
+    public GameObject explosionGameObject;
+    public GameObject explosionFlashGameObject;
+    public GameObject explosionEmbersGameObject;
+    public GameObject trailGameObject;
     public GameObject devBubble;
     public bool ShowSphereCollider = false;
     public AudioClip timerSFX;
@@ -14,14 +20,19 @@ public class Conc : NetworkBehaviour
     public AudioClip primeSFX;
     public AudioClip warningSFX;
     public float timer = 5f;
+    public float timeLeft = 4f;
     public bool exploded = false;
 
-    private GameObject owner;
+    public GameObject owner;
+    public bool remote = false;
     private GameObject playerObject;
     private int BeepCount = 1;
 
     void Start()
     {
+        if (remote)
+            return;
+
         var playerObjects = GameObject.FindGameObjectsWithTag("Player");
 
         foreach(GameObject obj in playerObjects)
@@ -44,16 +55,41 @@ public class Conc : NetworkBehaviour
         }
     }
 
+    void FixedUpdate()
+    {
+        timeLeft -= Time.deltaTime;
+    }
+
     void Explode()
     {
         explosionParticleSystem.Emit(1);
         explosionFlashParticleSystem.Emit(1);
         explosionEmbersParticleSystem.Emit(100);
+        explosionParticleSystem.Play();
+        explosionFlashParticleSystem.Play();
+        explosionEmbersParticleSystem.Play();
+        trailParticleSystem.Stop();
         exploded = true;
         Invoke("Destroy", timer);
         gameObject.GetComponent<MeshRenderer>().enabled = false;
         EnactPush();
         PlayExplosionSound();
+    }
+
+    public void HarmlesslyExplode()
+    {
+        explosionParticleSystem.Emit(1);
+        explosionFlashParticleSystem.Emit(1);
+        explosionEmbersParticleSystem.Emit(100);
+        explosionParticleSystem.Play();
+        explosionFlashParticleSystem.Play();
+        explosionEmbersParticleSystem.Play();
+        if (trailParticleSystem != null)
+            trailParticleSystem.Stop();
+        exploded = true;
+        Invoke("Destroy", 0.5f);
+        gameObject.GetComponent<MeshRenderer>().enabled = false;
+        PlayRemoteExplosionSound();
     }
 
     void EnactPush()
@@ -90,9 +126,17 @@ public class Conc : NetworkBehaviour
 
     void PlayExplosionSound()
     {
-        if (explodeSFX)
+        if (explodeSFX && explodeSFX != null && playerObject != null)
         {
             AudioSource.PlayClipAtPoint(explodeSFX, playerObject.transform.position, ApplicationManager.sfxVolume);
+        }
+    }
+
+    void PlayRemoteExplosionSound()
+    {
+        if (explodeSFX)
+        {
+            AudioSource.PlayClipAtPoint(explodeSFX, gameObject.transform.position, ApplicationManager.sfxVolume);
         }
     }
 
@@ -126,5 +170,20 @@ public class Conc : NetworkBehaviour
     public void SetOwner(GameObject owner)
     {
         this.owner = owner;
+    }
+
+    private GameObject GetLocalPlayerObject()
+    {
+        var playerObjects = GameObject.FindGameObjectsWithTag("Player");
+        GameObject playerObject = null;
+        foreach (GameObject obj in playerObjects)
+        {
+            if (obj.GetComponent<NetworkIdentity>().isLocalPlayer)
+            {
+                playerObject = obj;
+            }
+        }
+
+        return playerObject;
     }
 }

@@ -11,9 +11,10 @@ public class RaceStarter : NetworkBehaviour {
     public GameObject TriggerPlatform;
     public GameObject Barrier;
     public AudioClip GoSound;
+    public float CountdownDuration;
 
     [SyncVar]
-    private float Timer = 10;
+    private float Timer;
     [SyncVar]
     private bool IsTriggered = false;
     [SyncVar]
@@ -21,6 +22,7 @@ public class RaceStarter : NetworkBehaviour {
 
     void OnStart()
     {
+        Timer = CountdownDuration;
         Trigger.GetComponent<Renderer>().enabled = true;
         GetComponent<CapsuleCollider>().enabled = true;
         TriggerPlatform.GetComponent<Renderer>().enabled = true;
@@ -28,6 +30,7 @@ public class RaceStarter : NetworkBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
+        Timer = CountdownDuration;
         CmdStartTimeYaNobHead();
     }
 
@@ -44,16 +47,9 @@ public class RaceStarter : NetworkBehaviour {
             var GatePanel = GameObject.FindGameObjectWithTag("GatePanel").GetComponent<Text>();
             Trigger.SetActive(false);
             TriggerPlatform.SetActive(false);
+            GetComponent<CapsuleCollider>().enabled = false;
 
-            if (Timer > 10)
-            {
-                if (Math.Floor(Timer) % 5 == 0)
-                {
-                    GatePanel.text = ("Gate opens in " + Math.Floor(Timer) + " seconds");
-                }
-                Timer -= Time.deltaTime;
-            }
-            else if (Timer > 0)
+            if (Timer > 0)
             {
                 GatePanel.text = ("Gate opens in " + Math.Floor(Timer) + " seconds");
                 Timer -= Time.deltaTime;
@@ -110,18 +106,45 @@ public class RaceStarter : NetworkBehaviour {
         IsTriggered = false;
         GetComponent<AudioSource>().PlayOneShot(GoSound, ApplicationManager.sfxVolume);
         Barrier.SetActive(false);
+        if (ApplicationManager.GameType == GameTypes.ConcminationGameType) {
+            GetComponent<SetTimerOnTrigger>().StartTimer();
+        }
     }
 
     void ShutGate()
     {
-        Barrier.SetActive(true);
+        if (ApplicationManager.GameType == GameTypes.ConcminationGameType)
+        {
+            GetComponent<SetTimerOnTrigger>().StopTimer();
+        }
+        else
+        {
+            Barrier.SetActive(true);
+        }
+
         GateOpened = false;
     }
 
     public void RestartGate()
     {
-        Timer = 10;
+        if (Barrier != null)
+        {
+            Barrier.SetActive(true);
+        }
+        Timer = CountdownDuration;
         Trigger.SetActive(true);
         TriggerPlatform.SetActive(true);
+        GetComponent<CapsuleCollider>().enabled = true;
+        GateOpened = false;
+        if (ApplicationManager.GameType == GameTypes.ConcminationGameType)
+        {
+            GetComponent<SetTimerOnTrigger>().StopTimer();
+        }
+    }
+
+    [ClientRpc]
+    public void RpcRestartGate()
+    {
+        RestartGate();
     }
 }

@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class GameStateManager : NetworkBehaviour {
     public bool TimerIsRunning;
+    public float ConcminationCountdownDuration;
     public GameObject TimerHUDElement;
     public GameObject JumpHUDElement;
     public GameObject JumpNameHUDElement;
@@ -19,6 +20,7 @@ public class GameStateManager : NetworkBehaviour {
     public GameObject BestTimeCrown;
     public GameObject localPlayer;
     public GameObject nicknamePrefab;
+    public List<AudioClip> TeamWinSounds;
 
     // Server Objects
     public GameServerManager gameServerManager;
@@ -33,6 +35,7 @@ public class GameStateManager : NetworkBehaviour {
     private bool IsDisplayNicknames = true;
     private bool IsCourseComplete = false;
     private bool IsCourseFavorited = false;
+    private List<string> ConcminationWinners = new List<string>();
 
     [SyncVar]
     private int CourseSeed;
@@ -67,6 +70,7 @@ public class GameStateManager : NetworkBehaviour {
             ApplicationManager.GameType = CurrentGameType;
         }
         ApplicationManager.respawnCount = 0;
+        ResetTimer();
         SetBestTime();
     }
 
@@ -107,7 +111,11 @@ public class GameStateManager : NetworkBehaviour {
         CheckIfDisplayNicknames();
 
         if (TimerIsRunning) {
-            CurrentTimerTime += Time.deltaTime;
+            if (ApplicationManager.GameType != GameTypes.ConcminationGameType) {
+                CurrentTimerTime += Time.deltaTime;
+            } else {
+                CurrentTimerTime -= Time.deltaTime;
+            }
             TimeSpan timeSpan = TimeSpan.FromSeconds(CurrentTimerTime);
 
             if (timeSpan.Hours < 1)
@@ -117,6 +125,14 @@ public class GameStateManager : NetworkBehaviour {
             else
             {
                 TimerHUDElement.GetComponent<Text>().text = timeSpan.Hours.ToString("00") + ":" + timeSpan.Minutes.ToString("00") + ":" + timeSpan.Seconds.ToString("000");
+            }
+
+
+            if (CurrentTimerTime <= 0 && ApplicationManager.GameType == GameTypes.ConcminationGameType) {
+                var RaceStarter = GameObject.FindGameObjectWithTag("RaceStart").GetComponent<SetTimerOnTrigger>();
+                RaceStarter.SwitchToOn = false;
+                RaceStarter.StopTimer();
+                TimerHUDElement.GetComponent<Text>().text = "TIMES UP!";    
             }
         }
     }
@@ -242,41 +258,105 @@ public class GameStateManager : NetworkBehaviour {
     }
 
     public void UpdatePlayerStats() {
-		foreach (Text row in PlayerInfoHUDElement.GetComponentsInChildren<Text>()) {
+        var i = 0;
+
+        foreach (Text row in PlayerInfoHUDElement.GetComponentsInChildren<Text>()) {
 			Destroy(row.gameObject);
 		}
-
-		var i = 0;
-		AddHeaderTextToPanel (PlayerInfoHUDElement, "InfoRow" + i, "In Game", 1);
-		AddHeaderTextToPanel (PlayerInfoHUDElement, "InfoRow" + i, "", 1);
-		AddHeaderTextToPanel (PlayerInfoHUDElement, "InfoRow" + i, "", 1);
-		AddHeaderTextToPanel (PlayerInfoHUDElement, "InfoRow" + i, "", 1);
-		AddHeaderTextToPanel (PlayerInfoHUDElement, "InfoRow" + i++, "", 1);
-		AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i, "Player", 2);
-		AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i, "Status", 2);
-		AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i, "Current Jump", 2);
-		AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i, "Best Time", 2);
-		AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i++, "Times Completed", 2);
-
-		foreach (string info in playerInfo) {
-			if (info.Split(';').Length > 5) {
-				string pId = info.Split(';')[0];
-				string nickname = info.Split(';')[1];
-				string status = info.Split(';')[2];
-				string jumpNumber = info.Split(';')[3];
-				string bestScore = info.Split (';') [4];
-				string timesCompleted = info.Split (';') [5];
-				Color rowColor = Color.white;
-				if (pId.Trim().Equals(GetLocalPlayerObject().GetComponent<NetworkIdentity>().netId.ToString().Trim())) {
-					nickname = "*" + nickname; 
-				}
-				AddTextToPanel(PlayerInfoHUDElement, "InfoRow" + i + "nickname", nickname, rowColor);
-				AddTextToPanel(PlayerInfoHUDElement, "InfoRow" + i + "status", status, rowColor);
-				AddTextToPanel(PlayerInfoHUDElement, "InfoRow" + i++ + "jumpNumber", jumpNumber, rowColor);
-				AddTextToPanel(PlayerInfoHUDElement, "InfoRow" + i++ + "bestScore", bestScore, rowColor);
-				AddTextToPanel(PlayerInfoHUDElement, "InfoRow" + i++ + "timesCompleted", timesCompleted, rowColor);
-			}
+        if (ApplicationManager.GameType == GameTypes.ConcminationGameType) {
+            AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i, "In Game", 1);
+            AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i, "", 1);
+            AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i, "", 1);
+            AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i, "", 1);
+            AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i++, "", 1);
+            foreach (string info in playerInfo) {
+                i = parseConcminiationModeScores(info, i);
+            }
+        } else {
+            AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i, "In Game", 1);
+            AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i, "", 1);
+            AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i, "", 1);
+            AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i, "", 1);
+            AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i++, "", 1);
+            AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i, "Player", 2);
+            AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i, "Status", 2);
+            AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i, "Current Jump", 2);
+            AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i, "Best Time", 2);
+            AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i++, "Times Completed", 2);
+            foreach (string info in playerInfo) {
+                    i = parseRaceModeScores(info, i);
+            }
 		}
+    }
+
+    private int addConcminationPlayerScoreHeaders(int i) {
+        AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i, "Player", 2);
+        AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i, "Beacons Captured", 2);
+        AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i, "", 2);
+        AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i, "", 2);
+        AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i++, "", 2);
+        return i;
+    }
+
+    private int addConcminationTeamScoreHeaders(int i) {
+        AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i, "Team", 2);
+        AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i, "Score", 2);
+        AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i, "", 2);
+        AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i, "", 2);
+        AddHeaderTextToPanel(PlayerInfoHUDElement, "InfoRow" + i++, "", 2);
+        return i;
+    }
+
+    private int parseRaceModeScores(string info, int i) {
+        if (info.Split(';').Length > 5) {
+            string pId = info.Split(';')[0];
+            string nickname = info.Split(';')[1];
+            string status = info.Split(';')[2];
+            string jumpNumber = info.Split(';')[3];
+            string bestScore = info.Split(';')[4];
+            string timesCompleted = info.Split(';')[5];
+            Color rowColor = Color.white;
+            if (pId.Trim().Equals(GetLocalPlayerObject().GetComponent<NetworkIdentity>().netId.ToString().Trim())) {
+                nickname = "*" + nickname;
+            }
+            AddTextToPanel(PlayerInfoHUDElement, "InfoRow" + i + "nickname", nickname, rowColor);
+            AddTextToPanel(PlayerInfoHUDElement, "InfoRow" + i + "status", status, rowColor);
+            AddTextToPanel(PlayerInfoHUDElement, "InfoRow" + i++ + "jumpNumber", jumpNumber, rowColor);
+            AddTextToPanel(PlayerInfoHUDElement, "InfoRow" + i++ + "bestScore", bestScore, rowColor);
+            AddTextToPanel(PlayerInfoHUDElement, "InfoRow" + i++ + "timesCompleted", timesCompleted, rowColor);
+        }
+        return i;
+    }
+
+    private int parseConcminiationModeScores(string info, int i) {
+        if (info.Split(';').Length > 3) {
+            string pId = info.Split(';')[0];
+            string nickname = info.Split(';')[1];
+            string status = info.Split(';')[2];
+            string beaconsCaptured = info.Split(';')[3];
+            Color rowColor = Color.white;
+            if (pId.Trim().Equals(GetLocalPlayerObject().GetComponent<NetworkIdentity>().netId.ToString().Trim())) {
+                nickname = "*" + nickname;
+            }
+            AddTextToPanel(PlayerInfoHUDElement, "InfoRow" + i + "nickname", nickname, rowColor);
+            AddTextToPanel(PlayerInfoHUDElement, "InfoRow" + i++ + "beaconsCaptured", beaconsCaptured, rowColor);
+            AddTextToPanel(PlayerInfoHUDElement, "InfoRow" + i++ + "emptycell", "", rowColor);
+            AddTextToPanel(PlayerInfoHUDElement, "InfoRow" + i++ + "emptycell", "", rowColor);
+            AddTextToPanel(PlayerInfoHUDElement, "InfoRow" + i++ + "emptycell", "", rowColor);
+        } else if (info.Split(';').Length > 1) {
+            i = addConcminationTeamScoreHeaders(i);
+            Color rowColor = Color.white;
+            string teamName = info.Split(';')[0];
+            string beaconsCaptured = info.Split(';')[1];
+            AddTextToPanel(PlayerInfoHUDElement, "InfoRow" + i + "teamName", teamName, rowColor);
+            AddTextToPanel(PlayerInfoHUDElement, "InfoRow" + i + "beaconsCaptured", beaconsCaptured, rowColor);
+            AddTextToPanel(PlayerInfoHUDElement, "InfoRow" + i++ + "emptycell", "", rowColor);
+            AddTextToPanel(PlayerInfoHUDElement, "InfoRow" + i++ + "emptycell", "", rowColor);
+            AddTextToPanel(PlayerInfoHUDElement, "InfoRow" + i++ + "emptycell", "", rowColor);
+            //Don't print player scors
+            //i = addConcminationPlayerScoreHeaders(i);
+        }
+        return i;
     }
 
     public void ShowPlayerStats(bool show) {
@@ -351,7 +431,11 @@ public class GameStateManager : NetworkBehaviour {
 
     public void ResetTimer()
     {
-        this.CurrentTimerTime = 0.0f;
+        if (ApplicationManager.GameType == GameTypes.RaceGameType) {
+            this.CurrentTimerTime = 0.0f;
+        } else if (ApplicationManager.GameType == GameTypes.ConcminationGameType) {
+            this.CurrentTimerTime = ConcminationCountdownDuration;
+        }
     }
 
     public float GetRawTime()
@@ -367,6 +451,41 @@ public class GameStateManager : NetworkBehaviour {
     public bool GetIsCourseFavorited()
     {
         return IsCourseFavorited;
+    }
+
+    public string GetConcminationEndGameMsg() {
+        if (ConcminationWinners.Count == 1) {
+            if (ConcminationWinners.Contains(ApplicationManager.GetLocalPlayerObject().GetComponent<Concer>().CurrentTeam)) {
+                return "Victory!";
+            } else {
+                return "Defeat!";
+            }
+        } else {
+            return "Tie Game!";
+        }
+    }
+
+    public void PlayVictorySong()
+    {
+        if (ConcminationWinners.Count == 1)
+        {
+            var audioSource = GameObject.FindGameObjectWithTag("TeamWinSound").GetComponent<AudioSource>();
+            switch (ConcminationWinners[0])
+            {
+                case "Red Rangers":
+                    audioSource.PlayOneShot(TeamWinSounds[0], ApplicationManager.sfxVolume);
+                    break;
+                case "Blue Bandits":
+                    audioSource.PlayOneShot(TeamWinSounds[2], ApplicationManager.sfxVolume);
+                    break;
+                case "Green Gorillas":
+                    audioSource.PlayOneShot(TeamWinSounds[1], ApplicationManager.sfxVolume);
+                    break;
+                case "Yellow Yahoos":
+                    audioSource.PlayOneShot(TeamWinSounds[3], ApplicationManager.sfxVolume);
+                    break;
+            }
+        }
     }
 
     public GameObject GetLocalPlayerObject() {
@@ -392,6 +511,15 @@ public class GameStateManager : NetworkBehaviour {
 	}
 
     [ClientRpc]
+    public void RpcUpdateConcminationWinners(string WinnerMSg) {
+        ConcminationWinners.Clear();
+        string[] winners = WinnerMSg.Split(',');
+        foreach (string w in winners) {
+            ConcminationWinners.Add(w);
+        }
+    }
+
+    [ClientRpc]
     public void RpcUpdateCourseJumpLimit(int CourseJumpLimit) {
         if (!isServer) {
             this.CourseJumpLimit = CourseJumpLimit;
@@ -413,6 +541,23 @@ public class GameStateManager : NetworkBehaviour {
     }
 
     [ClientRpc]
+    public void RpcUpdateTeamSkins(NetworkInstanceId netId, int value)
+    {
+        if (netId == GetLocalPlayerObject().GetComponent<NetworkIdentity>().netId)
+            return;
+        GameObject networkedPlayer = ClientScene.FindLocalObject(netId);
+        if (networkedPlayer != null)
+        {
+            var networkedDrifter = networkedPlayer.GetComponent<FirstPersonDrifter>();
+            if (networkedDrifter != null)
+            {
+                var networkedModel = networkedDrifter.playerModelRenderer.GetComponent<SkinnedMeshRenderer>();
+                networkedModel.material = GameObject.FindGameObjectWithTag("PlayerSkins").GetComponent<PlayerSkinSelectBehavior>().TeamSkins[value];
+            }
+        }
+    }
+
+    [ClientRpc]
     public void RpcUpdatePlayerSkins(NetworkInstanceId netId, int value)
     {
         if (netId == GetLocalPlayerObject().GetComponent<NetworkIdentity>().netId)
@@ -424,5 +569,11 @@ public class GameStateManager : NetworkBehaviour {
             var networkedModel = networkedDrifter.playerModelRenderer.GetComponent<SkinnedMeshRenderer>();
             networkedModel.material = GameObject.FindGameObjectWithTag("PlayerSkins").GetComponent<PlayerSkinSelectBehavior>().playerSkins[value];
         }
+    }
+
+    [ClientRpc]
+    public void RpcResetConcminationAssets()
+    {
+        ResetTimer();
     }
 }

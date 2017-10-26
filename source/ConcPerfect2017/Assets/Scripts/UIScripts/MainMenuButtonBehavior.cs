@@ -36,7 +36,7 @@ public class MainMenuButtonBehavior : MonoBehaviour {
         if (Camera.main.GetComponent<AudioSource>() != null)
         {
             ApplicationManager.JumpsDifficultiesAllowed = new List<int> { 0, 1, 2, 3, 4 };
-            ApplicationManager.GameType = GameTypes.CasualGameType;
+            //ApplicationManager.GameType = GameTypes.CasualGameType;
             Camera.main.GetComponent<AudioSource>().volume = ApplicationManager.musicVolume;
         }
 
@@ -66,7 +66,7 @@ public class MainMenuButtonBehavior : MonoBehaviour {
             sfxVolumeSliderMenuUIElement.GetComponent<Slider>().value = ApplicationManager.sfxVolume;
         }
 
-        if (resetCourseButton != null && (ApplicationManager.GameType == GameTypes.TutorialGameType || ApplicationManager.GameType == GameTypes.RaceGameType))
+        if (resetCourseButton != null && (ApplicationManager.GameType == GameTypes.TutorialGameType || ApplicationManager.GameType == GameTypes.RaceGameType || ApplicationManager.GameType == GameTypes.ConcminationGameType))
         {
             resetCourseButton.SetActive(false);
         }
@@ -179,6 +179,8 @@ public class MainMenuButtonBehavior : MonoBehaviour {
 
     void LoadMainMenu()
     {
+        // Reset single player menu panel to show casual
+        //ApplicationManager.GameType = GameTypes.CasualGameType;
         GameObject.FindGameObjectWithTag("NetManager").GetComponent<NetworkManager>().StopHost();
         SceneManager.UnloadSceneAsync(mainGameScene);
         SceneManager.LoadScene(mainMenuScene);
@@ -330,14 +332,17 @@ public class MainMenuButtonBehavior : MonoBehaviour {
     {
         ApplicationManager.musicVolume = volume;
         PlayerPrefs.SetFloat("MusicVolume", volume);
-        var music = GameObject.FindGameObjectWithTag("Music");
-        if (music == null)
+        var musics = GameObject.FindGameObjectsWithTag("Music");
+        if (musics.Length == 0)
         {
             Camera.main.GetComponent<AudioSource>().volume = ApplicationManager.musicVolume;
         }
         else
         {
-            music.GetComponent<AudioSource>().volume = ApplicationManager.musicVolume;
+            foreach(var music in musics)
+            {
+                music.GetComponent<AudioSource>().volume = ApplicationManager.musicVolume;
+            }
         }
     }
 

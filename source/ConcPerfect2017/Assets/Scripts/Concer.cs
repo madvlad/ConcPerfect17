@@ -8,6 +8,7 @@ using System.Collections.Generic;
 public class Concer : NetworkBehaviour
 {
     public GameObject concPrefab;
+    public GameObject remoteConcPrefab;
     public int ConcPushForce = 8;
     public int ConcCount = 3;
     public int MaxConcCount = 3;
@@ -79,6 +80,12 @@ public class Concer : NetworkBehaviour
                 concInstance.GetComponent<Rigidbody>().useGravity = false;
                 concInstance.GetComponent<BoxCollider>().enabled = false;
                 concInstance.GetComponent<MeshRenderer>().enabled = false;
+                concInstance.GetComponent<ParticleSystem>().Play();
+                concInstance.GetComponent<Conc>().trailGameObject.SetActive(false);
+                concInstance.GetComponent<Conc>().beaconParticleSystem.Play();
+                concInstance.GetComponent<Conc>().explosionParticleSystem.Stop();
+                concInstance.GetComponent<Conc>().explosionFlashParticleSystem.Stop();
+                concInstance.GetComponent<Conc>().explosionEmbersParticleSystem.Stop();
             }
         }
         if (primed && !Input.GetButton("Conc"))
@@ -89,7 +96,13 @@ public class Concer : NetworkBehaviour
                 concInstance.GetComponent<BoxCollider>().enabled = true;
                 concInstance.GetComponent<MeshRenderer>().enabled = true;
                 concInstance.GetComponent<Rigidbody>().useGravity = true;
+                concInstance.GetComponent<Conc>().trailGameObject.SetActive(true);
+                concInstance.GetComponent<Conc>().trailParticleSystem.Play();
+                concInstance.GetComponent<Conc>().explosionParticleSystem.Stop();
+                concInstance.GetComponent<Conc>().explosionFlashParticleSystem.Stop();
+                concInstance.GetComponent<Conc>().explosionEmbersParticleSystem.Stop();
                 concInstance.GetComponent<Rigidbody>().AddForce(playerCamera.transform.forward * ConcPushForce, ForceMode.Impulse);
+                CmdSpawnNetworkedConc(concInstance.GetComponent<Conc>().timeLeft, concInstance.transform.position, playerCamera.transform.forward, concInstance.transform.rotation, concInstance.GetComponent<Conc>().owner, GetLocalPlayerObject().GetComponent<NetworkIdentity>());
                 primed = false;
                 concPrimedHUDElement.SetActive(false);
             }
@@ -148,5 +161,39 @@ public class Concer : NetworkBehaviour
         }
 
         return playerObject;
+    }
+
+    [Command]
+    void CmdSpawnNetworkedConc(float timeLeft, Vector3 position, Vector3 push, Quaternion rotation, GameObject owner, NetworkIdentity IgnoreMe)
+    {
+        var recipients = GameObject.FindGameObjectsWithTag("Player");
+
+        foreach (var recipient in recipients)
+        {
+            if (recipient.GetComponent<NetworkIdentity>().netId != IgnoreMe.netId)
+                recipient.GetComponent<Concer>().RpcReceiveNetworkedConc(timeLeft, position, push, rotation, owner);
+        }
+    }
+
+    [ClientRpc]
+    void RpcReceiveNetworkedConc(float timeLeft, Vector3 position, Vector3 push, Quaternion rotation, GameObject owner)
+    {
+        StartCoroutine(HandleNetworkedConc(timeLeft, position, push, rotation, owner));
+    }
+
+    IEnumerator HandleNetworkedConc(float timeLeft, Vector3 position, Vector3 push, Quaternion rotation, GameObject owner)
+    {
+        if (!isLocalPlayer)
+            yield break;
+
+        var concInstance = Instantiate(remoteConcPrefab, position, rotation);
+        concInstance.GetComponent<Conc>().SetOwner(owner);
+        concInstance.GetComponent<BoxCollider>().enabled = true;
+        concInstance.GetComponent<MeshRenderer>().enabled = true;
+        if (!concInstance.GetComponent<Rigidbody>()) { concInstance.AddComponent<Rigidbody>(); }
+        concInstance.GetComponent<Rigidbody>().useGravity = true;
+        concInstance.GetComponent<Rigidbody>().AddForce(push * ConcPushForce, ForceMode.Impulse);
+        yield return new WaitForSeconds(timeLeft - 0.5f);
+        concInstance.GetComponent<Conc>().HarmlesslyExplode();
     }
 }

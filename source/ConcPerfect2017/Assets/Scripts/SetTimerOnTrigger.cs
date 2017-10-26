@@ -14,6 +14,7 @@ public class SetTimerOnTrigger : MonoBehaviour {
     public ParticleSystem confetti1;
     public ParticleSystem confetti2;
     public ParticleSystem confetti3;
+    public bool EnableTrigger = true;
 
     private GameStateManager gameStateManager;
     private CourseHistoryManager courseHistoryManager;
@@ -26,75 +27,77 @@ public class SetTimerOnTrigger : MonoBehaviour {
         courseCompleteMessage = GameObject.FindGameObjectWithTag("CourseEndText").GetComponent<Text>();
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            if (!gameStateManager.TimerIsRunning && SwitchToOn && !gameStateManager.GetIsCourseComplete())
-            {
-                gameStateManager.SetTimerIsRunning(SwitchToOn);
-                gameObject.GetComponent<MeshRenderer>().enabled = false;
-                startLabel.GetComponent<MeshRenderer>().enabled = false;
+    public void StartTimer() {
+        GameObject player = ApplicationManager.GetLocalPlayerObject();
+        if (!gameStateManager.TimerIsRunning && SwitchToOn && !gameStateManager.GetIsCourseComplete()) {
+            gameStateManager.SetTimerIsRunning(SwitchToOn);
+            gameObject.GetComponent<MeshRenderer>().enabled = false;
 
-                if (gameStateManager.GetLocalPlayerObject () != null)
-                {
-					gameStateManager.GetLocalPlayerObject ().gameObject.GetComponent<LocalPlayerStats> ().UpdateStatus ("Started");
-                    gameStateManager.GetLocalPlayerObject ().gameObject.GetComponent<LocalPlayerStats> ().RequestCourseJumpLimit ();
-                }
+            if (startLabel != null)
+                    startLabel.GetComponent<MeshRenderer>().enabled = false;
 
-                other.GetComponent<MultiplayerChatScript>().SendStartMessage();
+            if (gameStateManager.GetLocalPlayerObject() != null) {
+                gameStateManager.GetLocalPlayerObject().gameObject.GetComponent<LocalPlayerStats>().UpdateStatus("Started");
+                gameStateManager.GetLocalPlayerObject().gameObject.GetComponent<LocalPlayerStats>().RequestCourseJumpLimit();
             }
-            else if (gameStateManager.TimerIsRunning && !SwitchToOn)
-            {
-                gameStateManager.SetTimerIsRunning(SwitchToOn);
-                gameObject.GetComponent<AudioSource>().PlayOneShot(GameEndSound, ApplicationManager.sfxVolume);
-                GameObject.FindGameObjectWithTag("Music").GetComponent<AudioSource>().Stop();
+
+            player.GetComponent<MultiplayerChatScript>().SendStartMessage();
+        }
+    }
+
+    public void StopTimer() {
+        GameObject player = ApplicationManager.GetLocalPlayerObject();
+        if (gameStateManager.TimerIsRunning && !SwitchToOn) {
+            gameStateManager.SetTimerIsRunning(SwitchToOn);
+            gameObject.GetComponent<AudioSource>().PlayOneShot(GameEndSound, ApplicationManager.sfxVolume);
+            GameObject.FindGameObjectWithTag("Music").GetComponent<AudioSource>().Stop();
+
+            if (ApplicationManager.GameType == GameTypes.ConcminationGameType) {
+                courseCompleteMessage.enabled = true;
+                courseCompleteMessage.text = gameStateManager.GetConcminationEndGameMsg() + "\n\nPress ESC To Quit";
+
+                if (SteamManager.Initialized && gameStateManager.GetConcminationEndGameMsg().Equals("Victory!"))
+                    SteamUserStats.SetAchievement("ACHIEVEMENT_WIN_RACE");
+
+                gameStateManager.PlayVictorySong();
+                Invoke("ResetConcmination", 10.0f);
+            }  else {
                 courseCompleteMessage.enabled = true;
                 courseCompleteMessage.text = "Course Complete!!\n\nYour time: " + gameStateManager.GetCurrentTime() + "\n\nPress ESC To Quit";
+                var reward = player.GetComponent<TimeQualifier>().CheckTime(gameStateManager.GetRawTime(), ApplicationManager.currentLevel);
 
-                var reward = other.GetComponent<TimeQualifier>().CheckTime(gameStateManager.GetRawTime(), ApplicationManager.currentLevel);
-
-                if (ApplicationManager.currentLevel != 0)
-                {
-                    other.GetComponent<MultiplayerChatScript>().WriteLocalMessage(DisplayRewardMessage(reward));
+                if (ApplicationManager.currentLevel != 0) {
+                    player.GetComponent<MultiplayerChatScript>().WriteLocalMessage(DisplayRewardMessage(reward));
                 }
 
                 SetCompletionAchievement(reward, ApplicationManager.currentLevel);
 
-                if (gameStateManager.GetLocalPlayerObject () != null)
-                {
-                    gameStateManager.GetLocalPlayerObject ().gameObject.GetComponent<LocalPlayerStats> ().UpdateTime (gameStateManager.GetCurrentTime());
+                if (gameStateManager.GetLocalPlayerObject() != null) {
+                    gameStateManager.GetLocalPlayerObject().gameObject.GetComponent<LocalPlayerStats>().UpdateTime(gameStateManager.GetCurrentTime());
                 }
 
-                ShootConfetti(other.gameObject);
-                if (reward != -1)
-                {
+                ShootConfetti(player.gameObject);
+                if (reward != -1) {
                     SaveLevelCompletion();
                 }
                 gameStateManager.SetIsCourseComplete(true);
 
                 TimeSpan timeSpan = TimeSpan.FromSeconds(gameStateManager.GetRawTime());
                 string timeString = "";
-                if (timeSpan.Hours > 0)
-                {
+                if (timeSpan.Hours > 0) {
                     timeString += "H" + timeSpan.Hours.ToString("00") + ":" + timeSpan.Minutes.ToString("00") + ":" + timeSpan.Seconds.ToString("00");
-                }
-                else
-                {
+                } else {
                     timeString += timeSpan.Minutes.ToString("00") + ":" + timeSpan.Seconds.ToString("00") + ":" + timeSpan.Milliseconds.ToString("000");
                 }
 
                 SetSpecialLevelTimeAchievements(timeSpan);
 
-                if (courseHistoryManager.StoreNewRecord(gameStateManager.GetCourseSeed(), gameStateManager.GetRawTime(), gameStateManager.GetIsCourseFavorited(), ApplicationManager.GetDifficultyLevel()))
-                {
+                if (courseHistoryManager.StoreNewRecord(gameStateManager.GetCourseSeed(), gameStateManager.GetRawTime(), gameStateManager.GetIsCourseFavorited(), ApplicationManager.GetDifficultyLevel())) {
                     GameObject.FindGameObjectWithTag("TheCrown").SetActive(true);
                     GameObject.FindGameObjectWithTag("BestTime").GetComponent<Text>().text = timeString;
-                    other.GetComponent<MultiplayerChatScript>().SendRecordFinishMessage(timeString);
-                }
-                else
-                {
-                    other.GetComponent<MultiplayerChatScript>().SendFinishMessage(timeString);
+                    player.GetComponent<MultiplayerChatScript>().SendRecordFinishMessage(timeString);
+                } else {
+                    player.GetComponent<MultiplayerChatScript>().SendFinishMessage(timeString);
                 }
 
                 courseHistoryManager.AddRecentlyPlayed(gameStateManager.GetCourseSeed(), gameStateManager.GetRawTime(), ApplicationManager.GetDifficultyLevel());
@@ -102,52 +105,53 @@ public class SetTimerOnTrigger : MonoBehaviour {
                 var totalCoursesCompleted = courseHistoryManager.GetSavedRecords("RecentPlayed");
                 SetTotalCompletedAchievement(totalCoursesCompleted.Count);
 
-                if (!ApplicationManager.IsLAN)
-                {
-                    if (SteamManager.Initialized)
-                    {
-                        if (PlayerPrefs.HasKey("OnlineModeRecord"))
-                        {
+                if (!ApplicationManager.IsLAN) {
+                    if (SteamManager.Initialized) {
+                        if (PlayerPrefs.HasKey("OnlineModeRecord")) {
                             var winRecord = PlayerPrefs.GetInt("OnlineModeRecord");
                             winRecord++;
-                            if (winRecord >= 10)
-                            {
+                            if (winRecord >= 10) {
                                 SteamUserStats.SetAchievement("ACHIEVEMENT_SOCIAL_CONCER");
                             }
                             PlayerPrefs.SetInt("OnlineModeRecord", winRecord);
-                        }
-                        else
-                        {
+                        } else {
                             PlayerPrefs.SetInt("OnlineModeRecord", 1);
                         }
                     }
                 }
 
-                if (ApplicationManager.GameType == GameTypes.RaceGameType)
-                {
-                    if (SteamManager.Initialized)
-                    {
-                        if (PlayerPrefs.HasKey("RaceModeWinRecord"))
-                        {
+                if (ApplicationManager.GameType == GameTypes.RaceGameType) {
+                    if (SteamManager.Initialized) {
+                        if (PlayerPrefs.HasKey("RaceModeWinRecord")) {
                             var winRecord = PlayerPrefs.GetInt("RaceModeWinRecord");
                             winRecord++;
-                            if (winRecord >= 10)
-                            {
+                            if (winRecord >= 10) {
                                 SteamUserStats.SetAchievement("ACHIEVEMENT_STREET_CONCER");
                             }
                             PlayerPrefs.SetInt("RaceModeWinRecord", winRecord);
-                        }
-                        else
-                        {
+                        } else {
                             PlayerPrefs.SetInt("RaceModeWinRecord", 1);
                         }
                         SteamUserStats.SetAchievement("ACHIEVEMENT_WIN_RACE");
                     }
-                    other.GetComponent<FirstPersonDrifter>().CmdFreezeAll(true);
+                    player.GetComponent<FirstPersonDrifter>().CmdFreezeAll(true);
                     Invoke("Unfreeze", 5.0f);
                 }
+            }
 
-                Invoke("EndGame", 7.0f);
+            Invoke("EndGame", 7.0f);
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (EnableTrigger) {
+            if (other.CompareTag("Player")) {
+                if (!gameStateManager.TimerIsRunning && SwitchToOn && !gameStateManager.GetIsCourseComplete()) {
+                    StartTimer();
+                } else if (gameStateManager.TimerIsRunning && !SwitchToOn) {
+                    StopTimer();
+                }
             }
         }
     }
@@ -311,6 +315,15 @@ public class SetTimerOnTrigger : MonoBehaviour {
     private void EndGame()
     {
         courseCompleteMessage.enabled = false;
+    }
+
+    private void ResetConcmination()
+    {
+        var player = ApplicationManager.GetLocalPlayerObject();
+        player.GetComponent<Concer>().SetConcCount(0);
+        player.GetComponent<FirstPersonDrifter>().TeleportToConcminationOrigin();
+        player.GetComponent<FirstPersonDrifter>().ResetConcminationAssets();
+        SwitchToOn = true;
     }
 
     private GameObject GetLocalPlayerObject()

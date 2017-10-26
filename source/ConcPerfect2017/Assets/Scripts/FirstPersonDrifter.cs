@@ -89,8 +89,12 @@ public class FirstPersonDrifter : NetworkBehaviour
         rayDistance = controller.height * .5f + controller.radius;
         slideLimit = controller.slopeLimit - .1f;
         jumpTimer = antiBunnyHopFactor;
-        playerModelRenderer.GetComponent<SkinnedMeshRenderer>().material = GameObject.FindGameObjectWithTag("PlayerSkins").GetComponent<PlayerSkinSelectBehavior>().playerSkins[ApplicationManager.PlayerModel];
-        GetLocalPlayerObject().GetComponent<LocalPlayerStats>().RequestPlayerSkins();
+
+        if (ApplicationManager.GameType != GameTypes.ConcminationGameType)
+        {
+            playerModelRenderer.GetComponent<SkinnedMeshRenderer>().material = GameObject.FindGameObjectWithTag("PlayerSkins").GetComponent<PlayerSkinSelectBehavior>().playerSkins[ApplicationManager.PlayerModel];
+            GetLocalPlayerObject().GetComponent<LocalPlayerStats>().RequestPlayerSkins();
+        }
     }
 
     void Start()
@@ -283,6 +287,27 @@ public class FirstPersonDrifter : NetworkBehaviour
         return escaped;
     }
 
+    public void ResetConcminationAssets()
+    {
+        CmdResetConcminationAssets();
+    }
+
+    [Command]
+    public void CmdResetConcminationAssets()
+    {
+        var beaconManager = GameObject.FindGameObjectWithTag("BeaconManager");
+        if (beaconManager != null)
+            beaconManager.GetComponent<BeaconManager>().ResetBeacons();
+        var concminationStarter = GameObject.FindGameObjectWithTag("RaceStart");
+        if (concminationStarter != null)
+            concminationStarter.GetComponent<ConcminationStarter>().ResetStarter();
+        var raceStarter = GameObject.FindGameObjectWithTag("RaceStart");
+        if (raceStarter != null)
+            raceStarter.GetComponent<RaceStarter>().RpcRestartGate();
+
+        GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameStateManager>().RpcResetConcminationAssets();
+    }
+
     [Command]
     public void CmdFreezeAll(bool freeze)
     {
@@ -348,6 +373,13 @@ public class FirstPersonDrifter : NetworkBehaviour
         {
             music.Play();
         }
+    }
+
+    public void TeleportToConcminationOrigin()
+    {
+        var player = GetLocalPlayerObject();
+        var restartPoint = GameObject.FindGameObjectWithTag("ConcminationRespawn");
+        player.transform.position = restartPoint.transform.position;
     }
 
     internal bool IsFrozen()
