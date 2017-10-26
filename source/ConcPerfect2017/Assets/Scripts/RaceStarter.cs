@@ -135,6 +135,7 @@ public class RaceStarter : NetworkBehaviour {
         Trigger.SetActive(true);
         TriggerPlatform.SetActive(true);
         GetComponent<CapsuleCollider>().enabled = true;
+        GateOpened = false;
         if (ApplicationManager.GameType == GameTypes.ConcminationGameType)
         {
             GetComponent<SetTimerOnTrigger>().StopTimer();
