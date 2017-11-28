@@ -13,6 +13,14 @@ public class LevelManager : MonoBehaviour {
     public List<GameObject> level7;
     public List<GameObject> level8;
     public List<GameObject> level9;
+    public List<GameObject> level10;
+    public List<GameObject> level11;
+    public List<GameObject> level12;
+    public List<GameObject> level13;
+    public List<GameObject> level14;
+    public List<GameObject> level15;
+    public List<GameObject> level16;
+
 
     internal List<GameObject> getLevel(int currentLevel)
     {
