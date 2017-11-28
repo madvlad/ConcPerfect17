@@ -45,7 +45,7 @@ public class LevelManager : MonoBehaviour {
             case 9:
                 return level9;
             default:
-                return null;
+                return level9;
         }
     }
 }
