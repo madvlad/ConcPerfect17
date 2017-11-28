@@ -5,7 +5,7 @@ using UnityEngine.Networking;
 using Random = UnityEngine.Random;
 
 public class ApplicationManager : MonoBehaviour {
-    public const string APPLICATION_VERSION = "3.0.1";
+    public const string APPLICATION_VERSION = "3.2.0";
 
     static public int respawnCount = 0;
     static public int grandGalleryRespawnCount = 0;
