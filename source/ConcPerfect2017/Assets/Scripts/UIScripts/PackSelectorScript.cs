@@ -7,8 +7,12 @@ public class PackSelectorScript : MonoBehaviour {
     public List<GameObject> racePacks;
     public List<GameObject> concPacks;
     public GameObject customPack;
+    public GameObject World1UIElement;
+    public GameObject World2UIElement;
+    public GameObject World3UIElement;
+    public GameObject World4UIElement;
 
-	private int index = 0;
+    private int index = 0;
 
 	// Use this for initialization
 	void Start () {
@@ -52,5 +56,9 @@ public class PackSelectorScript : MonoBehaviour {
             customPack.SetActive(false);
         }
         levelPacks[index].SetActive(true);
+        World1UIElement.SetActive(false);
+        World2UIElement.SetActive(false);
+        World3UIElement.SetActive(false);
+        World4UIElement.SetActive(false);
     }
 }
