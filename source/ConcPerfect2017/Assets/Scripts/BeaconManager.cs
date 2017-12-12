@@ -16,8 +16,18 @@ public class BeaconManager : NetworkBehaviour
     {
         if (ApplicationManager.GameType == GameTypes.ConcminationGameType)
         {
+            var realBeaconMarkers = new List<GameObject>();
+            if (ApplicationManager.currentLevel == 18)
+            {
+                realBeaconMarkers = BeaconMarkers.GetRange(9, 9);
+            }
+            else
+            {
+                realBeaconMarkers = BeaconMarkers.GetRange(0, 9);
+            }
+
             beacons = new List<GameObject>();
-            foreach (GameObject bM in BeaconMarkers)
+            foreach (GameObject bM in realBeaconMarkers)
             {
                 GameObject bMPrefab = Instantiate(bM);
                 bMPrefab.transform.position = new Vector3(bMPrefab.transform.position.x + 67.81221f, bMPrefab.transform.position.y - 1.518f, bMPrefab.transform.position.z - 37.85f);
