@@ -27,9 +27,11 @@ public class ApplicationManager : MonoBehaviour {
     static public int GameType = GameTypes.CasualGameType;
     static public int LevelsCompleted = 0;
     static public int PlayerModel = 0;
+    static public int ConcModel = 0;
     static public List<int> JumpsDifficultiesAllowed = new List<int> { 0, 1, 2, 3, 4 };
 
     private string[] defaultNicknames = { "BAADF00D", "D15EA5E", "1CEB00DA", "DEADBEAF" };
+
     void Start()
     {
         CheckCompletedLevels();
@@ -63,6 +65,11 @@ public class ApplicationManager : MonoBehaviour {
         if (PlayerPrefs.HasKey("PlayerModel"))
         {
             ApplicationManager.PlayerModel = PlayerPrefs.GetInt("PlayerModel");
+        }
+
+        if (PlayerPrefs.HasKey("ConcModel"))
+        {
+            ApplicationManager.ConcModel = PlayerPrefs.GetInt("ConcModel");
         }
     }
 

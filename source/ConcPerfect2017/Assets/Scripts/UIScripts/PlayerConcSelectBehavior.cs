@@ -4,17 +4,17 @@ using UnityEngine;
 
 public class PlayerConcSelectBehavior : MonoBehaviour {
 
-    public List<Material> playerSkins;
-    public List<Material> TeamSkins;
-    public GameObject playerModel;
+    public List<Material> concMaterials;
+    public List<Mesh> concMeshes;
+    public GameObject concModel;
     public GameObject rotationModel;
 
     private int currentSkinIndex;
 	
 	void Start () {
-        //currentSkinIndex = ApplicationManager.PlayerModel;
-        //SetPlayerSkin();
-	}
+        currentSkinIndex = ApplicationManager.ConcModel;
+        SetPlayerSkin();
+    }
 
     void FixedUpdate()
     {
@@ -26,35 +26,36 @@ public class PlayerConcSelectBehavior : MonoBehaviour {
 
     void SetPlayerSkin()
     {
-        if (playerModel != null)
+        if (concModel != null)
         {
-            //playerModel.GetComponent<SkinnedMeshRenderer>().material = playerSkins[currentSkinIndex];
-            //PlayerPrefs.SetInt("PlayerModel", currentSkinIndex);
-            //ApplicationManager.PlayerModel = currentSkinIndex;
+            concModel.GetComponent<MeshRenderer>().material = concMaterials[currentSkinIndex];
+            concModel.GetComponent<MeshFilter>().mesh = concMeshes[currentSkinIndex];
+            PlayerPrefs.SetInt("ConcModel", currentSkinIndex);
+            ApplicationManager.ConcModel = currentSkinIndex;
         }
     }
 
     public void NextSkin()
     {
-        //currentSkinIndex++;
+        currentSkinIndex++;
 
-        //if (currentSkinIndex >= playerSkins.Count)
-        //{
-        //    currentSkinIndex = 0;
-        //}
+        if (currentSkinIndex >= concMaterials.Count)
+        {
+            currentSkinIndex = 0;
+        }
 
-        //SetPlayerSkin();
+        SetPlayerSkin();
     }
 
     public void PreviousSkin()
     {
-        //currentSkinIndex--;
+        currentSkinIndex--;
 
-        //if (currentSkinIndex < 0)
-        //{
-        //    currentSkinIndex = playerSkins.Count - 1;
-        //}
+        if (currentSkinIndex < 0)
+        {
+            currentSkinIndex = concMaterials.Count - 1;
+        }
 
-        //SetPlayerSkin();
+        SetPlayerSkin();
     }
 }

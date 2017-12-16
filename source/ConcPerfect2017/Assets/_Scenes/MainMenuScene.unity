@@ -3838,7 +3838,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 176793896}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -166.112, y: 412.6244, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1839044816}
@@ -11983,7 +11983,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 509799126}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -106, y: -80.5, z: 0}
+  m_LocalPosition: {x: -106, y: 393, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 991686151}
@@ -18204,9 +18204,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f29770d034856f04fb8c49f806ebbe8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerSkins: []
-  TeamSkins: []
-  playerModel: {fileID: 0}
+  concMaterials:
+  - {fileID: 2100000, guid: 8e35b5b59d81e0b4a8d020e9a1092504, type: 2}
+  - {fileID: 2100000, guid: 5d5d6df2091a9a14cb6a82f3e7987663, type: 2}
+  - {fileID: 2100000, guid: 8f79333a29d41e14e8b3d110eafb2f3a, type: 2}
+  - {fileID: 2100000, guid: cac36f38a328cdc43a192653e02482d6, type: 2}
+  - {fileID: 2100000, guid: d05dabe190e2069468bfd4b2c74e4d6b, type: 2}
+  concMeshes:
+  - {fileID: 4300000, guid: ad3596f72687213428d5735fbb88c14c, type: 3}
+  - {fileID: 4300000, guid: 13bd9c7037fe74c4685397569f72da52, type: 3}
+  - {fileID: 4300000, guid: 22b932255f90f0747899b7a9e0fd8d60, type: 3}
+  - {fileID: 4300000, guid: ad3596f72687213428d5735fbb88c14c, type: 3}
+  - {fileID: 4300000, guid: 5c963c8ce65f64047a198b4b182368da, type: 3}
+  concModel: {fileID: 827240358}
   rotationModel: {fileID: 827240358}
 --- !u!1 &608819305
 GameObject:
@@ -20519,7 +20529,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 710285252}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 100, y: -80.5, z: 0}
+  m_LocalPosition: {x: 100, y: 393, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 288951679}
@@ -27066,6 +27076,16 @@ Prefab:
       propertyPath: m_LocalScale.z
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 23129259450509084, guid: 4a4441c374e6f9a4c99dc0b4f134bd50,
+        type: 2}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: cac36f38a328cdc43a192653e02482d6, type: 2}
+    - target: {fileID: 33690284500717086, guid: 4a4441c374e6f9a4c99dc0b4f134bd50,
+        type: 2}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 4300000, guid: ad3596f72687213428d5735fbb88c14c, type: 3}
     m_RemovedComponents:
     - {fileID: 114881205104242172, guid: 4a4441c374e6f9a4c99dc0b4f134bd50, type: 2}
     - {fileID: 82370979054187108, guid: 4a4441c374e6f9a4c99dc0b4f134bd50, type: 2}
@@ -30644,7 +30664,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1003641739}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -438.5, z: 0}
+  m_LocalPosition: {x: 0, y: 35, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1414827726}
@@ -36872,7 +36892,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1104267799}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 205, y: -438.5, z: 0}
+  m_LocalPosition: {x: 205, y: 35, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1059997402}
@@ -37889,7 +37909,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 608590573}
         m_MethodName: NextSkin
         m_Mode: 1
         m_Arguments:
@@ -51732,7 +51752,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1473778408}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -205, y: -438.5, z: 0}
+  m_LocalPosition: {x: -205, y: 35, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1001581129}
@@ -61046,7 +61066,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1832234984}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 179, y: 473.5, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1839044816}
@@ -61589,7 +61609,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1862261233}
   m_LocalRotation: {x: -0.17306253, y: -0.36488715, z: 0.06922241, w: -0.91220343}
-  m_LocalPosition: {x: -0.036, y: -1.306, z: -0.84}
+  m_LocalPosition: {x: -0.02, y: -1.306, z: -0.855}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1631459318}
@@ -63217,7 +63237,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 608590573}
         m_MethodName: PreviousSkin
         m_Mode: 1
         m_Arguments:
