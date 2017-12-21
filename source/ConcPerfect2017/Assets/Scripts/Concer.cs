@@ -102,7 +102,7 @@ public class Concer : NetworkBehaviour
                 concInstance.GetComponent<Conc>().explosionFlashParticleSystem.Stop();
                 concInstance.GetComponent<Conc>().explosionEmbersParticleSystem.Stop();
                 concInstance.GetComponent<Rigidbody>().AddForce(playerCamera.transform.forward * ConcPushForce, ForceMode.Impulse);
-                CmdSpawnNetworkedConc(concInstance.GetComponent<Conc>().timeLeft, concInstance.transform.position, playerCamera.transform.forward, concInstance.transform.rotation, concInstance.GetComponent<Conc>().owner, GetLocalPlayerObject().GetComponent<NetworkIdentity>());
+                CmdSpawnNetworkedConc(concInstance.GetComponent<Conc>().timeLeft, concInstance.transform.position, playerCamera.transform.forward, concInstance.transform.rotation, concInstance.GetComponent<Conc>().owner, GetLocalPlayerObject().GetComponent<NetworkIdentity>(), ApplicationManager.ConcModel);
                 primed = false;
                 concPrimedHUDElement.SetActive(false);
             }
@@ -164,29 +164,30 @@ public class Concer : NetworkBehaviour
     }
 
     [Command]
-    void CmdSpawnNetworkedConc(float timeLeft, Vector3 position, Vector3 push, Quaternion rotation, GameObject owner, NetworkIdentity IgnoreMe)
+    void CmdSpawnNetworkedConc(float timeLeft, Vector3 position, Vector3 push, Quaternion rotation, GameObject owner, NetworkIdentity IgnoreMe, int concSkinIndex)
     {
         var recipients = GameObject.FindGameObjectsWithTag("Player");
 
         foreach (var recipient in recipients)
         {
             if (recipient.GetComponent<NetworkIdentity>().netId != IgnoreMe.netId)
-                recipient.GetComponent<Concer>().RpcReceiveNetworkedConc(timeLeft, position, push, rotation, owner);
+                recipient.GetComponent<Concer>().RpcReceiveNetworkedConc(timeLeft, position, push, rotation, owner, concSkinIndex);
         }
     }
 
     [ClientRpc]
-    void RpcReceiveNetworkedConc(float timeLeft, Vector3 position, Vector3 push, Quaternion rotation, GameObject owner)
+    void RpcReceiveNetworkedConc(float timeLeft, Vector3 position, Vector3 push, Quaternion rotation, GameObject owner, int concSkinIndex)
     {
-        StartCoroutine(HandleNetworkedConc(timeLeft, position, push, rotation, owner));
+        StartCoroutine(HandleNetworkedConc(timeLeft, position, push, rotation, owner, concSkinIndex));
     }
 
-    IEnumerator HandleNetworkedConc(float timeLeft, Vector3 position, Vector3 push, Quaternion rotation, GameObject owner)
+    IEnumerator HandleNetworkedConc(float timeLeft, Vector3 position, Vector3 push, Quaternion rotation, GameObject owner, int concSkinIndex)
     {
         if (!isLocalPlayer)
             yield break;
 
         var concInstance = Instantiate(remoteConcPrefab, position, rotation);
+        concInstance.GetComponent<Conc>().SetConcSkin(concSkinIndex);
         concInstance.GetComponent<Conc>().SetOwner(owner);
         concInstance.GetComponent<BoxCollider>().enabled = true;
         concInstance.GetComponent<MeshRenderer>().enabled = true;

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.Networking;
+using System;
 
 public class Conc : NetworkBehaviour
 {
@@ -33,6 +34,8 @@ public class Conc : NetworkBehaviour
         if (remote)
             return;
 
+        SetConcSkin(ApplicationManager.ConcModel);
+
         var playerObjects = GameObject.FindGameObjectsWithTag("Player");
 
         foreach(GameObject obj in playerObjects)
@@ -53,6 +56,13 @@ public class Conc : NetworkBehaviour
                 Invoke("Beep", 1.0f);
             }
         }
+    }
+
+    public void SetConcSkin(int skinIndex)
+    {
+        var concSkins = GameObject.FindGameObjectWithTag("PlayerConcs").GetComponent<PlayerConcSelectBehavior>();
+        gameObject.GetComponent<MeshRenderer>().material = concSkins.concMaterials[skinIndex];
+        gameObject.GetComponent<MeshFilter>().mesh = concSkins.concMeshes[skinIndex];
     }
 
     void FixedUpdate()

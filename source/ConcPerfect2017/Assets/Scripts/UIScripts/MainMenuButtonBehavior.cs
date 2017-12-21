@@ -30,6 +30,10 @@ public class MainMenuButtonBehavior : MonoBehaviour {
     public GameObject failedMessage;
     public GameObject resetCourseButton;
     public GameObject levelPageManager;
+    public GameObject world1UIElement;
+    public GameObject world2UIElement;
+    public GameObject world3UIElement;
+    public GameObject world4UIElement;
 
     void Start()
     {
@@ -159,6 +163,13 @@ public class MainMenuButtonBehavior : MonoBehaviour {
     {
         mainMenuUIElement.SetActive(true);
         singlePlayerMenuUIElement.SetActive(false);
+        if (world1UIElement != null)
+        {
+            world1UIElement.SetActive(false);
+            world2UIElement.SetActive(false);
+            world3UIElement.SetActive(false);
+            world4UIElement.SetActive(false);
+        }
     }
 
     void SetRandomSeed()

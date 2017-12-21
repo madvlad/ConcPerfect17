@@ -431,7 +431,7 @@ public class GameStateManager : NetworkBehaviour {
 
     public void ResetTimer()
     {
-        if (ApplicationManager.GameType == GameTypes.RaceGameType) {
+        if (ApplicationManager.GameType == GameTypes.RaceGameType || ApplicationManager.GameType == GameTypes.CasualGameType) {
             this.CurrentTimerTime = 0.0f;
         } else if (ApplicationManager.GameType == GameTypes.ConcminationGameType) {
             this.CurrentTimerTime = ConcminationCountdownDuration;
